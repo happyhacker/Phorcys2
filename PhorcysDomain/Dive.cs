@@ -1,26 +1,39 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
 
-namespace PhorcysDomain
+namespace Phorcys.Domain;
+
+public class Dive
 {
-    public class Dive
-    {
+    public int DiveId { get; set; }
 
-            public int DiveId { get; set; }
-            public required string Title { get; set; }
-            public int? AdditionalWeight { get; set; }
-            public int? AvgDepth { get; set; }
-            public DateTime Created { get; set; }
-            public DateTime? DescentTime { get; set; }
-            public int DiveNumber { get; set; }
-            public DateTime LastModified { get; set; }
-            public int? MaxDepth { get; set; }
-            public int? Minutes { get; set; }
-            public string? Notes { get; set; }
-            public int? Temperature { get; set; }
-            //public DivePlan DivePlan { get; set; }
-            //public Diver Diver { get; set; }
-           // public Role Role { get; set; }
-            //public User User { get; set; }
+    public int? DivePlanId { get; set; }
 
-        }
-    }
+    public int? Minutes { get; set; }
+
+    public DateTime? DescentTime { get; set; }
+
+    public int? AvgDepth { get; set; }
+
+    public int? MaxDepth { get; set; }
+
+    public int? Temperature { get; set; }
+
+    public int? AdditionalWeight { get; set; }
+
+    public string Notes { get; set; } = null!;
+
+    public int DiveNumber { get; set; }
+
+    public int? UserId { get; set; }
+
+    public DateTime Created { get; set; }
+
+    public DateTime LastModified { get; set; }
+
+    public virtual DivePlan? DivePlan { get; set; }
+
+    //public virtual ICollection<DiveUrl> DiveUrls { get; set; } = new List<DiveUrl>();
+
+    public User? User { get; set; }
+}
