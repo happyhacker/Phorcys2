@@ -12,8 +12,8 @@ namespace Phorcys.Data;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=HACKSOFT\\MSSQLSERVER01;Initial Catalog=SCUBA;Integrated Security=SSPI;Encrypt=False;");
-            //optionsBuilder.UseSqlServer("Data Source = sql2k1401.discountasp.net;Initial Catalog=SQL2014_754043_larryhack;User Id=SQL2014_754043_larryhack_user;password=nnihuee");
-
+            optionsBuilder.UseSqlServer("Data Source=HACKSOFT\\MSSQLSERVER01;Initial Catalog=SCUBA;Integrated Security=SSPI;Encrypt=False;")
+             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+ 
     }
 }

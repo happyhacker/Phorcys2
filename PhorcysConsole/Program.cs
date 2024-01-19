@@ -13,7 +13,7 @@ void GetDives()
 {
     using var context = new PhorcysContext();
     //var dives = context.Dives.ToList(); Lazy loading not working
-    var dives = context.Dives.Include(dive => dive.DivePlan).ToList();
+    var dives = context.Dives.Include(d => d.DivePlan).ToList();
     foreach (var dive in dives)
     {
         Console.Write("Dive # " + dive.DiveNumber + ",");
