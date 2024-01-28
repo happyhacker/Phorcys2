@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhorcysData\PhorcysData.csproj" />
+    <ProjectReference Include="..\PhorcysData\Phorcys.Data.csproj" />
+    <ProjectReference Include="..\PhorcysDomain\Phorcys.Domain.csproj" />
   </ItemGroup>
 
 </Project>
