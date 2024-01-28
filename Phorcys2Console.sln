@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhorcysConsole", "PhorcysConsole\PhorcysConsole.csproj", "{9622A482-093E-48E0-84FA-3BCCB2EA3502}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2FBBBDAB-EF3F-4375-BD99-2F17400DB852} = {2FBBBDAB-EF3F-4375-BD99-2F17400DB852}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Data", "PhorcysData\Phorcys.Data.csproj", "{D6A66293-03A1-4EFB-81BF-25344E631A72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Domain", "PhorcysDomain\Phorcys.Domain.csproj", "{844BE8E2-62DD-403A-B48E-8251208F8E25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phorcys.Services", "Phorcys.Services\Phorcys.Services.csproj", "{2FBBBDAB-EF3F-4375-BD99-2F17400DB852}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{844BE8E2-62DD-403A-B48E-8251208F8E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{844BE8E2-62DD-403A-B48E-8251208F8E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{844BE8E2-62DD-403A-B48E-8251208F8E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBBBDAB-EF3F-4375-BD99-2F17400DB852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBBBDAB-EF3F-4375-BD99-2F17400DB852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBBBDAB-EF3F-4375-BD99-2F17400DB852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBBBDAB-EF3F-4375-BD99-2F17400DB852}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

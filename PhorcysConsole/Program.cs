@@ -1,27 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Phorcys.Data;
 using Phorcys.Domain;
+using Phorcys.Services;
 
-using (PhorcysContext context = new PhorcysContext())
+
+var diveServices = new DiveServices();
+var dives = diveServices.GetDives();
+
+
+foreach (var dive in dives)
 {
-
-}
-
-GetDives();
-
-void GetDives()
-{
-    using var context = new PhorcysContext();
-    //var dives = context.Dives.ToList(); Lazy loading not working
-    var dives = context.Dives.Include(d => d.DivePlan).ToList();
-    foreach (var dive in dives)
-    {
-        Console.Write("Dive # " + dive.DiveNumber + ",");
-        if (dive.DivePlan != null)
-        {
-            Console.Write("Title: " + dive.DivePlan.Title + "," ?? ",");
-        }
-        Console.Write("Depth: " + dive.AvgDepth + ",");
-        Console.WriteLine("Time: " + dive.DescentTime + "");
-    }
+	Console.Write("Dive # " + dive.DiveNumber + ",");
+	if (dive.DivePlan != null)
+	{
+		Console.Write("Title: " + dive.DivePlan.Title + "," ?? ",");
+	}
+	Console.Write("Depth: " + dive.AvgDepth + ",");
+	Console.WriteLine("Time: " + dive.DescentTime + "");
 }
