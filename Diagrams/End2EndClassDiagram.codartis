@@ -1,0 +1,559 @@
+﻿{
+  "Version": 2,
+  "Properties": {
+    "AreNodeDescriptionsVisible": "True"
+  },
+  "Nodes": [
+    {
+      "Id": "3",
+      "Name": "Phorcys.Web.Models",
+      "Stereotype": "Namespace",
+      "CreatedAtUtc": "2024-02-04T00:16:01.3385933Z",
+      "AbsoluteTopLeft": "-73.1586,-205.3045",
+      "HeaderContentSize": "205.5767,27",
+      "PreferredHeaderSize": "205.5767,27",
+      "Tooltip": "namespace Phorcys.Web.Models\r\nassembly: Phorcys.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "205.5767,118",
+      "ChildrenAreaTopLeft": "1,27",
+      "ChildrenAreaSize": "203.5767,90",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynNamespace",
+        "SymbolName": "Models",
+        "FullyQualifiedName": "Phorcys.Web.Models",
+        "FullName": "namespace Phorcys.Web.Models",
+        "Symbols": [
+          "{\"K\":\"Namespace\",\"N\":\"Models\",\"C\":{\"K\":\"Namespace\",\"N\":\"Web\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "NamespaceLevel": 3
+      }
+    },
+    {
+      "Id": "4",
+      "ParentId": "3",
+      "Name": "DiveViewModel",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:16:01.3405908Z",
+      "AbsoluteTopLeft": "-28.7323,-158.3045",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "99.7667,39.4",
+      "Tooltip": "class Phorcys.Web.Models.DiveViewModel\r\nassembly: Phorcys.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DiveViewModel",
+        "FullName": "class Phorcys.Web.Models.DiveViewModel",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DiveViewModel\",\"C\":{\"K\":\"Namespace\",\"N\":\"Models\",\"C\":{\"K\":\"Namespace\",\"N\":\"Web\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "5",
+      "Name": "Phorcys.Domain",
+      "Stereotype": "Namespace",
+      "CreatedAtUtc": "2024-02-04T00:16:48.9965989Z",
+      "AbsoluteTopLeft": "222.4181,-219.4349",
+      "HeaderContentSize": "279.5,27",
+      "PreferredHeaderSize": "181.34,27",
+      "Tooltip": "namespace Phorcys.Domain\r\nassembly: Phorcys.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "279.5,437.1323",
+      "ChildrenAreaTopLeft": "1,27",
+      "ChildrenAreaSize": "277.5,409.1323",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynNamespace",
+        "SymbolName": "Domain",
+        "FullyQualifiedName": "Phorcys.Domain",
+        "FullName": "namespace Phorcys.Domain",
+        "Symbols": [
+          "{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "NamespaceLevel": 2
+      }
+    },
+    {
+      "Id": "6",
+      "ParentId": "5",
+      "Name": "Dive",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:16:48.9965989Z",
+      "AbsoluteTopLeft": "253.918,146.6974",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "57,39.4",
+      "Tooltip": "class Phorcys.Domain.Dive\r\nassembly: Phorcys.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "Dive",
+        "FullName": "class Phorcys.Domain.Dive",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"Dive\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "13",
+      "ParentId": "5",
+      "Name": "DivePlan",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:23:10.1944109Z",
+      "AbsoluteTopLeft": "380.918,43.5911",
+      "HeaderContentSize": "100,64.4",
+      "PreferredHeaderSize": "60.6333,64.4",
+      "Tooltip": "class Phorcys.Domain.DivePlan\r\nassembly: Phorcys.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,64.4",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DivePlan",
+        "FullName": "class Phorcys.Domain.DivePlan",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "Description": "N",
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "14",
+      "ParentId": "5",
+      "Name": "DiveLocation",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:23:31.6396575Z",
+      "AbsoluteTopLeft": "245.418,-172.4349",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "84.5,39.4",
+      "Tooltip": "class Phorcys.Domain.DiveLocation\r\nassembly: Phorcys.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DiveLocation",
+        "FullName": "class Phorcys.Domain.DiveLocation",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "15",
+      "ParentId": "5",
+      "Name": "DiveSite",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:23:38.0318730Z",
+      "AbsoluteTopLeft": "246.918,-53.0112",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "57.39,39.4",
+      "Tooltip": "class Phorcys.Domain.DiveSite\r\nassembly: Phorcys.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DiveSite",
+        "FullName": "class Phorcys.Domain.DiveSite",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "7",
+      "Name": "Phorcys.Services",
+      "Stereotype": "Namespace",
+      "CreatedAtUtc": "2024-02-04T00:17:03.8841719Z",
+      "AbsoluteTopLeft": "-344.0088,4.0251",
+      "HeaderContentSize": "182.1467,27",
+      "PreferredHeaderSize": "182.1467,27",
+      "Tooltip": "namespace Phorcys.Services\r\nassembly: Phorcys.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "182.1467,118",
+      "ChildrenAreaTopLeft": "1,27",
+      "ChildrenAreaSize": "180.1467,90",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynNamespace",
+        "SymbolName": "Services",
+        "FullyQualifiedName": "Phorcys.Services",
+        "FullName": "namespace Phorcys.Services",
+        "Symbols": [
+          "{\"K\":\"Namespace\",\"N\":\"Services\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Services\",\"V\":\"1.0.0.0\"}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "NamespaceLevel": 2
+      }
+    },
+    {
+      "Id": "8",
+      "ParentId": "7",
+      "Name": "DiveServices",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:17:03.8841719Z",
+      "AbsoluteTopLeft": "-282.8622,51.0251",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "82.06,39.4",
+      "Tooltip": "class Phorcys.Services.DiveServices\r\nassembly: Phorcys.Services, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DiveServices",
+        "FullName": "class Phorcys.Services.DiveServices",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DiveServices\",\"C\":{\"K\":\"Namespace\",\"N\":\"Services\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Services\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode"
+      }
+    },
+    {
+      "Id": "9",
+      "Name": "Phorcys2Web.Controllers",
+      "Stereotype": "Namespace",
+      "CreatedAtUtc": "2024-02-04T00:19:00.2614796Z",
+      "AbsoluteTopLeft": "-391.332,-204.4749",
+      "HeaderContentSize": "228.1733,27",
+      "PreferredHeaderSize": "228.1733,27",
+      "Tooltip": "namespace Phorcys2Web.Controllers\r\nassembly: Phorcys.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "228.1733,118",
+      "ChildrenAreaTopLeft": "1,27",
+      "ChildrenAreaSize": "226.1733,90",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynNamespace",
+        "SymbolName": "Controllers",
+        "FullyQualifiedName": "Phorcys2Web.Controllers",
+        "FullName": "namespace Phorcys2Web.Controllers",
+        "Symbols": [
+          "{\"K\":\"Namespace\",\"N\":\"Controllers\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys2Web\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "NamespaceLevel": 2
+      }
+    },
+    {
+      "Id": "10",
+      "ParentId": "9",
+      "Name": "DiveController",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:19:00.2624799Z",
+      "AbsoluteTopLeft": "-284.1586,-157.4749",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "93.0467,39.4",
+      "Tooltip": "class Phorcys2Web.Controllers.DiveController\r\nassembly: Phorcys.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "DiveController",
+        "FullName": "class Phorcys2Web.Controllers.DiveController",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"DiveController\",\"C\":{\"K\":\"Namespace\",\"N\":\"Controllers\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys2Web\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "IsDisposable": true
+      }
+    },
+    {
+      "Id": "11",
+      "Name": "Phorcys.Data",
+      "Stereotype": "Namespace",
+      "CreatedAtUtc": "2024-02-04T00:19:39.6133748Z",
+      "AbsoluteTopLeft": "-58.5431,3.6955",
+      "HeaderContentSize": "164.45,27",
+      "PreferredHeaderSize": "164.45,27",
+      "Tooltip": "namespace Phorcys.Data\r\nassembly: Phorcys.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "164.45,118",
+      "ChildrenAreaTopLeft": "1,27",
+      "ChildrenAreaSize": "162.45,90",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynNamespace",
+        "SymbolName": "Data",
+        "FullyQualifiedName": "Phorcys.Data",
+        "FullName": "namespace Phorcys.Data",
+        "Symbols": [
+          "{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "NamespaceLevel": 2
+      }
+    },
+    {
+      "Id": "12",
+      "ParentId": "11",
+      "Name": "PhorcysContext",
+      "Stereotype": "Class",
+      "CreatedAtUtc": "2024-02-04T00:19:39.6143060Z",
+      "AbsoluteTopLeft": "-15.0931,50.6955",
+      "HeaderContentSize": "100,50",
+      "PreferredHeaderSize": "99.6533,39.4",
+      "Tooltip": "class Phorcys.Data.PhorcysContext\r\nassembly: Phorcys.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "NodeTotalSize": "100,50",
+      "IsPinned": true,
+      "Payload": {
+        "Discriminator": "RoslynType",
+        "SymbolName": "PhorcysContext",
+        "FullName": "class Phorcys.Data.PhorcysContext",
+        "Symbols": [
+          "{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}"
+        ],
+        "IsDescriptionVisible": true,
+        "Accessibility": "Public",
+        "Origin": "SourceCode",
+        "IsDisposable": true
+      }
+    }
+  ],
+  "Connectors": [
+    {
+      "Id": "2",
+      "SourceNodeId": "10",
+      "TargetNodeId": "8",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DiveController\",\"C\":{\"K\":\"Namespace\",\"N\":\"Controllers\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys2Web\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveServices\",\"C\":{\"K\":\"Namespace\",\"N\":\"Services\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Services\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text2": "diveServices",
+              "Tooltip": "private DiveServices diveServices",
+              "CanBeHidden": true
+            },
+            "Symbol": "{\"K\":\"Field\",\"N\":\"diveServices\",\"C\":{\"K\":\"NamedType\",\"N\":\"DiveController\",\"C\":{\"K\":\"Namespace\",\"N\":\"Controllers\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys2Web\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Web\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "3",
+      "SourceNodeId": "8",
+      "TargetNodeId": "12",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DiveServices\",\"C\":{\"K\":\"Namespace\",\"N\":\"Services\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Services\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text2": "context",
+              "Tooltip": "private PhorcysContext context"
+            },
+            "Symbol": "{\"K\":\"Field\",\"N\":\"context\",\"C\":{\"K\":\"NamedType\",\"N\":\"DiveServices\",\"C\":{\"K\":\"Namespace\",\"N\":\"Services\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Services\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "4",
+      "SourceNodeId": "12",
+      "TargetNodeId": "6",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"Dive\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "Dives",
+              "Tooltip": "public DbSet<Dive> Dives { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"Dives\",\"C\":{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "5",
+      "SourceNodeId": "6",
+      "TargetNodeId": "13",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"Dive\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "0..1",
+              "Text2": "DivePlan",
+              "Tooltip": "public virtual DivePlan? DivePlan { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DivePlan\",\"C\":{\"K\":\"NamedType\",\"N\":\"Dive\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "6",
+      "SourceNodeId": "12",
+      "TargetNodeId": "13",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "DivePlans",
+              "Tooltip": "public DbSet<DivePlan> DivePlans { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DivePlans\",\"C\":{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "7",
+      "SourceNodeId": "12",
+      "TargetNodeId": "14",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "Locations",
+              "Tooltip": "public DbSet<DiveLocation> Locations { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"Locations\",\"C\":{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "8",
+      "SourceNodeId": "12",
+      "TargetNodeId": "15",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "DiveSites",
+              "Tooltip": "public DbSet<DiveSite> DiveSites { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DiveSites\",\"C\":{\"K\":\"NamedType\",\"N\":\"PhorcysContext\",\"C\":{\"K\":\"Namespace\",\"N\":\"Data\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Data\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "9",
+      "SourceNodeId": "13",
+      "TargetNodeId": "15",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "0..1",
+              "Text2": "DiveSite",
+              "Tooltip": "public virtual DiveSite? DiveSite { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DiveSite\",\"C\":{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "10",
+      "SourceNodeId": "14",
+      "TargetNodeId": "15",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "DiveSites",
+              "Tooltip": "public virtual ICollection<DiveSite> DiveSites { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DiveSites\",\"C\":{\"K\":\"NamedType\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "11",
+      "SourceNodeId": "15",
+      "TargetNodeId": "13",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DivePlan\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "*",
+              "Text2": "DivePlans",
+              "Tooltip": "public virtual ICollection<DivePlan> DivePlans { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DivePlans\",\"C\":{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "12",
+      "SourceNodeId": "15",
+      "TargetNodeId": "14",
+      "Stereotype": "Association",
+      "Payload": {
+        "Discriminator": "Association",
+        "Relationship": "{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}|Association|{\"K\":\"NamedType\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}",
+        "TargetLabels": [
+          {
+            "Label": {
+              "Text1": "0..1",
+              "Text2": "DiveLocation",
+              "Tooltip": "public virtual DiveLocation? DiveLocation { get; set; }"
+            },
+            "Symbol": "{\"K\":\"Property\",\"N\":\"DiveLocation\",\"C\":{\"K\":\"NamedType\",\"N\":\"DiveSite\",\"C\":{\"K\":\"Namespace\",\"N\":\"Domain\",\"C\":{\"K\":\"Namespace\",\"N\":\"Phorcys\",\"C\":{\"K\":\"Assembly\",\"N\":\"Phorcys.Domain\",\"V\":\"1.0.0.0\"}}}}}"
+          }
+        ]
+      }
+    }
+  ]
+}
