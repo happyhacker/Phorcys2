@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - Phorcys 2.0</title>
+
+	<environment names="Development">
+		<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="~/css/site.css" />
+	</environment>
+	<environment names="Staging,Production">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+			  asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+		<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+	</environment>
+	@*Core Content Start*@
+
+	<link href="@Url.Content("~/lib/kendo-ui/styles/default-ocean-blue.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/lib/jquery/jquery.min.js")"></script>
+	<script src="@Url.Content("~/lib/kendo-ui/js/jszip.min.js")"></script>
+	<script src="@Url.Content("~/lib/kendo-ui/js/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/lib/kendo-ui/js/kendo.aspnetmvc.min.js")"></script>
+	@*Core Content End*@
+</head>
+<body class="k-content">
+	<nav class="navbar navbar-dark bg-dark">
+		<div class="container-fluid d-flex justify-content-between p-0">
+			<a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">Phorcys 2.0</a>
+
+			<button id="configure" class="k-rpanel-toggle k-button k-button-md k-button-rectangle k-button-solid-primary btn-toggle">
+				<span class="menu"></span>
+			</button>
+		</div>
+	</nav>
+	<div id="responsive-panel" class="navbar navbar-dark bg-light mb-4">
+		<kendo-responsivepanel name="responsive-panel" auto-close="false" breakpoint="768" orientation="top">
+			@(
+						Html.Kendo().Menu()
+						.Name("Menu")
+						.Items(items =>
+						{
+							items.Add().Text("Home").Action("Index", "Home", new { area = "" });
+							items.Add().Text("Gear").Action("Index", "Gear", new { area = "" });
+							items.Add().Text("Locations").Action("Index", "Location", new { area = "" })
+							.Items(item =>
+							{
+								item.Add().Text("Locations").Action("Index", "Locaton");
+								item.Add().Text("Sites").Action("Index", "Site");
+							});
+							items.Add().Text("Dives").Action("Index", "Dive", new { area = "" })
+							.Items(item =>
+							{
+								item.Add().Text("Dive Types").Action("Index", "DiveTypes");
+								item.Add().Text("Dive Plans").Action("Index", "DivePlans");
+								item.Add().Text("Dives").Action("Index", "Dive");
+							});
+							items.Add().Text("Certifications").Action("Index", "Certifications", new { area = "" })
+							.Items(item =>
+							{
+								item.Add().Text("Agency Certifications").Action("Index", "Certifications");
+								item.Add().Text("My Certifications").Action("Index", "DiverCertifications");
+							});
+							items.Add().Text("Contacts").Action("Index", "Contact", new { area = "" });
+							items.Add().Text("Calculators").Action("Index", "DivePlans", new { area = "" })
+							.Items(item =>
+							{
+								item.Add().Text("MOD & END").Action("Index", "ModEnd");
+								item.Add().Text("END").Action("Index", "End");
+							});
+							items.Add().Text("About").Action("About", "Home", new { area = "" });
+							items.Add().Text("Contact Us").Action("Contact", "Home", new { area = "" });
+						}
+						)
+						)
+		</kendo-responsivepanel>
+	</div>
+
+	<main>
+		<div class="container-fluid">
+			@RenderBody()
+		</div>
+	</main>
+
+	<footer class="footer text-center d-flex align-items-center">
+		<div class="container-fluid">
+			<p class="text-muted">
+				<!--Copyright © @DateTime.Now.Year Hacksoft. All rights reserved. -->
+			</p>
+		</div>
+
+	</footer>
+
+	@*<div class="d-flex align-items-center bg-dark">
+		<table width="100%">
+			<tr>
+				<td align="left"> <img src="@(Href("~/images/larry_peacock2009.jpg"))" alt="Larry Hack, Peacock Springs" /></td>
+				<td align="left"> <img src="@(Href("~/images/JugHoleLarry.jpg"))" alt="Larry Hack, Jug Hole" /></td>
+				<td align="right"><img src="@(Href("~/images/LarryJB2009.jpg"))" alt="Larry Hack, Jackson Blue" /></td>
+			</tr>
+		</table>
+	</div>
+	*@
+
+	<environment names="Development">
+		<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+	</environment>
+	<environment names="Staging,Production">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+				asp-fallback-src="~/lib/bootstrap/js/bootstrap.bundle.min.js"
+				asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+	</environment>
+
+	@RenderSection("scripts", required: false)
+
+	<script>
+		$(document).ready(function () {
+			kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" })
+		});
+	</script>
+</body>
+</html>

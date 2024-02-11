@@ -1,0 +1,52 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers 
+
+@{
+	ViewData["Title"] = "Dives";
+}
+@model IEnumerable<Phorcys.Web.Models.DiveViewModel>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+	</div>
+</section>
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+<p>
+	@Html.ActionLink("Enter New Dive", "Create", "Dive")
+</p>
+
+<div class="row">
+	<div class="col-12">
+		@(
+				Html.Kendo().Grid(Model)
+				.Name("grid")
+				.Columns(columns =>
+				{
+					//columns.Bound(p => p.DiveId).Filterable(false);
+					columns.Bound(p => p.DiveNumber).Title("Dive #");
+					columns.Bound(p => p.DivePlanTitle);
+					columns.Bound(p => p.DiveSite);
+					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
+					columns.Bound(p => p.Minutes);
+					columns.Bound(p => p.MaxDepth);
+					columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+				})
+				.Pageable(pageable => pageable
+				.ButtonCount(5)
+				.Refresh(true)
+				.PageSizes(new[] { 5, 10, 20, 40 }))
+				.Sortable()
+				//.Scrollable()
+				.Groupable()
+				.Filterable()
+				.HtmlAttributes(new { style = "height:550px;" })
+				)
+	</div>
+</div>
+
+

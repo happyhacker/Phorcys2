@@ -1,0 +1,146 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.DiveViewModel
+
+@{
+	ViewData["Title"] = "New Dive";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm("Create", "Dive", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="errorOnPage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+
+				<fieldset>
+
+					<div>
+						<p>
+							<label for="Title">Title:</label>
+							<br />
+							@Html.EditorFor(m => m.DivePlanTitle)
+							@Html.ValidationMessageFor(m => m.DivePlanTitle)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="DivePlanId">Dive Plan:</label>
+							<br />
+							@Html.DropDownListFor(m => m.DivePlanSelectedId, Model.DivePlanList, "Select a Dive Plan")
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="DiveNumber">Dive Number:</label>
+							<br />
+							@Html.EditorFor(m => m.DiveNumber)
+							@Html.ValidationMessageFor(m => m.DiveNumber)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="DescentTime">Descent Time:</label>
+							<br />
+
+							@(Html.Kendo().DateTimePicker()
+														.Name("DescentTime") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+														.Value(DateTime.Today) // Sets the value of the DatePicker.
+														.HtmlAttributes(new { @style = "width: 300px;" })
+														)
+							@Html.ValidationMessageFor(m => m.DescentTime)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Minutes">Minutes:</label>
+							<br />
+							@Html.EditorFor(m => m.Minutes)
+							@Html.ValidationMessageFor(m => m.Minutes)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="AvgDepth">Average Depth:</label>
+							<br />
+							@Html.EditorFor(m => m.AvgDepth)
+							@Html.ValidationMessageFor(m => m.AvgDepth)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="MaxDepth">Max Depth:</label>
+							<br />
+							@Html.EditorFor(m => m.MaxDepth)
+							@Html.ValidationMessageFor(m => m.MaxDepth)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Temperature">Temperature:</label>
+							<br />
+							@Html.EditorFor(m => m.Temperature)
+							@Html.ValidationMessageFor(m => m.Temperature)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="AdditionalWeight">Additional Weight:</label>
+							<br />
+							@Html.EditorFor(m => m.AdditionalWeight)
+							@Html.ValidationMessageFor(m => m.AdditionalWeight)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							<textarea id="notes" name="Notes" rows="6" cols="50"> 
+						  </textarea>
+							@Html.ValidationMessageFor(m => m.Notes)
+						</p>
+					</div>
+					<div>
+
+						<input type="submit" value="Save" />
+						@* @Html.ActionLink("Cancel", "Index", "Dive") *@
+						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-primary" })
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
