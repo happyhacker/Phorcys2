@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Identity.Client;
 using Phorcys.Data;
 using Phorcys.Domain;
 using System.Collections;
@@ -9,12 +12,22 @@ public class DiveServices
 {
 	PhorcysContext context = new PhorcysContext();
 
-	public IEnumerable<Dive> GetDives()
+	public async Task<IEnumerable<Dive>> GetDivesAsync()
 	{
-		var dives = context.Dives.Include(d => d.DivePlan.DiveSite).ThenInclude(u => u.User).OrderByDescending(dive => dive.DiveNumber).ToList();
+		var dives = await context.Dives
+								 .Include(d => d.DivePlan.DiveSite)
+								 .ThenInclude(u => u.User)
+								 .OrderByDescending(dive => dive.DiveNumber)
+								 .ToListAsync();
 		return dives;
 	}
 
+
+	public Dive GetDive(int diveId)
+	{
+		var dive = context.Dives.FirstOrDefault(d => d.DiveId == diveId);
+		return dive;
+	}
 	public void SaveNewDive(Dive dive)
 	{
 		try
@@ -22,11 +35,21 @@ public class DiveServices
 			context.Dives.Add(dive);
 			context.SaveChanges();
 		}
-		catch (Exception ex)
+		catch (SqlException ex)
 		{
 			Console.WriteLine(ex.Message + " Inner: " + ex.InnerException.Message);
 		}
-
-
 	}
+	public void Delete(int id)
+	{
+		var dive = context.Dives.Find(id);
+		dive = GetDive(id);
+		if (dive != null)
+		{
+			context.Dives.Remove(dive);
+			context.SaveChanges();
+		}
+	}
+
 }
+

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@using Phorcys2Web.Controllers 
+@using Phorcys2Web.Controllers
 
 @{
 	ViewData["Title"] = "Dives";
@@ -24,7 +24,7 @@
 	<div class="col-12">
 		@(
 				Html.Kendo().Grid(Model)
-				.Name("grid")
+				.Name("Grid")
 				.Columns(columns =>
 				{
 					//columns.Bound(p => p.DiveId).Filterable(false);
@@ -36,6 +36,22 @@
 					columns.Bound(p => p.MaxDepth);
 					columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
 				})
+				.DataSource(dataSource => dataSource
+				.Ajax()
+				.Read(read => read.Action("Read", "Dive")) // Assuming you have a Read action for fetching data
+				.Destroy(destroy => destroy.Action("Delete", "Dive"))) // Pointing to the Delete action in DiveController
+				.Height(500)
+				.Resizable(resize => resize.Columns(true)
+				)
+				.ToolBar(toolbar =>
+				{
+					toolbar.Excel();
+					toolbar.Pdf();
+					toolbar.Search();
+				})
+				.Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+				.Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+				.ColumnMenu(col => col.Filterable(false))
 				.Pageable(pageable => pageable
 				.ButtonCount(5)
 				.Refresh(true)

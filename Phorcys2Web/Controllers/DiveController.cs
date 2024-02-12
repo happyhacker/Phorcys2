@@ -32,13 +32,22 @@ namespace Phorcys2Web.Controllers
 		private DivePlanServices divePlanServices = new DivePlanServices();
 
 		// GET: DiveController
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
-			var dives = diveServices.GetDives();
-			var model = CreateIndexModel(dives);
+			try
+			{
+				var dives = await diveServices.GetDivesAsync(); // Await the completion of the async method
+				var model = CreateIndexModel(dives); // Now dives is IEnumerable<Dive>
 
-			return View(model);
+				return View(model);
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the exception as appropriate
+				return View("Error"); // Or another appropriate response
+			}
 		}
+
 
 		// GET: DiveController/Details/5
 		public ActionResult Details(int id)
@@ -81,11 +90,10 @@ namespace Phorcys2Web.Controllers
 				diveServices.SaveNewDive(dive);
 				//TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 				//   "The Dive was successfully created.";
-				return RedirectToAction("Index");
 			}
-			else {
-				model.DivePlanList = BuildDivePlanList();
-				return View(model); }
+			return RedirectToAction("Index");
+			//model.DivePlanList = BuildDivePlanList();
+			//return View(model); }
 
 			//return View(model);
 		}
@@ -112,26 +120,25 @@ namespace Phorcys2Web.Controllers
 			}
 		}
 
-		// GET: DiveController/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
 		// POST: DiveController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id)
 		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
+			diveServices.Delete(id);
+			DiveViewModel model = new DiveViewModel();
+			model.DivePlanList = BuildDivePlanList();
+			return RedirectToAction("Index");
 		}
+
+		public ActionResult Destroy(int id)
+		{
+			diveServices.Delete(id);
+			DiveViewModel model = new DiveViewModel();
+			model.DivePlanList = BuildDivePlanList();
+			return RedirectToAction("Index");
+		}
+
 
 		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
 		{
