@@ -133,9 +133,17 @@
 					</div>
 					<div>
 
-						<input type="submit" value="Save" />
+						<button type="submit" class="btn btn-success">Save</button>
+
+						@*(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-success"})
+													.Icon("save")
+													.Content("Save")
+													)*@
+
 						@* @Html.ActionLink("Cancel", "Index", "Dive") *@
-						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-primary" })
+						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-warning" })
 					</div>
 
 				</fieldset>

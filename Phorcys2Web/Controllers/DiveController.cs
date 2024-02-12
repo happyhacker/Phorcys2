@@ -122,6 +122,7 @@ namespace Phorcys2Web.Controllers
 
 		// POST: DiveController/Delete/5
 		[HttpPost]
+		[HttpDelete]
 		[ValidateAntiForgeryToken]
 		public ActionResult Delete(int id)
 		{
@@ -130,15 +131,6 @@ namespace Phorcys2Web.Controllers
 			model.DivePlanList = BuildDivePlanList();
 			return RedirectToAction("Index");
 		}
-
-		public ActionResult Destroy(int id)
-		{
-			diveServices.Delete(id);
-			DiveViewModel model = new DiveViewModel();
-			model.DivePlanList = BuildDivePlanList();
-			return RedirectToAction("Index");
-		}
-
 
 		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
 		{

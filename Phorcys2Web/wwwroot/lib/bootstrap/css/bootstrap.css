@@ -3091,14 +3091,14 @@ textarea.form-control-lg {
 }
 
 .btn-danger {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
+    color: #000000;
+    background-color: #dc3545;
+    border-color: #dc3545;
 }
 .btn-danger:hover {
-  color: #fff;
-  background-color: #bb2d3b;
-  border-color: #b02a37;
+    color: #000000;
+    background-color: #bb2d3b;
+    border-color: #b02a37;
 }
 .btn-check:focus + .btn-danger, .btn-danger:focus {
   color: #fff;

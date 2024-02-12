@@ -17,7 +17,10 @@
 	</div>
 </div>
 <p>
-	@Html.ActionLink("Enter New Dive", "Create", "Dive")
+	@*Html.ActionLink("Enter New Dive", "Create", "Dive")*@
+	<form action="@Url.Action("Create", "Dive")" method="get">
+		<button type="submit" class="btn btn-primary">Enter New Dive</button>
+	</form>
 </p>
 
 <div class="row">
@@ -27,19 +30,22 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
-					//columns.Bound(p => p.DiveId).Filterable(false);
+					columns.Bound(p => p.DiveId).Filterable(false);
 					columns.Bound(p => p.DiveNumber).Title("Dive #");
 					columns.Bound(p => p.DivePlanTitle);
 					columns.Bound(p => p.DiveSite);
 					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.Minutes);
-					columns.Bound(p => p.MaxDepth);
-					columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
+					columns.Bound(p => p.MaxDepth).Width(50);
+					columns.Command(command => command.Custom("Delete").Click("onDelete").HtmlAttributes(new { @class = "btn btn-danger" }));
+					//columns.Command(command => { command.Destroy(); });
+
+					//columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
 				})
-				.DataSource(dataSource => dataSource
-				.Ajax()
-				.Read(read => read.Action("Read", "Dive")) // Assuming you have a Read action for fetching data
-				.Destroy(destroy => destroy.Action("Delete", "Dive"))) // Pointing to the Delete action in DiveController
+				//.DataSource(dataSource => dataSource
+				//.Ajax()
+				//.Read(read => read.Action("Read", "Dive")) // Assuming you have a Read action for fetching data
+				//.Destroy(destroy => destroy.Action("Delete", "Dive"))) // Pointing to the Delete action in DiveController
 				.Height(500)
 				.Resizable(resize => resize.Columns(true)
 				)
@@ -65,4 +71,22 @@
 	</div>
 </div>
 
+
+<script>
+	function onDelete(e) {
+		e.preventDefault(); // Prevent the grid's default delete action
+		var tr = $(e.target).closest("tr"); // Get the row for the button
+		var data = this.dataItem(tr); // Get the row data
+
+		var diveId = data.DiveId; // Assuming your model has a DiveId property
+
+		if (confirm("Are you sure you want to delete this dive? " + diveId)) {
+			// Create a form and submit it
+			var form = $('<form action="@Url.Action("Delete", "Dive")" method="post"></form>');
+			form.append('<input type="hidden" name="DiveId" value="' + diveId + '" />');
+			form.appendTo('body').submit();
+		}
+	}
+
+</script>
 
