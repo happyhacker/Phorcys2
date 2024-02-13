@@ -30,16 +30,17 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
-					columns.Bound(p => p.DiveId).Filterable(false);
+					columns.Bound(p => p.DiveId).Hidden(true);
 					columns.Bound(p => p.DiveNumber).Title("Dive #");
 					columns.Bound(p => p.DivePlanTitle);
 					columns.Bound(p => p.DiveSite);
 					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.Minutes);
 					columns.Bound(p => p.MaxDepth).Width(50);
-					columns.Command(command => command.Custom("Delete").Click("onDelete").HtmlAttributes(new { @class = "btn btn-danger" }));
+					columns.Command(command => command.Custom("Delete").Click("onDelete"));
+					//columns.Bound(p => p)
+					//.ClientTemplate("<button onclick='deleteDive()' class='k-button k-primary'><img src='icons/TrashCan.png' />Delete</button>");
 					//columns.Command(command => { command.Destroy(); });
-
 					//columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
 				})
 				//.DataSource(dataSource => dataSource
@@ -47,6 +48,7 @@
 				//.Read(read => read.Action("Read", "Dive")) // Assuming you have a Read action for fetching data
 				//.Destroy(destroy => destroy.Action("Delete", "Dive"))) // Pointing to the Delete action in DiveController
 				.Height(500)
+				.Mobile()
 				.Resizable(resize => resize.Columns(true)
 				)
 				.ToolBar(toolbar =>
@@ -57,7 +59,7 @@
 				})
 				.Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
 				.Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
-				.ColumnMenu(col => col.Filterable(false))
+				.ColumnMenu(col => col.Filterable(true))
 				.Pageable(pageable => pageable
 				.ButtonCount(5)
 				.Refresh(true)
@@ -88,5 +90,8 @@
 		}
 	}
 
+	function deleteDive() {
+		Alert("Test");
+	}
 </script>
 

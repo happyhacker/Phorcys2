@@ -34,8 +34,15 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 
-
 				<fieldset>
+
+					<div>
+						<p>
+							<label for="DivePlanId">Dive Plan:</label>
+							<br />
+							@Html.DropDownListFor(m => m.DivePlanSelectedId, Model.DivePlanList, "Select a Dive Plan")
+						</p>
+					</div>
 
 					<div>
 						<p>
@@ -43,14 +50,6 @@
 							<br />
 							@Html.EditorFor(m => m.DivePlanTitle)
 							@Html.ValidationMessageFor(m => m.DivePlanTitle)
-						</p>
-					</div>
-
-					<div>
-						<p>
-							<label for="DivePlanId">Dive Plan:</label>
-							<br />
-							@Html.DropDownListFor(m => m.DivePlanSelectedId, Model.DivePlanList, "Select a Dive Plan")
 						</p>
 					</div>
 
@@ -135,12 +134,21 @@
 
 						<button type="submit" class="btn btn-success">Save</button>
 
-						@*(Html.Kendo().Button()
+						@(Html.Kendo().Button()
 													.Name("saveButton")
-													.HtmlAttributes(new { type = "submit", @class = "btn btn-success"})
-													.Icon("save")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal"})
+													//.Icon("save")
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
 													.Content("Save")
-													)*@
+													)
+
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
 
 						@* @Html.ActionLink("Cancel", "Index", "Dive") *@
 						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-warning" })
@@ -152,3 +160,8 @@
 		</div>
 	</div>
 }
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "Dive")';
+	}
+</script>
