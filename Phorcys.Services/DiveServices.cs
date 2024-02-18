@@ -43,7 +43,6 @@ public class DiveServices
 	public void Delete(int id)
 	{
 		var dive = context.Dives.Find(id);
-		dive = GetDive(id);
 		if (dive != null)
 		{
 			context.Dives.Remove(dive);

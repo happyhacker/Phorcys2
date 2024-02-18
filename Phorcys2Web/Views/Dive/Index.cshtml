@@ -31,7 +31,7 @@
 				.Columns(columns =>
 				{
 					columns.Bound(p => p.DiveId).Hidden(true);
-					columns.Bound(p => p.DiveNumber).Title("Dive #");
+					columns.Bound(p => p.DiveNumber);//.Title("Dive #");
 					columns.Bound(p => p.DivePlanTitle);
 					columns.Bound(p => p.DiveSite);
 					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
@@ -73,25 +73,24 @@
 	</div>
 </div>
 
-
+@using (Html.BeginForm("Delete", "Dive", FormMethod.Post, new { id = "hiddenDeleteForm", style = "display:none;" }))
+{
+	@Html.AntiForgeryToken()
+	<input type="hidden" name="DiveId" id="hiddenDiveId" value="" />
+}
 <script>
 	function onDelete(e) {
-		e.preventDefault(); // Prevent the grid's default delete action
-		var tr = $(e.target).closest("tr"); // Get the row for the button
-		var data = this.dataItem(tr); // Get the row data
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
 
-		var diveId = data.DiveId; // Assuming your model has a DiveId property
-
-		if (confirm("Are you sure you want to delete this dive? " + diveId)) {
-			// Create a form and submit it
-			var form = $('<form action="@Url.Action("Delete", "Dive")" method="post"></form>');
-			form.append('<input type="hidden" name="DiveId" value="' + diveId + '" />');
-			form.appendTo('body').submit();
+		var diveId = data.DiveId;
+		var diveNumber = data.DiveNumber;
+		if (confirm("Are you sure you want to delete dive #" + diveNumber + "?")) {
+			// Set the DiveId in the hidden form and submit the form
+			$('#hiddenDiveId').val(diveId);
+			$('#hiddenDeleteForm').submit();
 		}
-	}
-
-	function deleteDive() {
-		Alert("Test");
 	}
 </script>
 
