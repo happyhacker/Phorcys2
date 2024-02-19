@@ -38,15 +38,7 @@
 					columns.Bound(p => p.Minutes);
 					columns.Bound(p => p.MaxDepth).Width(50);
 					columns.Command(command => command.Custom("Delete").Click("onDelete"));
-					//columns.Bound(p => p)
-					//.ClientTemplate("<button onclick='deleteDive()' class='k-button k-primary'><img src='icons/TrashCan.png' />Delete</button>");
-					//columns.Command(command => { command.Destroy(); });
-					//columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
 				})
-				//.DataSource(dataSource => dataSource
-				//.Ajax()
-				//.Read(read => read.Action("Read", "Dive")) // Assuming you have a Read action for fetching data
-				//.Destroy(destroy => destroy.Action("Delete", "Dive"))) // Pointing to the Delete action in DiveController
 				.Height(500)
 				.Mobile()
 				.Resizable(resize => resize.Columns(true)
@@ -65,7 +57,6 @@
 				.Refresh(true)
 				.PageSizes(new[] { 5, 10, 20, 40 }))
 				.Sortable()
-				//.Scrollable()
 				.Groupable()
 				.Filterable()
 				.HtmlAttributes(new { style = "height:550px;" })

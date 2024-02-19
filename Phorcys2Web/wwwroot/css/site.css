@@ -9,7 +9,7 @@ body {
 
 /* #region Navbar styles */
 .navbar-header {
-    border-bottom: 1px solid rgba(255,255,255, 0.1);
+    border-bottom: 1px solid rgba(177, 12, 15, 0.1);
 }
 
 .navbar-brand {
