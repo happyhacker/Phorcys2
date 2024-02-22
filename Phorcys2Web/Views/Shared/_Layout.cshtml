@@ -51,7 +51,7 @@
 								item.Add().Text("Locations").Action("Index", "Locaton");
 								item.Add().Text("Sites").Action("Index", "Site");
 							});
-							items.Add().Text("Dives").Action("Index", "Dive", new { area = "" })
+							items.Add().Text("Dives")
 							.Items(item =>
 							{
 								item.Add().Text("Dive Types").Action("Index", "DiveTypes");
@@ -118,8 +118,11 @@
 
 	<script>
 
+		$(document).ready(function () {
+			kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" })
+		});			
+		
 		const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 		if (prefersDark) {
 			// Logic to load dark theme
 			document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main-dark.css';
@@ -129,6 +132,7 @@
 		}
 
 		// Add listener for changes in OS theme preference
+		
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
 			if (event.matches) {
 				// User switched to dark theme
@@ -139,9 +143,8 @@
 			}
 		});
 		
-		$(document).ready(function () {
-			kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" })
-		});	</script>
+
+	</script>
 
 </body>
 </html>
