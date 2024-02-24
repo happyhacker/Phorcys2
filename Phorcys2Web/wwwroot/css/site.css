@@ -7,6 +7,10 @@ body {
     margin-bottom: 60px;
 }
 
+.pageMessage {
+    color: red;
+}
+
 /* #region Navbar styles */
 .navbar-header {
     border-bottom: 1px solid rgba(177, 12, 15, 0.1);

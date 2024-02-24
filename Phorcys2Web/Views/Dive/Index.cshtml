@@ -12,6 +12,17 @@
 	</div>
 </section>
 
+<div id="message" class="pageMessage">
+	@{
+		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
+		{
+		}
+		<p id="pageMessage">
+			@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+		</p>
+	}
+</div>
+
 <div class="placeholders mb-2">
 	<div class="row d-flex justify-content-start">
 	</div>
@@ -55,7 +66,7 @@
 				.Pageable(pageable => pageable
 				.ButtonCount(5)
 				.Refresh(true)
-				.PageSizes(new[] { 5, 10, 20, 40 }))
+				.PageSizes(new[] { 5, 10, 20, 40, 800 }))
 				.Sortable()
 				.Groupable()
 				.Filterable()

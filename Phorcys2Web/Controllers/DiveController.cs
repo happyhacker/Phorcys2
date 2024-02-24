@@ -88,8 +88,7 @@ namespace Phorcys2Web.Controllers
 				dive.UserId = 3; //Hardcoded for now
 				dive.DivePlanId = model.DivePlanSelectedId;
 				diveServices.SaveNewDive(dive);
-				//TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
-				//   "The Dive was successfully created.";
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
 			}
 			return RedirectToAction("Index");
 			//model.DivePlanList = BuildDivePlanList();
@@ -128,6 +127,7 @@ namespace Phorcys2Web.Controllers
 			try
 			{
 				diveServices.Delete(DiveId);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive successfully deleted.";
 				return RedirectToAction("Index");
 			}
 			catch (Exception ex)
