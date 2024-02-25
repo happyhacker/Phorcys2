@@ -19,14 +19,15 @@
 	</div>
 </section>
 
-
+<div class="pageMessage">
 @Html.ValidationSummary()
+</div>
 
 @using (Html.BeginForm("Create", "Dive", FormMethod.Post))
 {
 	@Html.AntiForgeryToken()
 
-	<div class="errorOnPage">
+	<div class="pageMessage">
 		@Html.ValidationSummary(true, "Please correct the errors and try again.")
 	</div>
 
@@ -55,10 +56,12 @@
 
 					<div>
 						<p>
-							<label for="DiveNumber">Dive Number:</label>
+							<label for="DiveNumber">Dive #:</label>
 							<br />
 							@Html.EditorFor(m => m.DiveNumber)
-							@Html.ValidationMessageFor(m => m.DiveNumber)
+							<div class="pageMessage"> 
+							   @Html.ValidationMessageFor(m => m.DiveNumber)
+							</div>
 						</p>
 					</div>
 
@@ -99,7 +102,9 @@
 							<label for="MaxDepth">Max Depth:</label>
 							<br />
 							@Html.EditorFor(m => m.MaxDepth)
-							@Html.ValidationMessageFor(m => m.MaxDepth)
+							<div class="pageMessage">
+							   @Html.ValidationMessageFor(m => m.MaxDepth)
+							</div>
 						</p>
 					</div>
 

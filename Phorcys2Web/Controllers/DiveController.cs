@@ -72,9 +72,6 @@ namespace Phorcys2Web.Controllers
 			if (ModelState.IsValid)
 			{
 				Dive dive = new Dive();
-				//user = userServices.FindUser(this.User.Identity.Name);
-				//dive.User = user;
-				//dive.DivePlan = divePlanServices.Get(model.DivePlanId);
 				dive.DiveNumber = model.DiveNumber;
 				dive.Minutes = model.Minutes;
 				dive.Notes = " " + model.Notes;
@@ -89,12 +86,13 @@ namespace Phorcys2Web.Controllers
 				dive.DivePlanId = model.DivePlanSelectedId;
 				diveServices.SaveNewDive(dive);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
+				return RedirectToAction("Index");			
 			}
-			return RedirectToAction("Index");
-			//model.DivePlanList = BuildDivePlanList();
-			//return View(model); }
-
-			//return View(model);
+			else
+			{
+				model.DivePlanList = BuildDivePlanList();
+				return View(model);
+			}
 		}
 
 

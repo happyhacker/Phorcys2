@@ -12,34 +12,47 @@ namespace Phorcys.Web.Models
     {
         public int DiveId { get; set; }
 
-        public string DivePlanTitle { get; set; }
+		[DisplayName("Dive Plan title")]
+		public string DivePlanTitle { get; set; }
 
         public IList<SelectListItem> DivePlanList { get; set; }
         public int DivePlanSelectedId { get; set; }
 
+		[DisplayName("Dive Site")]
 		public string DiveSite { get; set; }
 
-        public string UserName { get; set; }
+		[DisplayName("User Name")]
+		public string UserName { get; set; }
 
 		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid number.")]
-		public int? Minutes { get; set; }
 
-        public DateTime? DescentTime { get; set; }
+		[DisplayName("Minutes")] 
+        public int? Minutes { get; set; }
 
-        public int? AvgDepth { get; set; }
+		[DisplayName("Descent Time")]
+		public DateTime? DescentTime { get; set; }
+
+		[DisplayName("Average Depth")]
+		public int? AvgDepth { get; set; }
 
         [DisplayName("Max Depth")]
-        [Range(0,1200, ErrorMessage = "You didn't really go this deep, right?")]
+        [Range(0,1100, ErrorMessage = "You didn't really go this deep.")]
         public int? MaxDepth { get; set; }
 
-        public int? Temperature { get; set; }
+		[DisplayName("temperature")]
+		public int? Temperature { get; set; }
 
-        public int? AdditionalWeight { get; set; }
+		[DisplayName("Additional Weight")]
+		public int? AdditionalWeight { get; set; }
 
-        public string Notes { get; set; } = null!;
+		[DisplayName("Notes")]
+		public string Notes { get; set; } = null!;
 
-        public int DiveNumber { get; set; }
+		[DisplayName("Dive #")]
+		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid number.")]
+		public int DiveNumber { get; set; }
 
+        [DisplayName("UserId")]
         public int? UserId { get; set; }
 
         public DateTime Created { get; set; }
