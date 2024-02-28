@@ -14,12 +14,21 @@ public class DiveServices
 
 	public async Task<IEnumerable<Dive>> GetDivesAsync()
 	{
-		var dives = await context.Dives
-								 .Include(d => d.DivePlan.DiveSite)
-								 .ThenInclude(u => u.User)
-								 .OrderByDescending(dive => dive.DiveNumber)
-								 .ToListAsync();
-		return dives;
+		try
+		{
+			var dives = await context.Dives
+									 .Include(d => d.DivePlan.DiveSite)
+									 .ThenInclude(u => u.User)
+									 .AsNoTracking()
+									 .OrderByDescending(dive => dive.DiveNumber)
+									 .ToListAsync();
+			return dives;
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message);
+			throw new Exception("Can't connect to database");
+		}
 	}
 
 

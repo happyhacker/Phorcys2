@@ -15,7 +15,7 @@ public class DivePlanServices
 
 	public IEnumerable<DivePlan> GetDivePlans()
 	{
-		var divePlans = context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).OrderByDescending(dp => dp.ScheduledTime).ToList();
+		var divePlans = context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 		return divePlans;
 	}
 
