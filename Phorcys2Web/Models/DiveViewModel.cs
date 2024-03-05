@@ -46,7 +46,7 @@ namespace Phorcys.Web.Models
 		public int? AdditionalWeight { get; set; }
 
 		[DisplayName("Notes")]
-		public string Notes { get; set; } = null!;
+		public string Notes { get; set; }
 
 		[DisplayName("Dive #")]
 		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid number.")]

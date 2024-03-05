@@ -155,6 +155,7 @@ namespace Phorcys2Web.Controllers
 				model.Created = dive.Created;
 				model.LastModified = dive.LastModified;
 				model.DescentTime = dive.DescentTime;
+				model.Notes = dive.Notes;
 				//model.UserName = dive.User.
 				models.Add(model);
 
