@@ -3,53 +3,19 @@ using System.Collections.Generic;
 
 namespace Phorcys.Domain;
 
-/// <summary>
-/// N
-/// </summary>
+
 public partial class DivePlan
 {
-    /// <summary>
-    /// N
-    /// </summary>
     public int DivePlanId { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public int? DiveSiteId { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public string Title { get; set; } = null!;
-
-    /// <summary>
-    /// N
-    /// </summary>
-    public DateTime ScheduledTime { get; set; }
-
+	public int? Minutes { get; set; }
+	public DateTime ScheduledTime { get; set; }
     public int? MaxDepth { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public string? Notes { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public int UserId { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public DateTime Created { get; set; }
-
-    /// <summary>
-    /// N
-    /// </summary>
     public DateTime LastModified { get; set; }
-
     public virtual DiveSite? DiveSite { get; set; }
 
     //public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();

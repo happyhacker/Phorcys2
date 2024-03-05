@@ -43,15 +43,15 @@
 				{
 					columns.Bound(p => p.DiveId).Hidden(true);
 					columns.Bound(p => p.DiveNumber).Title("#").Width(50);
-					columns.Bound(p => p.DivePlanTitle);
+					columns.Bound(p => p.Title);
 					columns.Bound(p => p.DiveSite);
 					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
-					columns.Bound(p => p.Minutes);
-					columns.Bound(p => p.MaxDepth).Width(80);
+					columns.Bound(p => p.Minutes).Width(80);
+					columns.Bound(p => p.MaxDepth).Width(120);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
 					columns.Command(command => command.Custom("Delete").Click("onDelete"));
 				})
-				.Height(500)
+				.Height(700)
 				.Mobile()
 				.Resizable(resize => resize.Columns(true)
 				)
@@ -72,7 +72,7 @@
 				.Groupable()
 				.Filterable()
 				.Scrollable()
-				.HtmlAttributes(new { style = "height:550px;" })
+				@*.HtmlAttributes(new { style = "height:700px;" })*@
 				)
 	</div>
 </div>

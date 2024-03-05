@@ -73,6 +73,7 @@ namespace Phorcys2Web.Controllers
 			{
 				Dive dive = new Dive();
 				dive.DiveNumber = model.DiveNumber;
+				dive.Title = model.Title;
 				dive.Minutes = model.Minutes;
 				dive.Notes = " " + model.Notes;
 				dive.MaxDepth = model.MaxDepth;
@@ -148,6 +149,7 @@ namespace Phorcys2Web.Controllers
 					model.DivePlanTitle = dive.DivePlan.Title;
 					model.DiveSite = dive.DivePlan.DiveSite.Title;
 				}
+				model.Title = dive.Title;
 				model.Minutes = dive.Minutes;
 				model.MaxDepth = dive.MaxDepth;
 				model.AvgDepth = dive.AvgDepth;
