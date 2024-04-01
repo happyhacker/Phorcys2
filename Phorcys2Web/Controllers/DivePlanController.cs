@@ -29,6 +29,7 @@ namespace Phorcys2Web.Controllers
 		}
 
 		private DivePlanServices divePlanServices = new DivePlanServices();
+		private DiveSiteServices diveSiteServices = new DiveSiteServices();
 
 		// GET: DiveController
 		public ActionResult Index()
@@ -58,8 +59,8 @@ namespace Phorcys2Web.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			var model = new DiveViewModel();
-			model.DivePlanList = BuildDivePlanList();
+			var model = new DivePlanViewModel();
+			model.DiveSiteList = BuildDiveSiteList();
 
 			return View(model);
 		}
@@ -107,20 +108,20 @@ namespace Phorcys2Web.Controllers
 			return models;
 		}
 
-		private IList<SelectListItem> BuildDivePlanList()
+		private IList<SelectListItem> BuildDiveSiteList()
 		{
-			IList<SelectListItem> divePlanList = new List<SelectListItem>();
-			IEnumerable<DivePlan> divePlans = divePlanServices.GetDivePlans();
+			IList<SelectListItem> diveSiteList = new List<SelectListItem>();
+			IEnumerable<DiveSite> diveSites = diveSiteServices.GetDiveSites();
 			SelectListItem item;
 
-			foreach (var divePlan in divePlans)
+			foreach (var diveSite in diveSites)
 			{
 				item = new SelectListItem();
-				item.Text = divePlan.Title;
-				item.Value = divePlan.DivePlanId.ToString();
-				divePlanList.Add(item);
+				item.Text = diveSite.Title;
+				item.Value = diveSite.DiveSiteId.ToString();
+				diveSiteList.Add(item);
 			}
-			return divePlanList;
+			return diveSiteList;
 		}
 
 	}
