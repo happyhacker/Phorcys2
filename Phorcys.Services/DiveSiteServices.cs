@@ -16,12 +16,12 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				//var diveSites = context.DiveSites.Include(d => d.DiveSiteId).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
-				var diveSites = new List<DiveSite>
+				var diveSites = context.DiveSites.OrderByDescending(ds => ds.Title).ToList();
+				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},
 					new DiveSite {Title = "Site 2", DiveSiteId = 2}
-				};
+				};*/
 				
 				return diveSites;
 			}
