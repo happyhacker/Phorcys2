@@ -24,7 +24,7 @@ public partial class DivePlan
 
     //public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
 
-    public required User User { get; set; }
+    public User User { get; set; }
 
     //public virtual ICollection<DiveType> DiveTypes { get; set; } = new List<DiveType>();
 

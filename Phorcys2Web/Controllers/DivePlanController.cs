@@ -65,6 +65,34 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(DivePlanViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				DivePlan divePlan = new DivePlan();
+				divePlan.Title = model.Title;
+				divePlan.Minutes = model.Minutes;
+				divePlan.Notes = " " + model.Notes;
+				divePlan.MaxDepth = model.MaxDepth;
+				divePlan.ScheduledTime = model.ScheduledTime;
+				divePlan.Created = DateTime.Now;
+				divePlan.LastModified = DateTime.Now;
+				divePlan.UserId = 3; //Hardcoded for now
+				divePlan.DiveSiteId = model.DiveSiteSelectedId;
+				divePlanServices.SaveNewDivePlan(divePlan);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully created.";
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				model.DiveSiteList = BuildDiveSiteList();
+				return View(model);
+			}
+		}
+
+
 
 		// POST: DiveController/Delete/5
 		[HttpPost]

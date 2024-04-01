@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Phorcys.Data;
 using Phorcys.Domain;
 using System;
@@ -32,6 +33,20 @@ public class DivePlanServices
 			throw new Exception("Can't connect to database");
 		}
 	}
+
+	public void SaveNewDivePlan(DivePlan divePlan)
+	{
+		try
+		{
+			context.DivePlans.Add(divePlan);
+			context.SaveChanges();
+		}
+		catch (SqlException ex)
+		{
+			Console.WriteLine(ex.Message);
+		}
+	}
+
 
 	public void Delete(int id)
 	{
