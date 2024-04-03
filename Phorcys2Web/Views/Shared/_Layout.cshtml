@@ -57,8 +57,10 @@
 							.Items(item =>
 							{
 								item.Add().Text("Dive Types").Action("Index", "DiveType");
-								item.Add().Text("Dive Plans").Action("Index", "DivePlan");
-								item.Add().Text("Dives").Action("Index", "Dive");
+								item.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
+								item.Add().Text("List Dive Plans").Action("Index", "DivePlan");
+								item.Add().Text("Log Dive").Action("Create", "Dive");
+								item.Add().Text("List Dives").Action("Index", "Dive");
 							});
 							items.Add().Text("Certifications").Action("Index", "Certifications", new { area = "" })
 							.Items(item =>
@@ -122,8 +124,8 @@
 
 		$(document).ready(function () {
 			kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" })
-		});			
-		
+		});
+
 		const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 		if (prefersDark) {
 			// Logic to load dark theme
@@ -134,7 +136,7 @@
 		}
 
 		// Add listener for changes in OS theme preference
-		
+
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
 			if (event.matches) {
 				// User switched to dark theme
@@ -144,7 +146,7 @@
 				document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main.css';
 			}
 		});
-		
+
 
 	</script>
 
