@@ -1,0 +1,130 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.DivePlanViewModel
+
+@{
+	ViewData["Title"] = "Edit Dive Plan";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+<div class="pageMessage">
+	@Html.ValidationSummary()
+</div>
+
+@using (Html.BeginForm("Edit", "DivePlan", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="pageMessage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<fieldset>
+
+					<div>
+						<p>
+							<label for="DiveSiteId">Dive Site:</label>
+							<br />
+							@Html.DropDownListFor(m => m.DiveSiteSelectedId, Model.DiveSiteList, "Select a Dive Site")
+						</p>
+					</div>
+
+				    @Html.HiddenFor(m => m.DivePlanId)
+					<div>
+						<p>
+							<label for="Title">Title:</label>
+							<br />
+							@Html.EditorFor(m => m.Title)
+							@Html.ValidationMessageFor(m => m.Title)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="ScheduledTime">Schedule Time:</label>
+							<br />
+
+							@(Html.Kendo().DateTimePickerFor(m => m.ScheduledTime)
+														.HtmlAttributes(new { @style = "width: 300px;" })
+														)
+							@Html.ValidationMessageFor(m => m.ScheduledTime)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Minutes">Minutes:</label>
+							<br />
+							@Html.EditorFor(m => m.Minutes)
+							@Html.ValidationMessageFor(m => m.Minutes)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="MaxDepth">Max Depth:</label>
+							<br />
+							@Html.EditorFor(m => m.MaxDepth)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.MaxDepth)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							<textarea id="notes" name="Notes" rows="6" cols="50"> 
+								  </textarea>
+							@Html.ValidationMessageFor(m => m.Notes)
+						</p>
+					</div>
+					<div>
+
+						<button type="submit" class="btn btn-primary">Save</button>
+						@Html.ActionLink("Cancel", "Index", "DivePlan", null, new { @class = "btn btn-danger" })
+
+						@(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+													//.Icon("save")
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+													.Content("Save")
+													)
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "DivePlan")';
+	}
+</script>

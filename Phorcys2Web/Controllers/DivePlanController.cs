@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Globalization;
 using Phorcys.Services;
 using Phorcys.Domain;
+using Phorcys.Data.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
@@ -60,7 +61,7 @@ namespace Phorcys2Web.Controllers
 		public ActionResult Create()
 		{
 			var model = new DivePlanViewModel();
-			model.DiveSiteList = BuildDiveSiteList();
+			model.DiveSiteList = BuildDiveSiteList(null);
 
 			return View(model);
 		}
@@ -71,7 +72,7 @@ namespace Phorcys2Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				DivePlan divePlan = new DivePlan();
+				var divePlan = new DivePlan();
 				divePlan.Title = model.Title;
 				divePlan.Minutes = model.Minutes;
 				divePlan.Notes = " " + model.Notes;
@@ -87,11 +88,55 @@ namespace Phorcys2Web.Controllers
 			}
 			else
 			{
-				model.DiveSiteList = BuildDiveSiteList();
+				model.DiveSiteList = BuildDiveSiteList(null);
 				return View(model);
 			}
 		}
 
+		[HttpGet]
+		public ActionResult Edit(int Id)
+		{
+			DivePlan divePlan = divePlanServices.GetDivePlan(Id);
+			DivePlanViewModel model = new DivePlanViewModel();
+			model.DivePlanId = Id;
+			model.Title = divePlan.Title;
+			model.Minutes = divePlan.Minutes;	
+			model.Notes = divePlan.Notes;	
+			model.MaxDepth = divePlan.MaxDepth;
+			model.UserId = divePlan.UserId;
+			model.ScheduledTime = divePlan.ScheduledTime;
+			model.DiveSiteId = divePlan.DiveSiteId;
+			model.DiveSiteList = BuildDiveSiteList(divePlan.DiveSiteId);
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit(DivePlanViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var divePlanDto = new DivePlanDto();
+				divePlanDto.DivePlanId = model.DivePlanId;
+				divePlanDto.Title = model.Title;
+				divePlanDto.Minutes = model.Minutes;
+				divePlanDto.Notes = " " + model.Notes;
+				divePlanDto.MaxDepth = model.MaxDepth;
+				divePlanDto.ScheduledTime = model.ScheduledTime;
+				divePlanDto.UserId = 3; //Hardcoded for now
+				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
+				divePlanServices.EditDivePlan(divePlanDto);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				model.DiveSiteList = BuildDiveSiteList(model.DiveSiteSelectedId);
+				return View(model);
+			}
+
+		}
 
 
 		// POST: DiveController/Delete/5
@@ -136,7 +181,7 @@ namespace Phorcys2Web.Controllers
 			return models;
 		}
 
-		private IList<SelectListItem> BuildDiveSiteList()
+		private IList<SelectListItem> BuildDiveSiteList(int? diveSiteId)
 		{
 			IList<SelectListItem> diveSiteList = new List<SelectListItem>();
 			IEnumerable<DiveSite> diveSites = diveSiteServices.GetDiveSites();
@@ -147,6 +192,14 @@ namespace Phorcys2Web.Controllers
 				item = new SelectListItem();
 				item.Text = diveSite.Title;
 				item.Value = diveSite.DiveSiteId.ToString();
+				if (diveSiteId != null)
+				{
+					if (diveSite.DiveSiteId == diveSiteId)
+					{
+						item.Selected = true;
+					}
+				}
+
 				diveSiteList.Add(item);
 			}
 			return diveSiteList;

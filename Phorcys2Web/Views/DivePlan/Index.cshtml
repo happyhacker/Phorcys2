@@ -17,9 +17,9 @@
 		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
 		{
 		}
-		<p id="pageMessage">
-			@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
-		</p>
+			<p id="pageMessage">
+				@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+			</p>
 	}
 </div>
 
@@ -48,7 +48,11 @@
 					columns.Bound(p => p.Minutes).Width(100);
 					columns.Bound(p => p.MaxDepth).Width(120);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
-					columns.Command(command => command.Custom("Delete").Click("onDelete"));
+					columns.Command(command =>
+					{
+						command.Custom("Edit").Click("onEdit");
+						command.Custom("Delete").Click("onDelete");
+					}).Width(400);
 				})
 				.Height(700)
 				.Mobile()
@@ -93,6 +97,16 @@
 			$('#hiddenDivePlanId').val(divePlanId);
 			$('#hiddenDeleteForm').submit();
 		}
+	}
+
+	function onEdit(e) {
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
+
+		var divePlanId = data.DivePlanId;
+		//alert("DivePlanId = " + divePlanId);
+		window.location.href = '@Url.Action("Edit", "DivePlan")/' + divePlanId;
 	}
 </script>
 
