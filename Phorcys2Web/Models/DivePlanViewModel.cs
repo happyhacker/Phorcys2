@@ -18,10 +18,6 @@ namespace Phorcys.Web.Models
 		
 		[DisplayName("Minutes")]
 		public int? Minutes { get; set; }
-
-		[DisplayName("Minutes")]
-		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid number.")]
-		public string Minutes2 { get; set; }
 		
 		[DisplayName("Scheduled Time")]	
 		public DateTime ScheduledTime { get; set; }

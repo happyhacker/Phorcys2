@@ -16,7 +16,7 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var diveSites = context.DiveSites.OrderByDescending(ds => ds.Title).ToList();
+				var diveSites = context.DiveSites.OrderBy(ds => ds.Title).ToList();
 				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},

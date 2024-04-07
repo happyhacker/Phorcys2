@@ -42,11 +42,11 @@
 							<label for="DiveSiteId">Dive Site:</label>
 							<br />
 							@(Html.Kendo().DropDownListFor(m => m.DiveSiteSelectedId)
-														.DataTextField("Text") // Replace 'Text' with the property name of DiveSiteList that contains the text to display.
-														.DataValueField("Value") // Replace 'Value' with the property name of DiveSiteList that contains the corresponding value.
-														.BindTo(Model.DiveSiteList) // Binding the DropDownList to the DiveSiteList.
-														.OptionLabel("Select a Dive Site") // Adding an option label.
-														.HtmlAttributes(new { @class = "form-control" }) // Adding HTML attributes, if needed.
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.DiveSiteList)
+														.OptionLabel("Select a Dive Site")
+														.HtmlAttributes(new { @class = "form-control" })
 														)
 						</p>
 					</div>
@@ -117,7 +117,6 @@
 						@(Html.Kendo().Button()
 													.Name("saveButton")
 													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
-													//.Icon("save")
 													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
 													.Content("Save")
 													)
