@@ -41,7 +41,13 @@
 						<p>
 							<label for="DiveSiteId">Dive Site:</label>
 							<br />
-							@Html.DropDownListFor(m => m.DiveSiteSelectedId, Model.DiveSiteList, "Select a Dive Site")
+							@(Html.Kendo().DropDownListFor(m => m.DiveSiteSelectedId)
+														.DataTextField("Text") // Replace 'Text' with the property name of DiveSiteList that contains the text to display.
+														.DataValueField("Value") // Replace 'Value' with the property name of DiveSiteList that contains the corresponding value.
+														.BindTo(Model.DiveSiteList) // Binding the DropDownList to the DiveSiteList.
+														.OptionLabel("Select a Dive Site") // Adding an option label.
+														.HtmlAttributes(new { @class = "form-control" }) // Adding HTML attributes, if needed.
+														)
 						</p>
 					</div>
 
@@ -74,7 +80,7 @@
 						<p>
 							<label for="Minutes">Minutes:</label>
 							<br />
-							@Html.EditorFor(m => m.Minutes2)
+							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1))
 							@Html.ValidationMessageFor(m => m.Minutes)
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Minutes2)
@@ -86,7 +92,7 @@
 						<p>
 							<label for="MaxDepth">Max Depth:</label>
 							<br />
-							@Html.EditorFor(m => m.MaxDepth)
+							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1000).Step(1))
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.MaxDepth)
 							</div>
@@ -97,7 +103,8 @@
 						<p>
 							<label for="Notes">Notes:</label>
 							<br />
-							@Html.TextAreaFor(m => m.Notes, new { rows = "6", cols = "60" })<br />
+							@(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
+							<br />
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Notes)
 							</div>
