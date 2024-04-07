@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Phorcys.Domain;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Phorcys.Web.Models
 {
@@ -12,15 +13,24 @@ namespace Phorcys.Web.Models
 		public IList<SelectListItem> DiveSiteList { get; set; }
 
 		[DisplayName("Title")]
+		[Required]
 		public string Title { get; set; } = null!;
+		
 		[DisplayName("Minutes")]
 		public int? Minutes { get; set; }
-		[DisplayName("Scheduled Time")]
+
+		[DisplayName("Minutes")]
+		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid number.")]
+		public string Minutes2 { get; set; }
+		
+		[DisplayName("Scheduled Time")]	
 		public DateTime ScheduledTime { get; set; }
+		
 		[DisplayName("Max Depth")]
 		public int? MaxDepth { get; set; }
+		
 		[DisplayName("Notes")]
-		public string? Notes { get; set; }
+		public string Notes { get; set; }
 		public int UserId { get; set; }
 		public DateTime Created { get; set; }
 		public DateTime LastModified { get; set; }
