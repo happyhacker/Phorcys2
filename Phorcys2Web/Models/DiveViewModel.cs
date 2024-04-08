@@ -40,7 +40,7 @@ namespace Phorcys.Web.Models
 
         [DisplayName("Max Depth")]
         [Range(0,1100, ErrorMessage = "You didn't really go this deep.")]
-        public int? MaxDepth { get; set; }
+        public int? MaxDepth { get; set; }  
 
 		[DisplayName("temperature")]
 		public int? Temperature { get; set; }
