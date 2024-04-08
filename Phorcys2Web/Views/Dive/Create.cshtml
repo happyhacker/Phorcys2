@@ -20,7 +20,7 @@
 </section>
 
 <div class="pageMessage">
-@Html.ValidationSummary()
+	@Html.ValidationSummary()
 </div>
 
 @using (Html.BeginForm("Create", "Dive", FormMethod.Post))
@@ -39,9 +39,18 @@
 
 					<div>
 						<p>
-							<label for="DivePlanId">Dive Plan:</label>
+							<label for="Dive Plan">Dive Plan:</label>
 							<br />
-							@Html.DropDownListFor(m => m.DivePlanSelectedId, Model.DivePlanList, "Select a Dive Plan")
+							@(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.DivePlanList)
+														.OptionLabel("Select a Dive Plan")
+														.HtmlAttributes(new { @class = "form-control" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.DivePlanSelectedId)
+							</div>
 						</p>
 					</div>
 
@@ -50,7 +59,9 @@
 							<label for="Title">Title:</label>
 							<br />
 							@Html.EditorFor(m => m.Title)
-							@Html.ValidationMessageFor(m => m.Title)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Title)
+							</div>
 						</p>
 					</div>
 
@@ -58,9 +69,9 @@
 						<p>
 							<label for="DiveNumber">Dive #:</label>
 							<br />
-							@Html.EditorFor(m => m.DiveNumber)
-							<div class="pageMessage"> 
-							   @Html.ValidationMessageFor(m => m.DiveNumber)
+							@(Html.Kendo().NumericTextBoxFor(m => m.DiveNumber).Min(1).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.DiveNumber)
 							</div>
 						</p>
 					</div>
@@ -83,8 +94,10 @@
 						<p>
 							<label for="Minutes">Minutes:</label>
 							<br />
-							@Html.EditorFor(m => m.Minutes)
-							@Html.ValidationMessageFor(m => m.Minutes)
+							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Minutes)
+							</div>
 						</p>
 					</div>
 
@@ -92,8 +105,10 @@
 						<p>
 							<label for="AvgDepth">Average Depth:</label>
 							<br />
-							@Html.EditorFor(m => m.AvgDepth)
-							@Html.ValidationMessageFor(m => m.AvgDepth)
+							@(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.AvgDepth)
+							</div>
 						</p>
 					</div>
 
@@ -101,9 +116,9 @@
 						<p>
 							<label for="MaxDepth">Max Depth:</label>
 							<br />
-							@Html.EditorFor(m => m.MaxDepth)
+							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(600).Step(1).Format("n0"))
 							<div class="pageMessage">
-							   @Html.ValidationMessageFor(m => m.MaxDepth)
+								@Html.ValidationMessageFor(m => m.MaxDepth)
 							</div>
 						</p>
 					</div>
@@ -112,8 +127,10 @@
 						<p>
 							<label for="Temperature">Temperature:</label>
 							<br />
-							@Html.EditorFor(m => m.Temperature)
-							@Html.ValidationMessageFor(m => m.Temperature)
+							@(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Temperature)
+							</div>
 						</p>
 					</div>
 
@@ -121,8 +138,10 @@
 						<p>
 							<label for="AdditionalWeight">Additional Weight:</label>
 							<br />
-							@Html.EditorFor(m => m.AdditionalWeight)
-							@Html.ValidationMessageFor(m => m.AdditionalWeight)
+							@(Html.Kendo().NumericTextBoxFor(m => m.AdditionalWeight).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.AdditionalWeight)
+							</div>
 						</p>
 					</div>
 
@@ -130,19 +149,21 @@
 						<p>
 							<label for="Notes">Notes:</label>
 							<br />
-							<textarea id="notes" name="Notes" rows="6" cols="50"> 
-						  </textarea>
-							@Html.ValidationMessageFor(m => m.Notes)
+							@(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
+							<br />
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Notes)
+							</div>
 						</p>
 					</div>
-					<div>
 
-						<button type="submit" class="btn btn-primary">Save</button>
-						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })
+					<div>
+						@*<button type="submit" class="btn btn-primary">Save</button>
+						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })*@
 
 						@(Html.Kendo().Button()
 													.Name("saveButton")
-													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal"})
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
 													//.Icon("save")
 													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
 													.Content("Save")

@@ -81,7 +81,6 @@
 							<label for="Minutes">Minutes:</label>
 							<br />
 							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1).Format("n0"))
-							@Html.ValidationMessageFor(m => m.Minutes)
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Minutes)
 							</div>
