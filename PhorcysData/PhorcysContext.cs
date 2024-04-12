@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Phorcys.Domain;
+using Microsoft.AspNetCore.Identity;
+
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Phorcys.Data;
