@@ -15,9 +15,9 @@ public class PhorcysContext : DbContext
 	public DbSet<DiveLocation> Locations { get; set; }
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		//optionsBuilder.UseSqlServer("Data Source=sql2k1401.discountasp.net;Initial Catalog=SQL2014_754043_larryhack;User Id=SQL2014_754043_larryhack_user;password=nnihuee")
+		optionsBuilder.UseSqlServer("Data Source=sql2k1401.discountasp.net;Initial Catalog=SQL2014_754043_larryhack;User Id=SQL2014_754043_larryhack_user;password=nnihuee")
 		//optionsBuilder.UseSqlServer("Data Source=HACKSOFT\\MSSQLSERVER01;Initial Catalog=SCUBA;User Id=sheckexley;password=Measureless2Man;TrustServerCertificate=True;")
-		optionsBuilder.UseSqlServer("Server=tcp:hacksoft.database.windows.net,1433;Initial Catalog=Phorcys2;Persist Security Info=False;User ID=larry.hack;Password=Brenda1964!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
+		//optionsBuilder.UseSqlServer("Server=tcp:hacksoft.database.windows.net,1433;Initial Catalog=Phorcys2;Persist Security Info=False;User ID=larry.hack;Password=Brenda1964!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
 			.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
 	}
