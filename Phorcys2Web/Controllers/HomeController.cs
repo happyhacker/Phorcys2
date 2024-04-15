@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Phorcys2Web.Controllers
 {
@@ -26,6 +26,11 @@ namespace Phorcys2Web.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View(); 
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -33,6 +38,7 @@ namespace Phorcys2Web.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
