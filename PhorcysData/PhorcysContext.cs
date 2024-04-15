@@ -1,14 +1,32 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Phorcys.Domain;
 
 namespace Phorcys.Data;
 
-public class PhorcysContext : IdentityDbContext
+/*public class PhorcysContext : IdentityDbContext
 {
 	public PhorcysContext(DbContextOptions<PhorcysContext> options)
 		: base(options)
 	{
+	}
+}
+*/
+
+public class PhorcysContext : IdentityDbContext<IdentityUser>
+{
+	public PhorcysContext(DbContextOptions<PhorcysContext> options)
+		: base(options)
+	{
+	}
+
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		base.OnModelCreating(builder);
+		// Customize the ASP.NET Identity model and override the defaults if needed.
+		// For example, you can rename the ASP.NET Identity table names and more.
+		// Add your customizations after calling base.OnModelCreating(builder);
 	}
 
 	public DbSet<Dive> Dives { get; set; }
@@ -17,4 +35,5 @@ public class PhorcysContext : IdentityDbContext
 	public DbSet<Contact> Contacts { get; set; }
 	public DbSet<DiveSite> DiveSites { get; set; }
 	public DbSet<DiveLocation> Locations { get; set; }
+
 }

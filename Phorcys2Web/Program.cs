@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Phorcys.Data;
 using Phorcys.Services;
+using Phorcys.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

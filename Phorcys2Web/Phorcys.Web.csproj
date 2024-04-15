@@ -36,8 +36,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Data\PhorcysContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Phorcys.Services\Phorcys.Services.csproj" />
     <ProjectReference Include="..\PhorcysDomain\Phorcys.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties UseCdnSupport="False" /></VisualStudio></ProjectExtensions>
