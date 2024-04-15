@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Phorcys.Data;
+namespace delPhorcys.Data;
 
 public class PhorcysContext : IdentityDbContext<IdentityUser>
 {
