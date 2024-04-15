@@ -37,6 +37,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.MapRazorPages();
+//app.MapControllers();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
