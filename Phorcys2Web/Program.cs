@@ -1,10 +1,24 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Phorcys.Data;
+using Phorcys.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<PhorcysContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=HACKSOFT\\MSSQLSERVER01;Initial Catalog=SCUBA;User Id=sheckexley;password=Measureless2Man;TrustServerCertificate=True;")));
+
+builder.Services.AddScoped<DivePlanServices>();
+builder.Services.AddScoped<DiveSiteServices>();
+builder.Services.AddScoped<DiveServices>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddEntityFrameworkStores<PhorcysContext>();
+
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
@@ -24,7 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -11,12 +11,17 @@ namespace Phorcys.Services
 
 	public class DiveSiteServices
 	{
-	PhorcysContext context = new PhorcysContext();
-	public IEnumerable<DiveSite> GetDiveSites()
+		private readonly PhorcysContext _context;
+		public DiveSiteServices(PhorcysContext context)
+		{
+			_context = context;
+		}
+
+		public IEnumerable<DiveSite> GetDiveSites()
 		{
 			try
 			{
-				var diveSites = context.DiveSites.OrderBy(ds => ds.Title).ToList();
+				var diveSites = _context.DiveSites.OrderBy(ds => ds.Title).ToList();
 				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},

@@ -14,11 +14,17 @@ namespace Phorcys.Services;
 
 public class DivePlanServices
 {
-	PhorcysContext context = new PhorcysContext();
+	private readonly PhorcysContext _context;
+	public DivePlanServices(PhorcysContext context)
+	{
+		_context = context;
+	}
+
+	//PhorcysContext context = new PhorcysContext();
 
 	public IEnumerable<DivePlan> GetDivePlans()
 	{
-		var divePlans = context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+		var divePlans = _context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 		return divePlans;
 	}
 
@@ -26,7 +32,7 @@ public class DivePlanServices
 	{
 		try
 		{
-			var divePlans = context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+			var divePlans = _context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 			return divePlans;
 		}
 		catch (Exception ex)
@@ -40,8 +46,8 @@ public class DivePlanServices
 	{
 		try
 		{
-			context.DivePlans.Add(divePlan);
-			context.SaveChanges();
+			_context.DivePlans.Add(divePlan);
+			_context.SaveChanges();
 		}
 		catch (SqlException ex)
 		{
@@ -60,15 +66,15 @@ public class DivePlanServices
 		divePlan.DiveSiteId = divePlanDto.DiveSiteId;
 		divePlan.LastModified = DateTime.Now;
 
-		context.Entry(divePlan).State = EntityState.Modified;
-		context.SaveChanges();
+		_context.Entry(divePlan).State = EntityState.Modified;
+		_context.SaveChanges();
 	}
 	public DivePlan GetDivePlan(int divePlanId)
 	{
 		DivePlan divePlan = null;
 		try
 		{
-			divePlan = context.DivePlans.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
+			divePlan = _context.DivePlans.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
 		} 
 		catch (SqlException ex)
 		{ 
@@ -79,11 +85,11 @@ public class DivePlanServices
 	}
 	public void Delete(int id)
 	{
-		var divePlan = context.DivePlans.Find(id);
+		var divePlan = _context.DivePlans.Find(id);
 		if (divePlan != null)
 		{
-			context.DivePlans.Remove(divePlan);
-			context.SaveChanges();
+			_context.DivePlans.Remove(divePlan);
+			_context.SaveChanges();
 		}
 	}
 

@@ -19,6 +19,15 @@ namespace Phorcys2Web.Controllers
 {
 	public class DiveController : Controller
 	{
+		private readonly DivePlanServices _divePlanServices;
+		private readonly DiveServices _diveServices;
+
+		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices)
+		{
+			_divePlanServices = divePlanServices;
+			_diveServices = diveServices;
+		}
+
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 			if (!string.IsNullOrEmpty(context.HttpContext.Request.Query["culture"]))
@@ -28,15 +37,12 @@ namespace Phorcys2Web.Controllers
 			base.OnActionExecuting(context);
 		}
 
-		private DiveServices diveServices = new DiveServices();
-		private DivePlanServices divePlanServices = new DivePlanServices();
-
 		// GET: DiveController
 		public async Task<ActionResult> Index()
 		{
 			try
 			{
-				var dives = await diveServices.GetDivesAsync(); // Await the completion of the async method
+				var dives = await _diveServices.GetDivesAsync(); // Await the completion of the async method
 				var model = CreateIndexModel(dives); // Now dives is IEnumerable<Dive>
 
 				return View(model);
@@ -85,7 +91,7 @@ namespace Phorcys2Web.Controllers
 				dive.LastModified = DateTime.Now;
 				dive.UserId = 3; //Hardcoded for now
 				dive.DivePlanId = model.DivePlanSelectedId;
-				diveServices.SaveNewDive(dive);
+				_diveServices.SaveNewDive(dive);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
 				return RedirectToAction("Index");			
 			}
@@ -125,7 +131,7 @@ namespace Phorcys2Web.Controllers
 		{
 			try
 			{
-				diveServices.Delete(DiveId);
+				_diveServices.Delete(DiveId);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive successfully deleted.";
 				return RedirectToAction("Index");
 			}
@@ -169,7 +175,7 @@ namespace Phorcys2Web.Controllers
 		private IList<SelectListItem> BuildDivePlanList()
 		{
 			IList<SelectListItem> divePlanList = new List<SelectListItem>();
-			IEnumerable<DivePlan> divePlans = divePlanServices.GetDivePlans();
+			IEnumerable<DivePlan> divePlans = _divePlanServices.GetDivePlans();
 			SelectListItem item;
 
 			foreach (var divePlan in divePlans)

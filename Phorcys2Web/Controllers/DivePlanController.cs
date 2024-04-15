@@ -15,11 +15,21 @@ using Phorcys.Data.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Phorcys.Data;
 
 namespace Phorcys2Web.Controllers
 {
 	public class DivePlanController : Controller
 	{
+		private readonly DivePlanServices _divePlanServices;
+		private readonly DiveSiteServices _diveSiteServices;
+
+		// Inject DivePlanServices into the controller
+		public DivePlanController(DivePlanServices divePlanServices, DiveSiteServices diveSiteServices)
+		{
+			_divePlanServices = divePlanServices;
+			_diveSiteServices = diveSiteServices;
+		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 			if (!string.IsNullOrEmpty(context.HttpContext.Request.Query["culture"]))
@@ -29,15 +39,15 @@ namespace Phorcys2Web.Controllers
 			base.OnActionExecuting(context);
 		}
 
-		private DivePlanServices divePlanServices = new DivePlanServices();
-		private DiveSiteServices diveSiteServices = new DiveSiteServices();
+		//private DivePlanServices divePlanServices = new DivePlanServices();
+		//private DiveSiteServices diveSiteServices = new DiveSiteServices();
 
 		// GET: DiveController
 		public ActionResult Index()
 		{
 			try
 			{
-				var divePlans = divePlanServices.GetDivePlans(); // Await the completion of the async method
+				var divePlans = _divePlanServices.GetDivePlans(); // Await the completion of the async method
 				var model = CreateIndexModel(divePlans); 
 
 				return View(model);
@@ -82,7 +92,7 @@ namespace Phorcys2Web.Controllers
 				divePlan.LastModified = DateTime.Now;
 				divePlan.UserId = 3; //Hardcoded for now
 				divePlan.DiveSiteId = model.DiveSiteSelectedId;
-				divePlanServices.SaveNewDivePlan(divePlan);
+				_divePlanServices.SaveNewDivePlan(divePlan);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully created.";
 				return RedirectToAction("Index");
 			}
@@ -96,7 +106,7 @@ namespace Phorcys2Web.Controllers
 		[HttpGet]
 		public ActionResult Edit(int Id)
 		{
-			DivePlan divePlan = divePlanServices.GetDivePlan(Id);
+			DivePlan divePlan = _divePlanServices.GetDivePlan(Id);
 			DivePlanViewModel model = new DivePlanViewModel();
 			model.DivePlanId = Id;
 			model.Title = divePlan.Title;
@@ -126,7 +136,7 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.ScheduledTime = model.ScheduledTime;
 				divePlanDto.UserId = 3; //Hardcoded for now
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
-				divePlanServices.EditDivePlan(divePlanDto);
+				_divePlanServices.EditDivePlan(divePlanDto);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
 				return RedirectToAction("Index");
 			}
@@ -146,7 +156,7 @@ namespace Phorcys2Web.Controllers
 		{
 			try
 			{
-				divePlanServices.Delete(DivePlanId);
+				_divePlanServices.Delete(DivePlanId);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan successfully deleted.";
 				return RedirectToAction("Index");
 			}
@@ -184,7 +194,7 @@ namespace Phorcys2Web.Controllers
 		private IList<SelectListItem> BuildDiveSiteList(int? diveSiteId)
 		{
 			IList<SelectListItem> diveSiteList = new List<SelectListItem>();
-			IEnumerable<DiveSite> diveSites = diveSiteServices.GetDiveSites();
+			IEnumerable<DiveSite> diveSites = _diveSiteServices.GetDiveSites();
 			SelectListItem item;
 
 			foreach (var diveSite in diveSites)

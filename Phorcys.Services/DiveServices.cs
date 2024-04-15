@@ -10,13 +10,19 @@ namespace Phorcys.Services;
 
 public class DiveServices
 {
-	PhorcysContext context = new PhorcysContext();
+	private readonly PhorcysContext _context;
+	public DiveServices(PhorcysContext context)
+	{
+		_context = context;
+	}
+
+	//PhorcysContext context = new PhorcysContext();
 
 	public async Task<IEnumerable<Dive>> GetDivesAsync()
 	{
 		try
 		{
-			var dives = await context.Dives
+			var dives = await _context.Dives
 									 .Include(d => d.DivePlan.DiveSite)
 									 .ThenInclude(u => u.User)
 									 .AsNoTracking()
@@ -34,15 +40,15 @@ public class DiveServices
 
 	public Dive GetDive(int diveId)
 	{
-		var dive = context.Dives.FirstOrDefault(d => d.DiveId == diveId);
+		var dive = _context.Dives.FirstOrDefault(d => d.DiveId == diveId);
 		return dive;
 	}
 	public void SaveNewDive(Dive dive)
 	{
 		try
 		{
-			context.Dives.Add(dive);
-			context.SaveChanges();
+			_context.Dives.Add(dive);
+			_context.SaveChanges();
 		}
 		catch (SqlException ex)
 		{
@@ -51,11 +57,11 @@ public class DiveServices
 	}
 	public void Delete(int id)
 	{
-		var dive = context.Dives.Find(id);
+		var dive = _context.Dives.Find(id);
 		if (dive != null)
 		{
-			context.Dives.Remove(dive);
-			context.SaveChanges();
+			_context.Dives.Remove(dive);
+			_context.SaveChanges();
 		}
 	}
 
