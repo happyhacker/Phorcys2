@@ -9,8 +9,17 @@ using Phorcys.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-IServiceCollection serviceCollection = builder.Services.AddDbContext<PhorcysContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("PhorcysDbConnection")));
+/*IServiceCollection serviceCollection = builder.Services.AddDbContext<PhorcysContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("PhorcysDbConnection"),
+		x => x.MigrationsAssembly("Phorcys.Data")
+	)
+);*/
+builder.Services.AddDbContext<PhorcysContext>(options =>
+	options.UseSqlServer(
+		builder.Configuration.GetConnectionString("PhorcysDbConnection"),
+		x => x.MigrationsAssembly("Phorcys.Web")
+	)
+);
 
 builder.Services.AddScoped<DivePlanServices>();
 builder.Services.AddScoped<DiveSiteServices>();
