@@ -40,43 +40,6 @@ CREATE TABLE [AspNetUsers] (
 );
 GO
 
-CREATE TABLE [Contacts] (
-    [ContactId] int NOT NULL IDENTITY,
-    [Company] nvarchar(max) NOT NULL,
-    [FirstName] nvarchar(max) NOT NULL,
-    [LastName] nvarchar(max) NOT NULL,
-    [Address1] nvarchar(max) NOT NULL,
-    [Address2] nvarchar(max) NOT NULL,
-    [City] nvarchar(max) NOT NULL,
-    [State] nvarchar(max) NOT NULL,
-    [PostalCode] nvarchar(max) NOT NULL,
-    [CountryCode] nvarchar(max) NULL,
-    [Email] nvarchar(max) NOT NULL,
-    [CellPhone] nvarchar(max) NOT NULL,
-    [HomePhone] nvarchar(max) NOT NULL,
-    [WorkPhone] nvarchar(max) NOT NULL,
-    [Birthday] datetime2 NULL,
-    [Gender] nvarchar(max) NOT NULL,
-    [Notes] nvarchar(max) NULL,
-    [UserId] int NOT NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    CONSTRAINT [PK_Contacts] PRIMARY KEY ([ContactId])
-);
-GO
-
-CREATE TABLE [Users] (
-    [UserId] int NOT NULL IDENTITY,
-    [LoginId] nvarchar(max) NOT NULL,
-    [Password] nvarchar(max) NOT NULL,
-    [LoginCount] int NULL,
-    [ContactId] int NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    CONSTRAINT [PK_Users] PRIMARY KEY ([UserId])
-);
-GO
-
 CREATE TABLE [AspNetRoleClaims] (
     [Id] int NOT NULL IDENTITY,
     [RoleId] nvarchar(450) NOT NULL,
@@ -126,86 +89,6 @@ CREATE TABLE [AspNetUserTokens] (
 );
 GO
 
-CREATE TABLE [Locations] (
-    [DiveLocationId] int NOT NULL IDENTITY,
-    [ContactId] int NULL,
-    [Title] nvarchar(max) NOT NULL,
-    [UserId] int NOT NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    [Notes] nvarchar(max) NULL,
-    CONSTRAINT [PK_Locations] PRIMARY KEY ([DiveLocationId]),
-    CONSTRAINT [FK_Locations_Contacts_ContactId] FOREIGN KEY ([ContactId]) REFERENCES [Contacts] ([ContactId]),
-    CONSTRAINT [FK_Locations_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
-);
-GO
-
-CREATE TABLE [DiveSites] (
-    [DiveSiteId] int NOT NULL IDENTITY,
-    [DiveLocationId] int NULL,
-    [Title] nvarchar(max) NOT NULL,
-    [IsFreshWater] bit NOT NULL,
-    [GeoCode] nvarchar(max) NULL,
-    [Notes] nvarchar(max) NULL,
-    [UserId] int NOT NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    [MaxDepth] int NULL,
-    CONSTRAINT [PK_DiveSites] PRIMARY KEY ([DiveSiteId]),
-    CONSTRAINT [FK_DiveSites_Locations_DiveLocationId] FOREIGN KEY ([DiveLocationId]) REFERENCES [Locations] ([DiveLocationId]),
-    CONSTRAINT [FK_DiveSites_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
-);
-GO
-
-CREATE TABLE [DivePlans] (
-    [DivePlanId] int NOT NULL IDENTITY,
-    [DiveSiteId] int NULL,
-    [Title] nvarchar(max) NOT NULL,
-    [Minutes] int NULL,
-    [ScheduledTime] datetime2 NOT NULL,
-    [MaxDepth] int NULL,
-    [Notes] nvarchar(max) NULL,
-    [UserId] int NOT NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    CONSTRAINT [PK_DivePlans] PRIMARY KEY ([DivePlanId]),
-    CONSTRAINT [FK_DivePlans_DiveSites_DiveSiteId] FOREIGN KEY ([DiveSiteId]) REFERENCES [DiveSites] ([DiveSiteId]),
-    CONSTRAINT [FK_DivePlans_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
-);
-GO
-
-CREATE TABLE [DiveSiteUrl] (
-    [DiveSiteUrlId] int NOT NULL IDENTITY,
-    [DiveSiteId] int NOT NULL,
-    [Url] nvarchar(max) NOT NULL,
-    [IsImage] bit NOT NULL,
-    [Title] nvarchar(max) NULL,
-    CONSTRAINT [PK_DiveSiteUrl] PRIMARY KEY ([DiveSiteUrlId]),
-    CONSTRAINT [FK_DiveSiteUrl_DiveSites_DiveSiteId] FOREIGN KEY ([DiveSiteId]) REFERENCES [DiveSites] ([DiveSiteId]) ON DELETE CASCADE
-);
-GO
-
-CREATE TABLE [Dives] (
-    [DiveId] int NOT NULL IDENTITY,
-    [DivePlanId] int NULL,
-    [Title] nvarchar(max) NULL,
-    [Minutes] int NULL,
-    [DescentTime] datetime2 NULL,
-    [AvgDepth] int NULL,
-    [MaxDepth] int NULL,
-    [Temperature] int NULL,
-    [AdditionalWeight] int NULL,
-    [Notes] nvarchar(max) NOT NULL,
-    [DiveNumber] int NOT NULL,
-    [UserId] int NULL,
-    [Created] datetime2 NOT NULL,
-    [LastModified] datetime2 NOT NULL,
-    CONSTRAINT [PK_Dives] PRIMARY KEY ([DiveId]),
-    CONSTRAINT [FK_Dives_DivePlans_DivePlanId] FOREIGN KEY ([DivePlanId]) REFERENCES [DivePlans] ([DivePlanId]),
-    CONSTRAINT [FK_Dives_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
-);
-GO
-
 CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
 GO
 
@@ -225,33 +108,6 @@ CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
 GO
 
 CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
-GO
-
-CREATE INDEX [IX_DivePlans_DiveSiteId] ON [DivePlans] ([DiveSiteId]);
-GO
-
-CREATE INDEX [IX_DivePlans_UserId] ON [DivePlans] ([UserId]);
-GO
-
-CREATE INDEX [IX_Dives_DivePlanId] ON [Dives] ([DivePlanId]);
-GO
-
-CREATE INDEX [IX_Dives_UserId] ON [Dives] ([UserId]);
-GO
-
-CREATE INDEX [IX_DiveSites_DiveLocationId] ON [DiveSites] ([DiveLocationId]);
-GO
-
-CREATE INDEX [IX_DiveSites_UserId] ON [DiveSites] ([UserId]);
-GO
-
-CREATE INDEX [IX_DiveSiteUrl_DiveSiteId] ON [DiveSiteUrl] ([DiveSiteId]);
-GO
-
-CREATE INDEX [IX_Locations_ContactId] ON [Locations] ([ContactId]);
-GO
-
-CREATE INDEX [IX_Locations_UserId] ON [Locations] ([UserId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
