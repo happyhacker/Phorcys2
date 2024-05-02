@@ -1,118 +1,225 @@
-CREATE TABLE [AspNetRoleClaims] (
-    [Id] INTEGER IDENTITY(1,1) NOT NULL,
-    [RoleId] NVARCHAR(450) NOT NULL,
-    [ClaimType] NVARCHAR(max),
-    [ClaimValue] NVARCHAR(max),
-    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY CLUSTERED ([Id])
-)
+/* ---------------------------------------------------------------------- */
+/* Script generated with: DeZign for Databases 14.4.0                     */
+/* Target DBMS:           MS SQL Server 2022                              */
+/* Project file:          Phorcys2.dez                                    */
+/* Project name:          Phorcys2                                        */
+/* Author:                                                                */
+/* Script type:           Alter database script                           */
+/* Created on:            2024-05-01 20:25                                */
+/* ---------------------------------------------------------------------- */
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop foreign key constraints                                           */
+/* ---------------------------------------------------------------------- */
+
+ALTER TABLE [Users] DROP CONSTRAINT [Contacts_Users]
 GO
 
-CREATE NONCLUSTERED INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId] ASC)
+
+ALTER TABLE [Attributes] DROP CONSTRAINT [Users_Attributes]
 GO
 
-CREATE TABLE [AspNetRoles] (
-    [Id] NVARCHAR(450) NOT NULL,
-    [Name] NVARCHAR(256),
-    [NormalizedName] NVARCHAR(256),
-    [ConcurrencyStamp] NVARCHAR(max),
-    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY CLUSTERED ([Id])
-)
+
+ALTER TABLE [Certifications] DROP CONSTRAINT [Users_Certifications]
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName] ASC) WHERE ([NormalizedName] IS NOT NULL)
+
+ALTER TABLE [Contacts] DROP CONSTRAINT [Users_Contacts]
 GO
 
-CREATE TABLE [AspNetUserClaims] (
-    [Id] INTEGER IDENTITY(1,1) NOT NULL,
-    [UserId] NVARCHAR(450) NOT NULL,
-    [ClaimType] NVARCHAR(max),
-    [ClaimValue] NVARCHAR(max),
-    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY CLUSTERED ([Id])
-)
+
+ALTER TABLE [DiveLocations] DROP CONSTRAINT [Users_DiveLocations]
 GO
 
-CREATE NONCLUSTERED INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId] ASC)
+
+ALTER TABLE [DivePlans] DROP CONSTRAINT [Users_DivePlans]
 GO
 
-CREATE TABLE [AspNetUserLogins] (
-    [LoginProvider] NVARCHAR(128) NOT NULL,
-    [ProviderKey] NVARCHAR(128) NOT NULL,
-    [ProviderDisplayName] NVARCHAR(max),
-    [UserId] NVARCHAR(450) NOT NULL,
-    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY CLUSTERED ([LoginProvider], [ProviderKey])
-)
+
+ALTER TABLE [Dives] DROP CONSTRAINT [Users_Dives]
 GO
 
-CREATE NONCLUSTERED INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId] ASC)
+
+ALTER TABLE [DiveSites] DROP CONSTRAINT [Users_DiveSites]
 GO
 
-CREATE TABLE [AspNetUserRoles] (
-    [UserId] NVARCHAR(450) NOT NULL,
-    [RoleId] NVARCHAR(450) NOT NULL,
-    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY CLUSTERED ([UserId], [RoleId])
-)
+
+ALTER TABLE [DiveTypes] DROP CONSTRAINT [Users_DiveTypes]
 GO
 
-CREATE NONCLUSTERED INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId] ASC)
+
+ALTER TABLE [Friends] DROP CONSTRAINT [Users_Friends1]
 GO
 
-CREATE TABLE [AspNetUsers] (
-    [Id] NVARCHAR(450) NOT NULL,
-    [UserName] NVARCHAR(256),
-    [NormalizedUserName] NVARCHAR(256),
-    [Email] NVARCHAR(256),
-    [NormalizedEmail] NVARCHAR(256),
-    [EmailConfirmed] BIT NOT NULL,
-    [PasswordHash] NVARCHAR(max),
-    [SecurityStamp] NVARCHAR(max),
-    [ConcurrencyStamp] NVARCHAR(max),
-    [PhoneNumber] NVARCHAR(max),
-    [PhoneNumberConfirmed] BIT NOT NULL,
-    [TwoFactorEnabled] BIT NOT NULL,
-    [LockoutEnd] DATETIMEOFFSET,
-    [LockoutEnabled] BIT NOT NULL,
-    [AccessFailedCount] INTEGER NOT NULL,
-    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED ([Id])
-)
+
+ALTER TABLE [Friends] DROP CONSTRAINT [Users_Friends2]
 GO
 
-CREATE NONCLUSTERED INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail] ASC)
+
+ALTER TABLE [Gear] DROP CONSTRAINT [Users_Gear]
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName] ASC) WHERE ([NormalizedUserName] IS NOT NULL)
+
+ALTER TABLE [Qualifications] DROP CONSTRAINT [Users_Qualifications]
 GO
 
-CREATE TABLE [AspNetUserTokens] (
-    [UserId] NVARCHAR(450) NOT NULL,
-    [LoginProvider] NVARCHAR(128) NOT NULL,
-    [Name] NVARCHAR(128) NOT NULL,
-    [Value] NVARCHAR(max),
-    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY CLUSTERED ([UserId], [LoginProvider], [Name])
-)
+
+ALTER TABLE [Roles] DROP CONSTRAINT [Users_Roles]
 GO
 
-ALTER TABLE [AspNetRoleClaims] ADD CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] 
-    FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+
+/* ---------------------------------------------------------------------- */
+/* Drop and recreate table "Users"                                        */
+/* ---------------------------------------------------------------------- */
+
+/* Table must be recreated because some of the changes can't be done with the regular commands available. */
+
+ALTER TABLE [Users] DROP CONSTRAINT [DEF_Users_LoginCount]
 GO
 
-ALTER TABLE [AspNetUserClaims] ADD CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] 
-    FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+
+ALTER TABLE [Users] DROP CONSTRAINT [DEF_Users_Created]
 GO
 
-ALTER TABLE [AspNetUserLogins] ADD CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] 
-    FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+
+ALTER TABLE [Users] DROP CONSTRAINT [DEF_Users_LastModified]
 GO
 
-ALTER TABLE [AspNetUserRoles] ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] 
-    FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+
+ALTER TABLE [Users] DROP CONSTRAINT [PK_Users]
 GO
 
-ALTER TABLE [AspNetUserRoles] ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] 
-    FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+
+ALTER TABLE [Users] DROP CONSTRAINT [TUC_Users_1]
 GO
 
-ALTER TABLE [AspNetUserTokens] ADD CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] 
-    FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+
+CREATE TABLE [Users_TMP] (
+    [UserId] INTEGER IDENTITY(1,1) NOT NULL,
+    [LoginId] VARCHAR(30) NOT NULL,
+    [Password] VARCHAR(20) NOT NULL,
+    [LoginCount] INTEGER CONSTRAINT [DEF_Users_LoginCount] DEFAULT 0,
+    [ContactId] INTEGER,
+    [AspNetUserId] NVARCHAR(450),
+    [Created] DATETIME CONSTRAINT [DEF_Users_Created] DEFAULT getdate() NOT NULL,
+    [LastModified] DATETIME CONSTRAINT [DEF_Users_LastModified] DEFAULT getdate() NOT NULL)
 GO
 
+
+
+SET IDENTITY_INSERT [Users_TMP] ON
+GO
+
+
+
+INSERT INTO [Users_TMP]
+    ([UserId],[LoginId],[Password],[LoginCount],[ContactId],[Created],[LastModified])
+SELECT
+    [UserId],[LoginId],[Password],[LoginCount],[ContactId],[Created],[LastModified]
+FROM [Users]
+GO
+
+
+
+SET IDENTITY_INSERT [Users_TMP] OFF
+GO
+
+
+
+DROP TABLE [Users]
+GO
+
+
+EXEC sp_rename '[Users_TMP]', 'Users', 'OBJECT'
+GO
+
+
+ALTER TABLE [Users] ADD CONSTRAINT [PK_Users] 
+    PRIMARY KEY CLUSTERED ([UserId])
+GO
+
+
+ALTER TABLE [Users] ADD CONSTRAINT [TUC_Users_1] 
+    UNIQUE ([LoginId])
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add foreign key constraints                                            */
+/* ---------------------------------------------------------------------- */
+
+ALTER TABLE [Users] ADD CONSTRAINT [Contacts_Users] 
+    FOREIGN KEY ([ContactId]) REFERENCES [Contacts] ([ContactId])
+GO
+
+
+ALTER TABLE [Users] ADD CONSTRAINT [AspNetUsers_Users] 
+    FOREIGN KEY ([AspNetUserId]) REFERENCES [AspNetUsers] ([Id])
+GO
+
+
+ALTER TABLE [Contacts] ADD CONSTRAINT [Users_Contacts] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [DiveLocations] ADD CONSTRAINT [Users_DiveLocations] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [DivePlans] ADD CONSTRAINT [Users_DivePlans] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [DiveTypes] ADD CONSTRAINT [Users_DiveTypes] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Roles] ADD CONSTRAINT [Users_Roles] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Gear] ADD CONSTRAINT [Users_Gear] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Certifications] ADD CONSTRAINT [Users_Certifications] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Qualifications] ADD CONSTRAINT [Users_Qualifications] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Friends] ADD CONSTRAINT [Users_Friends1] 
+    FOREIGN KEY ([RequestorUserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Friends] ADD CONSTRAINT [Users_Friends2] 
+    FOREIGN KEY ([RecipientUserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Attributes] ADD CONSTRAINT [Users_Attributes] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [DiveSites] ADD CONSTRAINT [Users_DiveSites] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
+ALTER TABLE [Dives] ADD CONSTRAINT [Users_Dives] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
 
