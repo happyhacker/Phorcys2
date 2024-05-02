@@ -5,6 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - Phorcys 2.0</title>
 
+	@*@<div class="rightColumn">*@
+	<div id="logindisplay" align="right">
+		@{
+			Html.RenderPartial("LogOnUserControl");
+		}
+	</div>
+	@*</div>*@
+
+
 	@*<environment names="Development">*@
 	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
@@ -56,7 +65,7 @@
 							items.Add().Text("Dives")
 							.Items(item =>
 							{
-								item.Add().Text("Dive Types").Action("Index", "DiveType");
+								@*item.Add().Text("Dive Types").Action("Index", "DiveType");*@
 								item.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
 								item.Add().Text("List Dive Plans").Action("Index", "DivePlan");
 								item.Add().Text("Log Dive").Action("Create", "Dive");
@@ -76,10 +85,17 @@
 								item.Add().Text("END").Action("Index", "End");
 							});
 							items.Add().Text("About").Action("About", "Home", new { area = "" });
-							items.Add().Text("Login").Url("/Identity/Account/Login");
+							if(User.Identity.IsAuthenticated)
+						{
+								items.Add().Text("Logout").Url("/Identity/Account/Logout");
+							}
+						else
+							{
+								items.Add().Text("Login").Url("/Identity/Account/Login");
+							}
 						}
 						)
-			)
+		   )
 		</kendo-responsivepanel>
 	</div>
 

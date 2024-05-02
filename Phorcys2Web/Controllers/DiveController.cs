@@ -14,6 +14,7 @@ using Phorcys.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Phorcys2Web.Controllers
 {
@@ -37,7 +38,9 @@ namespace Phorcys2Web.Controllers
 			base.OnActionExecuting(context);
 		}
 
+
 		// GET: DiveController
+		[Authorize]
 		public async Task<ActionResult> Index()
 		{
 			try
@@ -62,6 +65,7 @@ namespace Phorcys2Web.Controllers
 		}
 
 		// GET: DiveController/Create
+		[Authorize]
 		[HttpGet]
 		public ActionResult Create()
 		{
@@ -71,6 +75,7 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(DiveViewModel model)
@@ -110,6 +115,7 @@ namespace Phorcys2Web.Controllers
 		}
 
 		// POST: DiveController/Edit/5
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(int id, IFormCollection collection)
@@ -125,6 +131,7 @@ namespace Phorcys2Web.Controllers
 		}
 
 		// POST: DiveController/Delete/5
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Delete(int DiveId)

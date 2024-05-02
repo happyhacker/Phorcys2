@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Phorcys.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Phorcys2Web.Controllers
 {
@@ -43,6 +44,7 @@ namespace Phorcys2Web.Controllers
 		//private DiveSiteServices diveSiteServices = new DiveSiteServices();
 
 		// GET: DiveController
+		[Authorize]
 		public ActionResult Index()
 		{
 			try
@@ -67,6 +69,7 @@ namespace Phorcys2Web.Controllers
 		}
 
 		// GET: DiveController/Create
+		[Authorize]
 		[HttpGet]
 		public ActionResult Create()
 		{
@@ -76,6 +79,7 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Create(DivePlanViewModel model)
@@ -103,6 +107,7 @@ namespace Phorcys2Web.Controllers
 			}
 		}
 
+		[Authorize]
 		[HttpGet]
 		public ActionResult Edit(int Id)
 		{
@@ -121,6 +126,7 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit(DivePlanViewModel model)
@@ -150,6 +156,7 @@ namespace Phorcys2Web.Controllers
 
 
 		// POST: DiveController/Delete/5
+		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Delete(int DivePlanId)
