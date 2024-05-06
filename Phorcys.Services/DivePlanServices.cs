@@ -22,9 +22,9 @@ public class DivePlanServices
 
 	//PhorcysContext context = new PhorcysContext();
 
-	public IEnumerable<DivePlan> GetDivePlans()
+	public IEnumerable<DivePlan> GetDivePlans(int userId)
 	{
-		var divePlans = _context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+		var divePlans = _context.DivePlans.Where(r => r.UserId==userId).Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 		return divePlans;
 	}
 

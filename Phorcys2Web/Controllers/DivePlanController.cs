@@ -13,10 +13,8 @@ using Phorcys.Services;
 using Phorcys.Domain;
 using Phorcys.Data.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Options;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
-using Phorcys.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Phorcys2Web.Controllers
 {
@@ -24,12 +22,14 @@ namespace Phorcys2Web.Controllers
 	{
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveSiteServices _diveSiteServices;
+		private readonly UserServices _userServices;
 
 		// Inject DivePlanServices into the controller
-		public DivePlanController(DivePlanServices divePlanServices, DiveSiteServices diveSiteServices)
+		public DivePlanController(DivePlanServices divePlanServices, DiveSiteServices diveSiteServices, UserServices userServices)
 		{
 			_divePlanServices = divePlanServices;
 			_diveSiteServices = diveSiteServices;
+			_userServices = userServices;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -49,7 +49,7 @@ namespace Phorcys2Web.Controllers
 		{
 			try
 			{
-				var divePlans = _divePlanServices.GetDivePlans(); // Await the completion of the async method
+				var divePlans = _divePlanServices.GetDivePlans(_userServices.GetUserId()); // Await the completion of the async method
 				var model = CreateIndexModel(divePlans); 
 
 				return View(model);
@@ -94,7 +94,8 @@ namespace Phorcys2Web.Controllers
 				divePlan.ScheduledTime = model.ScheduledTime;
 				divePlan.Created = DateTime.Now;
 				divePlan.LastModified = DateTime.Now;
-				divePlan.UserId = 3; //Hardcoded for now
+				int userId = _userServices.GetUserId();
+				divePlan.UserId = userId; //Hardcoded for now
 				divePlan.DiveSiteId = model.DiveSiteSelectedId;
 				_divePlanServices.SaveNewDivePlan(divePlan);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully created.";
@@ -140,7 +141,6 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.Notes = " " + model.Notes;
 				divePlanDto.MaxDepth = model.MaxDepth;
 				divePlanDto.ScheduledTime = model.ScheduledTime;
-				divePlanDto.UserId = 3; //Hardcoded for now
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
 				_divePlanServices.EditDivePlan(divePlanDto);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
@@ -221,6 +221,14 @@ namespace Phorcys2Web.Controllers
 			}
 			return diveSiteList;
 		}
+
+       /* private string GetAspNetUserId() //returns long string of hashed id
+		{
+			_userServices.GetLoggedInUserId();
+			var loginId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			return loginId;
+		}*/
+			
 
 	}
 

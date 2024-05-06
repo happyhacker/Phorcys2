@@ -1,10 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Identity.Client;
 using Phorcys.Data;
 using Phorcys.Domain;
-using System.Collections;
 
 namespace Phorcys.Services;
 

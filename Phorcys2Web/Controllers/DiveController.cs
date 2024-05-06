@@ -22,11 +22,13 @@ namespace Phorcys2Web.Controllers
 	{
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveServices _diveServices;
+		private readonly UserServices _userServices;
 
-		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices)
+		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices, UserServices userServices)
 		{
 			_divePlanServices = divePlanServices;
 			_diveServices = diveServices;
+			_userServices = userServices;
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext context)
@@ -182,7 +184,8 @@ namespace Phorcys2Web.Controllers
 		private IList<SelectListItem> BuildDivePlanList()
 		{
 			IList<SelectListItem> divePlanList = new List<SelectListItem>();
-			IEnumerable<DivePlan> divePlans = _divePlanServices.GetDivePlans();
+			string loggedInId = _userServices.GetLoggedInUserId();
+			IEnumerable<DivePlan> divePlans = _divePlanServices.GetDivePlans(3);
 			SelectListItem item;
 
 			foreach (var divePlan in divePlans)

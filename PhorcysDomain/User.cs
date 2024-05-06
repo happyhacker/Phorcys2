@@ -14,6 +14,8 @@ public partial class User
     public int? LoginCount { get; set; }
 
     public int? ContactId { get; set; }
+    
+    public string? AspNetUserId { get; set; }
 
     public DateTime Created { get; set; }
 
