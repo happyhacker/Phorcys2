@@ -1,0 +1,76 @@
+﻿@using Phorcys2Web.Controllers;
+
+@{
+	ViewBag.Title = "MOD and END Calculator";
+}
+
+<script src="/js/DiveCalcs.js"></script>
+
+<h1>MOD and END Calculator</h1>
+
+
+<div id="calculator" align="center">
+	<form id="form1" name="form1" action="">
+		<br /> <br />
+		<label for="O2">
+			Oxygen %:
+		</label>
+		@(Html.Kendo().NumericTextBox()
+				.Name("O2")
+				.Value(21).Min(1).Max(100)
+				.Decimals(0)
+				.Format("#")
+				.HtmlAttributes(new { style = "width: 100px;" })
+				)
+
+		<label for="O2">
+			Helium %:
+		</label>
+		@(Html.Kendo().NumericTextBox()
+				.Name("HE")
+				.Value(0).Min(0).Max(100)
+				.Decimals(0)
+				.Format("#")
+				.HtmlAttributes(new { style = "width: 100px;" })
+				)
+
+		<br /><br />
+		<label for="PPO2">
+			PPO2:
+		</label>
+		@(Html.Kendo().NumericTextBox()
+				.Name("PPO2")
+				.Value(1.6).Min(.1).Max(4.0)
+				.Step(.1)
+				.Decimals(1)
+				.Format("#.0")
+				.HtmlAttributes(new { style = "width: 100px;" })
+				)
+
+		<br /><br />
+
+		<label for="IsFreshWater">
+			Fresh/Salt Water:
+		</label>
+		<input type="radio" id="Fresh" name="IsFreshWater" value="true" checked="checked" />
+		Fresh
+		<input type="radio" id="Salt" name="IsFreshWater" value="false" />
+		Salt
+
+		<br /> <br />
+		<button type="button" id="button" class="btn btn-primary" onclick="CalcBoth(form1)">Calc</button>
+		<br /><br />
+
+		<label for="MOD">
+			<b>M</b>aximum <b>O</b>perating <b>D</b>epth
+		</label>
+		<input id="MOD" name="MOD" type="number" style="width: 100px;" readonly />
+		<br /><br />
+
+		<label for="END">
+			<b>E</b>quivalent <b>N</b>itrogen <b>D</b>epth
+		</label>
+		<input id="END" name="END" type="number" style="width: 100px;" readonly />
+		<br /><br />
+	</form>
+</div>
