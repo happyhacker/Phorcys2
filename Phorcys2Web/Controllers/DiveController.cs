@@ -47,7 +47,7 @@ namespace Phorcys2Web.Controllers
 		{
 			try
 			{
-				var dives = await _diveServices.GetDivesAsync(); // Await the completion of the async method
+				var dives = await _diveServices.GetDivesAsync(_userServices.GetUserId()); // Await the completion of the async method
 				var model = CreateIndexModel(dives); // Now dives is IEnumerable<Dive>
 
 				return View(model);
@@ -96,7 +96,7 @@ namespace Phorcys2Web.Controllers
 				dive.DescentTime = model.DescentTime;
 				dive.Created = DateTime.Now;
 				dive.LastModified = DateTime.Now;
-				dive.UserId = 3; //Hardcoded for now
+				dive.UserId = _userServices.GetUserId();
 				dive.DivePlanId = model.DivePlanSelectedId;
 				_diveServices.SaveNewDive(dive);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
@@ -173,7 +173,6 @@ namespace Phorcys2Web.Controllers
 				model.LastModified = dive.LastModified;
 				model.DescentTime = dive.DescentTime;
 				model.Notes = dive.Notes;
-				//model.UserName = dive.User.
 				models.Add(model);
 
 			}
@@ -185,7 +184,7 @@ namespace Phorcys2Web.Controllers
 		{
 			IList<SelectListItem> divePlanList = new List<SelectListItem>();
 			string loggedInId = _userServices.GetLoggedInUserId();
-			IEnumerable<DivePlan> divePlans = _divePlanServices.GetDivePlans(3);
+			IEnumerable<DivePlan> divePlans = _divePlanServices.GetDivePlans(_userServices.GetUserId());
 			SelectListItem item;
 
 			foreach (var divePlan in divePlans)

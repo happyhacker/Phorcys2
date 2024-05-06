@@ -12,16 +12,17 @@ namespace Phorcys.Services
 	public class DiveSiteServices
 	{
 		private readonly PhorcysContext _context;
+		private const int systemUser = 6;
 		public DiveSiteServices(PhorcysContext context)
 		{
 			_context = context;
 		}
 
-		public IEnumerable<DiveSite> GetDiveSites()
+		public IEnumerable<DiveSite> GetDiveSites(int userId)
 		{
 			try
 			{
-				var diveSites = _context.DiveSites.OrderBy(ds => ds.Title).ToList();
+				var diveSites = _context.DiveSites.Where(r => r.UserId == userId || r.UserId == systemUser).OrderBy(ds => ds.Title).ToList();
 				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},

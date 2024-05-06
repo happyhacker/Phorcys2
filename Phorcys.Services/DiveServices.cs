@@ -15,11 +15,12 @@ public class DiveServices
 
 	//PhorcysContext context = new PhorcysContext();
 
-	public async Task<IEnumerable<Dive>> GetDivesAsync()
+	public async Task<IEnumerable<Dive>> GetDivesAsync(int userId)
 	{
 		try
 		{
 			var dives = await _context.Dives
+									 .Where(r => r.UserId==userId)
 									 .Include(d => d.DivePlan.DiveSite)
 									 .ThenInclude(u => u.User)
 									 .AsNoTracking()

@@ -201,7 +201,7 @@ namespace Phorcys2Web.Controllers
 		private IList<SelectListItem> BuildDiveSiteList(int? diveSiteId)
 		{
 			IList<SelectListItem> diveSiteList = new List<SelectListItem>();
-			IEnumerable<DiveSite> diveSites = _diveSiteServices.GetDiveSites();
+			IEnumerable<DiveSite> diveSites = _diveSiteServices.GetDiveSites(_userServices.GetUserId());
 			SelectListItem item;
 
 			foreach (var diveSite in diveSites)

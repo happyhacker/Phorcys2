@@ -94,7 +94,7 @@
 						<p>
 							<label for="Minutes">Minutes:</label>
 							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1).Format("n0"))
+							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(1440).Step(1).Format("n0"))
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Minutes)
 							</div>
@@ -105,7 +105,7 @@
 						<p>
 							<label for="AvgDepth">Average Depth:</label>
 							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(600).Step(1).Format("n0"))
+							@(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(1000).Step(1).Format("n0"))
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.AvgDepth)
 							</div>
@@ -116,7 +116,7 @@
 						<p>
 							<label for="MaxDepth">Max Depth:</label>
 							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(600).Step(1).Format("n0"))
+							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.MaxDepth)
 							</div>
