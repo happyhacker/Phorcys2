@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="Views\End\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties UseCdnSupport="False" /></VisualStudio></ProjectExtensions>

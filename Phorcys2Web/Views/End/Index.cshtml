@@ -1,11 +1,11 @@
 ﻿@using Phorcys2Web.Controllers;
 
 @{
-	ViewBag.Title = "MOD and END Calculator";
+	ViewBag.Title = "END Calculator";
 }
 <script src="/js/DiveCalcs.js"></script>
 
-<h1>MOD and END Calculator</h1>
+<h1>END Calculator</h1>
 
 
 <div id="calculator" align="center">
@@ -34,36 +34,20 @@
 				)
 
 		<br /><br />
-		<label for="PPO2">
-			PPO2:
+		<label for="Depth">
+			Depth:
 		</label>
 		@(Html.Kendo().NumericTextBox()
-				.Name("PPO2")
-				.Value(1.6).Min(.1).Max(4.0)
-				.Step(.1)
-				.Decimals(1)
-				.Format("#.0")
+				.Name("Depth")
+				.Value(0).Min(1).Max(1000)
+				.Decimals(0)
+				.Format("#")
 				.HtmlAttributes(new { style = "width: 100px;" })
 				)
 
-		<br /><br />
-
-		<label for="IsFreshWater">
-			Fresh/Salt Water:
-		</label>
-		<input type="radio" id="Fresh" name="IsFreshWater" value="true" checked="checked" />
-		Fresh
-		<input type="radio" id="Salt" name="IsFreshWater" value="false" />
-		Salt
 
 		<br /> <br />
-		<button type="button" id="button" class="btn btn-primary" onclick="CalcBoth(form1)">Calc</button>
-		<br /><br />
-
-		<label for="MOD">
-			<b>M</b>aximum <b>O</b>perating <b>D</b>epth
-		</label>
-		<input id="MOD" name="MOD" type="number" style="width: 100px;" readonly />
+		<button type="button" id="button" class="btn btn-primary" onclick="CalcEndWithO2(form1)">Calc</button>
 		<br /><br />
 
 		<label for="END">
