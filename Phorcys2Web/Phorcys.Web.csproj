@@ -49,6 +49,12 @@
     <Folder Include="Views\End\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\DiveCalcs.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties UseCdnSupport="False" /></VisualStudio></ProjectExtensions>
   
 </Project>

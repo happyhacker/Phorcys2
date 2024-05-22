@@ -1,4 +1,5 @@
 ﻿function CalcMOD(o2, ppo2, isFreshWater) {
+    alert("CalcMOD");
     var atmDepth = 34;
     var isFresh = GetRadioValue(isFreshWater);
 
@@ -10,7 +11,7 @@
 }
 
 function CalcBoth(formVar) {
-    alert("test");
+    alert("CalcBoth");
     formVar.MOD.value = CalcMOD(formVar.O2.value, formVar.PPO2.value, formVar.IsFreshWater);
     if (formVar.HE.value > 0) {
         formVar.END.value = CalcEND(formVar.HE.value, formVar.MOD.value, GetRadioValue(formVar.IsFreshWater));
@@ -22,9 +23,9 @@ function CalcBoth(formVar) {
 }
 
 function CalcEND(he, depth, isFreshWater) {
-    alert("Message");
+    alert("CalcEND");
     var end;
-    var atmDepth = 33;
+    var atmDepth = 35;
     if (isFreshWater == "true") atmDepth = 34;
     //end = ( (1 - (he / 100)) * (depth + atmDepth)) - atmDepth;
     var1 = 1 - (he / 100);
@@ -34,7 +35,7 @@ function CalcEND(he, depth, isFreshWater) {
 }
 
 function CalcEndWithO2(formVar) {
-    alert("test");
+    alert("CalEndWithO2");
     if (parseInt(formVar.He) + parseInt(formVar.O2) > 100) {
         Alert("O2 + Helium can't exceed 100%");
     } else {
@@ -45,6 +46,7 @@ function CalcEndWithO2(formVar) {
 }
 
 function GetRadioValue(field) {
+    alert("GetRadioValue");
     var value = "";
     for (i = 0; i < field.length; i++) {
         if (field[i].checked) {
