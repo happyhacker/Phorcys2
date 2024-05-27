@@ -38,6 +38,11 @@ namespace Phorcys2Web.Controllers
             return View();
         }
 
+        public IActionResult ComingSoon()
+        {
+            return View();
+        }
+
         [Authorize]
         public IActionResult Contact()
         {

@@ -60,46 +60,52 @@
 						{
 							items.Add().Text("Home").Action("Index", "Home", new { area = "" });
 							items.Add().Text("Gear").Action("Index", "Gear", new { area = "" });
-							items.Add().Text("Locations").Action("Index", "Location", new { area = "" })
+
+							items.Add().Text("Locations")
 							.Items(item =>
 							{
-								item.Add().Text("Locations").Action("Index", "Locaton");
-								item.Add().Text("Sites").Action("Index", "Site");
+								item.Add().Text("Locations").Action("Index", "Location");
+								item.Add().Text("Sites").Action("ComingSoon", "Home");
 							});
+
 							items.Add().Text("Dives")
 							.Items(item =>
 							{
-								@*item.Add().Text("Dive Types").Action("Index", "DiveType");*@
+								/*item.Add().Text("Dive Types").Action("Index", "DiveType");*/
 								item.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
 								item.Add().Text("List Dive Plans").Action("Index", "DivePlan");
 								item.Add().Text("Log Dive").Action("Create", "Dive");
 								item.Add().Text("List Dives").Action("Index", "Dive");
 							});
-							items.Add().Text("Certifications").Action("Index", "Certifications", new { area = "" })
+
+							items.Add().Text("Certifications")
 							.Items(item =>
 							{
-								item.Add().Text("Agency Certifications").Action("Index", "Certifications");
-								item.Add().Text("My Certifications").Action("Index", "DiverCertifications");
+								item.Add().Text("Agency Certifications").Action("ComingSoon", "Home");
+								item.Add().Text("My Certifications").Action("ComingSoon", "Home");
 							});
-							items.Add().Text("Contacts").Action("Index", "Contact", new { area = "" });
+
+							items.Add().Text("Contacts").Action("ComingSoon", "Home", new { area = "" });
+
 							items.Add().Text("Calculators")
 							.Items(item =>
 							{
 								item.Add().Text("MOD & END").Action("Index", "ModEnd");
 								item.Add().Text("END").Action("Index", "End");
 							});
+
 							items.Add().Text("About").Action("About", "Home", new { area = "" });
-							if(User.Identity.IsAuthenticated)
-						{
+							if (User.Identity.IsAuthenticated)
+							{
 								items.Add().Text("Logout").Url("/Identity/Account/Logout");
 							}
-						else
+							else
 							{
 								items.Add().Text("Login").Url("/Identity/Account/Login");
 							}
 						}
 						)
-		   )
+						)
 		</kendo-responsivepanel>
 	</div>
 
