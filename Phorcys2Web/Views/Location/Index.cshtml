@@ -1,0 +1,108 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@{
+	ViewData["Title"] = "Dive Locations";
+}
+@model IEnumerable<Phorcys.Web.Models.LocationViewModel>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+	</div>
+</section>
+
+<div id="message" class="pageMessage">
+	@{
+		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
+		{
+		}
+			<p id="pageMessage">
+				@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+			</p>
+	}
+</div>
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+<p>
+	@*Html.ActionLink("Enter New Dive Plan", "Create", "DivePlan")*@
+	<form action="@Url.Action("Create", "Location")" method="get">
+		<button type="submit" class="btn btn-primary">Enter New Location</button>
+	</form>
+</p>
+
+<div class="row">
+	<div class="col-12">
+		@(
+				Html.Kendo().Grid(Model)
+				.Name("Grid")
+				.Columns(columns =>
+				{
+					columns.Bound(p => p.DiveLocationId).Hidden(true);
+					columns.Bound(p => p.Title);
+					columns.Bound(p => p.Notes).Width(100).Hidden(true);
+					columns.Command(command =>
+					{
+						command.Custom("Edit").Click("onEdit");
+						command.Custom("Delete").Click("onDelete");
+					});
+				})
+				.Height(700)
+				.Mobile()
+				.Resizable(resize => resize.Columns(true)
+				)
+				.ToolBar(toolbar =>
+				{
+					toolbar.Excel();
+					toolbar.Pdf();
+					toolbar.Search();
+				})
+				.Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+				.Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+				.ColumnMenu(col => col.Filterable(true))
+				.Pageable(pageable => pageable
+				.ButtonCount(5)
+				.Refresh(true)
+				.PageSizes(new[] { 5, 10, 20, 40, 800 }))
+				.Sortable()
+				.Groupable()
+				.Filterable()
+				.Scrollable()
+				@*.HtmlAttributes(new { style = "height:700px;" })*@
+				)
+	</div>
+</div>
+
+@using (Html.BeginForm("Delete", "Location", FormMethod.Post, new { id = "hiddenDeleteForm", style = "display:none;" }))
+{
+	@Html.AntiForgeryToken()
+	<input type="hidden" name="DivePlanId" id="hiddenDiveLocationId" value="" />
+}
+<script>
+	function onDelete(e) {
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
+
+		var diveLocationId = data.DiveLocationId;
+		if (confirm("Are you sure you want to delete this location?")) {
+			// Set the DivePlanId in the hidden form and submit the form
+			$('#hiddenDivePlanId').val(diveLocationId);
+			$('#hiddenDeleteForm').submit();
+		}
+	}
+
+	function onEdit(e) {
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
+
+		var diveLocationId = data.DiveLocationId;
+		//alert("DivePlanId = " + divePlanId);
+		window.location.href = '@Url.Action("Edit", "Location")/' + diveLocationId;
+	}
+</script>
+
