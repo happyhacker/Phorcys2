@@ -43,7 +43,7 @@
 				{
 					columns.Bound(p => p.DiveLocationId).Hidden(true);
 					columns.Bound(p => p.Title);
-					columns.Bound(p => p.Notes).Width(100).Hidden(true);
+					columns.Bound(p => p.Notes);
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");
@@ -68,7 +68,6 @@
 				.Refresh(true)
 				.PageSizes(new[] { 5, 10, 20, 40, 800 }))
 				.Sortable()
-				.Groupable()
 				.Filterable()
 				.Scrollable()
 				@*.HtmlAttributes(new { style = "height:700px;" })*@

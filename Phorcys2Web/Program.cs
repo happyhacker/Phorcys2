@@ -25,6 +25,7 @@ builder.Services.AddScoped<DivePlanServices>();
 builder.Services.AddScoped<DiveSiteServices>();
 builder.Services.AddScoped<DiveServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<LocationServices>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<PhorcysContext>();

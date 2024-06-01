@@ -5,15 +5,6 @@ using Phorcys.Domain;
 
 namespace Phorcys.Data;
 
-/*public class PhorcysContext : IdentityDbContext
-{
-	public PhorcysContext(DbContextOptions<PhorcysContext> options)
-		: base(options)
-	{
-	}
-}
-*/
-
 public class PhorcysContext : IdentityDbContext<IdentityUser>
 {
 	public PhorcysContext(DbContextOptions<PhorcysContext> options)
@@ -34,6 +25,6 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<User> Users { get; set; }
 	public DbSet<Contact> Contacts { get; set; }
 	public DbSet<DiveSite> DiveSites { get; set; }
-	public DbSet<DiveLocation> Locations { get; set; }
+	public DbSet<DiveLocation> DiveLocations { get; set; }
 
 }
