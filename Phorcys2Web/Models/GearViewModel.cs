@@ -12,11 +12,9 @@ namespace Phorcys.Web.Models
 		public string Title { get; set; } = null!;
 
 		[DisplayName("Retail Price")]
-		[Range(0, double.MaxValue, ErrorMessage = "Please enter a valid amount.")]
         public decimal? RetailPrice { get; set; }
 
 		[DisplayName("Paid")]
-		[Range(0, double.MaxValue, ErrorMessage = "Please enter a valid amount.")]
 		public decimal? Paid { get; set; }
 		public string? Sn { get; set; }
 		public DateTime? Acquired { get; set; }

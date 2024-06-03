@@ -1,0 +1,149 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.GearViewModel
+
+@{
+	ViewData["Title"] = "New Gear";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+<div class="pageMessage">
+	@Html.ValidationSummary()
+</div>
+
+@using (Html.BeginForm("Create", "Gear", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="pageMessage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<fieldset>
+
+					<div>
+						<p>
+							<label for="Title">Title:</label>
+							<br />
+							@Html.EditorFor(m => m.Title)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Title)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="SN">Serial #:</label>
+							<br />
+							@(Html.Kendo().TextBoxFor(m => m.Sn))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Sn)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Acquired">Acquired Date:</label>
+							<br />
+
+							@(Html.Kendo().DatePicker()
+														.Name("Acquired")
+														.Value(DateTime.Today)
+														.HtmlAttributes(new { @style = "width: 300px;" })
+														)
+							@Html.ValidationMessageFor(m => m.Acquired)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="RetailPrice">Retail Price:</label>
+							<br />
+							@(Html.Kendo().CurrencyTextBoxFor(m => m.RetailPrice))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.RetailPrice)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Paid">Paid:</label>
+							<br />
+							@(Html.Kendo().CurrencyTextBoxFor(m => m.Paid))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Paid)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Weight">Weight:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.Weight))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Weight)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							@(Html.Kendo().TextAreaFor(m => m.Notes).Rows(6))
+							<br />
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Notes)
+							</div>
+						</p>
+					</div>
+
+					<div>
+
+						@(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+													//.Icon("save")
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+													.Content("Save")
+													)
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "Gear")';
+	}
+</script>

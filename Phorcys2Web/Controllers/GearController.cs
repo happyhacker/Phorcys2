@@ -65,6 +65,43 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
+		[Authorize]
+		[HttpGet]
+		public ActionResult Create()
+		{
+			var model = new GearViewModel();
+			return View(model);
+		}
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(GearViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var gear = new Gear();
+				gear.Title = model.Title;
+				gear.Sn = model.Sn;
+				gear.Acquired = model.Acquired;
+				gear.RetailPrice = model.RetailPrice;
+				gear.Paid = model.Paid;
+				gear.Weight = model.Weight;
+				gear.Notes = model.Notes;
+				gear.Created = DateTime.Now;
+				gear.LastModified = DateTime.Now;
+				int userId = _userServices.GetUserId();
+				gear.UserId = userId;
+				_gearServices.SaveNewGear(gear);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive gear was successfully created.";
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
+
 		private List<GearViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Gear> gearList)
 		{
 			List<GearViewModel> models = new List<GearViewModel>();

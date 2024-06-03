@@ -1,4 +1,5 @@
-﻿using Phorcys.Data;
+﻿using Microsoft.Data.SqlClient;
+using Phorcys.Data;
 using Phorcys.Domain;
 using System;
 using System.Collections.Generic;
@@ -40,5 +41,20 @@ namespace Phorcys.Services
 				_context.SaveChanges();
 			}
 		}
+
+		public void SaveNewGear(Gear gear)
+		{
+			try
+			{
+				_context.Gear.Add(gear);
+				_context.SaveChanges();
+			}
+			catch (SqlException ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
+
+
 	}
 }
