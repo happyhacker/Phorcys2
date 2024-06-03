@@ -26,6 +26,6 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<Contact> Contacts { get; set; }
 	public DbSet<DiveSite> DiveSites { get; set; }
 	public DbSet<DiveLocation> DiveLocations { get; set; }
-	public DbSet<Gear> GearList { get; set; }
+	public DbSet<Gear> Gear { get; set; }
 
 }

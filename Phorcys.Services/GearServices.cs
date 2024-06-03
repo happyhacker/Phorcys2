@@ -21,7 +21,7 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var gearList = _context.GearList.Where(r => r.UserId == userId || r.UserId == systemUser).OrderBy(l => l.Title).ToList();
+				var gearList = _context.Gear.Where(r => r.UserId == userId || r.UserId == systemUser).OrderByDescending(l => l.Acquired).ToList();
 				return gearList;
 			}
 			catch (Exception ex)
@@ -31,5 +31,14 @@ namespace Phorcys.Services
 			}
 		}
 
+		public void Delete(int id)
+		{
+			var gear = _context.Gear.Find(id);
+			if (gear != null)
+			{
+				_context.Gear.Remove(gear);
+				_context.SaveChanges();
+			}
+		}
 	}
 }

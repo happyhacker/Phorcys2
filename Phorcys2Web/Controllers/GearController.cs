@@ -5,6 +5,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys.Web.Models;
 using Phorcys.Domain;
+using Phorcys2Web.Controllers;
 
 namespace Phorcys.Web.Controllers
 {
@@ -45,6 +46,23 @@ namespace Phorcys.Web.Controllers
 
 
 			return View();
+		}
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Delete(int GearId)
+		{
+			try
+			{
+				_gearServices.Delete(GearId);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Gear successfully deleted.";
+				return RedirectToAction("Index");
+			}
+			catch (Exception ex)
+			{
+				return View("Error");
+			}
 		}
 
 		private List<GearViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Gear> gearList)
