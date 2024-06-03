@@ -6,6 +6,7 @@ using Phorcys.Domain;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using Phorcys2Web.Controllers;
 
 namespace Phorcys.Web.Controllers
 {
@@ -49,6 +50,57 @@ namespace Phorcys.Web.Controllers
 			{
 				// Handle or log the exception as appropriate
 				return View("Error"); // Or another appropriate response
+			}
+		}
+
+		[Authorize]
+		[HttpGet]
+		public ActionResult Create()
+		{
+			var model = new LocationViewModel();
+
+			return View(model);
+		}
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(LocationViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var location = new DiveLocation();
+				location.Title = model.Title;
+				location.Notes = model.Notes;
+				location.Created = DateTime.Now;
+				location.LastModified = DateTime.Now;
+				int userId = _userServices.GetUserId();
+				location.UserId = userId;
+				_locationServices.SaveNewLocation(location);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Location was successfully created.";
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
+
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Delete(int DiveLocationId)
+		{
+			try
+			{
+				_locationServices.Delete(DiveLocationId);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Location successfully deleted.";
+				return RedirectToAction("Index");
+			}
+			catch (Exception ex)
+			{
+				return View("Error"); // Or redirect to a different view as appropriate
 			}
 		}
 

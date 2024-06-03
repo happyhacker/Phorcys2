@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Phorcys.Domain;
+using Microsoft.Data.SqlClient;
 
 namespace Phorcys.Services
 {
@@ -26,6 +27,29 @@ namespace Phorcys.Services
 			} catch(Exception ex) {
 			    Console.WriteLine(ex.Message);
 				throw new Exception("Can not connect to database");
+			}
+		}
+
+		public void SaveNewLocation(DiveLocation location)
+		{
+			try
+			{
+				_context.DiveLocations.Add(location);
+				_context.SaveChanges();
+			}
+			catch (SqlException ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
+
+		public void Delete(int id)
+		{
+			var location = _context.DiveLocations.Find(id);
+			if (location != null)
+			{
+				_context.DiveLocations.Remove(location);
+				_context.SaveChanges();
 			}
 		}
 	}
