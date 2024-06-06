@@ -55,11 +55,17 @@
 		<kendo-responsivepanel name="responsive-panel" auto-close="false" breakpoint="768" orientation="top">
 			@(
 						Html.Kendo().Menu()
-						.Name("Menu")
-						.Items(items =>
-						{
-							items.Add().Text("Home").Action("Index", "Home", new { area = "" });
-							items.Add().Text("Gear").Action("Index", "Gear", new { area = "" });
+									.Name("Menu")
+									.Items(items =>
+									{
+										items.Add().Text("Home").Action("Index", "Home", new { area = "" });
+										items.Add().Text("Gear")
+										.Items(item =>
+										{
+											item.Add().Text("Add Gear").Action("Create", "Gear");
+											item.Add().Text("List Gear").Action("Index", "Gear");
+										}
+							);
 
 							items.Add().Text("Locations")
 							.Items(item =>

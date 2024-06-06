@@ -24,6 +24,22 @@ namespace Phorcys.Web.Models
 		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid weight.")]
 		public double? Weight { get; set; }
 
+		[DisplayName("Tank Volume")]
+		[Range(1,5000, ErrorMessage = "Please enter a valid volume.")]
+		public int? TankVolume { get; set; }
+
+		[DisplayName("Tank Pressure")]
+		[Range(1, 5000, ErrorMessage = "Please enter a valid Pressure.")]
+		public int? TankPressure { get; set; }
+		
+		[DisplayName("Manufactured Month")]
+		[Range(1, 12, ErrorMessage = "Please enter a valid month.")]
+		public int? ManufacturedMonth { get; set; }
+
+		[DisplayName("Manufactured Year")]
+		[Range(0, 99, ErrorMessage = "Please enter a valid year.")]
+		public int? ManufacturedYear { get; set; }	
+		
 		public string? Notes { get; set; }
 		public int UserId { get; set; }
 	}

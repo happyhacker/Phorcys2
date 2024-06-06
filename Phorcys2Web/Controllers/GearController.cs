@@ -65,7 +65,7 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
-		[Authorize]
+		
 		[HttpGet]
 		public ActionResult Create()
 		{
