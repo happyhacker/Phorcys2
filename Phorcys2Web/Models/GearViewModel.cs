@@ -25,7 +25,7 @@ namespace Phorcys.Web.Models
 		public double? Weight { get; set; }
 
 		[DisplayName("Tank Volume")]
-		[Range(1,5000, ErrorMessage = "Please enter a valid volume.")]
+		[Range(1,200, ErrorMessage = "Please enter a valid volume.")]
 		public int? TankVolume { get; set; }
 
 		[DisplayName("Tank Pressure")]

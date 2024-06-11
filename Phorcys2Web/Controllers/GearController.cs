@@ -65,7 +65,7 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
-		
+		[Authorize]
 		[HttpGet]
 		public ActionResult Create()
 		{
@@ -92,6 +92,7 @@ namespace Phorcys.Web.Controllers
 				gear.LastModified = DateTime.Now;
 				int userId = _userServices.GetUserId();
 				gear.UserId = userId;
+
 				_gearServices.SaveNewGear(gear);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive gear was successfully created.";
 				return RedirectToAction("Index");

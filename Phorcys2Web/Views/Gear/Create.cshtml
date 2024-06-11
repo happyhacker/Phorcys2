@@ -97,13 +97,14 @@
                             </div>
                         </p>
                     </div>
-
-                    <div id="expansionPanel">
+                   <br/>
+                    
+                   <div>
                         @(
-                            Html.Kendo().ExpansionPanel()
-                            .Name("expansionPanel")
-                            .Title("If this is a tank")
-                            .Content(@<text>
+                        Html.Kendo().ExpansionPanel()
+                                    .Name("expansionPanel")
+                                    .Title("If this is a tank")
+                                    .Content(@<text>
                         <div>
                             <label for="TankVolume">Tank Volume:</label>
                             <br />
@@ -135,7 +136,7 @@
                         <div>
                             <label for="ManufacuredYear">Manufactured Year:</label>
                             <br />
-                            @(Html.Kendo().NumericTextBoxFor(m => m.ManufacturedYear).Format("n0"))
+                            @(Html.Kendo().NumericTextBoxFor(m => m.ManufacturedYear).Format("n00"))
                             <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.ManufacturedYear)
                             </div>
@@ -143,7 +144,7 @@
 
                     </text>)
                             )
-                    </div>
+                     </div>
 
                     <div>
                         <br />
@@ -183,10 +184,4 @@
     function redirectToIndex() {
         window.location.href = '@Url.Action("Index", "Gear")';
     }
-
-    $(document).ready(function () {
-        $("#expansionPanel").kendoExpansionPanel({
-            expanded: true // Ensures the panel is expanded by default
-        });
-    });
 </script>
