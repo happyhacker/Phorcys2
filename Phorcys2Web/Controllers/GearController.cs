@@ -93,6 +93,17 @@ namespace Phorcys.Web.Controllers
 				int userId = _userServices.GetUserId();
 				gear.UserId = userId;
 
+				if (model.WorkingPressure > 0 || model.TankVolume > 0 || model.ManufacturedMonth > 0 || model.ManufacturedYear > 0)
+				{
+					Tank tank = new Tank();
+					tank.Volume = model.TankVolume;
+					tank.WorkingPressure = model.WorkingPressure;
+					tank.ManufacturedMonth = model.ManufacturedMonth;
+					tank.ManufacturedYear = model.ManufacturedYear;
+					tank.GearId = gear.GearId;
+					gear.Tank = tank;
+					tank.Gear = gear;
+				}
 				_gearServices.SaveNewGear(gear);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive gear was successfully created.";
 				return RedirectToAction("Index");

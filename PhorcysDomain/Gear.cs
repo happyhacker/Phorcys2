@@ -29,7 +29,9 @@ public partial class Gear
 
     public DateTime? LastModified { get; set; }
 
-	//public virtual User User { get; set; } = null!;
+    public virtual Tank? Tank { get; set; }
+        
+    //public virtual User User { get; set; } = null!;
 
 	//public int? ManufacturerId { get; set; }
 	//public int? PurchasedFromContactId { get; set; }
@@ -43,7 +45,7 @@ public partial class Gear
 
 	//public virtual SoldGear? SoldGear { get; set; }
 
-	//public virtual Tank? Tank { get; set; }
+
 
 	//public virtual ICollection<DivePlan> DivePlans { get; set; } = new List<DivePlan>();
 

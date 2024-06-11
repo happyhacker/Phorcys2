@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 namespace Phorcys.Domain;
 
 public partial class Tank
 {
+    [Key]
     public int GearId { get; set; }
 
     public int? Volume { get; set; }
@@ -17,5 +19,5 @@ public partial class Tank
 
     public virtual Gear Gear { get; set; } = null!;
 
-    public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
+    //public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
 }
