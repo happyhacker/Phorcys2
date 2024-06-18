@@ -23,7 +23,7 @@
 	@Html.ValidationSummary()
 </div>
 
-@using (Html.BeginForm("Create", "Location", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Location", FormMethod.Post))
 {
 	@Html.AntiForgeryToken()
 
@@ -36,7 +36,7 @@
 			<div class="col-md-6">
 
 				<fieldset>
-
+					@Html.HiddenFor(m => m.DiveLocationId)
 					<div>
 						<p>
 							<label for="Title">Title:</label>

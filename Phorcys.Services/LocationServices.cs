@@ -1,5 +1,4 @@
-﻿using Phorcys.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,9 @@ using Phorcys.Domain;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Phorcys.Data;
+using Phorcys.Data.DTOs;
 
 namespace Phorcys.Services
 {
@@ -48,6 +50,22 @@ namespace Phorcys.Services
             }
         }
 
+        public void EditLocation(LocationDto locationDto)
+        {
+            try
+            {
+                var location = GetLocation(locationDto.DiveLocationId);
+                location.Title = locationDto.Title;
+                location.Notes = locationDto.Notes;
+                location.LastModified = DateTime.Now;
+
+                _context.Entry(location).State = EntityState.Modified;
+                _context.SaveChanges();
+            } catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         public DiveLocation GetLocation(int id)
         {
             try

@@ -2,6 +2,7 @@
 using Phorcys.Services;
 using Phorcys.Web.Models;
 using Phorcys.Data;
+using Phorcys.Data.DTOs;
 using Phorcys.Domain;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Globalization;
@@ -101,6 +102,20 @@ namespace Phorcys.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(LocationViewModel model) 
+        {
+            var location = new LocationDto();
+            location.DiveLocationId = model.DiveLocationId;
+            location.Title = model.Title;
+            location.Notes = model.Notes;
+
+            _locationServices.EditLocation(location);
+
+            return RedirectToAction("Index");
+        }
 
         [Authorize]
         [HttpPost]
