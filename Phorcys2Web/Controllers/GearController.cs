@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Phorcys.Web.Models;
 using Phorcys.Domain;
 using Phorcys2Web.Controllers;
+using Phorcys.Data.DTOs;
 
 namespace Phorcys.Web.Controllers
 {
@@ -33,7 +34,7 @@ namespace Phorcys.Web.Controllers
 		{
 			try
 			{
-				var gearList = _gearServices.GetGear(_userServices.GetUserId());
+				var gearList = _gearServices.GetGearList(_userServices.GetUserId());
 				var model = CreateIndexModel(gearList);
 
 				return View(model);
@@ -112,6 +113,60 @@ namespace Phorcys.Web.Controllers
 			{
 				return View(model);
 			}
+		}
+
+		[Authorize]
+		[HttpGet]
+		public ActionResult Edit(int id) 
+			{
+			var model = new GearViewModel();
+			var gearDto = _gearServices.GetGear(id);
+			if (gearDto != null)
+			{
+				model.GearId = gearDto.GearId;
+				model.Title = gearDto.Title;
+				model.Acquired = gearDto.Acquired;
+				model.RetailPrice = gearDto.RetailPrice;
+				model.Paid = gearDto.Paid;
+				model.Sn = gearDto.Sn;
+				model.NoLongerUse = gearDto.NoLongerUse;
+				model.Weight = gearDto.Weight;
+				model.Notes = gearDto.Notes;
+				model.TankVolume = gearDto.Volume;
+				model.WorkingPressure = gearDto.WorkingPressure;
+				model.ManufacturedMonth = gearDto.ManufacturedMonth;
+				model.ManufacturedYear = gearDto.ManufacturedYear;
+			}
+			return View(model); 
+		}
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit(GearViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var gearDto = new GearDto();
+
+				gearDto.GearId = model.GearId;
+				gearDto.Title = model.Title;
+				gearDto.Acquired = model.Acquired;
+				gearDto.RetailPrice = model.RetailPrice;
+				gearDto.Paid = model.Paid;
+				gearDto.Sn = model.Sn;
+				gearDto.NoLongerUse = model.NoLongerUse;
+				gearDto.Weight = model.Weight;
+				gearDto.Notes = model.Notes;
+				gearDto.Volume = model.TankVolume;
+				gearDto.WorkingPressure = model.WorkingPressure;
+				gearDto.ManufacturedMonth = model.ManufacturedMonth;
+				gearDto.ManufacturedYear = model.ManufacturedYear;
+						
+				_gearServices.EditGear(gearDto);
+				return RedirectToAction("Index");
+			}
+			else { return View(model); }
 		}
 
 		private List<GearViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Gear> gearList)
