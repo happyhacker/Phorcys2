@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Phorcys.Services
 {
@@ -22,7 +23,7 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var diveSites = _context.DiveSites.Where(r => r.UserId == userId || r.UserId == systemUser).OrderBy(ds => ds.Title).ToList();
+				var diveSites = _context.DiveSites.Include(d => d.DiveLocation).Where(r => r.UserId == userId || r.UserId == systemUser).OrderBy(ds => ds.Title).ToList();
 				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},
@@ -35,6 +36,26 @@ namespace Phorcys.Services
 			{
 				Console.WriteLine(ex.Message);
 				throw new Exception("Can't connect to database");
+			}
+		}
+
+		public void Delete(int id)
+		{
+			try
+			{
+				var site = _context.DiveSites.Find(id);
+				if (site != null)
+				{
+					_context.DiveSites.Remove(site);
+					_context.SaveChanges();
+				}
+			}catch(DbUpdateException ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw ex;
+			}catch(Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 			}
 		}
 

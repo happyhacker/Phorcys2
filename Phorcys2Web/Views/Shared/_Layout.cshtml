@@ -63,15 +63,15 @@
 										.Items(item =>
 										{
 											item.Add().Text("Add Gear").Action("Create", "Gear");
-											item.Add().Text("List Gear").Action("Index", "Gear");
+											item.Add().Text("Display Gear").Action("Index", "Gear");
 										}
 							);
 
 							items.Add().Text("Locations")
 							.Items(item =>
 							{
-								item.Add().Text("Locations").Action("Index", "Location");
-								item.Add().Text("Sites").Action("ComingSoon", "Home");
+								item.Add().Text("Display Locations").Action("Index", "Location");
+								item.Add().Text("Display Sites").Action("Index", "Site");
 							});
 
 							items.Add().Text("Dives")
@@ -79,9 +79,9 @@
 							{
 								/*item.Add().Text("Dive Types").Action("Index", "DiveType");*/
 								item.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
-								item.Add().Text("List Dive Plans").Action("Index", "DivePlan");
+								item.Add().Text("Display Dive Plans").Action("Index", "DivePlan");
 								item.Add().Text("Log Dive").Action("Create", "Dive");
-								item.Add().Text("List Dives").Action("Index", "Dive");
+								item.Add().Text("Display Dives").Action("Index", "Dive");
 							});
 
 							items.Add().Text("Certifications")
