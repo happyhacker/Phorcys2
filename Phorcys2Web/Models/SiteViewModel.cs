@@ -9,6 +9,8 @@ namespace Phorcys.Web.Models
 
         public IList<SelectListItem> LocationList { get; set; }
 
+        public int LocationSelectedId { get; set; }
+
         public int? DiveLocationId { get; set; }
 
         public string LocationTitle { get; set; }

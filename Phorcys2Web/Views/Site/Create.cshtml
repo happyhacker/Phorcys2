@@ -41,15 +41,15 @@
 						<p>
 							<label for="Dive Location">Dive Location:</label>
 							<br />
-							@(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
+							@(Html.Kendo().DropDownListFor(m => m.LocationSelectedId)
 														.DataTextField("Text")
 														.DataValueField("Value")
-														.BindTo(Model.DivePlanList)
-														.OptionLabel("Select a Dive Plan")
+														.BindTo(Model.LocationList)
+														.OptionLabel("Select a Location")
 														.HtmlAttributes(new { @class = "form-control" })
 														)
 							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.DivePlanSelectedId)
+								@Html.ValidationMessageFor(m => m.LocationSelectedId)
 							</div>
 						</p>
 					</div>
@@ -58,7 +58,7 @@
 						<p>
 							<label for="Title">Title:</label>
 							<br />
-							@Html.EditorFor(m => m.Title)
+							@Html.Kendo().TextBoxFor(m => m.Title)
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Title)
 							</div>
@@ -67,9 +67,41 @@
 
 					<div>
 						<p>
+							<label for="IsFreshWaterTrue">Fresh or Salt Water</label>
+							<br />
+							@(Html.Kendo().RadioButtonFor(m => m.IsFreshWater).Label("Fresh").Value(true))
+							@(Html.Kendo().RadioButtonFor(m => m.IsFreshWater).Label("Salt").Value(false))
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="MaxDepth">Max Depth:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.MaxDepth)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Geocode">Geocode:</label>
+							<br />
+							Example: 30.790484,-85.140075 <br />
+							@Html.Kendo().TextBoxFor(m => m.GeoCode)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.GeoCode)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
 							<label for="Notes">Notes:</label>
 							<br />
-							@(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
+							@(Html.Kendo().EditorFor(m => m.Notes))
 							<br />
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Notes)

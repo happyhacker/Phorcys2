@@ -71,7 +71,9 @@
 							.Items(item =>
 							{
 								item.Add().Text("Display Locations").Action("Index", "Location");
+								item.Add().Text("Add a Location").Action("Create", "Location");
 								item.Add().Text("Display Sites").Action("Index", "Site");
+								item.Add().Text("Add a Site").Action("Create", "Site");
 							});
 
 							items.Add().Text("Dives")
