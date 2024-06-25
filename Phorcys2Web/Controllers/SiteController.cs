@@ -10,6 +10,7 @@ using Phorcys.Web.Models;
 using System.Collections;
 using Phorcys2Web.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Phorcys.Web.Controllers
 {
@@ -57,10 +58,9 @@ namespace Phorcys.Web.Controllers
 		public ActionResult Create()
 		{
 			var model = new SiteViewModel();
-			//model.LocationList = BuildLocationList();
+			model.LocationList = BuildLocationList();
 
-			//return View(model);
-			return RedirectToAction("ComingSoon", "Home");
+			return View(model);
 		}
 
 		[Authorize]
@@ -94,6 +94,23 @@ namespace Phorcys.Web.Controllers
 			}
 
 			return RedirectToAction("Index");
+		}
+
+		private IList<SelectListItem> BuildLocationList()
+		{
+			string loggedInId = _userServices.GetLoggedInUserId();
+			IList<SelectListItem> locationList = new List<SelectListItem>();
+			IEnumerable<DiveLocation> locations = _locationServices.GetLocations(_userServices.GetUserId());
+			SelectListItem item;
+
+			foreach (var location in locations)
+			{
+				item = new SelectListItem();
+				item.Text = location.Title;
+				item.Value = location.DiveLocationId.ToString();
+				locationList.Add(item);
+			}
+			return locationList;
 		}
 
 
