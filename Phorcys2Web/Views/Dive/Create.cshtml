@@ -58,7 +58,7 @@
 						<p>
 							<label for="Title">Title:</label>
 							<br />
-							@Html.EditorFor(m => m.Title)
+							@Html.Kendo().TextBoxFor(m => m.Title)
 							<div class="pageMessage">
 								@Html.ValidationMessageFor(m => m.Title)
 							</div>
