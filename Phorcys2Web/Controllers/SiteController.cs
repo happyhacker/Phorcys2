@@ -11,6 +11,7 @@ using System.Collections;
 using Phorcys2Web.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Phorcys.Data.DTOs;
 
 namespace Phorcys.Web.Controllers
 {
@@ -61,6 +62,29 @@ namespace Phorcys.Web.Controllers
 			model.LocationList = BuildLocationList();
 
 			return View(model);
+		}
+
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Create(SiteViewModel model) {
+			if (ModelState.IsValid)
+			{
+				var siteDto = new SiteDto();
+				siteDto.UserId = _userServices.GetUserId();
+				siteDto.DiveLocationId = model.DiveLocationId;	
+				siteDto.Title = model.Title;				
+				siteDto.MaxDepth = model.MaxDepth;	
+				siteDto.IsFreshWater = model.IsFreshWater;	
+				siteDto.GeoCode = model.GeoCode;
+				siteDto.Notes = model.Notes;
+
+				_diveSiteServices.Save(siteDto);
+
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View();
+			}
 		}
 
 		[Authorize]

@@ -77,9 +77,7 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
-		[Authorize]
-		[HttpPost]
-		[ValidateAntiForgeryToken]
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
 		public ActionResult Create(DiveViewModel model)
 		{
 			if (ModelState.IsValid)

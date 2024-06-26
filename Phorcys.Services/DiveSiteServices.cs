@@ -1,4 +1,5 @@
 ﻿using Phorcys.Data;
+using Phorcys.Data.DTOs;
 using Phorcys.Domain;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,29 @@ namespace Phorcys.Services
 			}
 		}
 
+		public void Save(SiteDto siteDto) { 
+		  try
+			{
+				var site = new DiveSite();
+				site.UserId	= siteDto.UserId;				
+				site.Title = siteDto.Title;
+				site.DiveLocationId = siteDto.DiveLocationId;
+				site.IsFreshWater = siteDto.IsFreshWater;
+				site.MaxDepth = siteDto.MaxDepth;
+				site.GeoCode = siteDto.GeoCode;
+				site.Notes = siteDto.Notes;
+				site.Created = DateTime.Now;
+				site.LastModified = DateTime.Now;
+
+				_context.DiveSites.Add(site);
+				_context.SaveChanges();
+
+			} catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+		}
+		
 		public void Delete(int id)
 		{
 			try
