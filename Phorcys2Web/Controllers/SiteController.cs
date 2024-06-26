@@ -70,7 +70,7 @@ namespace Phorcys.Web.Controllers
 			{
 				var siteDto = new SiteDto();
 				siteDto.UserId = _userServices.GetUserId();
-				siteDto.DiveLocationId = model.DiveLocationId;	
+				siteDto.DiveLocationId = model.LocationSelectedId;	
 				siteDto.Title = model.Title;				
 				siteDto.MaxDepth = model.MaxDepth;	
 				siteDto.IsFreshWater = model.IsFreshWater;	
