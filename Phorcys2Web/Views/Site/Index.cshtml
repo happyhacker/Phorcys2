@@ -44,6 +44,16 @@
 					columns.Bound(p => p.LocationTitle).Title("Location");
 					columns.Bound(p => p.Title).Title("Site");
 					columns.Bound(p => p.MaxDepth).Width(120);
+					columns.Bound(p => p.SiteMapUrl)
+					.Title("Map")
+					.ClientTemplate(
+					"# if (SiteMapUrl) { #" +
+					"<a href='#= SiteMapUrl #' target='_blank'>View Map</a>" +
+					"# } else { #" +
+					"No Map Available" +
+					"# } #"
+					)
+					.HtmlAttributes(new { @class = "grid" });
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
 					columns.Command(command => command.Custom("Delete").Click("onDelete"));
 				})

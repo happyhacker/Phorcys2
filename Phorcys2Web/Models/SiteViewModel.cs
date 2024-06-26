@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 namespace Phorcys.Web.Models
 {
     public class SiteViewModel
@@ -24,7 +25,9 @@ namespace Phorcys.Web.Models
         [DisplayName("Geo Code")]
         public string? GeoCode { get; set; }
 
-        [DisplayName("Max Depth")]
+		public string SiteMapUrl => $"http://maps.google.com/maps?q={GeoCode}&ll={GeoCode}&z=14\\";
+
+		[DisplayName("Max Depth")]
         [Range(0, 1200, ErrorMessage = "Please enter a reasonable depth you Sheck wannabe :-)")]
         public int? MaxDepth { get; set; }
 
@@ -35,5 +38,26 @@ namespace Phorcys.Web.Models
 
         public DateTime LastModified { get; set; }
 
-    }
+		public virtual string Url4Map(string geoCode)
+		{
+			var retVal = new StringBuilder("");
+
+			if (geoCode != null && geoCode.Trim().Length > 0)
+			{
+				retVal.Append("<a href=\"http://maps.google.com/maps?q=");
+				retVal.Append(geoCode.Trim());
+				//arrow is centered
+				retVal.Append("&ll=");
+				retVal.Append(geoCode.Trim());
+				//zoom level
+				retVal.Append("&z=14");
+				retVal.Append("\"");
+				retVal.Append(" target=\"_blank\" ");
+				//retVal.Append("onclick='return ! window.open(this.href);'");
+				retVal.Append(">Map</a>");
+			}
+			return retVal.ToString();
+		}
+
+	}
 }

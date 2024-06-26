@@ -12,6 +12,7 @@ using Phorcys2Web.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Phorcys.Data.DTOs;
+using System.Text;
 
 namespace Phorcys.Web.Controllers
 {
@@ -152,10 +153,32 @@ namespace Phorcys.Web.Controllers
 				{
 					model.LocationTitle = site.DiveLocation.Title;
 				}
+				model.GeoCode = site.GeoCode;
 				model.MaxDepth = site.MaxDepth;
+
 				siteViewModels.Add(model);
 			}
 			return siteViewModels;     
+		}
+
+		private string Url4Map(string geoCode)
+		{
+			var retVal = new StringBuilder("");
+
+			if (geoCode != null && geoCode.Trim().Length > 0)
+			{
+				retVal.Append("<a href=\"http://maps.google.com/maps?q=");
+				retVal.Append(geoCode.Trim());
+				//arrow is centered
+				retVal.Append("&ll=");
+				retVal.Append(geoCode.Trim());
+				//zoom level
+				retVal.Append("&z=14");
+				retVal.Append("\"");
+				//retVal.Append(" target=\"_blank\" ");
+				//retVal.Append(">Map</a>");
+			}
+			return retVal.ToString();
 		}
 
 	}
