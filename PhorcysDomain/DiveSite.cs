@@ -7,7 +7,7 @@ public partial class DiveSite
 {
     public int DiveSiteId { get; set; }
 
-    public int? DiveLocationId { get; set; }
+    public int DiveLocationId { get; set; }
 
     public string Title { get; set; } = null!;
 

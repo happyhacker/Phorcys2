@@ -17,7 +17,7 @@ namespace Phorcys.Data.DTOs
 
 		public int LocationSelectedId { get; set; }
 
-		public int? DiveLocationId { get; set; }
+		public int DiveLocationId { get; set; }
 
 		public string LocationTitle { get; set; }
 

@@ -16,18 +16,18 @@ using System.Text;
 
 namespace Phorcys.Web.Controllers
 {
-    public class SiteController : Controller
-    {
-        private readonly DiveSiteServices _diveSiteServices;
+	public class SiteController : Controller
+	{
+		private readonly DiveSiteServices _diveSiteServices;
 		private readonly LocationServices _locationServices;
 		private readonly UserServices _userServices;
 
-        public SiteController(DiveSiteServices diveSiteServices, LocationServices locationServices, UserServices userServices)
-        {
-            _diveSiteServices = diveSiteServices;
+		public SiteController(DiveSiteServices diveSiteServices, LocationServices locationServices, UserServices userServices)
+		{
+			_diveSiteServices = diveSiteServices;
 			_locationServices = locationServices;
 			_userServices = userServices;
-        }
+		}
 
 		[Authorize]
 		public async Task<ActionResult> Index()
@@ -66,15 +66,16 @@ namespace Phorcys.Web.Controllers
 		}
 
 		[Authorize, HttpPost, ValidateAntiForgeryToken]
-		public ActionResult Create(SiteViewModel model) {
+		public ActionResult Create(SiteViewModel model)
+		{
 			if (ModelState.IsValid)
 			{
 				var siteDto = new SiteDto();
 				siteDto.UserId = _userServices.GetUserId();
-				siteDto.DiveLocationId = model.LocationSelectedId;	
-				siteDto.Title = model.Title;				
-				siteDto.MaxDepth = model.MaxDepth;	
-				siteDto.IsFreshWater = model.IsFreshWater;	
+				siteDto.DiveLocationId = model.LocationSelectedId;
+				siteDto.Title = model.Title;
+				siteDto.MaxDepth = model.MaxDepth;
+				siteDto.IsFreshWater = model.IsFreshWater;
 				siteDto.GeoCode = model.GeoCode;
 				siteDto.Notes = model.Notes;
 
@@ -103,7 +104,7 @@ namespace Phorcys.Web.Controllers
 			{
 				if (ex.InnerException != null)
 				{
-					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = 
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 						"Unable to delete the Dive Site - a Dive Plan is using it.";
 				}
 				else
@@ -114,14 +115,65 @@ namespace Phorcys.Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = 
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 					"An unexpected error occurred.";
 			}
 
 			return RedirectToAction("Index");
 		}
 
-		private IList<SelectListItem> BuildLocationList()
+		[Authorize]
+		[HttpGet]
+		public ActionResult Edit(int Id)
+		{
+			var model = new SiteViewModel();
+
+			var siteDto = _diveSiteServices.GetSiteDto(Id);
+
+			model.DiveSiteId = siteDto.DiveSiteId;
+			model.DiveLocationId = siteDto.DiveLocationId;
+			model.LocationSelectedId = siteDto.LocationSelectedId;
+			model.LocationList = BuildLocationList();
+			model.Title = siteDto.Title;
+			model.GeoCode = siteDto.GeoCode;
+			model.IsFreshWater = siteDto.IsFreshWater;
+			model.MaxDepth = siteDto.MaxDepth;
+			model.Notes = siteDto.Notes;
+
+			return View(model);
+		}
+
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Edit(SiteViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var siteDto = new SiteDto();
+				siteDto.DiveSiteId = model.DiveSiteId;
+				siteDto.DiveLocationId = model.LocationSelectedId;
+				siteDto.Title = model.Title;
+				siteDto.MaxDepth = model.MaxDepth;
+				siteDto.IsFreshWater = model.IsFreshWater;
+				siteDto.GeoCode = model.GeoCode;
+				siteDto.Notes = model.Notes;
+				try
+				{
+					_diveSiteServices.Edit(siteDto);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Site was successfully updated.";
+				} catch(Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error saving the Dive Site";
+				}
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View();
+			}
+		}
+
+	private IList<SelectListItem> BuildLocationList()
 		{
 			string loggedInId = _userServices.GetLoggedInUserId();
 			IList<SelectListItem> locationList = new List<SelectListItem>();
@@ -147,18 +199,19 @@ namespace Phorcys.Web.Controllers
 			foreach (var site in sites)
 			{
 				model = new SiteViewModel();
-				model.DiveSiteId = site.DiveSiteId;				
+				model.DiveSiteId = site.DiveSiteId;
 				model.Title = site.Title;
 				if (site.DiveLocation != null)
 				{
 					model.LocationTitle = site.DiveLocation.Title;
 				}
 				model.GeoCode = site.GeoCode;
+				model.IsFreshWater = site.IsFreshWater;
 				model.MaxDepth = site.MaxDepth;
 
 				siteViewModels.Add(model);
 			}
-			return siteViewModels;     
+			return siteViewModels;
 		}
 
 		private string Url4Map(string geoCode)

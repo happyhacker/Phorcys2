@@ -44,6 +44,7 @@
 					columns.Bound(p => p.LocationTitle).Title("Location");
 					columns.Bound(p => p.Title).Title("Site");
 					columns.Bound(p => p.MaxDepth).Width(120);
+					columns.Bound(p => p.IsFreshWater).Title("Water").ClientTemplate("#= IsFreshWater ? 'Fresh' : 'Salt' #");
 					columns.Bound(p => p.SiteMapUrl)
 					.Title("Map")
 					.ClientTemplate(
@@ -55,7 +56,11 @@
 					)
 					.HtmlAttributes(new { @class = "grid" });
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
-					columns.Command(command => command.Custom("Delete").Click("onDelete"));
+					columns.Command(command =>
+					{
+						command.Custom("Edit").Click("onEdit");
+						command.Custom("Delete").Click("onDelete");
+					});
 				})
 				.Height(700)
 				.Mobile()
@@ -101,5 +106,16 @@
 			$('#hiddenDeleteForm').submit();
 		}
 	}
+
+	function onEdit(e) {
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
+
+		var diveSiteId = data.DiveSiteId;
+		//alert("DiveSiteId = " + diveSiteId);
+		window.location.href = '@Url.Action("Edit", "Site")/' + diveSiteId;
+	}
+
 </script>
 
