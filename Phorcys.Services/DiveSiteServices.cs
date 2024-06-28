@@ -92,7 +92,7 @@ namespace Phorcys.Services
 					site.GeoCode = siteDto.GeoCode;
 					site.Notes = siteDto.Notes;
 					site.LastModified = DateTime.Now;
-					_context.Entry(site).State = EntityState.Modified;
+					//_context.Entry(site).State = EntityState.Modified;
 					_context.SaveChanges();
 				}
 			}catch (Exception ex)
