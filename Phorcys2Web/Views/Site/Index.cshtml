@@ -100,12 +100,15 @@
 		e.preventDefault();
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
-
 		var diveSiteId = data.DiveSiteId;
-		if (confirm("Are you sure you want to delete site #" + diveSiteId + "?")) {
-			// Set the DiveSiteId in the hidden form and submit the form
-			$('#hiddenDiveSiteId').val(diveSiteId);
-			$('#hiddenDeleteForm').submit();
+		if (data.UserName == "System") {
+			alert("You may not delete a System Dive Site");
+		} else {
+			if (confirm("Are you sure you want to delete site #" + diveSiteId + "?")) {
+				// Set the DiveSiteId in the hidden form and submit the form
+				$('#hiddenDiveSiteId').val(diveSiteId);
+				$('#hiddenDeleteForm').submit();
+			}
 		}
 	}
 
@@ -113,11 +116,13 @@
 		e.preventDefault();
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
-
 		var diveSiteId = data.DiveSiteId;
 		//alert("DiveSiteId = " + diveSiteId);
-		window.location.href = '@Url.Action("Edit", "Site")/' + diveSiteId;
+		if (data.UserName == "System") {
+			alert("You may not edit a System Dive Site");
+		} else {
+			window.location.href = '@Url.Action("Edit", "Site")/' + diveSiteId;
+		}
 	}
 
 </script>
-
