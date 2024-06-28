@@ -8,6 +8,10 @@ namespace Phorcys.Web.Models
     {
         public int DiveSiteId { get; set; }
 
+		public int UserId { get; set; }
+
+		public string UserName { get; set; }
+
         public IList<SelectListItem> LocationList { get; set; }
 
         public int LocationSelectedId { get; set; }

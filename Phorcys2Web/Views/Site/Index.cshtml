@@ -41,6 +41,7 @@
 				.Columns(columns =>
 				{
 					columns.Bound(p => p.DiveSiteId).Hidden(true);
+					columns.Bound(p => p.UserId).Hidden(true);
 					columns.Bound(p => p.LocationTitle).Title("Location");
 					columns.Bound(p => p.Title).Title("Site");
 					columns.Bound(p => p.MaxDepth).Width(120);
@@ -56,6 +57,7 @@
 					)
 					.HtmlAttributes(new { @class = "grid" });
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
+					columns.Bound(p => p.UserName).Title("User");
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");

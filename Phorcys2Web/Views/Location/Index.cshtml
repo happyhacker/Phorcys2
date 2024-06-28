@@ -42,8 +42,10 @@
 				.Columns(columns =>
 				{
 					columns.Bound(p => p.DiveLocationId).Hidden(true);
+					columns.Bound(p => p.UserId).Hidden(true);
 					columns.Bound(p => p.Title);
 					columns.Bound(p => p.Notes);
+					columns.Bound(p => p.UserName).Title("User");
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");

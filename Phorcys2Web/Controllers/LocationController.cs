@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys2Web.Controllers;
+using Microsoft.VisualBasic;
 
 namespace Phorcys.Web.Controllers
 {
@@ -15,8 +16,9 @@ namespace Phorcys.Web.Controllers
     {
         private readonly LocationServices _locationServices;
         private readonly UserServices _userServices;
+		private const int SystemUserId = 6;
 
-        public LocationController(LocationServices locationServices, UserServices userServices)
+		public LocationController(LocationServices locationServices, UserServices userServices)
         {
             _locationServices = locationServices;
             _userServices = userServices;
@@ -143,11 +145,11 @@ namespace Phorcys.Web.Controllers
             {
                 model = new LocationViewModel();
                 model.DiveLocationId = location.DiveLocationId;
-                model.Title = location.Title;
+                model.UserId = location.UserId;
+				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : "";
+				model.Title = location.Title;
                 model.Notes = location.Notes;
-                //model.UserName = dive.User.
                 models.Add(model);
-
             }
 
             return models;
