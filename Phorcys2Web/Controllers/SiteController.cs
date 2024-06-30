@@ -201,7 +201,7 @@ namespace Phorcys.Web.Controllers
 				model = new SiteViewModel();
 				model.DiveSiteId = site.DiveSiteId;
 				model.UserId = site.UserId;
-				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : "";
+				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : _userServices.GetUserName();
 				model.Title = site.Title;
 				if (site.DiveLocation != null)
 				{

@@ -47,4 +47,22 @@ public class UserServices
 		}
 		return retVal;
 	}
+
+	public string GetUserName()
+	{
+		try
+		{
+			var loginId = GetLoggedInUserId();
+			var User = _context.Users.FirstOrDefault(d => d.AspNetUserId == loginId);
+			if (User != null)
+			{
+				return User.LoginId;
+			}
+		}
+		catch (Exception ex)
+		{
+
+		}
+		return "";
+	}
 }

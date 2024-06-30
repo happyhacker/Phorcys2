@@ -60,8 +60,8 @@
 					columns.Bound(p => p.UserName).Title("User");
 					columns.Command(command =>
 					{
-						command.Custom("Edit").Click("onEdit");
-						command.Custom("Delete").Click("onDelete");
+						command.Custom("Edit").Click("onEdit").Visible("isVisible");
+						command.Custom("Delete").Click("onDelete").Visible("isVisible");
 					}).Title("Actions");
 				})
 				.Height(700)
@@ -125,4 +125,7 @@
 		}
 	}
 
+	function isVisible(data) {
+		return data.UserName !== 'System';
+	}
 </script>

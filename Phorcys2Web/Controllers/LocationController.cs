@@ -146,7 +146,7 @@ namespace Phorcys.Web.Controllers
                 model = new LocationViewModel();
                 model.DiveLocationId = location.DiveLocationId;
                 model.UserId = location.UserId;
-				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : "";
+				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : _userServices.GetUserName();
 				model.Title = location.Title;
                 model.Notes = location.Notes;
                 models.Add(model);
