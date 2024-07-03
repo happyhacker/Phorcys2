@@ -70,18 +70,26 @@ namespace Phorcys.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var siteDto = new SiteDto();
-				siteDto.UserId = _userServices.GetUserId();
-				siteDto.DiveLocationId = model.LocationSelectedId;
-				siteDto.Title = model.Title;
-				siteDto.MaxDepth = model.MaxDepth;
-				siteDto.IsFreshWater = model.IsFreshWater;
-				siteDto.GeoCode = model.GeoCode;
-				siteDto.Notes = model.Notes;
+				try
+				{
+					var siteDto = new SiteDto();
+					siteDto.UserId = _userServices.GetUserId();
+					siteDto.DiveLocationId = model.LocationSelectedId;
+					siteDto.Title = model.Title;
+					siteDto.MaxDepth = model.MaxDepth;
+					siteDto.IsFreshWater = model.IsFreshWater;
+					siteDto.GeoCode = model.GeoCode;
+					siteDto.Notes = model.Notes;
 
-				_diveSiteServices.Save(siteDto);
-
-				return RedirectToAction("Index");
+					_diveSiteServices.Save(siteDto);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Site successfully created.";
+					return RedirectToAction("Index");
+				}catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "An error WTF-117 occured. Unable to add site.";
+					return View();
+				}
 			}
 			else
 			{

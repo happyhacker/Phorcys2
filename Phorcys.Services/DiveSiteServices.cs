@@ -61,6 +61,7 @@ namespace Phorcys.Services
 			} catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
+				throw;
 			}
 		}
 

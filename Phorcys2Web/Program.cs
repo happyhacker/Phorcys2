@@ -14,11 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 		x => x.MigrationsAssembly("Phorcys.Data")
 	)
 );*/
-builder.Services.AddDbContext<PhorcysContext>(options =>
+/*builder.Services.AddDbContext<PhorcysContext>(options =>
 	options.UseSqlServer(
 		builder.Configuration.GetConnectionString("PhorcysDbConnection"),
 		x => x.MigrationsAssembly("Phorcys.Web")
 	)
+);*/
+builder.Services.AddDbContext<PhorcysContext>(options =>
+	options.UseSqlServer(
+		builder.Configuration.GetConnectionString("PhorcysDbConnection"),
+		sqlServerOptions =>
+		{
+			sqlServerOptions.MigrationsAssembly("Phorcys.Web");
+			sqlServerOptions.EnableRetryOnFailure(
+				maxRetryCount: 5,                  // Maximum number of retry attempts
+				maxRetryDelay: TimeSpan.FromSeconds(30),  // Maximum delay between retries
+				errorNumbersToAdd: null);          // SQL error numbers to add to the list of transient errors
+		})
 );
 
 builder.Services.AddScoped<DivePlanServices>();

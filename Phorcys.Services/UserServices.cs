@@ -35,19 +35,19 @@ public class UserServices
 		try
 		{
 			var loginId = GetLoggedInUserId();
-			var User = _context.Users.FirstOrDefault(d => d.AspNetUserId == loginId);
-			if (User != null)
+			var user = _context.Users.FirstOrDefault(d => d.AspNetUserId == loginId);
+			if (user != null)
 			{
-				retVal = User.UserId;
+				retVal = user.UserId;
 			}
 		}
 		catch (Exception ex)
 		{
-
+			Console.WriteLine(ex.Message);
+			throw;
 		}
 		return retVal;
 	}
-
 	public string GetUserName()
 	{
 		try
