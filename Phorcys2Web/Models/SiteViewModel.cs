@@ -6,7 +6,10 @@ namespace Phorcys.Web.Models
 {
     public class SiteViewModel
     {
-        public int DiveSiteId { get; set; }
+		//A hack to pass in the logged in user
+        public string LoggedIn { get; set; }
+
+		public int DiveSiteId { get; set; }
 
 		public int UserId { get; set; }
 

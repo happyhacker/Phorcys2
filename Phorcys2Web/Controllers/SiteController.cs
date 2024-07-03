@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Phorcys.Data.DTOs;
 using System.Text;
+using Azure.Identity;
 
 namespace Phorcys.Web.Controllers
 {
@@ -203,10 +204,12 @@ namespace Phorcys.Web.Controllers
 		{
 			List<SiteViewModel> siteViewModels = new List<SiteViewModel>();
 			SiteViewModel model;
+			var userName = _userServices.GetUserName();
 
 			foreach (var site in sites)
 			{
 				model = new SiteViewModel();
+				model.LoggedIn = userName;
 				model.DiveSiteId = site.DiveSiteId;
 				model.UserId = site.UserId;
 				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : _userServices.GetUserName();

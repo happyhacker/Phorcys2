@@ -17,9 +17,9 @@
 		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
 		{
 		}
-		<p id="pageMessage">
-			@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
-		</p>
+					<p id="pageMessage">
+						@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+					</p>
 	}
 </div>
 
@@ -40,6 +40,7 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
+					columns.Bound(p => p.LoggedIn).Hidden(true);
 					columns.Bound(p => p.DiveSiteId).Hidden(true);
 					columns.Bound(p => p.UserId).Hidden(true);
 					columns.Bound(p => p.LocationTitle).Title("Location");
@@ -126,6 +127,10 @@
 	}
 
 	function isVisible(data) {
-		return data.UserName !== 'System';
+		if (data.LoggedIn == 'system') {
+			return true;
+		} else {
+			return data.UserName != 'System';
+		}
 	}
 </script>
