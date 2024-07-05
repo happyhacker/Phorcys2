@@ -5,6 +5,7 @@ namespace Phorcys.Web.Models
 {
 	public class LocationViewModel
 	{
+		public string LoggedIn { get; set; }
 		public int DiveLocationId { get; set; }	
 		public int UserId { get; set; }
 		public string UserName { get; set; }  
@@ -13,7 +14,11 @@ namespace Phorcys.Web.Models
 		[Required(ErrorMessage = "Location Title is required")]
 		public string Title { get; set; }
 
-		[DisplayName("Notes")]
+		public DateTime Created { get; set; }
+
+		public DateTime LastModified { get; set; }
+
+		[DisplayName("Notes")]		
 		public string Notes { get; set; }
 	}
 }

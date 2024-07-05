@@ -17,9 +17,9 @@
 		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
 		{
 		}
-					<p id="pageMessage">
-						@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
-					</p>
+			<p id="pageMessage">
+				@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+			</p>
 	}
 </div>
 
@@ -57,6 +57,8 @@
 					"# } #"
 					)
 					.HtmlAttributes(new { @class = "grid" });
+					columns.Bound(p => p.Created).Hidden(true).Format("{0:MM/dd/yyyy hh:mm tt}");
+					columns.Bound(p => p.LastModified).Hidden(true).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
 					columns.Bound(p => p.UserName).Title("User");
 					columns.Command(command =>
@@ -119,11 +121,13 @@
 		var data = this.dataItem(tr);
 		var diveSiteId = data.DiveSiteId;
 		//alert("DiveSiteId = " + diveSiteId);
+		/*
 		if (data.UserName == "System") {
 			alert("You may not edit a System Dive Site");
 		} else {
+		*/
 			window.location.href = '@Url.Action("Edit", "Site")/' + diveSiteId;
-		}
+		//}
 	}
 
 	function isVisible(data) {

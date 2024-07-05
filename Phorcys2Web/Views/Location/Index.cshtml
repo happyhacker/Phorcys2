@@ -41,16 +41,19 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
+					columns.Bound(p => p.LoggedIn).Hidden(true);
 					columns.Bound(p => p.DiveLocationId).Hidden(true);
 					columns.Bound(p => p.UserId).Hidden(true);
 					columns.Bound(p => p.Title);
 					columns.Bound(p => p.Notes);
+					columns.Bound(p => p.Created).Hidden(true).Format("{0:MM/dd/yyyy hh:mm tt}");
+					columns.Bound(p => p.LastModified).Hidden(true).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.UserName).Title("User");
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit").Visible("isVisible");
 						command.Custom("Delete").Click("onDelete").Visible("isVisible");
-					});
+					}).Title("Actions");
 				})
 				.Height(700)
 				.Mobile()
@@ -107,8 +110,11 @@
 	}
 
 	function isVisible(data) {
-		return data.UserName !== 'System';
+		if (data.LoggedIn == 'system') {
+			return true;
+		} else {
+			return data.UserName != 'System';
+		}
 	}
-
 </script>
 

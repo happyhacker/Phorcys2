@@ -78,6 +78,8 @@ namespace Phorcys.Web.Controllers
                 location.Created = DateTime.Now;
                 location.LastModified = DateTime.Now;
                 int userId = _userServices.GetUserId();
+                location.Created = model.Created;
+                location.LastModified = model.LastModified;
                 location.UserId = userId;
                 _locationServices.SaveNewLocation(location);
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Location was successfully created.";
@@ -140,14 +142,18 @@ namespace Phorcys.Web.Controllers
         {
             List<LocationViewModel> models = new List<LocationViewModel>();
             LocationViewModel model;
+			var loggedInUser = _userServices.GetUserName();
 
-            foreach (var location in locations)
+			foreach (var location in locations)
             {
                 model = new LocationViewModel();
+                model.LoggedIn = loggedInUser;
                 model.DiveLocationId = location.DiveLocationId;
                 model.UserId = location.UserId;
 				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : _userServices.GetUserName();
 				model.Title = location.Title;
+                model.Created = location.Created;
+                model.LastModified = location.LastModified;
                 model.Notes = location.Notes;
                 models.Add(model);
             }

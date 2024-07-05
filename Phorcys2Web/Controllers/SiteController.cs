@@ -204,12 +204,12 @@ namespace Phorcys.Web.Controllers
 		{
 			List<SiteViewModel> siteViewModels = new List<SiteViewModel>();
 			SiteViewModel model;
-			var userName = _userServices.GetUserName();
+			var loggedInUser = _userServices.GetUserName();
 
 			foreach (var site in sites)
 			{
 				model = new SiteViewModel();
-				model.LoggedIn = userName;
+				model.LoggedIn = loggedInUser;
 				model.DiveSiteId = site.DiveSiteId;
 				model.UserId = site.UserId;
 				model.UserName = model.UserId == Phorcys.Data.Constants.SystemUserId ? "System" : _userServices.GetUserName();
@@ -221,6 +221,8 @@ namespace Phorcys.Web.Controllers
 				model.GeoCode = site.GeoCode;
 				model.IsFreshWater = site.IsFreshWater;
 				model.MaxDepth = site.MaxDepth;
+				model.Created = site.Created;
+				model.LastModified = site.LastModified;
 
 				siteViewModels.Add(model);
 			}

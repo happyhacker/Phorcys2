@@ -30,7 +30,8 @@ namespace Phorcys.Web.Models
         public bool IsFreshWater { get; set; }
 
         [DisplayName("Geo Code")]
-        public string? GeoCode { get; set; }
+		[MaxLength(30)]
+		public string? GeoCode { get; set; }
 
 		public string SiteMapUrl => $"http://maps.google.com/maps?q={GeoCode}&ll={GeoCode}&z=14\\";
 
@@ -38,12 +39,12 @@ namespace Phorcys.Web.Models
         [Range(0, 1200, ErrorMessage = "Please enter a reasonable depth you Sheck wannabe :-)")]
         public int? MaxDepth { get; set; }
 
-        [DisplayName("Notes")]
+		public DateTime Created { get; set; }
+
+		public DateTime LastModified { get; set; }
+
+		[DisplayName("Notes")]
         public string? Notes { get; set; }
-
-        public DateTime Created { get; set; }
-
-        public DateTime LastModified { get; set; }
 
 		public virtual string Url4Map(string geoCode)
 		{
