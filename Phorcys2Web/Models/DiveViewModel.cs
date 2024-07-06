@@ -19,7 +19,7 @@ namespace Phorcys.Web.Models
 		[Required]
 		public string Title { get; set; }
         public IList<SelectListItem> DivePlanList { get; set; }
-        public int DivePlanSelectedId { get; set; }
+        public int? DivePlanSelectedId { get; set; }
 
 		[DisplayName("Dive Site")]
 		public string DiveSite { get; set; }

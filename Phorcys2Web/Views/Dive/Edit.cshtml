@@ -1,0 +1,188 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.DiveViewModel
+
+@{
+	ViewData["Title"] = "Edit Dive";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+<div class="pageMessage">
+	@Html.ValidationSummary()
+</div>
+
+@using (Html.BeginForm("Edit", "Dive", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="pageMessage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<fieldset>
+					@Html.HiddenFor(m => m.DiveId)
+					<div>
+						<p>
+							<label for="Dive Plan">Dive Plan:</label>
+							<br />
+							@(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.DivePlanList)
+														.OptionLabel("Select a Dive Plan")
+														.HtmlAttributes(new { @class = "form-control" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.DivePlanSelectedId)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Title">Title:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.Title)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Title)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="DiveNumber">Dive #:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.DiveNumber).Min(1).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.DiveNumber)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="DescentTime">Descent Time:</label>
+							<br />
+
+							@(Html.Kendo().DateTimePickerFor(m => m.DescentTime)
+									.HtmlAttributes(new { @style = "width: 300px;" })
+														)
+							@Html.ValidationMessageFor(m => m.DescentTime)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Minutes">Minutes:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(1440).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Minutes)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="AvgDepth">Average Depth:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(1000).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.AvgDepth)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="MaxDepth">Max Depth:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.MaxDepth)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Temperature">Temperature:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Temperature)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="AdditionalWeight">Additional Weight:</label>
+							<br />
+							@(Html.Kendo().NumericTextBoxFor(m => m.AdditionalWeight).Min(0).Max(600).Step(1).Format("n0"))
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.AdditionalWeight)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							@(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
+							<br />
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Notes)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						@*<button type="submit" class="btn btn-primary">Save</button>
+						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })*@
+
+						@(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+													//.Icon("save")
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+													.Content("Save")
+													)
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "Dive")';
+	}
+</script>

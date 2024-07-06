@@ -25,7 +25,9 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var diveSites = _context.DiveSites.Include(d => d.DiveLocation).Where(r => r.UserId == userId || r.UserId == systemUser).OrderBy(ds => ds.Title).ToList();
+				var diveSites = _context.DiveSites.Include(d => d.DiveLocation)
+					.Where(r => r.UserId == userId || r.UserId == systemUser)
+					.OrderBy(ds => ds.Title).ToList();
 				/*var diveSites = new List<DiveSite>
 				{
 					new DiveSite {Title = "Site 1", DiveSiteId = 1},

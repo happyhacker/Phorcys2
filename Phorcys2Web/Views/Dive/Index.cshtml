@@ -49,7 +49,11 @@
 					columns.Bound(p => p.Minutes).Width(80);
 					columns.Bound(p => p.MaxDepth).Width(120);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
-					columns.Command(command => command.Custom("Delete").Click("onDelete"));
+					columns.Command(command =>
+					{
+						command.Custom("Edit").Click("onEdit");
+						command.Custom("Delete").Click("onDelete");
+					}).Title("Actions");
 				})
 				.Height(700)
 				.Mobile()
@@ -95,6 +99,15 @@
 			$('#hiddenDiveId').val(diveId);
 			$('#hiddenDeleteForm').submit();
 		}
+	}
+
+	function onEdit(e) {
+		e.preventDefault();
+		var tr = $(e.target).closest("tr");
+		var data = this.dataItem(tr);
+
+		var diveId = data.DiveId;
+		window.location.href = '@Url.Action("Edit", "Dive")/' + diveId;
 	}
 </script>
 

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.AspNetCore.Authorization;
+using Phorcys.Data.DTOs;
 
 namespace Phorcys2Web.Controllers
 {
@@ -98,7 +99,7 @@ namespace Phorcys2Web.Controllers
 				dive.DivePlanId = model.DivePlanSelectedId;
 				_diveServices.SaveNewDive(dive);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
-				return RedirectToAction("Index");			
+				return RedirectToAction("Index");
 			}
 			else
 			{
@@ -108,23 +109,60 @@ namespace Phorcys2Web.Controllers
 		}
 
 
-		// GET: DiveController/Edit/5
+		[Authorize, HttpGet]
 		public ActionResult Edit(int id)
 		{
-			return View();
+			var model = new DiveViewModel();
+			var dive = _diveServices.GetDive(id);
+			if (dive != null)
+			{
+				model.DiveId = dive.DiveId;
+				model.DivePlanSelectedId = dive.DivePlanId;
+				model.DiveNumber = dive.DiveNumber;
+				model.DivePlanList = BuildDivePlanList();
+				model.Title = dive.Title;
+				model.MaxDepth = dive.MaxDepth;
+				model.AvgDepth = dive.AvgDepth;
+				model.DescentTime = dive.DescentTime;
+				model.AdditionalWeight = dive.AdditionalWeight;
+				model.Minutes = dive.Minutes;
+				model.Temperature = dive.Temperature;
+				model.Notes = dive.Notes;
+			}
+			return View(model);
 		}
 
 		// POST: DiveController/Edit/5
-		[Authorize]
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, IFormCollection collection)
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Edit(DiveViewModel model)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-				return RedirectToAction(nameof(Index));
+				var diveDto = new DiveDto();
+				diveDto.DiveId = model.DiveId;
+				diveDto.DivePlanId = model.DivePlanSelectedId;
+				diveDto.DiveNumber = model.DiveNumber;
+				diveDto.Title = model.Title;
+				diveDto.Minutes = model.Minutes;
+				diveDto.DescentTime = model.DescentTime;
+				diveDto.AvgDepth = model.AvgDepth;
+				diveDto.MaxDepth = model.MaxDepth;
+				diveDto.Temperature = model.Temperature;
+				diveDto.AdditionalWeight = model.AdditionalWeight;
+				diveDto.Notes = model.Notes;
+				try
+				{
+					_diveServices.Edit(diveDto);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully updated.";
+				}
+				catch (Exception ex)
+				{
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error saving the Dive.";
+				}
+				return RedirectToAction("Index");
+
 			}
-			catch
+			else
 			{
 				return View();
 			}

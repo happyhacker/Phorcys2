@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Phorcys.Data;
+using Phorcys.Data.DTOs;
 using Phorcys.Domain;
 
 namespace Phorcys.Services;
@@ -53,6 +54,33 @@ public class DiveServices
 			Console.WriteLine(ex.Message + " Inner: " + ex.InnerException.Message);
 		}
 	}
+
+	public void Edit(DiveDto diveDto)
+	{
+		try
+		{
+			var dive = GetDive(diveDto.DiveId);
+
+			dive.DivePlanId = diveDto.DivePlanId;
+			dive.DiveNumber = diveDto.DiveNumber;
+			dive.Title = diveDto.Title;
+			dive.Minutes = diveDto.Minutes;
+			dive.DescentTime = diveDto.DescentTime;
+			dive.AvgDepth = diveDto.AvgDepth;
+			dive.MaxDepth = diveDto.MaxDepth;
+			dive.Temperature = diveDto.Temperature;
+			dive.AdditionalWeight = diveDto.AdditionalWeight;
+			dive.Notes = diveDto.Notes;
+			dive.LastModified = DateTime.Now;
+
+			_context.SaveChanges();
+		} catch (SqlException ex)
+		{
+			Console.WriteLine(ex.Message);
+			throw;
+		}
+	}
+
 	public void Delete(int id)
 	{
 		var dive = _context.Dives.Find(id);
