@@ -5,21 +5,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Phorcys.Services;
 using Phorcys.Data;
+using Serilog;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-/*IServiceCollection serviceCollection = builder.Services.AddDbContext<PhorcysContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("PhorcysDbConnection"),
-		x => x.MigrationsAssembly("Phorcys.Data")
-	)
-);*/
-/*builder.Services.AddDbContext<PhorcysContext>(options =>
-	options.UseSqlServer(
-		builder.Configuration.GetConnectionString("PhorcysDbConnection"),
-		x => x.MigrationsAssembly("Phorcys.Web")
-	)
-);*/
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Information()
+	.WriteTo.Console()
+	.WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+	.CreateLogger();
+
+builder.Host.UseSerilog();  // Add this line to use Serilog as the logging provider
+
+// Add services to the container
 builder.Services.AddDbContext<PhorcysContext>(options =>
 	options.UseSqlServer(
 		builder.Configuration.GetConnectionString("PhorcysDbConnection"),
@@ -27,9 +27,9 @@ builder.Services.AddDbContext<PhorcysContext>(options =>
 		{
 			sqlServerOptions.MigrationsAssembly("Phorcys.Web");
 			sqlServerOptions.EnableRetryOnFailure(
-				maxRetryCount: 5,                  // Maximum number of retry attempts
-				maxRetryDelay: TimeSpan.FromSeconds(30),  // Maximum delay between retries
-				errorNumbersToAdd: null);          // SQL error numbers to add to the list of transient errors
+				maxRetryCount: 5,
+				maxRetryDelay: TimeSpan.FromSeconds(30),
+				errorNumbersToAdd: null);
 		})
 );
 
@@ -50,19 +50,16 @@ builder.Services.AddKendo();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.MapRazorPages();
-//app.MapControllers();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -71,4 +68,16 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+try
+{
+	Log.Information("Starting web host");
+	app.Run();
+}
+catch (Exception ex)
+{
+	Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+	Log.CloseAndFlush();
+}
