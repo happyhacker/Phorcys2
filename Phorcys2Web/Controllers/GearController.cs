@@ -7,6 +7,7 @@ using Phorcys.Web.Models;
 using Phorcys.Domain;
 using Phorcys2Web.Controllers;
 using Phorcys.Data.DTOs;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Web.Controllers
 {
@@ -14,6 +15,7 @@ namespace Phorcys.Web.Controllers
 	{
 		private readonly GearServices _gearServices;
 		private readonly UserServices _userServices;
+		private readonly ILogger _logger;
 
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -24,10 +26,11 @@ namespace Phorcys.Web.Controllers
 			base.OnActionExecuting(context);
 		}
 
-		public GearController(GearServices gearServices, UserServices userServices)
+		public GearController(GearServices gearServices, UserServices userServices, ILogger<GearController> logger)
 		{
 			_gearServices = gearServices;
 			_userServices = userServices;
+			_logger = logger;
 		}
 		[Authorize]
 		public IActionResult Index()
@@ -41,11 +44,8 @@ namespace Phorcys.Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				// Handle or log the exception as appropriate
 				return View("Error"); // Or another appropriate response
 			}
-
-
 			return View();
 		}
 

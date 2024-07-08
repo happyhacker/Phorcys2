@@ -6,17 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Phorcys.Data;
 using Phorcys.Domain;
-using Telerik.SvgIcons;
+//using Telerik.SvgIcons;
+
 public class UserServices
 {
 	private readonly IHttpContextAccessor _httpContextAccessor;
-	
 	private readonly PhorcysContext _context;
+	private readonly ILogger _logger;
 
-	public UserServices(IHttpContextAccessor httpContextAccessor, PhorcysContext context)
+	public UserServices(IHttpContextAccessor httpContextAccessor, PhorcysContext context, ILogger<UserServices> logger)
 	{
-		_httpContextAccessor = httpContextAccessor;	
+		_httpContextAccessor = httpContextAccessor;
 		_context = context;
+		_logger = logger;
 	}
 
 	public string GetLoggedInUserId()
@@ -43,7 +45,7 @@ public class UserServices
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine(ex.Message);
+			_logger.LogError(ex, "Error retreiving user: {Message}", ex.Message);
 			throw;
 		}
 		return retVal;
@@ -61,7 +63,7 @@ public class UserServices
 		}
 		catch (Exception ex)
 		{
-
+			_logger.LogError(ex, "Error retreiving user name: {Message}", ex.Message);
 		}
 		return "";
 	}

@@ -11,16 +11,19 @@ using System.Xml.Schema;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Linq.Expressions;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Services
 {
     public class GearServices
     {
         private readonly PhorcysContext _context;
+        private readonly ILogger _logger;
         private const int systemUser = 6;
-        public GearServices(PhorcysContext context)
+        public GearServices(PhorcysContext context, ILogger<GearServices> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IEnumerable<Gear> GetGearList(int userId)
@@ -32,8 +35,8 @@ namespace Phorcys.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw new Exception("Can not connect to database");
+				_logger.LogError(ex, "Error fetching Gear list: {ex.Message}", ex.Message);
+				throw new Exception("Can not connect to database");
             }
         }
 
@@ -65,19 +68,33 @@ namespace Phorcys.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+				_logger.LogError(ex, "Error retreiving Gear {gearId}: {ErrorMessage}", gearId, ex.Message);
+                throw;
             }
-            return gearDto;
+			return gearDto;
         }
         public void Delete(int id)
         {
-            var gear = _context.Gear.Find(id);
-            if (gear != null)
+            try
             {
-                _context.Gear.Remove(gear);
-                _context.SaveChanges();
+                var gear = _context.Gear.Find(id);
+                if (gear != null)
+                {
+                    _context.Gear.Remove(gear);
+                    _context.SaveChanges();
+                }
             }
-        }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+				_logger.LogError(ex, "Error deleting Gear: {ErrorMessage}", id, ex.Message);
+                throw;
+			}
+		}
 
         public void SaveNewGear(Gear gear)
         {
@@ -88,9 +105,10 @@ namespace Phorcys.Services
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
-            }
-        }
+				_logger.LogError(ex, "Error saving Gear: {Message}", ex.Message);
+                throw;
+			}
+		}
 
         public void EditGear(GearDto gearDto)
         {
@@ -127,9 +145,10 @@ namespace Phorcys.Services
                 }
             }catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+				_logger.LogError(ex, "Error editing Gear {gearId}: {ErrorMessage}", gearDto.GearId, ex.Message);
+                throw;
             }
 
-        }
+		}
     }
 }

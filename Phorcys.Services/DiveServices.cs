@@ -54,7 +54,7 @@ namespace Phorcys.Services
 			}
 			catch (SqlException ex)
 			{
-				_logger.LogError(ex, "Error occurred while saving a new dive"); // Replace Console.WriteLine
+				_logger.LogError(ex, "Error occurred while saving a new dive");
 			}
 		}
 
@@ -88,11 +88,23 @@ namespace Phorcys.Services
 
 		public void Delete(int id)
 		{
-			var dive = _context.Dives.Find(id);
-			if (dive != null)
+			try
 			{
-				_context.Dives.Remove(dive);
-				_context.SaveChanges();
+				var dive = _context.Dives.Find(id);
+				if (dive != null)
+				{
+					_context.Dives.Remove(dive);
+					_context.SaveChanges();
+				}
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+				throw ex;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 			}
 		}
 	}

@@ -1,6 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Phorcys.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys.Data.DTOs;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys2Web.Controllers
 {
@@ -24,12 +23,15 @@ namespace Phorcys2Web.Controllers
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveServices _diveServices;
 		private readonly UserServices _userServices;
+		private readonly ILogger _logger;
 
-		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices, UserServices userServices)
+		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices, 
+			UserServices userServices, ILogger<DiveController> logger)
 		{
 			_divePlanServices = divePlanServices;
 			_diveServices = diveServices;
 			_userServices = userServices;
+			_logger = logger;
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext context)
@@ -55,8 +57,8 @@ namespace Phorcys2Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				// Handle or log the exception as appropriate
-				return View("Error"); // Or another appropriate response
+				_logger.LogError(ex, ex.Message);
+				return View("Error");
 			}
 		}
 
@@ -157,7 +159,8 @@ namespace Phorcys2Web.Controllers
 				}
 				catch (Exception ex)
 				{
-					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error saving the Dive.";
+					_logger.LogError(ex, "There was an error editing a Dive");
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error editing the Dive.";
 				}
 				return RedirectToAction("Index");
 
@@ -172,17 +175,18 @@ namespace Phorcys2Web.Controllers
 		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int DiveId)
+		public ActionResult Delete(int diveId)
 		{
 			try
 			{
-				_diveServices.Delete(DiveId);
+				_diveServices.Delete(diveId);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive successfully deleted.";
 				return RedirectToAction("Index");
 			}
 			catch (Exception ex)
 			{
-				return View("Error"); // Or redirect to a different view as appropriate
+				_logger.LogError(ex, "Error deleting Dive {diveId}", diveId);
+				return View("Error");
 			}
 		}
 		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
@@ -236,4 +240,3 @@ namespace Phorcys2Web.Controllers
 	}
 
 }
-

@@ -9,6 +9,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys2Web.Controllers;
 using Microsoft.VisualBasic;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Web.Controllers
 {
@@ -16,12 +17,15 @@ namespace Phorcys.Web.Controllers
     {
         private readonly LocationServices _locationServices;
         private readonly UserServices _userServices;
+        private readonly ILogger _logger;
 		private const int SystemUserId = 6;
 
-		public LocationController(LocationServices locationServices, UserServices userServices)
+		public LocationController(LocationServices locationServices, UserServices userServices, 
+            ILogger<LocationController> logger)
         {
             _locationServices = locationServices;
             _userServices = userServices;
+            _logger = logger;
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {

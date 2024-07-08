@@ -15,6 +15,7 @@ using Phorcys.Data.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys2Web.Controllers
 {
@@ -23,13 +24,16 @@ namespace Phorcys2Web.Controllers
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveSiteServices _diveSiteServices;
 		private readonly UserServices _userServices;
+		private readonly ILogger _logger;
 
 		// Inject DivePlanServices into the controller
-		public DivePlanController(DivePlanServices divePlanServices, DiveSiteServices diveSiteServices, UserServices userServices)
+		public DivePlanController(DivePlanServices divePlanServices, 
+			DiveSiteServices diveSiteServices, UserServices userServices, ILogger<DivePlanController> logger)
 		{
 			_divePlanServices = divePlanServices;
 			_diveSiteServices = diveSiteServices;
 			_userServices = userServices;
+			_logger = logger;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -56,7 +60,6 @@ namespace Phorcys2Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				// Handle or log the exception as appropriate
 				return View("Error"); // Or another appropriate response
 			}
 		}
@@ -169,7 +172,7 @@ namespace Phorcys2Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				return View("Error"); // Or redirect to a different view as appropriate
+				return View("Error");
 			}
 		}
 		private List<DivePlanIndexViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.DivePlan> divePlans)
@@ -190,7 +193,6 @@ namespace Phorcys2Web.Controllers
 				model.MaxDepth = divePlan.MaxDepth;
 				model.ScheduledTime = divePlan.ScheduledTime;
 				model.Notes = divePlan.Notes;
-				//model.UserName = dive.User.
 				models.Add(model);
 
 			}
@@ -228,9 +230,7 @@ namespace Phorcys2Web.Controllers
 			var loginId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 			return loginId;
 		}*/
-			
 
 	}
-
 }
 

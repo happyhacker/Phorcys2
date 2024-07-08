@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Phorcys.Data.DTOs;
 using System.Text;
 using Azure.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Web.Controllers
 {
@@ -22,12 +23,15 @@ namespace Phorcys.Web.Controllers
 		private readonly DiveSiteServices _diveSiteServices;
 		private readonly LocationServices _locationServices;
 		private readonly UserServices _userServices;
+		private readonly ILogger _logger;
 
-		public SiteController(DiveSiteServices diveSiteServices, LocationServices locationServices, UserServices userServices)
+		public SiteController(DiveSiteServices diveSiteServices, 
+			LocationServices locationServices, UserServices userServices, ILogger<SiteController> logger)
 		{
 			_diveSiteServices = diveSiteServices;
 			_locationServices = locationServices;
 			_userServices = userServices;
+			_logger = logger;	
 		}
 
 		[Authorize]
@@ -36,14 +40,13 @@ namespace Phorcys.Web.Controllers
 			try
 			{
 				var sites = _diveSiteServices.GetDiveSites(_userServices.GetUserId()); // Await the completion of the async method
-				var model = CreateIndexModel(sites); // Now sites is IEnumerable<DiveSite>
+				var model = CreateIndexModel(sites);
 
 				return View(model);
 			}
 			catch (Exception ex)
 			{
-				// Handle or log the exception as appropriate
-				return View("Error"); // Or another appropriate response
+				return View("Error");
 			}
 		}
 
@@ -87,7 +90,6 @@ namespace Phorcys.Web.Controllers
 					return RedirectToAction("Index");
 				}catch (Exception ex)
 				{
-					Console.WriteLine(ex.Message);
 					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "An error WTF-117 occured. Unable to add site.";
 					return View();
 				}

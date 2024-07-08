@@ -9,15 +9,19 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Services;
 
 public class DivePlanServices
 {
 	private readonly PhorcysContext _context;
-	public DivePlanServices(PhorcysContext context)
+	private readonly ILogger _logger;
+
+	public DivePlanServices(PhorcysContext context, ILogger<DivePlanServices> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	//PhorcysContext context = new PhorcysContext();
@@ -38,6 +42,7 @@ public class DivePlanServices
 		catch (Exception ex)
 		{
 			Console.WriteLine(ex.Message);
+			_logger.LogError(ex, "Can't connect to database: " + ex.Message);
 			throw new Exception("Can't connect to database");
 		}
 	}
@@ -52,6 +57,7 @@ public class DivePlanServices
 		catch (SqlException ex)
 		{
 			Console.WriteLine(ex.Message);
+			_logger.LogError(ex, "Error saving Dive Plan : " + ex.Message);
 		}
 	}
 
@@ -71,25 +77,37 @@ public class DivePlanServices
 	}
 	public DivePlan GetDivePlan(int divePlanId)
 	{
-		DivePlan divePlan = null;
+		DivePlan divePlan = new DivePlan();
 		try
 		{
 			divePlan = _context.DivePlans.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
 		} 
 		catch (SqlException ex)
 		{ 
-			Console.WriteLine(ex.Message);
+			_logger.LogError(ex, "Error retreiving Dive Plan: " + ex.Message);
+			throw;
 		}
 		return divePlan;
-
 	}
 	public void Delete(int id)
 	{
+		try { 
 		var divePlan = _context.DivePlans.Find(id);
 		if (divePlan != null)
 		{
 			_context.DivePlans.Remove(divePlan);
 			_context.SaveChanges();
+		}
+		}
+		catch (DbUpdateException ex)
+		{
+			_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+			throw;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+			throw;
 		}
 	}
 

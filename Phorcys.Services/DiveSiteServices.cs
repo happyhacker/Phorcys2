@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Services
 {
@@ -15,10 +16,12 @@ namespace Phorcys.Services
 	public class DiveSiteServices
 	{
 		private readonly PhorcysContext _context;
+		private readonly ILogger _logger;
 		private const int systemUser = 6;
-		public DiveSiteServices(PhorcysContext context)
+		public DiveSiteServices(PhorcysContext context, ILogger<DiveSiteServices> logger)
 		{
 			_context = context;
+			_logger = logger;
 		}
 
 		public IEnumerable<DiveSite> GetDiveSites(int userId)
@@ -38,7 +41,7 @@ namespace Phorcys.Services
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				_logger.LogError(ex, "Error retreiving Dive Sites for user {userId}" + ex.Message, userId);
 				throw new Exception("Can't connect to database");
 			}
 		}
@@ -62,7 +65,7 @@ namespace Phorcys.Services
 
 			} catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				_logger.LogError(ex, "Error saving Dive Site: " + ex.Message);
 				throw;
 			}
 		}
@@ -76,7 +79,7 @@ namespace Phorcys.Services
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error fetching DiveSite with ID {siteId}: {ex.Message}");
+				_logger.LogError(ex, "Error fetching DiveSite with ID {SiteId}: {ErrorMessage}", siteId, ex.Message);
 				throw;
 			}
 		}
@@ -100,7 +103,7 @@ namespace Phorcys.Services
 				}
 			}catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				_logger.LogError(ex, "Error editing Dive Site: {ErrorMessage}", ex.Message);
 				throw;
 			}
 		}
@@ -135,7 +138,7 @@ namespace Phorcys.Services
 				}
 			}catch(DbUpdateException ex)
 			{
-				Console.WriteLine(ex.Message);
+				_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
 				throw ex;
 			}catch(Exception ex)
 			{

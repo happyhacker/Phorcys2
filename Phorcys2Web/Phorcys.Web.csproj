@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="Home\LogFiles\" />
     <Folder Include="Views\End\" />
   </ItemGroup>
 
