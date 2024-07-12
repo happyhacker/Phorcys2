@@ -49,7 +49,7 @@ public partial class Contact
 
     //public virtual ICollection<DiveAgency> DiveAgencies { get; set; } = new List<DiveAgency>();
 
-    public virtual ICollection<DiveLocation> DiveLocations { get; set; } = new List<DiveLocation>();
+    //public virtual ICollection<DiveLocation> DiveLocations { get; set; } = new List<DiveLocation>();
 
     //public virtual ICollection<DiveShop> DiveShops { get; set; } = new List<DiveShop>();
 

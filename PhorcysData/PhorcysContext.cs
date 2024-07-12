@@ -28,4 +28,5 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<DiveLocation> DiveLocations { get; set; }
 	public DbSet<Gear> Gear { get; set; }
     public DbSet<Tank> Tanks { get; set; }
+	public DbSet<DiverCertification> MyCertifications { get; set; }
 }
