@@ -1,10 +1,10 @@
 ﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @using Phorcys2Web.Controllers
-
+@using Phorcys.Domain;
 @{
-	ViewData["Title"] = "Certifications";
+	ViewData["Title"] = "My Certifications";
 }
-@model IEnumerable<Phorcys.Web.Models.DiveViewModel>
+@model IEnumerable<vwMyCertification>
 
 <section class="jumbotron text-center">
 	<div class="container">
@@ -28,9 +28,8 @@
 	</div>
 </div>
 <p>
-	@*Html.ActionLink("Enter New Dive", "Create", "Dive")*@
-	<form action="@Url.Action("Create", "Dive")" method="get">
-		<button type="submit" class="btn btn-primary">Enter New Dive</button>
+	<form action="@Url.Action("Create", "MyCertification")" method="get">
+		<button type="submit" class="btn btn-primary">Add Certification</button>
 	</form>
 </p>
 
@@ -41,14 +40,16 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
-					columns.Bound(p => p.DiveId).Hidden(true);
-					columns.Bound(p => p.DiveNumber).Title("#").Width(50);
-					columns.Bound(p => p.Title);
-					columns.Bound(p => p.DiveSite);
-					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
-					columns.Bound(p => p.Minutes).Width(80);
-					columns.Bound(p => p.MaxDepth).Width(120);
-					columns.Bound(p => p.Notes).Width(100).Hidden(true);
+					columns.Bound(c => c.DiverId).Hidden(true);
+					columns.Bound(c => c.Agency);
+					columns.Bound(c => c.Title);
+					columns.Bound(c => c.CertificationNum);
+					columns.Bound(c => c.Certified).Format("{0:MM/dd/yyyy hh:mm tt}");
+					columns.Bound(c => c.DiverFirstname);
+					columns.Bound(c => c.DiverLastName);
+					columns.Bound(c => c.InstructorFirstName);
+					columns.Bound(c => c.InstructorLastName);
+					columns.Bound(c => c.Notes).Width(100).Hidden(true);
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");
@@ -81,10 +82,10 @@
 	</div>
 </div>
 
-@using (Html.BeginForm("Delete", "Dive", FormMethod.Post, new { id = "hiddenDeleteForm", style = "display:none;" }))
+@using (Html.BeginForm("Delete", "MyCertification", FormMethod.Post, new { id = "hiddenDeleteForm", style = "display:none;" }))
 {
 	@Html.AntiForgeryToken()
-	<input type="hidden" name="DiveId" id="hiddenDiveId" value="" />
+	<input type="hidden" name="DiverCertificationId" id="hiddenDiverCertificationId" value="" />
 }
 <script>
 	function onDelete(e) {
@@ -92,11 +93,11 @@
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
 
-		var diveId = data.DiveId;
+		var diveId = data.DiverCertificationId;
 		var diveNumber = data.DiveNumber;
-		if (confirm("Are you sure you want to delete dive #" + diveNumber + "?")) {
-			// Set the DiveId in the hidden form and submit the form
-			$('#hiddenDiveId').val(diveId);
+		if (confirm("Are you sure you want to delete this Certification?")) {
+			// Set the DiverCertificationId in the hidden form and submit the form
+			$('#hiddenDiverCertificationId').val(diverCertificationId);
 			$('#hiddenDeleteForm').submit();
 		}
 	}
@@ -106,8 +107,7 @@
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
 
-		var diveId = data.DiveId;
-		window.location.href = '@Url.Action("Edit", "Dive")/' + diveId;
+		var diverCertificationId = data.DiverCertificationId;
+		window.location.href = '@Url.Action("Edit", "MyCertification")/' + diverCertificationId;
 	}
 </script>
-

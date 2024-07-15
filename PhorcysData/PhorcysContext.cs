@@ -18,6 +18,10 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 		// Customize the ASP.NET Identity model and override the defaults if needed.
 		// For example, you can rename the ASP.NET Identity table names and more.
 		// Add your customizations after calling base.OnModelCreating(builder);
+		// Define the primary key for vwMyCertification
+		builder.Entity<vwMyCertification>()
+			.HasKey(c => c.DiverCertificationId);
+
 	}
 
 	public DbSet<Dive> Dives { get; set; }
@@ -28,5 +32,5 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<DiveLocation> DiveLocations { get; set; }
 	public DbSet<Gear> Gear { get; set; }
     public DbSet<Tank> Tanks { get; set; }
-	public DbSet<DiverCertification> MyCertifications { get; set; }
+	public DbSet<vwMyCertification> vwMyCertifications { get; set; }
 }
