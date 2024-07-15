@@ -1501,3 +1501,731 @@ ORDER BY [v].[Certified]
 2024-07-15 06:41:30.023 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
 2024-07-15 06:41:30.034 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 11.2702ms
 2024-07-15 06:41:30.040 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.5488ms
+2024-07-15 07:16:48.776 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-15 07:16:49.428 -05:00 [INF] Starting web host
+2024-07-15 07:16:49.840 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-15 07:16:49.841 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-15 07:16:49.844 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-15 07:16:49.845 -05:00 [INF] Hosting environment: Development
+2024-07-15 07:16:49.846 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-15 07:16:51.437 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:16:51.743 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:16:51.799 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:16:57.789 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:16:59.717 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.719 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.720 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.722 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.723 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.724 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.726 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.727 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.728 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.729 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.775 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:16:59.815 -05:00 [INF] Executed ViewResult - view Index executed in 7964.4233ms.
+2024-07-15 07:16:59.830 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 8027.3435ms
+2024-07-15 07:16:59.835 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:16:59.848 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:16:59.848 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:16:59.852 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 8428.7653ms
+2024-07-15 07:16:59.856 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 9.0986ms
+2024-07-15 07:16:59.907 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 58.5323ms
+2024-07-15 07:17:02.568 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-15 07:17:03.138 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:17:03.366 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:17:03.390 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-15 07:17:03.400 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-15 07:17:03.402 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-15 07:17:03.406 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-15 07:17:03.407 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-15 07:17:04.139 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.141 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.142 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.144 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.145 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.146 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.148 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.149 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.150 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.151 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.153 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:17:04.161 -05:00 [INF] Executed page /Account/Login in 793.4216ms
+2024-07-15 07:17:04.163 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:17:04.164 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 1596.9528ms
+2024-07-15 07:17:04.185 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:17:04.185 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:17:04.200 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 15.8358ms
+2024-07-15 07:17:04.209 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 23.8116ms
+2024-07-15 07:17:10.302 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-15 07:17:10.326 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:17:10.328 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:17:10.379 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-15 07:17:11.018 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:17:11.021 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:17:12.058 -05:00 [INF] Executed DbCommand (103ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-15 07:17:12.333 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-15 07:17:12.345 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-15 07:17:12.347 -05:00 [INF] User logged in.
+2024-07-15 07:17:12.349 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-15 07:17:12.353 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-15 07:17:12.354 -05:00 [INF] Executed page /Account/Login in 2024.7716ms
+2024-07-15 07:17:12.356 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:17:12.362 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 2059.9826ms
+2024-07-15 07:17:12.363 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:17:12.377 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:17:12.378 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:17:12.381 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:17:12.388 -05:00 [INF] Executed ViewResult - view Index executed in 7.5523ms.
+2024-07-15 07:17:12.391 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 10.6823ms
+2024-07-15 07:17:12.393 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:17:12.395 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 32.3085ms
+2024-07-15 07:17:12.402 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:17:12.402 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:17:12.417 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 14.775ms
+2024-07-15 07:17:12.422 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 19.7833ms
+2024-07-15 07:17:17.491 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:17:17.500 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:17:17.505 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:17:23.087 -05:00 [INF] Executed DbCommand (22ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:17:23.181 -05:00 [INF] Executed DbCommand (55ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:17:23.530 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:17:23.890 -05:00 [INF] Executed ViewResult - view Index executed in 688.5226ms.
+2024-07-15 07:17:23.892 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 6384.5761ms
+2024-07-15 07:17:23.894 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:17:23.896 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 6405.3054ms
+2024-07-15 07:17:23.898 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:17:23.898 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:17:23.910 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 12.1963ms
+2024-07-15 07:17:23.933 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.641ms
+2024-07-15 07:22:47.970 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-15 07:22:48.425 -05:00 [INF] Starting web host
+2024-07-15 07:22:48.618 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-15 07:22:48.619 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-15 07:22:48.621 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-15 07:22:48.622 -05:00 [INF] Hosting environment: Development
+2024-07-15 07:22:48.624 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-15 07:22:49.225 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:22:49.407 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:22:49.439 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:22:54.960 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:22:56.803 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.805 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.807 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.808 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.809 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.811 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.812 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.813 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.814 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.815 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.849 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:22:56.881 -05:00 [INF] Executed ViewResult - view Index executed in 7425.297ms.
+2024-07-15 07:22:56.896 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:22:56.896 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:22:56.896 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 7454.3765ms
+2024-07-15 07:22:56.906 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:22:56.929 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 30.1844ms
+2024-07-15 07:22:56.932 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 7711.6223ms
+2024-07-15 07:22:56.955 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 58.4698ms
+2024-07-15 07:23:42.969 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-15 07:23:43.326 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:23:43.556 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:23:43.577 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-15 07:23:43.587 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-15 07:23:43.589 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-15 07:23:43.592 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-15 07:23:43.594 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-15 07:23:44.267 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.268 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.270 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.271 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.272 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.274 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.275 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.276 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.278 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.279 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.280 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:23:44.287 -05:00 [INF] Executed page /Account/Login in 729.9858ms
+2024-07-15 07:23:44.289 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:23:44.291 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 1322.4138ms
+2024-07-15 07:23:44.299 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:23:44.299 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:23:44.304 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 4.9887ms
+2024-07-15 07:23:44.332 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 32.3736ms
+2024-07-15 07:23:45.854 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-15 07:23:45.867 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:23:45.869 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:23:45.895 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-15 07:23:46.463 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:23:46.466 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:23:47.189 -05:00 [INF] Executed DbCommand (61ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-15 07:23:47.427 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-15 07:23:47.439 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-15 07:23:47.442 -05:00 [INF] User logged in.
+2024-07-15 07:23:47.444 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-15 07:23:47.448 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-15 07:23:47.449 -05:00 [INF] Executed page /Account/Login in 1579.0206ms
+2024-07-15 07:23:47.451 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:23:47.456 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:23:47.458 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 1603.2923ms
+2024-07-15 07:23:47.465 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:23:47.467 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:23:47.470 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:23:47.477 -05:00 [INF] Executed ViewResult - view Index executed in 6.9186ms.
+2024-07-15 07:23:47.479 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 10.1021ms
+2024-07-15 07:23:47.481 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:23:47.483 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 28.0594ms
+2024-07-15 07:23:47.492 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:23:47.492 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:23:47.496 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 4.6813ms
+2024-07-15 07:23:47.512 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 20.8995ms
+2024-07-15 07:23:53.168 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:23:53.177 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:23:53.181 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:23:53.253 -05:00 [INF] Executed DbCommand (8ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:23:53.313 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:23:53.656 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:23:53.911 -05:00 [INF] Executed ViewResult - view Index executed in 575.0328ms.
+2024-07-15 07:23:53.913 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 728.364ms
+2024-07-15 07:23:53.916 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:23:53.917 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:23:53.917 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:23:53.919 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 750.669ms
+2024-07-15 07:23:53.930 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 12.9966ms
+2024-07-15 07:23:53.940 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 23.9058ms
+2024-07-15 07:23:59.556 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-15 07:23:59.567 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.delete (Phorcys.Web)'
+2024-07-15 07:23:59.571 -05:00 [INF] Route matched with {action = "delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Void delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:25:51.578 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-15 07:25:52.020 -05:00 [INF] Starting web host
+2024-07-15 07:25:52.165 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-15 07:25:52.167 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-15 07:25:52.169 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-15 07:25:52.170 -05:00 [INF] Hosting environment: Development
+2024-07-15 07:25:52.172 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-15 07:25:53.228 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:25:53.354 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:25:53.380 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:25:57.656 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:25:59.520 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.522 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.523 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.525 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.526 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.527 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.528 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.529 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.531 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.533 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.566 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:25:59.596 -05:00 [INF] Executed ViewResult - view Index executed in 6177.0182ms.
+2024-07-15 07:25:59.608 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:25:59.608 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:25:59.611 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 6213.6973ms
+2024-07-15 07:25:59.622 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:25:59.623 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 14.8359ms
+2024-07-15 07:25:59.651 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 6427.8005ms
+2024-07-15 07:25:59.680 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 71.5979ms
+2024-07-15 07:26:09.518 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-15 07:26:09.845 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:26:10.079 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:26:10.103 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-15 07:26:10.113 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-15 07:26:10.116 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-15 07:26:10.120 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-15 07:26:10.121 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-15 07:26:10.785 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.787 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.788 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.789 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.791 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.792 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.793 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.795 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.796 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.798 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.799 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:26:10.806 -05:00 [INF] Executed page /Account/Login in 724.7291ms
+2024-07-15 07:26:10.809 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:26:10.811 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 1293.891ms
+2024-07-15 07:26:10.820 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:26:10.821 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:26:10.825 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 5.3032ms
+2024-07-15 07:26:10.851 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.5124ms
+2024-07-15 07:26:12.688 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-15 07:26:12.700 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:26:12.702 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:26:12.729 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-15 07:26:13.308 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:26:13.310 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:26:14.057 -05:00 [INF] Executed DbCommand (69ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-15 07:26:14.293 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-15 07:26:14.304 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-15 07:26:14.307 -05:00 [INF] User logged in.
+2024-07-15 07:26:14.309 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-15 07:26:14.312 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-15 07:26:14.314 -05:00 [INF] Executed page /Account/Login in 1610.1014ms
+2024-07-15 07:26:14.315 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:26:14.320 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:26:14.322 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 1634.5116ms
+2024-07-15 07:26:14.329 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:26:14.330 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:26:14.333 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:26:14.340 -05:00 [INF] Executed ViewResult - view Index executed in 6.7482ms.
+2024-07-15 07:26:14.343 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 10.3988ms
+2024-07-15 07:26:14.345 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:26:14.346 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 27.1837ms
+2024-07-15 07:26:14.349 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:26:14.350 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:26:14.362 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 11.7916ms
+2024-07-15 07:26:14.367 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 17.6379ms
+2024-07-15 07:26:27.648 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:26:27.658 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:26:27.660 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:26:27.727 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:26:27.786 -05:00 [INF] Executed DbCommand (20ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:26:28.133 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:26:28.381 -05:00 [INF] Executed ViewResult - view Index executed in 571.7425ms.
+2024-07-15 07:26:28.382 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 719.2326ms
+2024-07-15 07:26:28.384 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:26:28.386 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:26:28.386 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:26:28.386 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 737.8799ms
+2024-07-15 07:26:28.390 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 4.6779ms
+2024-07-15 07:26:28.404 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.6271ms
+2024-07-15 07:26:36.723 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-15 07:26:36.732 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.delete (Phorcys.Web)'
+2024-07-15 07:26:36.736 -05:00 [INF] Route matched with {action = "delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Void delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:26:43.304 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.delete (Phorcys.Web) in 6565.7999ms
+2024-07-15 07:26:43.306 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.delete (Phorcys.Web)'
+2024-07-15 07:26:43.308 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/Delete - 200 0 null 6584.9036ms
+2024-07-15 07:35:21.663 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-15 07:35:22.122 -05:00 [INF] Starting web host
+2024-07-15 07:35:22.276 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-15 07:35:22.278 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-15 07:35:22.290 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-15 07:35:22.291 -05:00 [INF] Hosting environment: Development
+2024-07-15 07:35:22.295 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-15 07:35:22.953 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:35:23.103 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:35:23.129 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:35:28.910 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:35:31.263 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.265 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.266 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.267 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.268 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.270 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.271 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.272 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.274 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.275 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.309 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:31.340 -05:00 [INF] Executed ViewResult - view Index executed in 8192.6028ms.
+2024-07-15 07:35:31.349 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 8215.7014ms
+2024-07-15 07:35:31.352 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:35:31.352 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:35:31.353 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:35:31.377 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 14.7361ms
+2024-07-15 07:35:31.380 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 8431.3794ms
+2024-07-15 07:35:31.410 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 58.6462ms
+2024-07-15 07:35:33.609 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-15 07:35:34.105 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:35:34.520 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:35:34.542 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-15 07:35:34.551 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-15 07:35:34.553 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-15 07:35:34.557 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-15 07:35:34.558 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-15 07:35:36.028 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.029 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.031 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.032 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.033 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.034 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.036 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.039 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.041 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.042 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.044 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:35:36.051 -05:00 [INF] Executed page /Account/Login in 1528.744ms
+2024-07-15 07:35:36.053 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:35:36.056 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 2447.3743ms
+2024-07-15 07:35:36.065 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:35:36.065 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:35:36.070 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 5.0509ms
+2024-07-15 07:35:36.100 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.8676ms
+2024-07-15 07:35:37.444 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-15 07:35:37.457 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:35:37.459 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:35:37.486 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-15 07:35:38.043 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:35:38.045 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:35:38.740 -05:00 [INF] Executed DbCommand (62ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-15 07:35:38.967 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-15 07:35:38.978 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-15 07:35:38.981 -05:00 [INF] User logged in.
+2024-07-15 07:35:38.983 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-15 07:35:38.986 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-15 07:35:38.988 -05:00 [INF] Executed page /Account/Login in 1526.5044ms
+2024-07-15 07:35:38.989 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:35:38.994 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:35:38.996 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 1552.2571ms
+2024-07-15 07:35:39.004 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:35:39.005 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:35:39.008 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:35:39.015 -05:00 [INF] Executed ViewResult - view Index executed in 7.1227ms.
+2024-07-15 07:35:39.019 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 11.2717ms
+2024-07-15 07:35:39.021 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:35:39.022 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 28.6878ms
+2024-07-15 07:35:39.028 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:35:39.028 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:35:39.041 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 12.8536ms
+2024-07-15 07:35:39.049 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 21.3539ms
+2024-07-15 07:35:42.857 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:35:42.872 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:35:42.875 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:35:42.942 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:35:42.998 -05:00 [INF] Executed DbCommand (18ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:35:43.348 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:35:43.612 -05:00 [INF] Executed ViewResult - view Index executed in 590.5895ms.
+2024-07-15 07:35:43.614 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 736.7614ms
+2024-07-15 07:35:43.616 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:35:43.618 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:35:43.618 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:35:43.619 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 761.9203ms
+2024-07-15 07:35:43.633 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 15.155ms
+2024-07-15 07:35:43.638 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 20.2141ms
+2024-07-15 07:35:48.327 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-15 07:35:48.335 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-15 07:35:48.338 -05:00 [INF] Route matched with {action = "Delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:35:48.344 -05:00 [INF] Executing RedirectResult, redirecting to /MyCertification.
+2024-07-15 07:35:48.346 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web) in 5.4478ms
+2024-07-15 07:35:48.347 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-15 07:35:48.349 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/Delete - 302 0 null 22.1169ms
+2024-07-15 07:35:48.351 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:35:48.360 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:35:48.362 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:35:48.387 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:35:48.402 -05:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:35:48.407 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:35:48.418 -05:00 [INF] Executed ViewResult - view Index executed in 10.9489ms.
+2024-07-15 07:35:48.421 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 56.4525ms
+2024-07-15 07:35:48.423 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:35:48.424 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 73.2407ms
+2024-07-15 07:35:48.425 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:35:48.427 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:35:48.441 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 14.6281ms
+2024-07-15 07:35:48.445 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 20.6247ms
+2024-07-15 07:36:30.042 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-15 07:36:30.053 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-15 07:36:30.055 -05:00 [INF] Route matched with {action = "Delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:46:00.513 -05:00 [INF] Executing RedirectResult, redirecting to /MyCertification.
+2024-07-15 07:46:00.522 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web) in 570463.0955ms
+2024-07-15 07:46:00.531 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-15 07:46:00.537 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/Delete - 302 0 null 570495.0942ms
+2024-07-15 07:46:00.540 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:46:00.551 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:46:00.552 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:46:00.573 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:46:00.595 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:46:00.868 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:46:00.889 -05:00 [INF] Executed ViewResult - view Index executed in 289.2614ms.
+2024-07-15 07:46:00.892 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 337.2776ms
+2024-07-15 07:46:00.894 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:46:00.896 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 355.8602ms
+2024-07-15 07:46:00.900 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:46:00.900 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:46:00.914 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 14.2749ms
+2024-07-15 07:46:00.924 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 24.3239ms
+2024-07-15 07:46:24.617 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-15 07:46:25.040 -05:00 [INF] Starting web host
+2024-07-15 07:46:25.178 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-15 07:46:25.180 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-15 07:46:25.182 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-15 07:46:25.183 -05:00 [INF] Hosting environment: Development
+2024-07-15 07:46:25.184 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-15 07:46:26.077 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:46:26.235 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:46:26.264 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:46:31.751 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:46:33.454 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.456 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.458 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.459 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.460 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.461 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.462 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.464 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.465 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.467 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.501 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:33.532 -05:00 [INF] Executed ViewResult - view Index executed in 7251.0752ms.
+2024-07-15 07:46:33.546 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 7278.2446ms
+2024-07-15 07:46:33.547 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:46:33.548 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:46:33.548 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:46:33.560 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 11.6565ms
+2024-07-15 07:46:33.569 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 7495.4783ms
+2024-07-15 07:46:33.598 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 50.2294ms
+2024-07-15 07:46:36.133 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-15 07:46:36.457 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:46:36.669 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:46:36.692 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-15 07:46:36.700 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-15 07:46:36.702 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-15 07:46:36.705 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-15 07:46:36.707 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-15 07:46:37.364 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.366 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.367 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.369 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.370 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.372 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.373 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.374 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.375 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.377 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.378 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-15 07:46:37.386 -05:00 [INF] Executed page /Account/Login in 714.457ms
+2024-07-15 07:46:37.388 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:46:37.390 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 1257.3907ms
+2024-07-15 07:46:37.398 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:46:37.398 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:46:37.402 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 5.3925ms
+2024-07-15 07:46:37.428 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.5759ms
+2024-07-15 07:46:38.736 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-15 07:46:38.748 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-15 07:46:38.750 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-15 07:46:38.776 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-15 07:46:39.330 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:46:39.333 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-15 07:46:40.037 -05:00 [INF] Executed DbCommand (65ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-15 07:46:40.274 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-15 07:46:40.285 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-15 07:46:40.288 -05:00 [INF] User logged in.
+2024-07-15 07:46:40.290 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-15 07:46:40.293 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-15 07:46:40.295 -05:00 [INF] Executed page /Account/Login in 1543.5707ms
+2024-07-15 07:46:40.297 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-15 07:46:40.301 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-15 07:46:40.304 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 1568.0127ms
+2024-07-15 07:46:40.311 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:46:40.312 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-15 07:46:40.315 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:46:40.321 -05:00 [INF] Executed ViewResult - view Index executed in 6.6562ms.
+2024-07-15 07:46:40.325 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 10.4249ms
+2024-07-15 07:46:40.327 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-15 07:46:40.328 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 27.6392ms
+2024-07-15 07:46:40.331 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:46:40.332 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:46:40.346 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 13.5834ms
+2024-07-15 07:46:40.354 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 22.5108ms
+2024-07-15 07:46:51.297 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-15 07:46:51.308 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:46:51.311 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-15 07:46:51.383 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-15 07:46:51.436 -05:00 [INF] Executed DbCommand (15ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified]
+2024-07-15 07:46:51.784 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-15 07:46:52.030 -05:00 [INF] Executed ViewResult - view Index executed in 570.0778ms.
+2024-07-15 07:46:52.032 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 718.2862ms
+2024-07-15 07:46:52.034 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-15 07:46:52.035 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-15 07:46:52.035 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-15 07:46:52.036 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 738.8119ms
+2024-07-15 07:46:52.040 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 5.5541ms
+2024-07-15 07:46:52.063 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 28.0639ms
+2024-07-15 07:46:55.367 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-15 07:46:55.376 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-15 07:46:55.379 -05:00 [INF] Route matched with {action = "Delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).

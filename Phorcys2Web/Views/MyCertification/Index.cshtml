@@ -92,10 +92,8 @@
 		e.preventDefault();
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
-
-		var diveId = data.DiverCertificationId;
-		var diveNumber = data.DiveNumber;
-		if (confirm("Are you sure you want to delete this Certification?")) {
+		var diverCertificationId = data.DiverCertificationId;
+		if (confirm("Are you sure you want to delete this Certification? " + diverCertificationId)) {
 			// Set the DiverCertificationId in the hidden form and submit the form
 			$('#hiddenDiverCertificationId').val(diverCertificationId);
 			$('#hiddenDeleteForm').submit();

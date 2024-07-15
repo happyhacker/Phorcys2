@@ -50,5 +50,19 @@ namespace Phorcys.Web.Controllers
 				return View("Error"); // Or another appropriate response
 			}
 		}
+
+		[Authorize]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Delete(int DiverCertificationId)
+		{
+			try
+			{
+				return RedirectToAction("Index");
+			} catch (Exception ex)
+			{
+				return View("Error");
+			}
+		}
 	}
 }
