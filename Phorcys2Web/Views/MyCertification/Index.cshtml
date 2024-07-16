@@ -42,11 +42,11 @@
 				{
 					columns.Bound(c => c.DiverId).Hidden(true);
 					columns.Bound(c => c.Agency);
-					columns.Bound(c => c.Title);
-					columns.Bound(c => c.CertificationNum);
+					columns.Bound(c => c.Title).Title("Certification");
+					columns.Bound(c => c.CertificationNum).Title("Certification #");
 					columns.Bound(c => c.Certified).Format("{0:MM/dd/yyyy hh:mm tt}");
-					columns.Bound(c => c.DiverFirstname);
-					columns.Bound(c => c.DiverLastName);
+					columns.Bound(c => c.DiverFirstname).Hidden(true);
+					columns.Bound(c => c.DiverLastName).Hidden(true);
 					columns.Bound(c => c.InstructorFirstName);
 					columns.Bound(c => c.InstructorLastName);
 					columns.Bound(c => c.Notes).Width(100).Hidden(true);
