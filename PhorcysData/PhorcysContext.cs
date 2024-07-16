@@ -33,4 +33,5 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<Gear> Gear { get; set; }
     public DbSet<Tank> Tanks { get; set; }
 	public DbSet<vwMyCertification> vwMyCertifications { get; set; }
+	public DbSet<DiverCertification> DiverCertifications { get; set;}
 }

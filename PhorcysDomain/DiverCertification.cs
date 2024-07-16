@@ -23,9 +23,9 @@ public partial class DiverCertification
 
     public int? InstructorId { get; set; }
 
-    public virtual Certification Certification { get; set; } = null!;
+    //public virtual Certification Certification { get; set; } = null!;
 
-    public virtual Diver Diver { get; set; } = null!;
+    //public virtual Diver Diver { get; set; } = null!;
 
-    public virtual Instructor? Instructor { get; set; }
+    //public virtual Instructor? Instructor { get; set; }
 }

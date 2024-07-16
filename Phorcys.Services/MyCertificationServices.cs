@@ -38,5 +38,29 @@ namespace Phorcys.Services
 				throw new Exception("Can't connect to database");
 			}
 		}
+
+		public void Delete(int diverCertificationId)
+		{
+			try
+			{
+				var cert = _context.DiverCertifications.Find(diverCertificationId);
+				if (cert != null)
+				{
+					_context.DiverCertifications.Remove(cert);
+					_context.SaveChanges();
+				}
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError(ex, "Error deleting Certification {id}: {ErrorMessage}", diverCertificationId, ex.Message);
+				throw ex;
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError("Error deleting Certification: " + ex.Message);
+			}
+
+		}
 	}
 }
+

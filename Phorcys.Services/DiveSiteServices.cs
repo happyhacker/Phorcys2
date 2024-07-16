@@ -142,7 +142,7 @@ namespace Phorcys.Services
 				throw ex;
 			}catch(Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				_logger.LogError("Error deleting Dive Site: " + ex.Message);
 			}
 		}
 

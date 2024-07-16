@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Phorcys2Web.Controllers;
 using Microsoft.VisualBasic;
 using Microsoft.Extensions.Logging;
+using Phorcys.Web.ModelsNew;
 
 namespace Phorcys.Web.Controllers
 {
@@ -54,14 +55,23 @@ namespace Phorcys.Web.Controllers
 		[Authorize]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int DiverCertificationId)
+		public ActionResult Delete(int diverCertificationId)
 		{
 			try
 			{
+				_myCertificationServices.Delete(diverCertificationId);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
+					"Certification successfully deleted.";
+
 				return RedirectToAction("Index");
-			} catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
-				return View("Error");
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
+					"there was an error deleting the Certification.";
+				{
+					return View("Error");
+				}
 			}
 		}
 	}
