@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Phorcys2Web.Controllers;
 using Microsoft.VisualBasic;
 using Microsoft.Extensions.Logging;
-using Phorcys.Web.ModelsNew;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Phorcys.Web.Controllers
 {
@@ -18,14 +19,16 @@ namespace Phorcys.Web.Controllers
 	{
 		private readonly MyCertificationServices _myCertificationServices;
 		private readonly UserServices _userServices;
+		private readonly AgencyServices _agencyServices;
 		private readonly ILogger _logger;
 
 		public MyCertificationController(MyCertificationServices myCertificationServices, UserServices userServices,
-			ILogger<MyCertificationController> logger)
+			ILogger<MyCertificationController> logger, AgencyServices agencyServices)
 		{
 			_myCertificationServices = myCertificationServices;
 			_userServices = userServices;
 			_logger = logger;
+			_agencyServices = agencyServices;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -73,6 +76,31 @@ namespace Phorcys.Web.Controllers
 					return View("Error");
 				}
 			}
+		}
+
+		[Authorize, HttpGet]
+		public ActionResult Create()
+		{
+			var model = new MyCertificationViewModel();
+			model.DiveAgencyListItems = BuildAgencyList();
+			//model.CertificationListItems = BuildCertificationList();
+			return View(model);
+		}
+
+		private IList<SelectListItem> BuildAgencyList()
+		{
+			IList<SelectListItem> agencyList = new List<SelectListItem>();
+			IEnumerable<DiveAgency> agencies = _agencyServices.GetAgencies();
+			SelectListItem item;
+
+			foreach (var agency in agencies)
+			{
+				item = new SelectListItem();
+				item.Text = agency.Contact.Company;
+				item.Value = agency.DiveAgencyId.ToString();
+				agencyList.Add(item);
+			}
+			return agencyList;
 		}
 	}
 }

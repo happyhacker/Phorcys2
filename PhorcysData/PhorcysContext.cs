@@ -21,6 +21,7 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 		// Define the primary key for vwMyCertification
 		builder.Entity<vwMyCertification>()
 			.HasKey(c => c.DiverCertificationId);
+		builder.Entity<AgencyInstructor>().HasKey(a => a.InstructorId);
 
 	}
 
@@ -34,4 +35,6 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
     public DbSet<Tank> Tanks { get; set; }
 	public DbSet<vwMyCertification> vwMyCertifications { get; set; }
 	public DbSet<DiverCertification> DiverCertifications { get; set;}
+	public DbSet<DiveAgency> DiveAgencies { get; set; }
+	public DbSet<Certification> Certifications { get; set; }
 }

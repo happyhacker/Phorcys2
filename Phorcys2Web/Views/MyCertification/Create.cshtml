@@ -36,8 +36,39 @@
 			<div class="col-md-6">
 
 				<fieldset>
+					<div>
+						<p>
+							<label for="Dive Agencies">Dive Agencies:</label>
+							<br />
+							@(Html.Kendo().DropDownListFor(m => m.DiveAgencyId)
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.DiveAgencyListItems)
+														.OptionLabel("Select a Location")
+														.HtmlAttributes(new { @class = "form-control" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.DiveAgencyId)
+							</div>
+						</p>
+					</div>
 
-
+					<div>
+						<p>
+							<label for="AgencyCertifications">Certifications:</label>
+							<br />
+							@(Html.Kendo().DropDownListFor(m => m.CertificationId)
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.CertificationListItems)
+														.OptionLabel("Select a Certification")
+														.HtmlAttributes(new { @class = "form-control" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.CertificationId)
+							</div>
+						</p>
+					</div>
 
 					<div>
 						<p>

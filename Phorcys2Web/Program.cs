@@ -40,6 +40,7 @@ builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<LocationServices>();
 builder.Services.AddScoped<GearServices>();
 builder.Services.AddScoped<MyCertificationServices>();
+builder.Services.AddScoped<AgencyServices>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<PhorcysContext>();
