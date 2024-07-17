@@ -1,0 +1,107 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.MyCertificationViewModel
+
+@{
+	ViewData["Title"] = "New Certificate";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+<div class="pageMessage">
+	@Html.ValidationSummary()
+</div>
+
+@using (Html.BeginForm("Create", "MyCertification", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="pageMessage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<fieldset>
+
+
+
+					<div>
+						<p>
+							<label for="CertificationNum">Certification #:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.CertificationNum)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.CertificationNum)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Certified">Certified Date:</label>
+							<br />
+
+							@(Html.Kendo().DatePicker()
+														.Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+														.Value(DateTime.Today)
+														.HtmlAttributes(new { @style = "width: 300px;" })
+														)
+							@Html.ValidationMessageFor(m => m.Certified)
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							@(Html.Kendo().EditorFor(m => m.Notes))
+							<br />
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Notes)
+							</div>
+						</p>
+					</div>
+
+					<div>
+
+						@(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+													.Content("Save")
+													)
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "MyCertification")';
+	}
+</script>
+
