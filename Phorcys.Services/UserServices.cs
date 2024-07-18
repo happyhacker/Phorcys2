@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Phorcys.Data;
 using Phorcys.Domain;
-//using Telerik.SvgIcons;
 
 public class UserServices
 {
@@ -31,7 +30,20 @@ public class UserServices
 		return userId;
 	}
 
-	public int GetUserId()
+	public User GetUser(int userId)
+	{
+		try
+		{
+			var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+			return user;
+		} catch (Exception ex)
+		{
+			_logger.LogError("Error retreiving user " +  userId + ex.Message);
+			throw;
+		}
+    }
+
+    public int GetUserId()
 	{
 		int retVal = 0;
 		try

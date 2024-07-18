@@ -94,6 +94,26 @@ namespace Phorcys.Web.Controllers
 			return View(model);
 		}
 
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Create(MyCertificationViewModel model)
+		{
+			if(ModelState.IsValid)
+			{
+				var myCert = new MyCertificationDto();
+				myCert.DiverId = model.DiverId;
+				myCert.CertificationId = model.CertificationId;
+				myCert.InstructorId = model.InstructorId;
+				myCert.CertificationNum = model.CertificationNum;
+				myCert.Certified = model.Certified;
+				myCert.Notes = model.Notes;
+
+				_myCertificationServices.SaveNewDiverCertification(myCert);
+
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Certification was successfully added.";
+                return RedirectToAction("Index");
+			} else { return View(model); }
+		}
+
 		private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
 		{
 			IList<SelectListItem> agencyList = new List<SelectListItem>();
@@ -146,7 +166,6 @@ namespace Phorcys.Web.Controllers
             }
             return instructorList;
         }
-
 
         [Authorize, HttpPost, ValidateAntiForgeryToken]
         public ActionResult UpdateCertificationList(MyCertificationViewModel model)

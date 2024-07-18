@@ -15,13 +15,13 @@ public partial class Diver
 
     public float? RestingSacRate { get; set; }
 
-    public virtual Contact Contact { get; set; } = null!;
+    //public virtual Contact Contact { get; set; } = null!;
 
-    public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
+    //public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
 
-    public virtual ICollection<DiverCertification> DiverCertifications { get; set; } = new List<DiverCertification>();
+    //public virtual ICollection<DiverCertification> DiverCertifications { get; set; } = new List<DiverCertification>();
 
-    public virtual ICollection<DiverQualification> DiverQualifications { get; set; } = new List<DiverQualification>();
+    //public virtual ICollection<DiverQualification> DiverQualifications { get; set; } = new List<DiverQualification>();
 
-    public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
+    //public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
 }

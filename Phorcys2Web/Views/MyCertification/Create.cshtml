@@ -80,6 +80,23 @@
 
                     <div>
                         <p>
+                            <label for="InstructorId">Instructor:</label>
+                            <br />
+                            @(Html.Kendo().DropDownListFor(m => m.InstructorId)
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(Model.InstructorListItems)
+                                .OptionLabel("Select an instructor")
+                                .HtmlAttributes(new { @class = "form-control", id = "InstructorId" })
+                                )
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.InstructorId)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
                             <label for="CertificationNum">Certification #:</label>
                             <br />
                             @(Html.Kendo().TextBoxFor(m => m.CertificationNum)
