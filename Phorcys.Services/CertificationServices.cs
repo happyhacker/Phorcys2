@@ -13,7 +13,7 @@ namespace Phorcys.Services
 		private readonly PhorcysContext _context;
 		private readonly ILogger _logger;
 
-		public CertificationServices(PhorcysContext context, ILogger logger)
+		public CertificationServices(PhorcysContext context, ILogger<CertificationServices> logger)
 		{
 			_context = context;
 			_logger = logger;

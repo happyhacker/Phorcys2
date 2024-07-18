@@ -20,15 +20,20 @@ namespace Phorcys.Web.Controllers
 		private readonly MyCertificationServices _myCertificationServices;
 		private readonly UserServices _userServices;
 		private readonly AgencyServices _agencyServices;
+		private readonly InstructorServices _instructorServices;
 		private readonly ILogger _logger;
 
-		public MyCertificationController(MyCertificationServices myCertificationServices, UserServices userServices,
-			ILogger<MyCertificationController> logger, AgencyServices agencyServices)
+		public MyCertificationController(ILogger<MyCertificationController> logger,
+			UserServices userServices, 
+			MyCertificationServices myCertificationServices, 
+			InstructorServices instructorServices,
+			AgencyServices agencyServices)
 		{
-			_myCertificationServices = myCertificationServices;
+            _logger = logger;
 			_userServices = userServices;
-			_logger = logger;
+            _myCertificationServices = myCertificationServices;
 			_agencyServices = agencyServices;
+			_instructorServices = instructorServices;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -85,10 +90,11 @@ namespace Phorcys.Web.Controllers
 			model.DiveAgencyListItems = BuildAgencyList();
 			string value = model.DiveAgencyListItems.First().Value;
 			model.CertificationListItems = BuildCertificationList(int.Parse(value));
+			model.InstructorListItems = BuildInstrucorList();
 			return View(model);
 		}
 
-		private IList<SelectListItem> BuildAgencyList()
+		private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
 		{
 			IList<SelectListItem> agencyList = new List<SelectListItem>();
 			IEnumerable<DiveAgency> agencies = _agencyServices.GetAgencies();
@@ -97,13 +103,16 @@ namespace Phorcys.Web.Controllers
 			foreach (var agency in agencies)
 			{
 				item = new SelectListItem();
+				if(agency.DiveAgencyId == diveAgencyId)
+				{
+					item.Selected = true;
+				}
 				item.Text = agency.Contact.Company;
 				item.Value = agency.DiveAgencyId.ToString();
 				agencyList.Add(item);
 			}
 			return agencyList;
 		}
-
 
 		public IList<SelectListItem> BuildCertificationList(int DiveAgencyId)
 		{
@@ -122,11 +131,30 @@ namespace Phorcys.Web.Controllers
 			return agencyCertificationList;
 		}
 
+        private IList<SelectListItem> BuildInstrucorList()
+        {
+            IList<SelectListItem> instructorList = new List<SelectListItem>();
+            IEnumerable<Instructor> instructors = _instructorServices.GetInstructors();
+            SelectListItem item;
+
+            foreach (var instructor in instructors)
+            {
+                item = new SelectListItem();
+                item.Text = instructor.Contact.LastName + ", " + instructor.Contact.FirstName;
+                item.Value = instructor.InstructorId.ToString();
+                instructorList.Add(item);
+            }
+            return instructorList;
+        }
+
+
         [Authorize, HttpPost, ValidateAntiForgeryToken]
         public ActionResult UpdateCertificationList(MyCertificationViewModel model)
 		{
+			model.DiveAgencyListItems = BuildAgencyList(model.DiveAgencyId);
 			model.CertificationListItems = BuildCertificationList(model.DiveAgencyId);
-			return RedirectToAction("Create", model);
+            model.InstructorListItems = BuildInstrucorList();
+            return View("Create", model);
 		}
 	}
 }
