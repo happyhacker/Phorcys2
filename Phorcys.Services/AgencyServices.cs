@@ -37,7 +37,12 @@ namespace Phorcys.Services
 				_logger.LogError(ex, "Error retreiving Dive Agencies" + ex.Message);
 				throw new Exception("Can't connect to database");
 			}
+		}
 
+		public DiveAgency GetAgency(int id)
+		{
+			var agency = _context.DiveAgencies.FirstOrDefault(a => a.DiveAgencyId == id);
+			return agency;
 		}
 	}
 }

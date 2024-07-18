@@ -83,7 +83,8 @@ namespace Phorcys.Web.Controllers
 		{
 			var model = new MyCertificationViewModel();
 			model.DiveAgencyListItems = BuildAgencyList();
-			//model.CertificationListItems = BuildCertificationList();
+			string value = model.DiveAgencyListItems.First().Value;
+			model.CertificationListItems = BuildCertificationList(int.Parse(value));
 			return View(model);
 		}
 
@@ -101,6 +102,31 @@ namespace Phorcys.Web.Controllers
 				agencyList.Add(item);
 			}
 			return agencyList;
+		}
+
+
+		public IList<SelectListItem> BuildCertificationList(int DiveAgencyId)
+		{
+			IList<SelectListItem> agencyCertificationList = new List<SelectListItem>();
+			DiveAgency agency = _agencyServices.GetAgency(DiveAgencyId);
+			SelectListItem item;
+
+			foreach (var certification in agency.Certifications)
+			{
+				item = new SelectListItem();
+				item.Text = certification.Title;
+				item.Value = certification.CertificationId.ToString();
+				agencyCertificationList.Add(item);
+			}
+			
+			return agencyCertificationList;
+		}
+
+        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        public ActionResult UpdateCertificationList(MyCertificationViewModel model)
+		{
+			model.CertificationListItems = BuildCertificationList(model.DiveAgencyId);
+			return RedirectToAction("Create", model);
 		}
 	}
 }

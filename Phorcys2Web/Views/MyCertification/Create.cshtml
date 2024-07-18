@@ -4,135 +4,209 @@
 @model Phorcys.Web.Models.MyCertificationViewModel
 
 @{
-	ViewData["Title"] = "New Certificate";
+    ViewData["Title"] = "New Certificate";
 }
 
 <div class="placeholders mb-2">
-	<div class="row d-flex justify-content-start">
-	</div>
+    <div class="row d-flex justify-content-start">
+    </div>
 </div>
 
 <section class="jumbotron text-center">
-	<div class="container">
-		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
-		<p class="lead-text text-muted">@ViewBag.Message</p>
-	</div>
+    <div class="container">
+        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        <p class="lead-text text-muted">@ViewBag.Message</p>
+    </div>
 </section>
 
 <div class="pageMessage">
-	@Html.ValidationSummary()
+    @Html.ValidationSummary()
 </div>
 
-@using (Html.BeginForm("Create", "MyCertification", FormMethod.Post))
+<!-- AgencyForm moved outside the fieldset -->
+@using (Html.BeginForm("UpdateCertificationList", "MyCertification", FormMethod.Post, new { id = "AgencyForm" }))
 {
-	@Html.AntiForgeryToken()
-
-	<div class="pageMessage">
-		@Html.ValidationSummary(true, "Please correct the errors and try again.")
-	</div>
-
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
-
-				<fieldset>
-					<div>
-						<p>
-							<label for="Dive Agencies">Dive Agencies:</label>
-							<br />
-							@(Html.Kendo().DropDownListFor(m => m.DiveAgencyId)
-														.DataTextField("Text")
-														.DataValueField("Value")
-														.BindTo(Model.DiveAgencyListItems)
-														.OptionLabel("Select a Location")
-														.HtmlAttributes(new { @class = "form-control" })
-														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.DiveAgencyId)
-							</div>
-						</p>
-					</div>
-
-					<div>
-						<p>
-							<label for="AgencyCertifications">Certifications:</label>
-							<br />
-							@(Html.Kendo().DropDownListFor(m => m.CertificationId)
-														.DataTextField("Text")
-														.DataValueField("Value")
-														.BindTo(Model.CertificationListItems)
-														.OptionLabel("Select a Certification")
-														.HtmlAttributes(new { @class = "form-control" })
-														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.CertificationId)
-							</div>
-						</p>
-					</div>
-
-					<div>
-						<p>
-							<label for="CertificationNum">Certification #:</label>
-							<br />
-							@Html.Kendo().TextBoxFor(m => m.CertificationNum)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.CertificationNum)
-							</div>
-						</p>
-					</div>
-
-					<div>
-						<p>
-							<label for="Certified">Certified Date:</label>
-							<br />
-
-							@(Html.Kendo().DatePicker()
-														.Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
-														.Value(DateTime.Today)
-														.HtmlAttributes(new { @style = "width: 300px;" })
-														)
-							@Html.ValidationMessageFor(m => m.Certified)
-						</p>
-					</div>
-
-					<div>
-						<p>
-							<label for="Notes">Notes:</label>
-							<br />
-							@(Html.Kendo().EditorFor(m => m.Notes))
-							<br />
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Notes)
-							</div>
-						</p>
-					</div>
-
-					<div>
-
-						@(Html.Kendo().Button()
-													.Name("saveButton")
-													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
-													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
-													.Content("Save")
-													)
-
-						@(Html.Kendo().Button()
-													.Name("cancelButton")
-													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
-													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
-													.Content("Cancel")
-													)
-					</div>
-
-				</fieldset>
-
-			</div>
-		</div>
-	</div>
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.DiveAgencyId, new { id = "HiddenDiveAgencyId" })
 }
-<script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "MyCertification")';
-	}
-</script>
 
+@using (Html.BeginForm("Create", "MyCertification", FormMethod.Post, new { id = "TheForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="pageMessage">
+        @Html.ValidationSummary(true, "Please correct the errors and try again.")
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <fieldset>
+                    <div>
+                        <p>
+                            <label for="DiveAgencyId">Dive Agencies:</label>
+                            <br />
+                            @(Html.Kendo().DropDownListFor(m => m.DiveAgencyId)
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(Model.DiveAgencyListItems)
+                                .OptionLabel("Select an Agency")
+                                .HtmlAttributes(new { @class = "form-control", id = "DiveAgencyId" })
+                                .Events(e => e.Change("AdjustCertList")) // Bind the change event to AdjustCertList
+                                )
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.DiveAgencyId)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
+                            <label for="CertificationId">Certifications:</label>
+                            <br />
+                            @(Html.Kendo().DropDownListFor(m => m.CertificationId)
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(Model.CertificationListItems)
+                                .OptionLabel("Select a Certification")
+                                .HtmlAttributes(new { @class = "form-control", id = "CertificationId" })
+                                )
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.CertificationId)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
+                            <label for="CertificationNum">Certification #:</label>
+                            <br />
+                            @(Html.Kendo().TextBoxFor(m => m.CertificationNum)
+                                .HtmlAttributes(new { id = "CertificationNum" }))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.CertificationNum)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
+                            <label for="Certified">Certified Date:</label>
+                            <br />
+                            @(Html.Kendo().DatePicker()
+                                .Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+                                .Value(DateTime.Today)
+                                .HtmlAttributes(new { @style = "width: 300px;", id = "Certified" })
+                                )
+                            @Html.ValidationMessageFor(m => m.Certified)
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
+                            <label for="Notes">Notes:</label>
+                            <br />
+                            @(Html.Kendo().EditorFor(m => m.Notes)
+                                .HtmlAttributes(new { id = "Notes" }))
+                            <br />
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Notes)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        @(Html.Kendo().Button()
+                            .Name("saveButton")
+                            .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                            .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+                            .Content("Save")
+                            )
+
+                        @(Html.Kendo().Button()
+                            .Name("cancelButton")
+                            .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+                            .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+                            .Content("Cancel")
+                            )
+                    </div>
+
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    console.log("Script Loaded");  // Debugging: Check if the script is loaded
+    alert("Script Loaded");
+
+    function redirectToIndex() {
+        window.location.href = '@Url.Action("Index", "MyCertification")';
+    }
+
+    function AdjustCertList() {
+        console.log("AdjustCertList called");  // Debugging: Check if the function is called
+        alert("AdjustCertList called");
+
+        // Reference the forms
+        var mainForm = document.getElementById("TheForm");
+        var agencyForm = document.getElementById("AgencyForm");
+        alert("agencyForm = " + agencyForm);
+        // Debugging: Log the forms to the console
+        console.log("mainForm:", mainForm);
+        console.log("agencyForm:", agencyForm);
+
+        // Check if the forms are found
+        if (!mainForm) {
+            alert("Main form not found");
+            return;
+        }
+        if (!agencyForm) {
+            alert("Agency form not found");
+            return;
+        }
+
+        // Get the DiveAgencyId value from the main form
+        var diveAgencyId = mainForm.elements["DiveAgencyId"].value;
+        alert("DiveAgencyId = " + diveAgencyId);
+
+        // Debugging: Log the diveAgencyId
+        console.log("diveAgencyId:", diveAgencyId);
+
+        // Set the DiveAgencyId value in the hidden form
+        agencyForm.elements["HiddenDiveAgencyId"].value = diveAgencyId;
+
+        // Debugging: Log the hidden form's DiveAgencyId value
+        console.log("agencyForm HiddenDiveAgencyId:", agencyForm.elements["HiddenDiveAgencyId"].value);
+
+        // Submit the hidden form
+        agencyForm.submit();
+    }
+
+    // Ensure the script runs after the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOMContentLoaded event fired");  // Debugging: Check if DOMContentLoaded is fired
+        alert("DOMContentLoaded event fired");
+
+        var agencyFormCheck = document.getElementById("AgencyForm");
+        if (agencyFormCheck) {
+            console.log("AgencyForm found during DOMContentLoaded:", agencyFormCheck);
+            alert("AgencyForm found during DOMContentLoaded");
+        } else {
+            console.log("AgencyForm NOT found during DOMContentLoaded");
+            alert("AgencyForm NOT found during DOMContentLoaded");
+        }
+
+        var dropdown = $("#DiveAgencyId").data("kendoDropDownList");
+        if (dropdown) {
+            console.log("Dropdown found, binding change event");  // Debugging: Check if the dropdown is found
+            dropdown.bind("change", AdjustCertList);
+        } else {
+            console.log("Dropdown element not found");
+            alert("Dropdown element not found");
+        }
+    });
+</script>
