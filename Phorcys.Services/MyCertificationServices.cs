@@ -73,7 +73,7 @@ namespace Phorcys.Services
 
 				cert.DiverId = diverId;
 				cert.CertificationId = certDto.CertificationId;
-				cert.InstructorId = 7;// certDto.InstructorId;
+				cert.InstructorId = certDto.InstructorId;
 				cert.CertificationNum = certDto.CertificationNum;
 				cert.Certified = certDto.Certified;
 				cert.Notes = certDto.Notes;
@@ -97,11 +97,22 @@ namespace Phorcys.Services
 			if(diver == null)
 			{
 				//create diver record
+				diverId = CreateNewDiver(user);
 			} else
 			{
 				diverId = diver.DiverId;
 			}
 			return diverId;
+		}
+
+		private int CreateNewDiver(User user)
+		{
+			Diver diver = new Diver();
+			diver.ContactId = (int)user.ContactId;
+			_context.Divers.Add(diver);
+			_context.SaveChanges();
+
+			return diver.DiverId;
 		}
 	}
 }
