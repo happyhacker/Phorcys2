@@ -6,6 +6,9 @@
 # $ git config --global mergetool.keepBackup false
 *.orig
 
+# Ignore all files in the Phorcys2Web/Home/LogFiles/ directory
+Phorcys2Web/Home/LogFiles/*
+
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
 *.BASE.*

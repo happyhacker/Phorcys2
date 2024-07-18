@@ -3454,3 +3454,316 @@ ORDER BY [v].[Certified] DESC
 2024-07-18 15:32:05.838 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
 2024-07-18 15:32:05.851 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 12.9267ms
 2024-07-18 15:32:05.870 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 31.9554ms
+2024-07-18 15:49:25.881 -05:00 [INF] User profile is available. Using 'C:\Users\larryhack\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-18 15:49:26.523 -05:00 [INF] Starting web host
+2024-07-18 15:49:26.892 -05:00 [INF] Now listening on: https://localhost:53862
+2024-07-18 15:49:26.894 -05:00 [INF] Now listening on: http://localhost:53863
+2024-07-18 15:49:26.896 -05:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-18 15:49:26.897 -05:00 [INF] Hosting environment: Development
+2024-07-18 15:49:26.899 -05:00 [INF] Content root path: Z:\Users\Data\dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys2Web
+2024-07-18 15:49:27.756 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-18 15:49:27.962 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-18 15:49:27.992 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-18 15:49:33.154 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-18 15:49:34.953 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.956 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.957 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.959 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.960 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.961 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.962 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.963 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.965 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:34.967 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:35.063 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:49:35.113 -05:00 [INF] Executed ViewResult - view Index executed in 7074.1773ms.
+2024-07-18 15:49:35.126 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 7130.3405ms
+2024-07-18 15:49:35.133 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-18 15:49:35.148 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 7395.4489ms
+2024-07-18 15:49:35.262 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:49:35.270 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:49:35.273 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 11.5992ms
+2024-07-18 15:49:35.320 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 50.653ms
+2024-07-18 15:54:41.646 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/Identity/Account/Login - null null
+2024-07-18 15:54:42.015 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-18 15:54:42.248 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-18 15:54:42.277 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnGetAsync - ModelState is "Valid"
+2024-07-18 15:54:42.287 -05:00 [INF] AuthenticationScheme: Identity.External signed out.
+2024-07-18 15:54:42.289 -05:00 [INF] Executed handler method OnGetAsync, returned result .
+2024-07-18 15:54:42.293 -05:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2024-07-18 15:54:42.294 -05:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2024-07-18 15:54:42.991 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:42.993 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:42.994 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:42.995 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:42.997 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:42.998 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.000 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.001 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.002 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.004 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.006 -05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2024-07-18 15:54:43.013 -05:00 [INF] Executed page /Account/Login in 762.1954ms
+2024-07-18 15:54:43.015 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-18 15:54:43.017 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/Identity/Account/Login - 200 null text/html; charset=utf-8 1371.2796ms
+2024-07-18 15:54:43.025 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:54:43.026 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:54:43.030 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 5.1371ms
+2024-07-18 15:54:43.045 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 19.572ms
+2024-07-18 15:54:44.730 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/Identity/Account/Login - application/x-www-form-urlencoded 267
+2024-07-18 15:54:44.743 -05:00 [INF] Executing endpoint '/Account/Login'
+2024-07-18 15:54:44.745 -05:00 [INF] Route matched with {page = "/Account/Login", area = "Identity", action = "", controller = ""}. Executing page /Account/Login
+2024-07-18 15:54:44.775 -05:00 [INF] Executing handler method Phorcys.Web.Areas.Identity.Pages.Account.LoginModel.OnPostAsync - ModelState is "Valid"
+2024-07-18 15:54:45.395 -05:00 [WRN] The foreign key property 'AgencyInstructor.InstructorId1' was created in shadow state because a conflicting property with the simple name 'InstructorId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-07-18 15:54:45.426 -05:00 [WRN] No store type was specified for the decimal property 'Paid' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-18 15:54:45.429 -05:00 [WRN] No store type was specified for the decimal property 'RetailPrice' on entity type 'Gear'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-07-18 15:54:46.421 -05:00 [INF] Executed DbCommand (62ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2024-07-18 15:54:46.684 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__user_Id_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ClaimType], [a].[ClaimValue], [a].[UserId]
+FROM [AspNetUserClaims] AS [a]
+WHERE [a].[UserId] = @__user_Id_0
+2024-07-18 15:54:46.695 -05:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2024-07-18 15:54:46.697 -05:00 [INF] User logged in.
+2024-07-18 15:54:46.700 -05:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.LocalRedirectResult.
+2024-07-18 15:54:46.704 -05:00 [INF] Executing LocalRedirectResult, redirecting to /.
+2024-07-18 15:54:46.706 -05:00 [INF] Executed page /Account/Login in 1958.7551ms
+2024-07-18 15:54:46.707 -05:00 [INF] Executed endpoint '/Account/Login'
+2024-07-18 15:54:46.712 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/ - null null
+2024-07-18 15:54:46.714 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/Identity/Account/Login - 302 0 null 1984.2596ms
+2024-07-18 15:54:46.721 -05:00 [INF] Executing endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-18 15:54:46.723 -05:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Phorcys2Web.Controllers.HomeController (Phorcys.Web).
+2024-07-18 15:54:46.726 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-18 15:54:46.733 -05:00 [INF] Executed ViewResult - view Index executed in 7.1763ms.
+2024-07-18 15:54:46.736 -05:00 [INF] Executed action Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web) in 10.4294ms
+2024-07-18 15:54:46.737 -05:00 [INF] Executed endpoint 'Phorcys2Web.Controllers.HomeController.Index (Phorcys.Web)'
+2024-07-18 15:54:46.739 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/ - 200 null text/html; charset=utf-8 27.6475ms
+2024-07-18 15:54:46.743 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:54:46.743 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:54:46.757 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 13.722ms
+2024-07-18 15:54:46.773 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.5011ms
+2024-07-18 15:54:50.328 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-18 15:54:50.338 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:54:50.342 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:54:50.419 -05:00 [INF] Executed DbCommand (8ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-18 15:54:50.490 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified] DESC
+2024-07-18 15:54:50.849 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-18 15:54:51.212 -05:00 [INF] Executed ViewResult - view Index executed in 697.506ms.
+2024-07-18 15:54:51.214 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 869.4179ms
+2024-07-18 15:54:51.216 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:54:51.217 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:54:51.217 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:54:51.219 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 890.772ms
+2024-07-18 15:54:51.240 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 22.8353ms
+2024-07-18 15:54:51.247 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.0705ms
+2024-07-18 15:55:03.914 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification/Create? - null null
+2024-07-18 15:55:03.925 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web)'
+2024-07-18 15:55:03.927 -05:00 [INF] Route matched with {action = "Create", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Create() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:04.048 -05:00 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[DiveAgencyId], [d].[ContactId], [d].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone], [c0].[CertificationId], [c0].[Created], [c0].[DiveAgencyId], [c0].[LastModified], [c0].[Notes], [c0].[Title], [c0].[UserId]
+FROM [DiveAgencies] AS [d]
+INNER JOIN [Contacts] AS [c] ON [d].[ContactId] = [c].[ContactId]
+LEFT JOIN [Certifications] AS [c0] ON [d].[DiveAgencyId] = [c0].[DiveAgencyId]
+ORDER BY [c].[Company], [d].[DiveAgencyId], [c].[ContactId]
+2024-07-18 15:55:04.136 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[DiveAgencyId], [t].[ContactId], [t].[Notes], [c].[CertificationId], [c].[Created], [c].[DiveAgencyId], [c].[LastModified], [c].[Notes], [c].[Title], [c].[UserId]
+FROM (
+    SELECT TOP(1) [d].[DiveAgencyId], [d].[ContactId], [d].[Notes]
+    FROM [DiveAgencies] AS [d]
+    WHERE [d].[DiveAgencyId] = @__id_0
+) AS [t]
+LEFT JOIN [Certifications] AS [c] ON [t].[DiveAgencyId] = [c].[DiveAgencyId]
+ORDER BY [t].[DiveAgencyId]
+2024-07-18 15:55:04.155 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [i].[InstructorId], [i].[ContactId], [i].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone]
+FROM [Instructors] AS [i]
+INNER JOIN [Contacts] AS [c] ON [i].[ContactId] = [c].[ContactId]
+ORDER BY [c].[LastName], [c].[FirstName]
+2024-07-18 15:55:04.429 -05:00 [INF] Executing ViewResult, running view Create.
+2024-07-18 15:55:04.564 -05:00 [INF] Executed ViewResult - view Create executed in 395.7556ms.
+2024-07-18 15:55:04.566 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web) in 636.4347ms
+2024-07-18 15:55:04.567 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:55:04.567 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:55:04.569 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web)'
+2024-07-18 15:55:04.573 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 6.2722ms
+2024-07-18 15:55:04.579 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification/Create? - 200 null text/html; charset=utf-8 664.6299ms
+2024-07-18 15:55:04.587 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 20.4471ms
+2024-07-18 15:55:08.568 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/UpdateCertificationList - application/x-www-form-urlencoded 240
+2024-07-18 15:55:08.581 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web)'
+2024-07-18 15:55:08.589 -05:00 [INF] Route matched with {action = "UpdateCertificationList", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult UpdateCertificationList(Phorcys.Web.Models.MyCertificationViewModel) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:08.613 -05:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[DiveAgencyId], [d].[ContactId], [d].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone], [c0].[CertificationId], [c0].[Created], [c0].[DiveAgencyId], [c0].[LastModified], [c0].[Notes], [c0].[Title], [c0].[UserId]
+FROM [DiveAgencies] AS [d]
+INNER JOIN [Contacts] AS [c] ON [d].[ContactId] = [c].[ContactId]
+LEFT JOIN [Certifications] AS [c0] ON [d].[DiveAgencyId] = [c0].[DiveAgencyId]
+ORDER BY [c].[Company], [d].[DiveAgencyId], [c].[ContactId]
+2024-07-18 15:55:08.624 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[DiveAgencyId], [t].[ContactId], [t].[Notes], [c].[CertificationId], [c].[Created], [c].[DiveAgencyId], [c].[LastModified], [c].[Notes], [c].[Title], [c].[UserId]
+FROM (
+    SELECT TOP(1) [d].[DiveAgencyId], [d].[ContactId], [d].[Notes]
+    FROM [DiveAgencies] AS [d]
+    WHERE [d].[DiveAgencyId] = @__id_0
+) AS [t]
+LEFT JOIN [Certifications] AS [c] ON [t].[DiveAgencyId] = [c].[DiveAgencyId]
+ORDER BY [t].[DiveAgencyId]
+2024-07-18 15:55:08.633 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [i].[InstructorId], [i].[ContactId], [i].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone]
+FROM [Instructors] AS [i]
+INNER JOIN [Contacts] AS [c] ON [i].[ContactId] = [c].[ContactId]
+ORDER BY [c].[LastName], [c].[FirstName]
+2024-07-18 15:55:08.638 -05:00 [INF] Executing ViewResult, running view Create.
+2024-07-18 15:55:08.649 -05:00 [INF] Executed ViewResult - view Create executed in 10.8852ms.
+2024-07-18 15:55:08.651 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web) in 59.0169ms
+2024-07-18 15:55:08.654 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web)'
+2024-07-18 15:55:08.656 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/UpdateCertificationList - 200 null text/html; charset=utf-8 88.5864ms
+2024-07-18 15:55:08.657 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:55:08.657 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:55:08.665 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 7.3205ms
+2024-07-18 15:55:08.683 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 26.4312ms
+2024-07-18 15:55:18.683 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/UpdateCertificationList - application/x-www-form-urlencoded 240
+2024-07-18 15:55:18.691 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web)'
+2024-07-18 15:55:18.692 -05:00 [INF] Route matched with {action = "UpdateCertificationList", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult UpdateCertificationList(Phorcys.Web.Models.MyCertificationViewModel) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:18.702 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[DiveAgencyId], [d].[ContactId], [d].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone], [c0].[CertificationId], [c0].[Created], [c0].[DiveAgencyId], [c0].[LastModified], [c0].[Notes], [c0].[Title], [c0].[UserId]
+FROM [DiveAgencies] AS [d]
+INNER JOIN [Contacts] AS [c] ON [d].[ContactId] = [c].[ContactId]
+LEFT JOIN [Certifications] AS [c0] ON [d].[DiveAgencyId] = [c0].[DiveAgencyId]
+ORDER BY [c].[Company], [d].[DiveAgencyId], [c].[ContactId]
+2024-07-18 15:55:18.710 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[DiveAgencyId], [t].[ContactId], [t].[Notes], [c].[CertificationId], [c].[Created], [c].[DiveAgencyId], [c].[LastModified], [c].[Notes], [c].[Title], [c].[UserId]
+FROM (
+    SELECT TOP(1) [d].[DiveAgencyId], [d].[ContactId], [d].[Notes]
+    FROM [DiveAgencies] AS [d]
+    WHERE [d].[DiveAgencyId] = @__id_0
+) AS [t]
+LEFT JOIN [Certifications] AS [c] ON [t].[DiveAgencyId] = [c].[DiveAgencyId]
+ORDER BY [t].[DiveAgencyId]
+2024-07-18 15:55:18.716 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [i].[InstructorId], [i].[ContactId], [i].[Notes], [c].[ContactId], [c].[Address1], [c].[Address2], [c].[Birthday], [c].[CellPhone], [c].[City], [c].[Company], [c].[CountryCode], [c].[Created], [c].[Email], [c].[FirstName], [c].[Gender], [c].[HomePhone], [c].[LastModified], [c].[LastName], [c].[Notes], [c].[PostalCode], [c].[State], [c].[UserId], [c].[WorkPhone]
+FROM [Instructors] AS [i]
+INNER JOIN [Contacts] AS [c] ON [i].[ContactId] = [c].[ContactId]
+ORDER BY [c].[LastName], [c].[FirstName]
+2024-07-18 15:55:18.720 -05:00 [INF] Executing ViewResult, running view Create.
+2024-07-18 15:55:18.730 -05:00 [INF] Executed ViewResult - view Create executed in 9.6867ms.
+2024-07-18 15:55:18.732 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web) in 37.09ms
+2024-07-18 15:55:18.734 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.UpdateCertificationList (Phorcys.Web)'
+2024-07-18 15:55:18.736 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:55:18.736 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:55:18.737 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/UpdateCertificationList - 200 null text/html; charset=utf-8 55.3679ms
+2024-07-18 15:55:18.748 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 12.34ms
+2024-07-18 15:55:18.755 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 19.6406ms
+2024-07-18 15:55:40.890 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Create - application/x-www-form-urlencoded 340
+2024-07-18 15:55:40.897 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web)'
+2024-07-18 15:55:40.901 -05:00 [INF] Route matched with {action = "Create", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Create(Phorcys.Web.Models.MyCertificationViewModel) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:40.919 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-18 15:55:40.929 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[UserId] = @__userId_0
+2024-07-18 15:55:40.939 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__user_ContactId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[DiverId], [d].[ContactId], [d].[Notes], [d].[RestingSacRate], [d].[WorkingSacRate]
+FROM [Divers] AS [d]
+WHERE [d].[ContactId] = @__user_ContactId_0
+2024-07-18 15:55:41.087 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [DiverCertifications] ([CertificationId], [CertificationNum], [Certified], [Created], [DiverId], [InstructorId], [LastModified], [Notes])
+OUTPUT INSERTED.[DiverCertificationId]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2024-07-18 15:55:41.109 -05:00 [INF] Executing RedirectResult, redirecting to /MyCertification.
+2024-07-18 15:55:41.111 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web) in 207.465ms
+2024-07-18 15:55:41.113 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Create (Phorcys.Web)'
+2024-07-18 15:55:41.114 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/Create - 302 0 null 225.8154ms
+2024-07-18 15:55:41.117 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-18 15:55:41.125 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:55:41.126 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:41.133 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-18 15:55:41.151 -05:00 [INF] Executed DbCommand (14ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified] DESC
+2024-07-18 15:55:41.154 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-18 15:55:41.166 -05:00 [INF] Executed ViewResult - view Index executed in 11.6097ms.
+2024-07-18 15:55:41.169 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 40.2084ms
+2024-07-18 15:55:41.171 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:55:41.173 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 56.231ms
+2024-07-18 15:55:41.177 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:55:41.176 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:55:41.188 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 11.3616ms
+2024-07-18 15:55:41.206 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.0718ms
+2024-07-18 15:55:55.833 -05:00 [INF] Request starting HTTP/2 POST https://localhost:53862/MyCertification/Delete - application/x-www-form-urlencoded 249
+2024-07-18 15:55:55.840 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-18 15:55:55.843 -05:00 [INF] Route matched with {action = "Delete", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Delete(Int32) on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:55.864 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[DiverCertificationId], [d].[CertificationId], [d].[CertificationNum], [d].[Certified], [d].[Created], [d].[DiverId], [d].[InstructorId], [d].[LastModified], [d].[Notes]
+FROM [DiverCertifications] AS [d]
+WHERE [d].[DiverCertificationId] = @__p_0
+2024-07-18 15:55:55.878 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [DiverCertifications]
+OUTPUT 1
+WHERE [DiverCertificationId] = @p0;
+2024-07-18 15:55:55.884 -05:00 [INF] Executing RedirectResult, redirecting to /MyCertification.
+2024-07-18 15:55:55.885 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web) in 39.1875ms
+2024-07-18 15:55:55.887 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Delete (Phorcys.Web)'
+2024-07-18 15:55:55.888 -05:00 [INF] Request finished HTTP/2 POST https://localhost:53862/MyCertification/Delete - 302 0 null 55.7411ms
+2024-07-18 15:55:55.890 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/MyCertification - null null
+2024-07-18 15:55:55.898 -05:00 [INF] Executing endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:55:55.899 -05:00 [INF] Route matched with {action = "Index", controller = "MyCertification", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Index() on controller Phorcys.Web.Controllers.MyCertificationController (Phorcys.Web).
+2024-07-18 15:55:55.904 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__loginId_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[UserId], [u].[AspNetUserId], [u].[ContactId], [u].[Created], [u].[LastModified], [u].[LoginCount], [u].[LoginId], [u].[Password]
+FROM [Users] AS [u]
+WHERE [u].[AspNetUserId] = @__loginId_0
+2024-07-18 15:55:55.919 -05:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [v].[DiverCertificationId], [v].[Agency], [v].[CertificationNum], [v].[Certified], [v].[Created], [v].[DiverFirstname], [v].[DiverId], [v].[DiverLastName], [v].[InstructorFirstName], [v].[InstructorLastName], [v].[LastModified], [v].[Notes], [v].[Title], [v].[UserId]
+FROM [vwMyCertifications] AS [v]
+WHERE [v].[UserId] = @__userId_0
+ORDER BY [v].[Certified] DESC
+2024-07-18 15:55:55.922 -05:00 [INF] Executing ViewResult, running view Index.
+2024-07-18 15:55:55.930 -05:00 [INF] Executed ViewResult - view Index executed in 8.1241ms.
+2024-07-18 15:55:55.933 -05:00 [INF] Executed action Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web) in 31.0696ms
+2024-07-18 15:55:55.935 -05:00 [INF] Executed endpoint 'Phorcys.Web.Controllers.MyCertificationController.Index (Phorcys.Web)'
+2024-07-18 15:55:55.937 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/MyCertification - 200 null text/html; charset=utf-8 46.5008ms
+2024-07-18 15:55:55.939 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-18 15:55:55.939 -05:00 [INF] Request starting HTTP/2 GET https://localhost:53862/_vs/browserLink - null null
+2024-07-18 15:55:55.946 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_framework/aspnetcore-browser-refresh.js - 200 13758 application/javascript; charset=utf-8 6.3308ms
+2024-07-18 15:55:55.962 -05:00 [INF] Request finished HTTP/2 GET https://localhost:53862/_vs/browserLink - 200 null text/javascript; charset=UTF-8 23.2333ms
