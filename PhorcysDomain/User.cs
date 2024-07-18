@@ -21,11 +21,13 @@ public partial class User
 
     public DateTime LastModified { get; set; }
 
+    //public virtual Contact? Contact { get; set; }   
+    
     //public virtual ICollection<Attribute> Attributes { get; set; } = new List<Attribute>();
 
     //public virtual ICollection<Certification> Certifications { get; set; } = new List<Certification>();
 
-    //public virtual Contact? Contact { get; set; }
+
 
     //public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
 

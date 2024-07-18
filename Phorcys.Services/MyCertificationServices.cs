@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Phorcys.Data.DTOs;
 
 namespace Phorcys.Services
 {
@@ -15,11 +16,13 @@ namespace Phorcys.Services
 	{
 		private readonly PhorcysContext _context;
 		private readonly ILogger _logger;
+		private readonly UserServices _userServices;
 
-		public MyCertificationServices(PhorcysContext context, ILogger<MyCertificationServices> logger)
+		public MyCertificationServices(PhorcysContext context, ILogger<MyCertificationServices> logger, UserServices userServices)
 		{
 			_context = context;
 			_logger = logger;
+			_userServices = userServices;
 		}
 
 		public IEnumerable<vwMyCertification> GetMyCerts(int userId)
@@ -28,7 +31,7 @@ namespace Phorcys.Services
 			{
 				var myCerts = _context.vwMyCertifications
 					.Where(c => c.UserId == userId)
-					.OrderBy(c => c.Certified).ToList();
+					.OrderByDescending(c => c.Certified).ToList();
 
 				return myCerts;
 			}
@@ -59,7 +62,57 @@ namespace Phorcys.Services
 			{
 				_logger.LogError("Error deleting Certification: " + ex.Message);
 			}
+		}
 
+	    public void SaveNewDiverCertification(MyCertificationDto certDto)
+		{
+			try
+			{
+				var cert = new DiverCertification();
+				var diverId = GetDiverId(_userServices.GetUserId());
+
+				cert.DiverId = diverId;
+				cert.CertificationId = certDto.CertificationId;
+				cert.InstructorId = certDto.InstructorId;
+				cert.CertificationNum = certDto.CertificationNum;
+				cert.Certified = certDto.Certified;
+				cert.Notes = certDto.Notes;
+				cert.Created = DateTime.Now;
+				cert.LastModified = DateTime.Now;
+
+				_context.DiverCertifications.Add(cert);
+				_context.SaveChanges();
+			} catch (DbUpdateException ex)
+			{
+				_logger.LogError("Error saving Diver Certification");
+				throw ex;
+			}
+		}
+
+		private int GetDiverId(int userId)
+		{
+			int diverId = 0;
+			var user = _userServices.GetUser(userId);
+			Diver diver = _context.Divers.FirstOrDefault(d => d.ContactId == user.ContactId);
+			if(diver == null)
+			{
+				//create diver record
+				diverId = CreateNewDiver(user);
+			} else
+			{
+				diverId = diver.DiverId;
+			}
+			return diverId;
+		}
+
+		private int CreateNewDiver(User user)
+		{
+			Diver diver = new Diver();
+			diver.ContactId = (int)user.ContactId;
+			_context.Divers.Add(diver);
+			_context.SaveChanges();
+
+			return diver.DiverId;
 		}
 	}
 }

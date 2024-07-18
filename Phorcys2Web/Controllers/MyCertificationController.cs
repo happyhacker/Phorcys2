@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Phorcys2Web.Controllers;
 using Microsoft.VisualBasic;
 using Microsoft.Extensions.Logging;
-using Phorcys.Web.ModelsNew;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Phorcys.Web.Controllers
 {
@@ -18,14 +19,21 @@ namespace Phorcys.Web.Controllers
 	{
 		private readonly MyCertificationServices _myCertificationServices;
 		private readonly UserServices _userServices;
+		private readonly AgencyServices _agencyServices;
+		private readonly InstructorServices _instructorServices;
 		private readonly ILogger _logger;
 
-		public MyCertificationController(MyCertificationServices myCertificationServices, UserServices userServices,
-			ILogger<MyCertificationController> logger)
+		public MyCertificationController(ILogger<MyCertificationController> logger,
+			UserServices userServices, 
+			MyCertificationServices myCertificationServices, 
+			InstructorServices instructorServices,
+			AgencyServices agencyServices)
 		{
-			_myCertificationServices = myCertificationServices;
+            _logger = logger;
 			_userServices = userServices;
-			_logger = logger;
+            _myCertificationServices = myCertificationServices;
+			_agencyServices = agencyServices;
+			_instructorServices = instructorServices;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
@@ -73,6 +81,99 @@ namespace Phorcys.Web.Controllers
 					return View("Error");
 				}
 			}
+		}
+
+		[Authorize, HttpGet]
+		public ActionResult Create()
+		{
+			var model = new MyCertificationViewModel();
+			model.DiveAgencyListItems = BuildAgencyList();
+			string value = model.DiveAgencyListItems.First().Value;
+			model.CertificationListItems = BuildCertificationList(int.Parse(value));
+			model.InstructorListItems = BuildInstrucorList();
+			return View(model);
+		}
+
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Create(MyCertificationViewModel model)
+		{
+			if(ModelState.IsValid)
+			{
+				var myCert = new MyCertificationDto();
+				myCert.DiverId = model.DiverId;
+				myCert.CertificationId = model.CertificationId;
+				myCert.InstructorId = model.InstructorId;
+				myCert.CertificationNum = model.CertificationNum;
+				myCert.Certified = model.Certified;
+				myCert.Notes = model.Notes;
+
+				_myCertificationServices.SaveNewDiverCertification(myCert);
+
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Certification was successfully added.";
+                return RedirectToAction("Index");
+			} else { return View(model); }
+		}
+
+		private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
+		{
+			IList<SelectListItem> agencyList = new List<SelectListItem>();
+			IEnumerable<DiveAgency> agencies = _agencyServices.GetAgencies();
+			SelectListItem item;
+
+			foreach (var agency in agencies)
+			{
+				item = new SelectListItem();
+				if(agency.DiveAgencyId == diveAgencyId)
+				{
+					item.Selected = true;
+				}
+				item.Text = agency.Contact.Company;
+				item.Value = agency.DiveAgencyId.ToString();
+				agencyList.Add(item);
+			}
+			return agencyList;
+		}
+
+		public IList<SelectListItem> BuildCertificationList(int DiveAgencyId)
+		{
+			IList<SelectListItem> agencyCertificationList = new List<SelectListItem>();
+			DiveAgency agency = _agencyServices.GetAgency(DiveAgencyId);
+			SelectListItem item;
+
+			foreach (var certification in agency.Certifications)
+			{
+				item = new SelectListItem();
+				item.Text = certification.Title;
+				item.Value = certification.CertificationId.ToString();
+				agencyCertificationList.Add(item);
+			}
+			
+			return agencyCertificationList;
+		}
+
+        private IList<SelectListItem> BuildInstrucorList()
+        {
+            IList<SelectListItem> instructorList = new List<SelectListItem>();
+            IEnumerable<Instructor> instructors = _instructorServices.GetInstructors();
+            SelectListItem item;
+
+            foreach (var instructor in instructors)
+            {
+                item = new SelectListItem();
+                item.Text = instructor.Contact.LastName + ", " + instructor.Contact.FirstName;
+                item.Value = instructor.InstructorId.ToString();
+                instructorList.Add(item);
+            }
+            return instructorList;
+        }
+
+        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        public ActionResult UpdateCertificationList(MyCertificationViewModel model)
+		{
+			model.DiveAgencyListItems = BuildAgencyList(model.DiveAgencyId);
+			model.CertificationListItems = BuildCertificationList(model.DiveAgencyId);
+            model.InstructorListItems = BuildInstrucorList();
+            return View("Create", model);
 		}
 	}
 }
