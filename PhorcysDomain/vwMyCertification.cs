@@ -17,7 +17,7 @@ namespace Phorcys.Domain
 		public string? Agency {  get; set; }
 		public DateTime? Certified { get; set; }
 		public string? CertificationNum { get; set; }
-		public string? DiverFirstname { get; set; }
+		public string? DiverFirstName { get; set; }
 		public string? DiverLastName { get; set; }
 		public string? InstructorFirstName { get; set; }
 		public string? InstructorLastName { get; set; }
