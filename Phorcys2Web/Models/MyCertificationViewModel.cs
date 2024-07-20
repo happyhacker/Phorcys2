@@ -15,7 +15,7 @@ namespace Phorcys.Web.Models
 		public int CertificationId { get; set; }
 
 		[Required]
-		public int InstructorId { get; set; }		
+		public int? InstructorId { get; set; }		
 		public DateTime? Certified { get; set; }
 		public string CertificationNum { get; set; }
 		public string Notes { get; set; }

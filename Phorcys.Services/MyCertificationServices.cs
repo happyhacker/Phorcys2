@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Phorcys.Data.DTOs;
+using Microsoft.Data.SqlClient;
 
 namespace Phorcys.Services
 {
@@ -41,6 +42,26 @@ namespace Phorcys.Services
 			}
 		}
 
+		public MyCertificationDto GetMyCert(int diverCertificationId)
+		{
+			try
+			{
+				var myCertDto = new MyCertificationDto();
+				var myCert = _context.DiverCertifications.Find(diverCertificationId);
+				myCertDto.CertificationId = myCert.CertificationId;
+				myCertDto.InstructorId = myCert.InstructorId;
+				myCertDto.Certified = myCert.Certified;
+				myCertDto.CertificationNum = myCert.CertificationNum;
+				myCertDto.Notes = myCert.Notes;
+
+				return myCertDto;
+			}catch(SqlException ex)
+			{
+				_logger.LogError("Error connecting to the database: {message}", ex.Message);
+				throw;
+			}
+		}
+
 		public void Delete(int diverCertificationId)
 		{
 			try
@@ -63,7 +84,7 @@ namespace Phorcys.Services
 			}
 		}
 
-	    public void SaveNewDiverCertification(MyCertificationDto certDto)
+		public void SaveNewDiverCertification(MyCertificationDto certDto)
 		{
 			try
 			{
@@ -81,7 +102,8 @@ namespace Phorcys.Services
 
 				_context.DiverCertifications.Add(cert);
 				_context.SaveChanges();
-			} catch (DbUpdateException ex)
+			}
+			catch (DbUpdateException ex)
 			{
 				_logger.LogError("Error saving Diver Certification");
 				throw ex;
@@ -93,11 +115,12 @@ namespace Phorcys.Services
 			int diverId = 0;
 			var user = _userServices.GetUser(userId);
 			Diver diver = _context.Divers.FirstOrDefault(d => d.ContactId == user.ContactId);
-			if(diver == null)
+			if (diver == null)
 			{
 				//create diver record
 				diverId = CreateNewDiver(user);
-			} else
+			}
+			else
 			{
 				diverId = diver.DiverId;
 			}

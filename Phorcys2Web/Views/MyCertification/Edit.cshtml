@@ -4,7 +4,7 @@
 @model Phorcys.Web.Models.MyCertificationViewModel
 
 @{
-    ViewData["Title"] = "New Certificate";
+    ViewData["Title"] = "Edit Certification";
 }
 
 <div class="placeholders mb-2">
@@ -30,7 +30,7 @@
     @Html.HiddenFor(m => m.DiveAgencyId, new { id = "HiddenDiveAgencyId" })
 }
 
-@using (Html.BeginForm("Create", "MyCertification", FormMethod.Post, new { id = "TheForm" }))
+@using (Html.BeginForm("Edit", "MyCertification", FormMethod.Post, new { id = "TheForm" }))
 {
     @Html.AntiForgeryToken()
 
@@ -113,7 +113,6 @@
                             <br />
                             @(Html.Kendo().DatePicker()
                                 .Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
-                                .Value(DateTime.Today)
                                 .HtmlAttributes(new { @style = "width: 300px;", id = "Certified" })
                                 )
                             @Html.ValidationMessageFor(m => m.Certified)

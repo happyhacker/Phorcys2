@@ -114,6 +114,29 @@ namespace Phorcys.Web.Controllers
 			} else { return View(model); }
 		}
 
+		[Authorize, HttpGet]
+		public ActionResult Edit(int Id)
+		{
+			try
+			{
+				var model = new MyCertificationViewModel();
+				MyCertificationDto myCertDto = _myCertificationServices.GetMyCert(Id);
+
+				model.DiverCertificationId = myCertDto.DiverCertificationId;
+				model.CertificationId = myCertDto.CertificationId;
+				model.InstructorId = myCertDto.InstructorId;
+				model.CertificationNum = myCertDto.CertificationNum;
+				model.Certified = myCertDto.Certified;
+				model.Notes = myCertDto.Notes;
+
+				return View(model);
+			}catch(Exception ex)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
+				return RedirectToAction("Index");
+			}
+		}
+
 		private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
 		{
 			IList<SelectListItem> agencyList = new List<SelectListItem>();
