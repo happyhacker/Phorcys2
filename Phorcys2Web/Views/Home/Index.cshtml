@@ -1,10 +1,22 @@
-﻿@{
+﻿@using Phorcys2Web.Controllers
+@{
 	ViewData["Title"] = "Homepage";
 }
 
 <div class="placeholders mb-2">
 	<div class="row d-flex justify-content-start">
 	</div>
+</div>
+
+<div id="message" class="pageMessage">
+	@{
+		if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
+		{
+		}
+		<p id="pageMessage">
+			@(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+		</p>
+	}
 </div>
 
 <div class="container">
