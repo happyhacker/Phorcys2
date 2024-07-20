@@ -10,6 +10,7 @@ namespace Phorcys.Data.DTOs
     {
         public int DiverCertificationId { get; set; }
         public int DiverId { get; set; }
+        public int AgencyId { get; set; }
         public int CertificationId { get; set; }
         public int? InstructorId { get; set; }       
         public DateTime? Certified { get; set; }

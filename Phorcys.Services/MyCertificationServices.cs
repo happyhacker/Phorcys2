@@ -47,7 +47,8 @@ namespace Phorcys.Services
 			try
 			{
 				var myCertDto = new MyCertificationDto();
-				var myCert = _context.DiverCertifications.Find(diverCertificationId);
+				var myCert = _context.DiverCertifications.Include("Certification").FirstOrDefault(c => c.DiverCertificationId == diverCertificationId);
+				myCertDto.AgencyId = (int)myCert.Certification.DiveAgencyId;
 				myCertDto.CertificationId = myCert.CertificationId;
 				myCertDto.InstructorId = myCert.InstructorId;
 				myCertDto.Certified = myCert.Certified;

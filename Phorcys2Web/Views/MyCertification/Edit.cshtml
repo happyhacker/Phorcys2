@@ -111,9 +111,9 @@
                         <p>
                             <label for="Certified">Certified Date:</label>
                             <br />
-                            @(Html.Kendo().DatePicker()
-                                .Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
-                                .HtmlAttributes(new { @style = "width: 300px;", id = "Certified" })
+                            @(Html.Kendo().DatePickerFor(m => m.Certified)
+                                //.Name("Certified") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+                                .HtmlAttributes(new { @style = "width: 300px;" /*, id = "Certified" */ })
                                 )
                             @Html.ValidationMessageFor(m => m.Certified)
                         </p>

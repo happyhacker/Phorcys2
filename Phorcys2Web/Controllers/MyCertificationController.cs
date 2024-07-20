@@ -122,6 +122,12 @@ namespace Phorcys.Web.Controllers
 				var model = new MyCertificationViewModel();
 				MyCertificationDto myCertDto = _myCertificationServices.GetMyCert(Id);
 
+				model.DiveAgencyListItems = BuildAgencyList(myCertDto.AgencyId);
+				model.CertificationId = myCertDto.CertificationId;
+				model.DiveAgencyId = myCertDto.AgencyId;
+				model.CertificationListItems = BuildCertificationList(model.DiveAgencyId, model.CertificationId);
+				model.InstructorListItems = BuildInstrucorList(myCertDto.InstructorId);
+
 				model.DiverCertificationId = myCertDto.DiverCertificationId;
 				model.CertificationId = myCertDto.CertificationId;
 				model.InstructorId = myCertDto.InstructorId;
@@ -157,10 +163,10 @@ namespace Phorcys.Web.Controllers
 			return agencyList;
 		}
 
-		public IList<SelectListItem> BuildCertificationList(int DiveAgencyId)
+		public IList<SelectListItem> BuildCertificationList(int diveAgencyId, int certificationId = 0)
 		{
 			IList<SelectListItem> agencyCertificationList = new List<SelectListItem>();
-			DiveAgency agency = _agencyServices.GetAgency(DiveAgencyId);
+			DiveAgency agency = _agencyServices.GetAgency(diveAgencyId);
 			SelectListItem item;
 
 			foreach (var certification in agency.Certifications)
@@ -168,13 +174,17 @@ namespace Phorcys.Web.Controllers
 				item = new SelectListItem();
 				item.Text = certification.Title;
 				item.Value = certification.CertificationId.ToString();
+				if(certification.CertificationId == certificationId)
+				{
+					item.Selected = true;
+				}
 				agencyCertificationList.Add(item);
 			}
 			
 			return agencyCertificationList;
 		}
 
-        private IList<SelectListItem> BuildInstrucorList()
+		private IList<SelectListItem> BuildInstrucorList(int? instructorId = 0)
         {
             IList<SelectListItem> instructorList = new List<SelectListItem>();
             IEnumerable<Instructor> instructors = _instructorServices.GetInstructors();
@@ -185,6 +195,10 @@ namespace Phorcys.Web.Controllers
                 item = new SelectListItem();
                 item.Text = instructor.Contact.LastName + ", " + instructor.Contact.FirstName;
                 item.Value = instructor.InstructorId.ToString();
+				if(instructor.InstructorId == instructorId)
+				{
+					item.Selected = true;
+				}
                 instructorList.Add(item);
             }
             return instructorList;
