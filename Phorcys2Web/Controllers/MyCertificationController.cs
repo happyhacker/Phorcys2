@@ -143,6 +143,21 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Edit(MyCertificationViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var myCertDto = new MyCertificationDto();
+				
+				_myCertificationServices.Save(myCertDto);
+				return RedirectToAction("Index");
+			} else
+			{
+				return View(model);
+			}
+		}
+
 		private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
 		{
 			IList<SelectListItem> agencyList = new List<SelectListItem>();

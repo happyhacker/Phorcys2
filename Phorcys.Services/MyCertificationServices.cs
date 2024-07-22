@@ -111,6 +111,8 @@ namespace Phorcys.Services
 			}
 		}
 
+
+
 		private int GetDiverId(int userId)
 		{
 			int diverId = 0;
