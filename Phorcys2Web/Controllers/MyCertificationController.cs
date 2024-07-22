@@ -121,15 +121,14 @@ namespace Phorcys.Web.Controllers
 			{
 				var model = new MyCertificationViewModel();
 				MyCertificationDto myCertDto = _myCertificationServices.GetMyCert(Id);
-
+				model.CertificationId = Id;
 				model.DiveAgencyListItems = BuildAgencyList(myCertDto.AgencyId);
 				model.CertificationId = myCertDto.CertificationId;
 				model.DiveAgencyId = myCertDto.AgencyId;
 				model.CertificationListItems = BuildCertificationList(model.DiveAgencyId, model.CertificationId);
 				model.InstructorListItems = BuildInstrucorList(myCertDto.InstructorId);
+				model.DiverCertificationId = Id;
 
-				model.DiverCertificationId = myCertDto.DiverCertificationId;
-				model.CertificationId = myCertDto.CertificationId;
 				model.InstructorId = myCertDto.InstructorId;
 				model.CertificationNum = myCertDto.CertificationNum;
 				model.Certified = myCertDto.Certified;
@@ -146,15 +145,29 @@ namespace Phorcys.Web.Controllers
 		[Authorize, HttpPost, ValidateAntiForgeryToken]
 		public ActionResult Edit(MyCertificationViewModel model)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				var myCertDto = new MyCertificationDto();
-				
-				_myCertificationServices.Save(myCertDto);
+				if (ModelState.IsValid)
+				{
+					var myCertDto = new MyCertificationDto();
+					myCertDto.DiverCertificationId = model.DiverCertificationId;
+					myCertDto.CertificationId = model.CertificationId;
+					myCertDto.InstructorId = model.InstructorId;
+					myCertDto.CertificationNum = model.CertificationNum;
+					myCertDto.Certified = model.Certified;
+					myCertDto.Notes = model.Notes;
+
+					_myCertificationServices.Save(myCertDto);
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					return View(model);
+				}
+			}catch (Exception ex)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
 				return RedirectToAction("Index");
-			} else
-			{
-				return View(model);
 			}
 		}
 

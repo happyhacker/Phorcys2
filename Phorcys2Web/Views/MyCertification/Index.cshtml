@@ -40,6 +40,7 @@
 				.Name("Grid")
 				.Columns(columns =>
 				{
+					columns.Bound(c => c.DiverCertificationId).Hidden(true);
 					columns.Bound(c => c.DiverId).Hidden(true);
 					columns.Bound(c => c.Agency);
 					columns.Bound(c => c.Title).Title("Certification");
@@ -104,7 +105,6 @@
 		e.preventDefault();
 		var tr = $(e.target).closest("tr");
 		var data = this.dataItem(tr);
-
 		var diverCertificationId = data.DiverCertificationId;
 		window.location.href = '@Url.Action("Edit", "MyCertification")/' + diverCertificationId;
 	}

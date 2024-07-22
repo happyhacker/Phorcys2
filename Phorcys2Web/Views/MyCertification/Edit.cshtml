@@ -43,7 +43,8 @@
             <div class="col-md-6">
 
                 <fieldset>
-                    <div>
+					@Html.HiddenFor(m => m.DiverCertificationId, new { id = "DiverCertificationId" })
+					<div>
                         <p>
                             <label for="DiveAgencyId">Dive Agencies:</label>
                             <br />
@@ -123,7 +124,7 @@
                         <p>
                             <label for="Notes">Notes:</label>
                             <br />
-                            @(Html.Kendo().TextAreaFor(m => m.Notes)
+                            @(Html.Kendo().TextAreaFor(m => m.Notes).Rows(6)
                                 .HtmlAttributes(new { id = "Notes" }))
                             <br />
                             <div class="pageMessage">
@@ -186,12 +187,11 @@
 
         // Get the DiveAgencyId value from the main form
         var diveAgencyId = mainForm.elements["DiveAgencyId"].value;
-        //alert("DiveAgencyId = " + diveAgencyId);
 
         // Debugging: Log the diveAgencyId
         console.log("diveAgencyId:", diveAgencyId);
 
-        // Set the DiveAgencyId value in the hidden form
+        // Set the hidden fields values in the hidden form
         agencyForm.elements["HiddenDiveAgencyId"].value = diveAgencyId;
 
         // Debugging: Log the hidden form's DiveAgencyId value

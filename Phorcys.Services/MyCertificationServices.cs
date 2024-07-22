@@ -111,6 +111,34 @@ namespace Phorcys.Services
 			}
 		}
 
+		public void Save(MyCertificationDto certDto)
+		{
+			try
+			{
+				var cert = _context.DiverCertifications.Find(certDto.DiverCertificationId);
+				//var diverId = GetDiverId(_userServices.GetUserId());
+
+				//cert.DiverId = diverId;
+				cert.CertificationId = certDto.CertificationId;
+				cert.InstructorId = certDto.InstructorId;
+				cert.CertificationNum = certDto.CertificationNum;
+				cert.Certified = certDto.Certified;
+				cert.Notes = certDto.Notes;
+				cert.LastModified = DateTime.Now;
+
+				_context.DiverCertifications.Update(cert);
+				_context.SaveChanges();
+			}
+			catch (DbUpdateException ex)
+			{
+				_logger.LogError("Database error saving Diver Certification: {msg}", ex.Message);
+				throw ex;
+			} catch(Exception ex)
+			{
+				_logger.LogError("Error saving Diver Certification: {msg}", ex.Message);
+				throw ex;
+			}
+		}
 
 
 		private int GetDiverId(int userId)
