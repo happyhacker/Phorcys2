@@ -7,7 +7,7 @@
 *.orig
 
 # Ignore all log files in any LogFiles directory at any depth
-*/LogFiles/*.txt
+**/LogFiles/*.txt
 
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
