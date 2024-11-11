@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys.Data.DTOs;
 using Microsoft.Extensions.Logging;
+//using Phorcys.Web.ModelsNew;
 
 namespace Phorcys2Web.Controllers
 {
@@ -89,8 +90,8 @@ namespace Phorcys2Web.Controllers
 				dive.DiveNumber = model.DiveNumber;
 				dive.Title = model.Title;
 				dive.Minutes = model.Minutes;
-				dive.Notes = " " + model.Notes;
-				dive.MaxDepth = model.MaxDepth;
+                dive.Notes = model.Notes ?? "";
+                dive.MaxDepth = model.MaxDepth;
 				dive.AvgDepth = model.AvgDepth;
 				dive.Temperature = model.Temperature;
 				dive.AdditionalWeight = model.AdditionalWeight;

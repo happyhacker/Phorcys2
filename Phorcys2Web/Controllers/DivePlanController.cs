@@ -92,8 +92,8 @@ namespace Phorcys2Web.Controllers
 				var divePlan = new DivePlan();
 				divePlan.Title = model.Title;
 				divePlan.Minutes = model.Minutes;
-				divePlan.Notes = " " + model.Notes;
-				divePlan.MaxDepth = model.MaxDepth;
+                divePlan.Notes = model.Notes ?? "";
+                divePlan.MaxDepth = model.MaxDepth;
 				divePlan.ScheduledTime = model.ScheduledTime;
 				divePlan.Created = DateTime.Now;
 				divePlan.LastModified = DateTime.Now;
@@ -141,7 +141,7 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.DivePlanId = model.DivePlanId;
 				divePlanDto.Title = model.Title;
 				divePlanDto.Minutes = model.Minutes;
-				divePlanDto.Notes = " " + model.Notes;
+				divePlanDto.Notes = model.Notes ?? "";
 				divePlanDto.MaxDepth = model.MaxDepth;
 				divePlanDto.ScheduledTime = model.ScheduledTime;
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
