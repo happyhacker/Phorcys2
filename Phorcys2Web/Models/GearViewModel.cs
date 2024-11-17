@@ -7,7 +7,7 @@ namespace Phorcys.Web.Models
 	{
 		public int GearId { get; set; }
 
-		[DisplayName("Dive Plan title")]
+		[DisplayName("Gear Name")]
 		[Required]
 		public string Title { get; set; } = null!;
 
