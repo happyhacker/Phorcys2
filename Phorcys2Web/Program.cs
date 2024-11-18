@@ -18,7 +18,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Home/LogFiles/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-builder.Host.UseSerilog();  // Add this line to use Serilog as the logging provider
+builder.Host.UseSerilog(); // Add this line to use Serilog as the logging provider
 
 // Add services to the container
 builder.Services.AddDbContext<PhorcysContext>(options =>
@@ -49,10 +49,26 @@ builder.Services.AddScoped<InstructorServices>();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true; // Require confirmed account
-    options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation"; // Email token provider
+    options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation"; // Map to the named token provider
 })
 .AddEntityFrameworkStores<PhorcysContext>()
 .AddDefaultTokenProviders();
+
+// Explicitly map the "emailconfirmation" token provider
+builder.Services.AddTransient<IUserTwoFactorTokenProvider<IdentityUser>, DataProtectorTokenProvider<IdentityUser>>();
+
+// Configure token lifespan for email confirmation
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromHours(24); // Token is valid for 24 hours
+});
+
+// Register "emailconfirmation" as a token provider
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Tokens.ProviderMap.Add("emailconfirmation", new TokenProviderDescriptor(
+        typeof(DataProtectorTokenProvider<IdentityUser>)));
+});
 
 // Configure email sender service
 builder.Services.AddTransient<IEmailSender, EmailSender>(); // Add custom email sender
