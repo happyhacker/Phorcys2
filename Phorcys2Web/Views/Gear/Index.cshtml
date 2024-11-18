@@ -45,7 +45,7 @@
 					columns.Bound(p => p.RetailPrice).Format("{0:c}");
 					columns.Bound(p => p.Paid).Format("{0:c}");
 					columns.Bound(p => p.Sn);
-					columns.Bound(p => p.Acquired).Format("{0:MM/dd/yyyy hh:mm tt}");
+					columns.Bound(p => p.Acquired).Format("{0:MM/dd/yyyy}");
 					columns.Bound(p => p.Weight);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
 					columns.Command(command =>

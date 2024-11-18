@@ -10,8 +10,8 @@ namespace Phorcys.Web.Models
 		public int UserId { get; set; }
 		public string UserName { get; set; }  
 
-		[DisplayName("Location Title")]
-		[Required(ErrorMessage = "Location Title is required")]
+		[DisplayName("Location")]
+		[Required(ErrorMessage = "Location is required")]
 		public string Title { get; set; }
 
 		public DateTime Created { get; set; }
