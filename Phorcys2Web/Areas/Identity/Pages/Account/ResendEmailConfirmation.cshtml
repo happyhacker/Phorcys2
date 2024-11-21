@@ -1,0 +1,31 @@
+﻿@page
+@model Phorcys.Web.Areas.Identity.Pages.Account.ResendEmailConfirmationModel
+
+@{
+    ViewData["Title"] = "Resend Email Confirmation";
+}
+
+<h1>Resend Email Confirmation</h1>
+
+<div class="pageMessage">
+    @Html.ValidationSummary()
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div>
+                <p>
+                    <label for="Email">Email:</label>
+                    <br />
+                    @Html.TextBoxFor(r => r.Email, new { @class = "form-control", placeholder = "Enter your email" })
+                    <div class="pageMessage">
+                        @Html.ValidationMessageFor(r => r.Email)
+                    </div>
+                </p>
+            </div>
+      
+            <button type="submit" class="btn btn-primary">Send Confirmation Email</button>
+        </form>
+    </div>
+</div>
