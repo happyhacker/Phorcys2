@@ -11,6 +11,15 @@
     @Html.ValidationSummary()
 </div>
 
+<div id="message" class="pageMessage">
+    @if (TempData["Message"] != null)
+    {
+        <p id="pageMessage">
+            @TempData["Message"]
+        </p>
+    }
+</div>
+
 <div class="row">
     <div class="col-md-6">
         <form method="post">
