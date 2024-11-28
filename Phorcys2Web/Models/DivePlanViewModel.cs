@@ -14,7 +14,8 @@ namespace Phorcys.Web.Models
 
 		[DisplayName("Title")]
 		[Required]
-		public string Title { get; set; } = null!;
+        [MaxLength(60, ErrorMessage = "The Title cannot exceed 60 characters.")]
+        public string Title { get; set; } = null!;
 		
 		[DisplayName("Minutes")]
 		public int? Minutes { get; set; }

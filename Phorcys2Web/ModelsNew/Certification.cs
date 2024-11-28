@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Phorcys.Web.ModelsNew;
 
@@ -9,6 +11,9 @@ public partial class Certification
 
     public int? DiveAgencyId { get; set; }
 
+    [DisplayName("Title")]
+    [Required]
+    [MaxLength(60, ErrorMessage = "The Title cannot exceed 60 characters.")]
     public string Title { get; set; }
 
     public string Notes { get; set; }
