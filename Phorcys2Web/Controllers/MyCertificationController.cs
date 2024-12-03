@@ -208,8 +208,12 @@ namespace Phorcys.Web.Controllers
 				}
 				agencyCertificationList.Add(item);
 			}
-			
-			return agencyCertificationList;
+            // Sort the list by Title
+            agencyCertificationList = agencyCertificationList
+                .OrderBy(c => c.Text)
+                .ToList();
+
+            return agencyCertificationList;
 		}
 
 		private IList<SelectListItem> BuildInstrucorList(int? instructorId = 0)
