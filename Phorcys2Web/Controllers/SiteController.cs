@@ -184,7 +184,27 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
-	private IList<SelectListItem> BuildLocationList()
+		public IActionResult Map()
+		{
+			List<MapViewModel> model = new List<MapViewModel>();
+			MapViewModel mapModel = new MapViewModel();
+			mapModel.Title = "Jackson Blue";
+			mapModel.Notes = "Favorite place on earth";
+			mapModel.Latitude = 30.790484m;
+			mapModel.Longitude = -85.140075m;
+			model.Add(mapModel);
+
+            mapModel = new MapViewModel();
+            mapModel.Title = "Jacob's Well";
+			mapModel.Notes = "Restricted access. Permit required.";
+            mapModel.Latitude = 30.034497m;
+            mapModel.Longitude = -98.126066m;
+            model.Add(mapModel);
+
+            return View(model);
+		}
+
+		private IList<SelectListItem> BuildLocationList()
 		{
 			string loggedInId = _userServices.GetLoggedInUserId();
 			IList<SelectListItem> locationList = new List<SelectListItem>();
