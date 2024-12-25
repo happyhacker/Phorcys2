@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Phorcys.Services
 {
-
 	public class DiveSiteServices
 	{
 		private readonly PhorcysContext _context;
@@ -56,6 +55,8 @@ namespace Phorcys.Services
 				site.IsFreshWater = siteDto.IsFreshWater;
 				site.MaxDepth = siteDto.MaxDepth;
 				site.GeoCode = siteDto.GeoCode;
+				site.Latitude = siteDto.Latitude;				
+				site.Longitude = siteDto.Longitude;
 				site.Notes = siteDto.Notes;
 				site.Created = DateTime.Now;
 				site.LastModified = DateTime.Now;
@@ -96,6 +97,8 @@ namespace Phorcys.Services
 					site.IsFreshWater = siteDto.IsFreshWater;
 					site.MaxDepth = siteDto.MaxDepth;
 					site.GeoCode = siteDto.GeoCode;
+					site.Latitude = siteDto.Latitude;
+					site.Longitude = siteDto.Longitude;
 					site.Notes = siteDto.Notes;
 					site.LastModified = DateTime.Now;
 					//_context.Entry(site).State = EntityState.Modified;
@@ -121,6 +124,8 @@ namespace Phorcys.Services
 			siteDto.IsFreshWater = site.IsFreshWater;
 			siteDto.MaxDepth = site.MaxDepth;
 			siteDto.GeoCode = site.GeoCode;
+			siteDto.Latitude = site.Latitude;
+			siteDto.Longitude = site.Longitude;
 			siteDto.Notes = site.Notes;
 
 			return siteDto;

@@ -184,10 +184,14 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
+		[Authorize]
 		public IActionResult Map()
 		{
-			List<MapViewModel> model = new List<MapViewModel>();
-			MapViewModel mapModel = new MapViewModel();
+            var sites = _diveSiteServices.GetDiveSites(_userServices.GetUserId()); // Await the completion of the async method
+            var model = BuildMapList(sites);
+
+			/*
+            List<MapViewModel> model = new List<MapViewModel>();			MapViewModel mapModel = new MapViewModel();
 			mapModel.Title = "Jackson Blue";
 			mapModel.Notes = "Favorite place on earth";
 			mapModel.Latitude = 30.790484m;
@@ -200,6 +204,7 @@ namespace Phorcys.Web.Controllers
             mapModel.Latitude = 30.034497m;
             mapModel.Longitude = -98.126066m;
             model.Add(mapModel);
+			*/
 
             return View(model);
 		}
@@ -222,11 +227,31 @@ namespace Phorcys.Web.Controllers
 		}
 
 
+		private List<MapViewModel> BuildMapList(IEnumerable<DiveSite> sites)
+		{
+			List<MapViewModel> mapViewModels = new List<MapViewModel>();
+			MapViewModel model;
+
+			foreach (var site in sites)
+			{
+				model = new MapViewModel();
+				model.Title = site.Title;
+				model.Notes = site.Notes;
+				model.Latitude = site.Latitude;
+				model.Longitude = site.Longitude;
+				model.MaxDepth = site.MaxDepth;
+				model.Water = site.IsFreshWater ? "Fresh" : "Salt";
+				mapViewModels.Add(model);
+			}
+                return mapViewModels;
+		}
+
 		private List<SiteViewModel> CreateIndexModel(IEnumerable<DiveSite> sites)
 		{
 			List<SiteViewModel> siteViewModels = new List<SiteViewModel>();
 			SiteViewModel model;
 			var loggedInUser = _userServices.GetUserName();
+
 
 			foreach (var site in sites)
 			{

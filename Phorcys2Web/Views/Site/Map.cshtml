@@ -1,0 +1,78 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+@using System.Text.Encodings.Web;
+
+@{
+    ViewData["Title"] = "Map of Dive Sites";
+}
+@model IEnumerable<Phorcys.Web.Models.MapViewModel>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+    </div>
+</section>
+
+<div id="message" class="pageMessage">
+    @{
+        if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
+        {
+        }
+        <p id="pageMessage">
+            @(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+        </p>
+    }
+</div>
+
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK8rLyEOX-mIRB1Qdcfu54GXMyuVj_XtA&callback=initMap&libraries=marker" async defer></script>
+<script>
+    function initMap() {
+        const center = { lat: 27.994402, lng: -81.760254 };
+        const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 6,
+            center: center,
+            mapId: 'YOUR_MAP_ID' // Replace with your valid Map ID
+        });
+
+        // Dynamically load dive site locations from the model
+        const locations = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(site => new
+        {
+            Lat = site.Latitude,
+            Lng = site.Longitude,
+            Title = site.Title,
+            Description = site.Notes
+        })));
+
+        console.log("Locations data:", locations); // Debugging output
+
+        // Create markers for each location
+        locations.forEach(location => {
+            console.log("Adding marker for:", location); // Debugging output
+
+            // Create the AdvancedMarkerElement with a default Google Maps pin
+            const marker = new google.maps.Marker({
+                position: { lat: location.Lat, lng: location.Lng },
+                map: map,
+                title: location.Title // Tooltip on hover
+            });
+
+            // Create an InfoWindow with black text on white background
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<div style="color: black; background-color: white; padding: 10px; border-radius: 5px;">
+                                 <h5 style="margin: 0;">${location.Title}</h5>
+                                 <p style="margin: 5px 0 0;">${location.Description}</p>
+                              </div>`
+            });
+
+            // Add a click listener to show the InfoWindow
+            marker.addListener("click", () => {
+                infoWindow.open({
+                    anchor: marker,
+                    map: map,
+                });
+            });
+        });
+    }
+</script>

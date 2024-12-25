@@ -27,6 +27,9 @@ namespace Phorcys.Data.DTOs
 
 		public string? GeoCode { get; set; }
 
+		public decimal? Latitude { get; set; }
+
+		public decimal? Longitude { get; set; }
 
 		public int? MaxDepth { get; set; }
 
