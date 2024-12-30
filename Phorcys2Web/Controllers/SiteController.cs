@@ -83,6 +83,8 @@ namespace Phorcys.Web.Controllers
 					siteDto.MaxDepth = model.MaxDepth;
 					siteDto.IsFreshWater = model.IsFreshWater;
 					siteDto.GeoCode = model.GeoCode;
+					siteDto.Latitude = model.Latitude;
+					siteDto.Longitude = model.Longitude;
 					siteDto.Notes = model.Notes;
 
 					_diveSiteServices.Save(siteDto);
@@ -147,6 +149,8 @@ namespace Phorcys.Web.Controllers
 			model.LocationList = BuildLocationList();
 			model.Title = siteDto.Title;
 			model.GeoCode = siteDto.GeoCode;
+			model.Latitude = siteDto.Latitude;
+			model.Longitude = siteDto.Longitude;
 			model.IsFreshWater = siteDto.IsFreshWater;
 			model.MaxDepth = siteDto.MaxDepth;
 			model.Notes = siteDto.Notes;
@@ -166,6 +170,8 @@ namespace Phorcys.Web.Controllers
 				siteDto.MaxDepth = model.MaxDepth;
 				siteDto.IsFreshWater = model.IsFreshWater;
 				siteDto.GeoCode = model.GeoCode;
+				siteDto.Latitude = model.Latitude;
+				siteDto.Longitude = model.Longitude;
 				siteDto.Notes = model.Notes;
 				try
 				{

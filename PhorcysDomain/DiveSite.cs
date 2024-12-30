@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Phorcys.Domain;
 
@@ -10,7 +11,9 @@ public partial class DiveSite
     public string Title { get; set; } = null!;
     public bool IsFreshWater { get; set; }
     public string? GeoCode { get; set; }
+    [Column(TypeName = "decimal(9,6)")] 
     public decimal? Latitude { get; set; }
+    [Column(TypeName = "decimal(9,6)")] 
     public decimal? Longitude { get; set; }
     public string? Notes { get; set; }
     public int UserId { get; set; }

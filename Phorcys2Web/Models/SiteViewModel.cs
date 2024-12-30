@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 namespace Phorcys.Web.Models
 {
@@ -32,6 +33,16 @@ namespace Phorcys.Web.Models
         [DisplayName("Geo Code")]
 		[MaxLength(30)]
 		public string? GeoCode { get; set; }
+
+        [Column(TypeName = "decimal(9,6)")]
+        [DisplayName("Latitude")]
+		[Range(-90, 90)]
+		public decimal? Latitude { get; set; }
+
+        [Column(TypeName = "decimal(9,6)")]
+        [DisplayName("Latitude")]
+		[Range(-180, 180)]
+		public decimal? Longitude { get; set; }
 
 		public string SiteMapUrl => $"http://maps.google.com/maps?q={GeoCode}&ll={GeoCode}&z=14\\";
 

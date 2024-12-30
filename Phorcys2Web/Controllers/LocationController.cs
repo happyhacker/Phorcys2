@@ -82,8 +82,6 @@ namespace Phorcys.Web.Controllers
                 location.Created = DateTime.Now;
                 location.LastModified = DateTime.Now;
                 int userId = _userServices.GetUserId();
-                location.Created = model.Created;
-                location.LastModified = model.LastModified;
                 location.UserId = userId;
                 _locationServices.SaveNewLocation(location);
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Location was successfully created.";
@@ -106,6 +104,7 @@ namespace Phorcys.Web.Controllers
                 model.DiveLocationId = location.DiveLocationId;
                 model.Title = location.Title;
                 model.Notes = location.Notes;
+                model.LastModified = DateTime.Now;
             }
             return View(model);
         }

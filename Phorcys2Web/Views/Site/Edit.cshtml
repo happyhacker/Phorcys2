@@ -99,6 +99,30 @@
 
 					<div>
 						<p>
+							<label for="Latitude">Latitude:</label>
+							<br />
+							Example: -85.140075 <br />
+							@Html.Kendo().NumericTextBoxFor(m => m.Latitude).Decimals(6).Format("n6")
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Latitude)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Longitude">Longitude:</label>
+							<br />
+							Example: 30.790484 <br />
+							@Html.Kendo().NumericTextBoxFor(m => m.Longitude).Decimals(6).Format("n6")
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Longitude)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
 							<label for="Notes">Notes:</label>
 							<br />
 							@(Html.Kendo().TextAreaFor(m => m.Notes))
