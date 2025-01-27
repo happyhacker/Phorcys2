@@ -44,6 +44,7 @@ builder.Services.AddScoped<GearServices>();
 builder.Services.AddScoped<MyCertificationServices>();
 builder.Services.AddScoped<AgencyServices>();
 builder.Services.AddScoped<InstructorServices>();
+builder.Services.AddScoped<ContactServices>();
 
 // Configure Identity with email confirmation
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>

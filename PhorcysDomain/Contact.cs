@@ -53,7 +53,7 @@ public partial class Contact
 
     //public virtual ICollection<DiveShop> DiveShops { get; set; } = new List<DiveShop>();
 
-    //public virtual ICollection<Diver> Divers { get; set; } = new List<Diver>();
+    public virtual ICollection<Diver> Divers { get; set; } = new List<Diver>();
 
     //public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
 
