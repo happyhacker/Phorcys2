@@ -97,7 +97,7 @@
                     items.Add().Text("Contacts")
                     .Items(items =>
                     {
-                        items.Add().Text("Add Contact");
+                        items.Add().Text("Add Contact").Action("Create", "Contact");
                         items.Add().Text("Display Contacts").Action("Index", "Contact");
                     });
 
