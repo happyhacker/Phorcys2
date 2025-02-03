@@ -76,7 +76,7 @@ namespace Phorcys.Services
                 .FirstOrDefault(c => c.ContactId == contactId);
                 if (contact != null)
                 {
-                    if (contact.Divers != null)
+                    if (contact.Divers != null && contact.Divers.Any())
                     {
                         Diver diver = contact.Divers.FirstOrDefault(d => d.ContactId == contactId);
                         _context.Divers.Remove(diver);
@@ -88,7 +88,7 @@ namespace Phorcys.Services
             catch (DbUpdateException ex)
             {
                 _logger.LogError(ex, "Error deleting Contact {id}: {ErrorMessage}", contactId, ex.Message);
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
@@ -96,31 +96,39 @@ namespace Phorcys.Services
             }
         }
 
-        //public void SaveNewDiverCertification(MyCertificationDto certDto)
-        //{
-        //	try
-        //	{
-        //		var cert = new DiverCertification();
-        //		var diverId = GetDiverId(_userServices.GetUserId());
+        public void SaveNewContact(ContactDto dto)
+        {
+            try
+            {
+                var contact = new Contact();
+                contact.UserId = dto.UserId;
+                contact.Company = dto.Company ?? "";
+                contact.FirstName = dto.FirstName;
+                contact.LastName = dto.LastName;
+                contact.Address1 = dto.Address1 ?? "";
+                contact.Address2 = dto.Address2 ?? "";
+                contact.City = dto.City ?? "";
+                contact.State = dto.State ?? "";
+                contact.PostalCode = dto.PostalCode ?? "";
+                contact.CountryCode = dto.CountryCode ?? "";
+                contact.Email = dto.Email ?? "";
+                contact.CellPhone = "";
+                contact.HomePhone = "";
+                contact.WorkPhone = "";
+                contact.Gender = "";
+                contact.Notes = dto.Notes ?? "";
+                contact.Created = DateTime.Now;
+                contact.LastModified = DateTime.Now;
 
-        //		cert.DiverId = diverId;
-        //		cert.CertificationId = certDto.CertificationId;
-        //		cert.InstructorId = certDto.InstructorId;
-        //		cert.CertificationNum = certDto.CertificationNum;
-        //		cert.Certified = certDto.Certified;
-        //		cert.Notes = certDto.Notes;
-        //		cert.Created = DateTime.Now;
-        //		cert.LastModified = DateTime.Now;
-
-        //		_context.DiverCertifications.Add(cert);
-        //		_context.SaveChanges();
-        //	}
-        //	catch (DbUpdateException ex)
-        //	{
-        //		_logger.LogError("Error saving Diver Certification");
-        //		throw ex;
-        //	}
-        //}
+                _context.Contacts.Add(contact);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError("Error saving Contact");
+                throw;
+            }
+        }
 
         //public void Save(MyCertificationDto certDto)
         //{

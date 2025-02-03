@@ -114,25 +114,33 @@ namespace Phorcys.Web.Controllers
 			return View(model);
 		}
 
-		//[Authorize, HttpPost, ValidateAntiForgeryToken]
-		//public ActionResult Create(MyCertificationViewModel model)
-		//{
-		//	if(ModelState.IsValid)
-		//	{
-		//		var myCert = new MyCertificationDto();
-		//		myCert.DiverId = model.DiverId;
-		//		myCert.CertificationId = model.CertificationId;
-		//		myCert.InstructorId = model.InstructorId;
-		//		myCert.CertificationNum = model.CertificationNum;
-		//		myCert.Certified = model.Certified;
-		//		myCert.Notes = model.Notes;
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Create(ContactViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var dto = new ContactDto();
+				dto.UserId = _userServices.GetUserId();
+				dto.ContactId = model.ContactId;
+				dto.Company = model.Company;
+				dto.FirstName = model.FirstName;
+				dto.LastName = model.LastName;
+				dto.Address1 = model.Address1;
+				dto.Address2 = model.Address2;
+				dto.City = model.City;
+				dto.State = model.State;
+				dto.PostalCode = model.PostalCode;
+				dto.CountryCode = model.CountryCode;
+				dto.Email = model.Email;
+				dto.Notes = model.Notes;
 
-		//		_myCertificationServices.SaveNewDiverCertification(myCert);
+				_contactServices.SaveNewContact(dto);
 
-  //              TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Certification was successfully added.";
-  //              return RedirectToAction("Index");
-		//	} else { return View(model); }
-		//}
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Contact was successfully added.";
+				return RedirectToAction("Index");
+			}
+			else { return View(model); }
+		}
 
 		//[Authorize, HttpGet]
 		//public ActionResult Edit(int Id)
@@ -213,32 +221,32 @@ namespace Phorcys.Web.Controllers
 
 
 		//private IList<SelectListItem> BuildInstrucorList(int? instructorId = 0)
-  //      {
-  //          IList<SelectListItem> instructorList = new List<SelectListItem>();
-  //          IEnumerable<Instructor> instructors = _instructorServices.GetInstructors();
-  //          SelectListItem item;
+		//      {
+		//          IList<SelectListItem> instructorList = new List<SelectListItem>();
+		//          IEnumerable<Instructor> instructors = _instructorServices.GetInstructors();
+		//          SelectListItem item;
 
-  //          foreach (var instructor in instructors)
-  //          {
-  //              item = new SelectListItem();
-  //              item.Text = instructor.Contact.LastName + ", " + instructor.Contact.FirstName;
-  //              item.Value = instructor.InstructorId.ToString();
+		//          foreach (var instructor in instructors)
+		//          {
+		//              item = new SelectListItem();
+		//              item.Text = instructor.Contact.LastName + ", " + instructor.Contact.FirstName;
+		//              item.Value = instructor.InstructorId.ToString();
 		//		if(instructor.InstructorId == instructorId)
 		//		{
 		//			item.Selected = true;
 		//		}
-  //              instructorList.Add(item);
-  //          }
-  //          return instructorList;
-  //      }
+		//              instructorList.Add(item);
+		//          }
+		//          return instructorList;
+		//      }
 
-  //      [Authorize, HttpPost, ValidateAntiForgeryToken]
-  //      public ActionResult UpdateCertificationList(MyCertificationViewModel model)
+		//      [Authorize, HttpPost, ValidateAntiForgeryToken]
+		//      public ActionResult UpdateCertificationList(MyCertificationViewModel model)
 		//{
 		//	model.DiveAgencyListItems = BuildAgencyList(model.DiveAgencyId);
 		//	model.CertificationListItems = BuildCertificationList(model.DiveAgencyId);
-  //          model.InstructorListItems = BuildInstrucorList();
-  //          return View("Create", model);
+		//          model.InstructorListItems = BuildInstrucorList();
+		//          return View("Create", model);
 		//}
 	}
 }
