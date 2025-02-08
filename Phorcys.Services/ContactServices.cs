@@ -45,26 +45,34 @@ namespace Phorcys.Services
             }
         }
 
-        //public MyCertificationDto GetMyCert(int diverCertificationId)
-        //{
-        //	try
-        //	{
-        //		var myCertDto = new MyCertificationDto();
-        //		var myCert = _context.DiverCertifications.Include("Certification").FirstOrDefault(c => c.DiverCertificationId == diverCertificationId);
-        //		myCertDto.AgencyId = (int)myCert.Certification.DiveAgencyId;
-        //		myCertDto.CertificationId = myCert.CertificationId;
-        //		myCertDto.InstructorId = myCert.InstructorId;
-        //		myCertDto.Certified = myCert.Certified;
-        //		myCertDto.CertificationNum = myCert.CertificationNum;
-        //		myCertDto.Notes = myCert.Notes;
+        public ContactDto GetContact(int contactId)
+        {
+            try
+            {
+                var dto = new ContactDto();
+                var contact = _context.Contacts.FirstOrDefault(c => c.ContactId == contactId);
+                dto.ContactId = contactId;
+				dto.UserId = contact.UserId;
+				dto.Company = contact.Company;
+                dto.FirstName = contact.FirstName;
+                dto.LastName = contact.LastName;
+                dto.Email = contact.Email;
+                dto.Address1 = contact.Address1;
+                dto.Address2 = contact.Address2;    
+                dto.City = contact.City;
+                dto.State = contact.State;
+                dto.PostalCode = contact.PostalCode;
+                dto.CountryCode = contact.CountryCode;  
+                dto.Notes = contact.Notes;
 
-        //		return myCertDto;
-        //	}catch(SqlException ex)
-        //	{
-        //		_logger.LogError("Error connecting to the database: {message}", ex.Message);
-        //		throw;
-        //	}
-        //}
+                return dto;
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError("Error connecting to the database: {message}", ex.Message);
+                throw;
+            }
+        }
 
         public void Delete(int contactId)
         {
@@ -130,34 +138,43 @@ namespace Phorcys.Services
             }
         }
 
-        //public void Save(MyCertificationDto certDto)
-        //{
-        //	try
-        //	{
-        //		var cert = _context.DiverCertifications.Find(certDto.DiverCertificationId);
-        //		//var diverId = GetDiverId(_userServices.GetUserId());
+        public void Save(ContactDto dto)
+        {
+            try
+            {
+                var contact = _context.Contacts.Find(dto.ContactId);
 
-        //		//cert.DiverId = diverId;
-        //		cert.CertificationId = certDto.CertificationId;
-        //		cert.InstructorId = certDto.InstructorId;
-        //		cert.CertificationNum = certDto.CertificationNum;
-        //		cert.Certified = certDto.Certified;
-        //		cert.Notes = certDto.Notes;
-        //		cert.LastModified = DateTime.Now;
+				contact.Company = dto.Company ?? "";
+				contact.FirstName = dto.FirstName;
+				contact.LastName = dto.LastName;
+				contact.Address1 = dto.Address1 ?? "";
+				contact.Address2 = dto.Address2 ?? "";
+				contact.City = dto.City ?? "";
+				contact.State = dto.State ?? "";
+				contact.PostalCode = dto.PostalCode ?? "";
+				contact.CountryCode = dto.CountryCode ?? "";
+				contact.Email = dto.Email ?? "";
+				contact.CellPhone = "";
+				contact.HomePhone = "";
+				contact.WorkPhone = "";
+				contact.Gender = "";
+				contact.Notes = dto.Notes ?? "";
+				contact.LastModified = DateTime.Now;
 
-        //		_context.DiverCertifications.Update(cert);
-        //		_context.SaveChanges();
-        //	}
-        //	catch (DbUpdateException ex)
-        //	{
-        //		_logger.LogError("Database error saving Diver Certification: {msg}", ex.Message);
-        //		throw ex;
-        //	} catch(Exception ex)
-        //	{
-        //		_logger.LogError("Error saving Diver Certification: {msg}", ex.Message);
-        //		throw ex;
-        //	}
-        //}
+				_context.Contacts.Update(contact);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError("Database error saving Contact: {msg}", ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error saving Diver Certification: {msg}", ex.Message);
+                throw;
+            }
+        }
 
 
         //private int GetDiverId(int userId)

@@ -142,62 +142,72 @@ namespace Phorcys.Web.Controllers
 			else { return View(model); }
 		}
 
-		//[Authorize, HttpGet]
-		//public ActionResult Edit(int Id)
-		//{
-		//	try
-		//	{
-		//		var model = new MyCertificationViewModel();
-		//		MyCertificationDto myCertDto = _myCertificationServices.GetMyCert(Id);
-		//		model.CertificationId = Id;
-		//		model.DiveAgencyListItems = BuildAgencyList(myCertDto.AgencyId);
-		//		model.CertificationId = myCertDto.CertificationId;
-		//		model.DiveAgencyId = myCertDto.AgencyId;
-		//		model.CertificationListItems = BuildCertificationList(model.DiveAgencyId, model.CertificationId);
-		//		model.InstructorListItems = BuildInstrucorList(myCertDto.InstructorId);
-		//		model.DiverCertificationId = Id;
+		[Authorize, HttpGet]
+		public ActionResult Edit(int Id)
+		{
+			try
+			{
+				var model = new ContactViewModel();
+				ContactDto dto = _contactServices.GetContact(Id);
+				model.ContactId = Id;
+				model.Company = dto.Company;
+				model.FirstName = dto.FirstName;
+				model.LastName = dto.LastName;
+				model.Address1 = dto.Address1;
+				model.Address2 = dto.Address2;
+				model.City = dto.City;
+				model.State = dto.State;
+				model.PostalCode = dto.PostalCode;
+				model.CountryCode = dto.CountryCode;
+				model.Email = dto.Email;
+				model.UserId = dto.UserId;
+				model.Notes = dto.Notes;
 
-		//		model.InstructorId = myCertDto.InstructorId;
-		//		model.CertificationNum = myCertDto.CertificationNum;
-		//		model.Certified = myCertDto.Certified;
-		//		model.Notes = myCertDto.Notes;
+				return View(model);
+			}
+			catch (Exception ex)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
+				return RedirectToAction("Index");
+			}
+		}
 
-		//		return View(model);
-		//	}catch(Exception ex)
-		//	{
-		//		TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
-		//		return RedirectToAction("Index");
-		//	}
-		//}
-
-		//[Authorize, HttpPost, ValidateAntiForgeryToken]
-		//public ActionResult Edit(MyCertificationViewModel model)
-		//{
-		//	try
-		//	{
-		//		if (ModelState.IsValid)
-		//		{
-		//			var myCertDto = new MyCertificationDto();
-		//			myCertDto.DiverCertificationId = model.DiverCertificationId;
-		//			myCertDto.CertificationId = model.CertificationId;
-		//			myCertDto.InstructorId = model.InstructorId;
-		//			myCertDto.CertificationNum = model.CertificationNum;
-		//			myCertDto.Certified = model.Certified;
-		//			myCertDto.Notes = model.Notes;
-
-		//			_myCertificationServices.Save(myCertDto);
-		//			return RedirectToAction("Index");
-		//		}
-		//		else
-		//		{
-		//			return View(model);
-		//		}
-		//	}catch (Exception ex)
-		//	{
-		//		TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
-		//		return RedirectToAction("Index");
-		//	}
-		//}
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public ActionResult Edit(ContactViewModel model)
+		{
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					var dto = new ContactDto();
+					dto.ContactId = model.ContactId;
+					dto.UserId = model.UserId;
+					dto.Company = model.Company;
+					dto.FirstName = model.FirstName;
+					dto.LastName = model.LastName;
+					dto.Address1 = model.Address1;
+					dto.Address2 = model.Address2;
+					dto.City = model.City;
+					dto.State = model.State;
+					dto.PostalCode = model.PostalCode;
+					dto.CountryCode = model.CountryCode;
+					dto.Email = model.Email;
+					dto.Notes = model.Notes;
+					_contactServices.Save(dto);
+					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Contact was successfully updated.";
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					return View(model);
+				}
+			}
+			catch (Exception ex)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
+				return RedirectToAction("Index");
+			}
+		}
 
 		//private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
 		//{

@@ -1,0 +1,189 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.ContactViewModel
+
+@{
+	ViewData["Title"] = "Edit Contact";
+}
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
+		<p class="lead-text text-muted">@ViewBag.Message</p>
+	</div>
+</section>
+
+<div class="pageMessage">
+	@Html.ValidationSummary()
+</div>
+
+@using (Html.BeginForm("Edit", "Contact", FormMethod.Post))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="pageMessage">
+		@Html.ValidationSummary(true, "Please correct the errors and try again.")
+	</div>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+
+				<fieldset>
+					@Html.HiddenFor(m => m.ContactId)
+					<div>
+						<p>
+							<label for="Company">Company:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.Company)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Company)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="FirstName">First Name:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.FirstName)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.FirstName)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="LastName">LastName:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.LastName)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.LastName)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Address1">Address 1:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.Address1)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Address1)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Address2">Address 2:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.Address2)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Address2)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="City">City:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.City)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.City)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="State">State:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.State)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.State)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="PostalCode">Postal Code:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.PostalCode)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.PostalCode)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Country">Country:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.CountryCode)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.CountryCode)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Email">Email:</label>
+							<br />
+							@Html.Kendo().TextBoxFor(m => m.Email)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Email)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						<p>
+							<label for="Notes">Notes:</label>
+							<br />
+							@(Html.Kendo().TextAreaFor(m => m.Notes).Rows(6))
+							<br />
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.Notes)
+							</div>
+						</p>
+					</div>
+
+					<div>
+						@(Html.Kendo().Button()
+													.Name("saveButton")
+													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+													//.Icon("save")
+													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+													.Content("Save")
+													)
+
+						@(Html.Kendo().Button()
+													.Name("cancelButton")
+													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
+													.Content("Cancel")
+													)
+					</div>
+
+				</fieldset>
+
+			</div>
+		</div>
+	</div>
+}
+<script type="text/javascript">
+	function redirectToIndex() {
+		window.location.href = '@Url.Action("Index", "Contact")';
+	}
+</script>
