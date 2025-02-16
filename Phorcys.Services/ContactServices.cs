@@ -176,25 +176,39 @@ namespace Phorcys.Services
             }
         }
 
+        private string GetCountryCode(string code)
+        {
+            string countryCode = "";
+            Country country = _context.Countries.FirstOrDefault(d => d.CountryCode == code);
+            if (country == null)
+            {
+                countryCode = "US";
+            }
+            else
+            {
+                countryCode = country.CountryCode;
+            }
+            return countryCode;
+        }
 
-        //private int GetDiverId(int userId)
-        //{
-        //	int diverId = 0;
-        //	var user = _userServices.GetUser(userId);
-        //	Diver diver = _context.Divers.FirstOrDefault(d => d.ContactId == user.ContactId);
-        //	if (diver == null)
-        //	{
-        //		//create diver record
-        //		diverId = CreateNewDiver(user);
-        //	}
-        //	else
-        //	{
-        //		diverId = diver.DiverId;
-        //	}
-        //	return diverId;
-        //}
+		public IEnumerable<Country> GetCountries(string code)
+		{
+			try
+			{
+				var countries = _context.Countries
+										 .AsNoTracking()
+										 .OrderBy(country => country.Name)
+										 .ToList();
+				return countries;
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error occurred while getting countries");
+				throw new Exception("Can't connect to database");
+			}
+		}
 
-        private int CreateNewContact(Phorcys.Domain.User user)
+		private int CreateNewContact(Phorcys.Domain.User user)
         {
             Contact contact = new Contact();
             contact.ContactId = (int)user.ContactId;

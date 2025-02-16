@@ -129,9 +129,16 @@
 						<p>
 							<label for="Country">Country:</label>
 							<br />
-							@Html.Kendo().TextBoxFor(m => m.CountryCode)
+							@(Html.Kendo().DropDownListFor(m => m.SelectedCountryCode)
+														.DataTextField("Text")
+														.DataValueField("Value")
+														.BindTo(Model.CountryList)
+														.OptionLabel("Select a Country")
+														.HtmlAttributes(new { @class = "form-control" })
+														)
+
 							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.CountryCode)
+								@Html.ValidationMessageFor(m => m.SelectedCountryCode)
 							</div>
 						</p>
 					</div>

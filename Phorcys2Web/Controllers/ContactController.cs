@@ -12,6 +12,7 @@ using Microsoft.VisualBasic;
 using Microsoft.Extensions.Logging;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Humanizer;
 
 namespace Phorcys.Web.Controllers
 {
@@ -107,10 +108,8 @@ namespace Phorcys.Web.Controllers
 		public ActionResult Create()
 		{
 			var model = new ContactViewModel();
-			//model.DiveAgencyListItems = BuildAgencyList();
-			//string value = model.DiveAgencyListItems.First().Value;
-			//model.CertificationListItems = BuildCertificationList(int.Parse(value));
-			//model.InstructorListItems = BuildInstrucorList();
+			model.CountryList = BuildCountryList("US");
+
 			return View(model);
 		}
 
@@ -130,7 +129,7 @@ namespace Phorcys.Web.Controllers
 				dto.City = model.City;
 				dto.State = model.State;
 				dto.PostalCode = model.PostalCode;
-				dto.CountryCode = model.CountryCode;
+				dto.CountryCode = model.SelectedCountryCode;
 				dto.Email = model.Email;
 				dto.Notes = model.Notes;
 
@@ -158,6 +157,7 @@ namespace Phorcys.Web.Controllers
 				model.City = dto.City;
 				model.State = dto.State;
 				model.PostalCode = dto.PostalCode;
+				model.CountryList = BuildCountryList(dto.CountryCode);
 				model.CountryCode = dto.CountryCode;
 				model.Email = dto.Email;
 				model.UserId = dto.UserId;
@@ -190,7 +190,7 @@ namespace Phorcys.Web.Controllers
 					dto.City = model.City;
 					dto.State = model.State;
 					dto.PostalCode = model.PostalCode;
-					dto.CountryCode = model.CountryCode;
+					dto.CountryCode = model.SelectedCountryCode;
 					dto.Email = model.Email;
 					dto.Notes = model.Notes;
 					_contactServices.Save(dto);
@@ -209,25 +209,25 @@ namespace Phorcys.Web.Controllers
 			}
 		}
 
-		//private IList<SelectListItem> BuildAgencyList(int diveAgencyId = 0)
-		//{
-		//	IList<SelectListItem> agencyList = new List<SelectListItem>();
-		//	IEnumerable<DiveAgency> agencies = _agencyServices.GetAgencies();
-		//	SelectListItem item;
+		private IList<SelectListItem> BuildCountryList(string countryCode)
+		{
+			IList<SelectListItem> countryList = new List<SelectListItem>();
+			IEnumerable<Country> countries = _contactServices.GetCountries(countryCode);
+			SelectListItem item;
 
-		//	foreach (var agency in agencies)
-		//	{
-		//		item = new SelectListItem();
-		//		if(agency.DiveAgencyId == diveAgencyId)
-		//		{
-		//			item.Selected = true;
-		//		}
-		//		item.Text = agency.Contact.Company;
-		//		item.Value = agency.DiveAgencyId.ToString();
-		//		agencyList.Add(item);
-		//	}
-		//	return agencyList;
-		//}
+			foreach (var country in countries)
+			{
+				item = new SelectListItem();
+				if (country.CountryCode == countryCode)
+				{
+					item.Selected = true;
+				}
+				item.Text = country.Name;
+				item.Value = country.CountryCode;
+				countryList.Add(item);
+			}
+			return countryList;
+		}
 
 
 		//private IList<SelectListItem> BuildInstrucorList(int? instructorId = 0)

@@ -1,8 +1,11 @@
-﻿namespace Phorcys.Web.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace Phorcys.Web.Models
 {
 	public class ContactViewModel
 	{
 		public int ContactId { get; set; }
+		public string SelectedCountryCode { get; set; }
 		public string LoggedIn { get; set; }
 		public string UserName { get; set; }
 		public string Company { get; set; } = null!;
@@ -24,6 +27,7 @@
 		public int UserId { get; set; }
 		public DateTime Created { get; set; }
 		public DateTime LastModified { get; set; }
+		public IList<SelectListItem> CountryList { get; set; }
 	}
 }
 
