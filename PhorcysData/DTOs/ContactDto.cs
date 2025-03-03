@@ -9,7 +9,12 @@ namespace Phorcys.Data.DTOs
     public class ContactDto
     {
 		public int ContactId { get; set; }
-		public string Company { get; set; } = null!;
+        public bool IsInstructor { get; set; }
+        public bool IsDiver { get; set; }
+        public bool IsManufacturer { get; set; }
+        public bool IsAgency { get; set; }
+        public bool IsDiveShop { get; set; }
+        public string Company { get; set; } = null!;
 		public string FirstName { get; set; } = null!;
 		public string LastName { get; set; } = null!;
 		public string Address1 { get; set; } = null!;

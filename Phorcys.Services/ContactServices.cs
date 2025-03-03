@@ -50,9 +50,16 @@ namespace Phorcys.Services
             try
             {
                 var dto = new ContactDto();
-                var contact = _context.Contacts.FirstOrDefault(c => c.ContactId == contactId);
+                var contact = _context.Contacts
+                    .Include(c => c.Instructors)
+                    .Include(c => c.DiveShops)
+                    .Include(c => c.Divers)
+                    .FirstOrDefault(c => c.ContactId == contactId);
                 dto.ContactId = contactId;
 				dto.UserId = contact.UserId;
+				dto.IsInstructor = contact.Instructors?.Any() == true;
+                dto.IsDiveShop = contact.DiveShops?.Any() == true;
+                dto.IsDiver = contact.Divers?.Any() == true;
 				dto.Company = contact.Company;
                 dto.FirstName = contact.FirstName;
                 dto.LastName = contact.LastName;

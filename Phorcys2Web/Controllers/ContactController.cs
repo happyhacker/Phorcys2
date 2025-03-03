@@ -121,6 +121,11 @@ namespace Phorcys.Web.Controllers
 				var dto = new ContactDto();
 				dto.UserId = _userServices.GetUserId();
 				dto.ContactId = model.ContactId;
+				dto.IsDiver = model.IsDiver;
+				dto.IsInstructor = model.IsInstructor;
+				dto.IsAgency = model.IsAgency;
+				dto.IsManufacturer = model.IsManufacturer;
+				dto.IsDiveShop = model.IsDiveShop;
 				dto.Company = model.Company;
 				dto.FirstName = model.FirstName;
 				dto.LastName = model.LastName;
@@ -149,6 +154,11 @@ namespace Phorcys.Web.Controllers
 				var model = new ContactViewModel();
 				ContactDto dto = _contactServices.GetContact(Id);
 				model.ContactId = Id;
+				model.IsDiver = dto.IsDiver;
+				model.IsInstructor = dto.IsInstructor;
+				model.IsAgency = dto.IsAgency;
+				model.IsManufacturer = dto.IsManufacturer;
+				model.IsDiveShop = dto.IsDiveShop;
 				model.Company = dto.Company;
 				model.FirstName = dto.FirstName;
 				model.LastName = dto.LastName;

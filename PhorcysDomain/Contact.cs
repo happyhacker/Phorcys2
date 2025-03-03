@@ -57,7 +57,7 @@ public partial class Contact
 
     //public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
 
-    //public virtual ICollection<Instructor> Instructors { get; set; } = new List<Instructor>();
+    public virtual ICollection<Instructor> Instructors { get; set; } = new List<Instructor>();
 
     //public virtual ICollection<InsurancePolicy> InsurancePolicies { get; set; } = new List<InsurancePolicy>();
 
@@ -70,4 +70,5 @@ public partial class Contact
     //public virtual ICollection<User> Users { get; set; } = new List<User>();
 
     //public virtual ICollection<DiveShop> DiveShops { get; set; } = new List<DiveShop>();
+	public ICollection<DiveShop>? DiveShops { get; set; }
 }

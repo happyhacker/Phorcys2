@@ -37,6 +37,47 @@
 
 				<fieldset>
 					@Html.HiddenFor(m => m.ContactId)
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-4 d-flex align-items-center mb-3">
+								@Html.LabelFor(m => m.IsDiver, "Diver", new { @class = "form-label me-2" })
+								@(Html.Kendo().SwitchFor(m => m.IsDiver)
+															.Messages(m => m.Checked("Yes").Unchecked("No"))
+															)
+							</div>
+
+							<div class="col-md-4 d-flex align-items-center mb-3">
+								@Html.LabelFor(m => m.IsInstructor, "Instructor", new { @class = "form-label me-2" })
+								@(Html.Kendo().SwitchFor(m => m.IsInstructor)
+															.Messages(m => m.Checked("Yes").Unchecked("No"))
+															)
+							</div>
+
+							<div class="col-md-4 d-flex align-items-center mb-3">
+								@Html.LabelFor(m => m.IsAgency, "Agency", new { @class = "form-label me-2" })
+								@(Html.Kendo().SwitchFor(m => m.IsAgency)
+															.Messages(m => m.Checked("Yes").Unchecked("No"))
+															)
+							</div>
+
+							<div class="col-md-4 d-flex align-items-center mb-3">
+								@Html.LabelFor(m => m.IsManufacturer, "Manufacturer", new { @class = "form-label me-2" })
+								@(Html.Kendo().SwitchFor(m => m.IsManufacturer)
+															.Messages(m => m.Checked("Yes").Unchecked("No"))
+															)
+							</div>
+
+							<div class="col-md-4 d-flex align-items-center mb-3">
+								@Html.LabelFor(m => m.IsDiveShop, "Diveshop", new { @class = "form-label me-2" })
+								@(Html.Kendo().SwitchFor(m => m.IsDiveShop)
+															.Messages(m => m.Checked("Yes").Unchecked("No"))
+															)
+							</div>
+						</div>
+					</div>
+
+					
 					<div>
 						<p>
 							<label for="Company">Company:</label>
