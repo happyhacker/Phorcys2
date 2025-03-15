@@ -137,7 +137,45 @@ namespace Phorcys.Services
 
                 _context.Contacts.Add(contact);
                 _context.SaveChanges();
-            }
+
+				var contactId = contact.ContactId; // Retrieve the newly created Contact ID
+
+				// Step 2: Create Related Contact Types
+				var newRecords = new List<object>();
+
+				if (dto.IsDiver)
+				{
+					newRecords.Add(new Diver { ContactId = contactId });
+				}
+
+				if (dto.IsInstructor)
+				{
+					newRecords.Add(new Instructor { ContactId = contactId });
+				}
+
+				if (dto.IsDiveShop)
+				{
+					newRecords.Add(new DiveShop { ContactId = contactId });
+				}
+
+				if (dto.IsManufacturer)
+				{
+					newRecords.Add(new Manufacturer { ContactId = contactId });
+				}
+
+				if (dto.IsAgency)
+				{
+					newRecords.Add(new DiveAgency { ContactId = contactId });
+				}
+
+				// Step 3: Bulk Insert Related Records
+				if (newRecords.Any())
+				{
+					_context.AddRange(newRecords);
+				}
+				_context.SaveChanges(); // Save related records
+				//transaction.Commit(); // Commit transaction
+			}
             catch (DbUpdateException ex)
             {
                 _logger.LogError("Error saving Contact");

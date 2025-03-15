@@ -41,4 +41,5 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<Certification> Certifications { get; set; }
 	public DbSet<Instructor> Instructors { get; set; }
 	public DbSet<Diver> Divers { get; set; }
+	public DbSet<Manufacturer> Manufacturers { get; set; }
 }
