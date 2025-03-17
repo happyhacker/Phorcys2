@@ -32,7 +32,7 @@ namespace Phorcys.Services
             try
             {
                 var contacts = _context.Contacts
-                    .Include(c => c.Divers)
+                    .Include(c => c.Diver)
                     .Where(c => c.UserId == userId || c.UserId == systemUser)
                     .OrderBy(c => c.LastName).ToList();
 
@@ -51,15 +51,19 @@ namespace Phorcys.Services
             {
                 var dto = new ContactDto();
                 var contact = _context.Contacts
-                    .Include(c => c.Instructors)
-                    .Include(c => c.DiveShops)
-                    .Include(c => c.Divers)
+                    .Include(c => c.Instructor)
+                    .Include(c => c.DiveShop)
+                    .Include(c => c.Diver)
+                    .Include(c => c.DiveAgency)
+                    .Include(c => c.Manufacturer)
                     .FirstOrDefault(c => c.ContactId == contactId);
                 dto.ContactId = contactId;
 				dto.UserId = contact.UserId;
-				dto.IsInstructor = contact.Instructors?.Any() == true;
-                dto.IsDiveShop = contact.DiveShops?.Any() == true;
-                dto.IsDiver = contact.Divers?.Any() == true;
+				dto.IsInstructor = contact.Instructor != null;
+                dto.IsDiveShop = contact.DiveShop != null;
+                dto.IsAgency = contact.DiveAgency != null;
+                dto.IsManufacturer = contact.Manufacturer != null;
+                dto.IsDiver = contact.Diver != null;
 				dto.Company = contact.Company;
                 dto.FirstName = contact.FirstName;
                 dto.LastName = contact.LastName;
@@ -87,14 +91,13 @@ namespace Phorcys.Services
             {
                 //var contact = _context.Contacts.Find(contactId);
                 var contact = _context.Contacts
-                .Include(c => c.Divers)
+                .Include(c => c.Diver)
                 .FirstOrDefault(c => c.ContactId == contactId);
                 if (contact != null)
                 {
-                    if (contact.Divers != null && contact.Divers.Any())
+                    if (contact.Diver != null)
                     {
-                        Diver diver = contact.Divers.FirstOrDefault(d => d.ContactId == contactId);
-                        _context.Divers.Remove(diver);
+                        _context.Divers.Remove(contact.Diver);
                     }
                     _context.Contacts.Remove(contact);
                     _context.SaveChanges();
@@ -183,45 +186,60 @@ namespace Phorcys.Services
             }
         }
 
-        public void Save(ContactDto dto)
-        {
-            try
-            {
-                var contact = _context.Contacts.Find(dto.ContactId);
+		public void Save(ContactDto dto)
+		{
+			using (var transaction = _context.Database.BeginTransaction())
+			{
+				try
+				{
+					// Step 1: Find the existing contact
+					var contact = _context.Contacts
+						.Include(c => c.Diver)
+						.Include(c => c.Instructor)
+						.Include(c => c.DiveShop)
+						.Include(c => c.Manufacturer)
+						.Include(c => c.DiveAgency)
+						.FirstOrDefault(c => c.ContactId == dto.ContactId);
 
-				contact.Company = dto.Company ?? "";
-				contact.FirstName = dto.FirstName;
-				contact.LastName = dto.LastName;
-				contact.Address1 = dto.Address1 ?? "";
-				contact.Address2 = dto.Address2 ?? "";
-				contact.City = dto.City ?? "";
-				contact.State = dto.State ?? "";
-				contact.PostalCode = dto.PostalCode ?? "";
-				contact.CountryCode = dto.CountryCode ?? "";
-				contact.Email = dto.Email ?? "";
-				contact.CellPhone = "";
-				contact.HomePhone = "";
-				contact.WorkPhone = "";
-				contact.Gender = "";
-				contact.Notes = dto.Notes ?? "";
-				contact.LastModified = DateTime.Now;
+					if (contact == null)
+					{
+						_logger.LogError("Contact with ID {id} not found.", dto.ContactId);
+						return;
+					}
 
-				_context.Contacts.Update(contact);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                _logger.LogError("Database error saving Contact: {msg}", ex.Message);
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error saving Diver Certification: {msg}", ex.Message);
-                throw;
-            }
-        }
+					// Step 2: Update Contact properties
+					contact.Company = dto.Company ?? "";
+					contact.FirstName = dto.FirstName;
+					contact.LastName = dto.LastName;
+					contact.Address1 = dto.Address1 ?? "";
+					contact.Address2 = dto.Address2 ?? "";
+					contact.City = dto.City ?? "";
+					contact.State = dto.State ?? "";
+					contact.PostalCode = dto.PostalCode ?? "";
+					contact.CountryCode = dto.CountryCode ?? "";
+					contact.Email = dto.Email ?? "";
+					contact.Gender = "";
+					contact.Notes = dto.Notes ?? "";
+					contact.LastModified = DateTime.Now;
 
-        private string GetCountryCode(string code)
+					_context.Contacts.Update(contact);
+				}
+				catch (DbUpdateException ex)
+				{
+					transaction.Rollback();
+					_logger.LogError("Database error saving Contact: {msg}", ex.Message);
+					throw;
+				}
+				catch (Exception ex)
+				{
+					transaction.Rollback();
+					_logger.LogError("Error saving Contact: {msg}", ex.Message);
+					throw;
+				}
+			}
+		}
+
+		private string GetCountryCode(string code)
         {
             string countryCode = "";
             Country country = _context.Countries.FirstOrDefault(d => d.CountryCode == code);

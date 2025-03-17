@@ -7,9 +7,11 @@ public partial class Diver
 {
     public int DiverId { get; set; }
 
-    public int ContactId { get; set; }
+    public int ContactId { get; set; } // Foreign Key
 
-    public double? WorkingSacRate { get; set; }
+	public virtual Contact Contact { get; set; } = null!; // Required navigation property
+
+	public double? WorkingSacRate { get; set; }
 
     public string? Notes { get; set; }
 

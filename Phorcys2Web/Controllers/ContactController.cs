@@ -192,6 +192,11 @@ namespace Phorcys.Web.Controllers
 					var dto = new ContactDto();
 					dto.ContactId = model.ContactId;
 					dto.UserId = model.UserId;
+					dto.IsDiver = model.IsDiver;
+					dto.IsInstructor = model.IsInstructor;
+					dto.IsAgency = model.IsAgency;
+					dto.IsManufacturer = model.IsManufacturer;
+					dto.IsDiveShop = model.IsDiveShop;
 					dto.Company = model.Company;
 					dto.FirstName = model.FirstName;
 					dto.LastName = model.LastName;

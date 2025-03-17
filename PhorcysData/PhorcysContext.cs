@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Phorcys.Domain;
+using System.Reflection.Emit;
 
 namespace Phorcys.Data;
 
@@ -22,6 +23,36 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 		builder.Entity<vwMyCertification>()
 			.HasKey(c => c.DiverCertificationId);
 		builder.Entity<AgencyInstructor>().HasKey(a => a.InstructorId);
+
+		builder.Entity<Contact>()
+	 .HasOne(c => c.Diver)
+	 .WithOne(d => d.Contact)
+	 .HasForeignKey<Diver>(d => d.ContactId)
+	 .OnDelete(DeleteBehavior.Cascade); // Delete Diver if Contact is deleted
+
+		builder.Entity<Contact>()
+			.HasOne(c => c.Instructor)
+			.WithOne(i => i.Contact)
+			.HasForeignKey<Instructor>(i => i.ContactId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Contact>()
+			.HasOne(c => c.DiveShop)
+			.WithOne(ds => ds.Contact)
+			.HasForeignKey<DiveShop>(ds => ds.ContactId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Contact>()
+			.HasOne(c => c.Manufacturer)
+			.WithOne(m => m.Contact)
+			.HasForeignKey<Manufacturer>(m => m.ContactId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<Contact>()
+			.HasOne(c => c.DiveAgency)
+			.WithOne(da => da.Contact)
+			.HasForeignKey<DiveAgency>(da => da.ContactId)
+			.OnDelete(DeleteBehavior.Cascade);
 
 	}
 
