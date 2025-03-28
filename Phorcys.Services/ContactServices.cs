@@ -89,14 +89,20 @@ namespace Phorcys.Services
         {
             try
             {
-                //var contact = _context.Contacts.Find(contactId);
-                var contact = _context.Contacts
-                .Include(c => c.Diver)
-                .FirstOrDefault(c => c.ContactId == contactId);
-                if (contact != null)
+				//var contact = _context.Contacts.Find(contactId);
+				var contact = _context.Contacts
+				   .Include(c => c.Instructor)
+				   .Include(c => c.DiveShop)
+				   .Include(c => c.Diver)
+				   .Include(c => c.DiveAgency)
+				   .Include(c => c.Manufacturer)
+				   .FirstOrDefault(c => c.ContactId == contactId);
+
+				if (contact != null)
                 {
                     if (contact.Diver != null)
                     {
+
                         _context.Divers.Remove(contact.Diver);
                     }
                     _context.Contacts.Remove(contact);
@@ -188,8 +194,7 @@ namespace Phorcys.Services
 
 		public void Save(ContactDto dto)
 		{
-			using (var transaction = _context.Database.BeginTransaction())
-			{
+
 				try
 				{
 					// Step 1: Find the existing contact
@@ -223,20 +228,90 @@ namespace Phorcys.Services
 					contact.LastModified = DateTime.Now;
 
 					_context.Contacts.Update(contact);
+
+					// Handle Adding and Deleting Contact Types
+
+					// Track objects to delete
+					var recordsToDelete = new List<object>();
+
+					// Track objects to add
+					var recordsToAdd = new List<object>();
+
+					// Diver
+					if (dto.IsDiver && contact.Diver == null)
+					{
+						recordsToAdd.Add(new Diver { ContactId = contact.ContactId });
+					}
+					else if (!dto.IsDiver && contact.Diver != null)
+					{
+						recordsToDelete.Add(contact.Diver);
+					}
+
+					// Instructor
+					if (dto.IsInstructor && contact.Instructor == null)
+					{
+						recordsToAdd.Add(new Instructor { ContactId = contact.ContactId });
+					}
+					else if (!dto.IsInstructor && contact.Instructor != null)
+					{
+						recordsToDelete.Add(contact.Instructor);
+					}
+
+					// Dive Shop
+					if (dto.IsDiveShop && contact.DiveShop == null)
+					{
+						recordsToAdd.Add(new DiveShop { ContactId = contact.ContactId });
+					}
+					else if (!dto.IsDiveShop && contact.DiveShop != null)
+					{
+						recordsToDelete.Add(contact.DiveShop);
+					}
+
+					// Manufacturer
+					if (dto.IsManufacturer && contact.Manufacturer == null)
+					{
+						recordsToAdd.Add(new Manufacturer { ContactId = contact.ContactId });
+					}
+					else if (!dto.IsManufacturer && contact.Manufacturer != null)
+					{
+						recordsToDelete.Add(contact.Manufacturer);
+					}
+
+					// Dive Agency
+					if (dto.IsAgency && contact.DiveAgency == null)
+					{
+						recordsToAdd.Add(new DiveAgency { ContactId = contact.ContactId });
+					}
+					else if (!dto.IsAgency && contact.DiveAgency != null)
+					{
+						recordsToDelete.Add(contact.DiveAgency);
+					}
+
+					// Delete records
+					if (recordsToDelete.Any())
+					{
+						_context.RemoveRange(recordsToDelete);
+					}
+
+					// Add records
+					if (recordsToAdd.Any())
+					{
+						_context.AddRange(recordsToAdd);
+					}
+
+					_context.SaveChanges();
 				}
 				catch (DbUpdateException ex)
 				{
-					transaction.Rollback();
 					_logger.LogError("Database error saving Contact: {msg}", ex.Message);
 					throw;
 				}
 				catch (Exception ex)
 				{
-					transaction.Rollback();
 					_logger.LogError("Error saving Contact: {msg}", ex.Message);
 					throw;
 				}
-			}
+			
 		}
 
 		private string GetCountryCode(string code)
