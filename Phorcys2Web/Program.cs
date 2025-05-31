@@ -13,11 +13,10 @@ using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var keyVaultName = "your-keyvault-name"; // Replace with your actual Key Vault name
-var keyVaultUri = $"https://{keyVaultName}.vault.azure.net/";
+var keyVaultUri = new Uri("https://PhorcysKeyVault.vault.azure.net/");
 
 builder.Configuration.AddAzureKeyVault(
-	new Uri(keyVaultUri),
+	keyVaultUri,
 	new DefaultAzureCredential());
 
 // Configure Serilog
