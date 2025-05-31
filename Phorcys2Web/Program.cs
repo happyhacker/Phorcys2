@@ -8,8 +8,17 @@ using Phorcys.Data;
 using Serilog;
 using System;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultName = "your-keyvault-name"; // Replace with your actual Key Vault name
+var keyVaultUri = $"https://{keyVaultName}.vault.azure.net/";
+
+builder.Configuration.AddAzureKeyVault(
+	new Uri(keyVaultUri),
+	new DefaultAzureCredential());
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
