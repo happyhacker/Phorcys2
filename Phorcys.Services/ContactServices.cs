@@ -127,8 +127,8 @@ namespace Phorcys.Services
                 var contact = new Contact();
                 contact.UserId = dto.UserId;
                 contact.Company = dto.Company ?? "";
-                contact.FirstName = dto.FirstName;
-                contact.LastName = dto.LastName;
+                contact.FirstName = dto.FirstName ?? "";
+                contact.LastName = dto.LastName ?? "";
                 contact.Address1 = dto.Address1 ?? "";
                 contact.Address2 = dto.Address2 ?? "";
                 contact.City = dto.City ?? "";
@@ -214,8 +214,8 @@ namespace Phorcys.Services
 
 					// Step 2: Update Contact properties
 					contact.Company = dto.Company ?? "";
-					contact.FirstName = dto.FirstName;
-					contact.LastName = dto.LastName;
+					contact.FirstName = dto.FirstName ?? "";
+					contact.LastName = dto.LastName ?? "";
 					contact.Address1 = dto.Address1 ?? "";
 					contact.Address2 = dto.Address2 ?? "";
 					contact.City = dto.City ?? "";
@@ -346,11 +346,28 @@ namespace Phorcys.Services
 			}
 		}
 
+		//Used as initiation when a user registers
 		private int CreateNewContact(Phorcys.Domain.User user)
         {
             Contact contact = new Contact();
             contact.ContactId = (int)user.ContactId;
-            _context.Contacts.Add(contact);
+			contact.Company = "";
+			contact.FirstName = "";
+			contact.LastName = "";
+			contact.Address1 = "";
+			contact.Address2 = "";
+			contact.City = "";
+			contact.State = "";
+			contact.PostalCode = "";
+			contact.CountryCode = "";
+			contact.Email = "";
+			contact.Gender = "";
+			contact.Notes = "";
+			contact.CellPhone = "";
+			contact.HomePhone = "";
+			contact.WorkPhone = "";
+
+			_context.Contacts.Add(contact);
             _context.SaveChanges();
 
             return contact.ContactId;
