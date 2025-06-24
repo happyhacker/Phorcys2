@@ -98,6 +98,27 @@
 						</p>
 					</div>
 
+					<!-- Add Gear MultiSelect -->
+					<div>
+						<p>
+							<label for="SelectedGearIds">Gear:</label>
+							<br />
+							@(Html.Kendo().MultiSelect()
+														.Name("SelectedGearIds")
+														.DataTextField("Text")   // what users see (Gear.Title)
+														.DataValueField("Value") // what is submitted (GearId)
+														.BindTo(Model.AvailableGear)
+														.Placeholder("Choose gear...")
+														.AutoClose(false)
+														.Value(Model.SelectedGearIds.Select(id => id.ToString()).ToList())
+														.HtmlAttributes(new { style = "width: 100%;" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.SelectedGearIds)
+							</div>
+						</p>
+					</div>
+					
 					<div>
 						<p>
 							<label for="Notes">Notes:</label>

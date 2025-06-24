@@ -27,7 +27,7 @@ namespace Phorcys2Web.Controllers
 		private readonly ILogger _logger;
 
 		// Inject DivePlanServices into the controller
-		public DivePlanController(DivePlanServices divePlanServices, 
+		public DivePlanController(DivePlanServices divePlanServices,
 			DiveSiteServices diveSiteServices, UserServices userServices, ILogger<DivePlanController> logger)
 		{
 			_divePlanServices = divePlanServices;
@@ -54,7 +54,7 @@ namespace Phorcys2Web.Controllers
 			try
 			{
 				var divePlans = _divePlanServices.GetDivePlans(_userServices.GetUserId()); // Await the completion of the async method
-				var model = CreateIndexModel(divePlans); 
+				var model = CreateIndexModel(divePlans);
 
 				return View(model);
 			}
@@ -78,8 +78,19 @@ namespace Phorcys2Web.Controllers
 		{
 			var model = new DivePlanViewModel();
 			model.DiveSiteList = BuildDiveSiteList(null);
+			model.AvailableGear = BuildGearList();
 
 			return View(model);
+		}
+
+		private List<SelectListItem> BuildGearList()
+		{
+			return new List<SelectListItem>
+			{
+				new SelectListItem { Text = "Gear 1", Value = "1" },
+				new SelectListItem { Text = "Gear 2", Value = "2", Selected = true },
+				new SelectListItem { Text = "Gear 3", Value = "3" }
+			};
 		}
 
 		[Authorize]
@@ -92,8 +103,8 @@ namespace Phorcys2Web.Controllers
 				var divePlan = new DivePlan();
 				divePlan.Title = model.Title;
 				divePlan.Minutes = model.Minutes;
-                divePlan.Notes = model.Notes ?? "";
-                divePlan.MaxDepth = model.MaxDepth;
+				divePlan.Notes = model.Notes ?? "";
+				divePlan.MaxDepth = model.MaxDepth;
 				divePlan.ScheduledTime = model.ScheduledTime;
 				divePlan.Created = DateTime.Now;
 				divePlan.LastModified = DateTime.Now;
@@ -119,8 +130,8 @@ namespace Phorcys2Web.Controllers
 			DivePlanViewModel model = new DivePlanViewModel();
 			model.DivePlanId = Id;
 			model.Title = divePlan.Title;
-			model.Minutes = divePlan.Minutes;	
-			model.Notes = divePlan.Notes;	
+			model.Minutes = divePlan.Minutes;
+			model.Notes = divePlan.Notes;
 			model.MaxDepth = divePlan.MaxDepth;
 			model.UserId = divePlan.UserId;
 			model.ScheduledTime = divePlan.ScheduledTime;
@@ -224,12 +235,12 @@ namespace Phorcys2Web.Controllers
 			return diveSiteList;
 		}
 
-       /* private string GetAspNetUserId() //returns long string of hashed id
-		{
-			_userServices.GetLoggedInUserId();
-			var loginId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-			return loginId;
-		}*/
+		/* private string GetAspNetUserId() //returns long string of hashed id
+		 {
+			 _userServices.GetLoggedInUserId();
+			 var loginId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			 return loginId;
+		 }*/
 
 	}
 }
