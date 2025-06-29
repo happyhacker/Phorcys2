@@ -24,15 +24,17 @@ namespace Phorcys2Web.Controllers
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveSiteServices _diveSiteServices;
 		private readonly UserServices _userServices;
+		private readonly GearServices _gearServices;
 		private readonly ILogger _logger;
 
 		// Inject DivePlanServices into the controller
 		public DivePlanController(DivePlanServices divePlanServices,
-			DiveSiteServices diveSiteServices, UserServices userServices, ILogger<DivePlanController> logger)
+			DiveSiteServices diveSiteServices, UserServices userServices, GearServices gearServices, ILogger<DivePlanController> logger)
 		{
 			_divePlanServices = divePlanServices;
 			_diveSiteServices = diveSiteServices;
 			_userServices = userServices;
+			_gearServices = gearServices;
 			_logger = logger;
 		}
 		public override void OnActionExecuting(ActionExecutingContext context)
@@ -78,19 +80,28 @@ namespace Phorcys2Web.Controllers
 		{
 			var model = new DivePlanViewModel();
 			model.DiveSiteList = BuildDiveSiteList(null);
-			model.AvailableGear = BuildGearList();
+			model.AvailableGear = BuildGearList(_userServices.GetUserId());
 
 			return View(model);
 		}
 
-		private List<SelectListItem> BuildGearList()
+		private List<SelectListItem> BuildGearList(int userId)
 		{
-			return new List<SelectListItem>
+			var gearDtos = _gearServices.GetGearTitles(userId) ?? new List<GearDto>();
+			var selectListItems = new List<SelectListItem>();
+
+			foreach (var gear in gearDtos)
 			{
-				new SelectListItem { Text = "Gear 1", Value = "1" },
-				new SelectListItem { Text = "Gear 2", Value = "2", Selected = true },
-				new SelectListItem { Text = "Gear 3", Value = "3" }
-			};
+				if (gear.NoLongerUse == null) // Include only if not marked as no longer used
+				{
+					selectListItems.Add(new SelectListItem
+					{
+						Text = gear.Title,
+						Value = gear.GearId.ToString()
+					});
+				}
+			}
+			return selectListItems;
 		}
 
 		[Authorize]
