@@ -28,7 +28,7 @@ public class DivePlanServices
 
 	public IEnumerable<DivePlan> GetDivePlans(int userId)
 	{
-		var divePlans = _context.DivePlans.Where(r => r.UserId==userId).Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+		var divePlans = _context.DivePlans.Where(r => r.UserId == userId).Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 		return divePlans;
 	}
 
@@ -91,7 +91,7 @@ public class DivePlanServices
 		var divePlan = GetDivePlan(divePlanDto.DivePlanId);
 		divePlan.Title = divePlanDto.Title;
 		divePlan.ScheduledTime = divePlanDto.ScheduledTime;
-		divePlan.MaxDepth = divePlanDto.MaxDepth;	
+		divePlan.MaxDepth = divePlanDto.MaxDepth;
 		divePlan.Minutes = divePlanDto.Minutes;
 		divePlan.Notes = divePlanDto.Notes;
 		divePlan.DiveSiteId = divePlanDto.DiveSiteId;
@@ -106,9 +106,9 @@ public class DivePlanServices
 		try
 		{
 			divePlan = _context.DivePlans.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
-		} 
+		}
 		catch (SqlException ex)
-		{ 
+		{
 			_logger.LogError(ex, "Error retreiving Dive Plan: " + ex.Message);
 			throw;
 		}
@@ -116,13 +116,16 @@ public class DivePlanServices
 	}
 	public void Delete(int id)
 	{
-		try { 
-		var divePlan = _context.DivePlans.Find(id);
-		if (divePlan != null)
+		try
 		{
-			_context.DivePlans.Remove(divePlan);
-			_context.SaveChanges();
-		}
+			var divePlan = _context.DivePlans
+			.Include(dp => dp.Gears)
+			.FirstOrDefault(dp => dp.DivePlanId == id);
+			if (divePlan != null)
+			{
+				_context.DivePlans.Remove(divePlan);
+				_context.SaveChanges();
+			}
 		}
 		catch (DbUpdateException ex)
 		{
