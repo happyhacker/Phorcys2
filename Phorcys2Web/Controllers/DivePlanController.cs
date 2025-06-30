@@ -120,9 +120,9 @@ namespace Phorcys2Web.Controllers
 				divePlan.Created = DateTime.Now;
 				divePlan.LastModified = DateTime.Now;
 				int userId = _userServices.GetUserId();
-				divePlan.UserId = userId; //Hardcoded for now
+				divePlan.UserId = userId;
 				divePlan.DiveSiteId = model.DiveSiteSelectedId;
-				_divePlanServices.SaveNewDivePlan(divePlan);
+				_divePlanServices.SaveNewDivePlan(divePlan, model.SelectedGearIds);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully created.";
 				return RedirectToAction("Index");
 			}

@@ -17,6 +17,7 @@ public partial class DivePlan
     public DateTime Created { get; set; }
     public DateTime LastModified { get; set; }
     public virtual DiveSite? DiveSite { get; set; }
+    public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
 
     //public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
 
@@ -28,5 +29,5 @@ public partial class DivePlan
 
     //public virtual ICollection<DiveType> DiveTypes { get; set; } = new List<DiveType>();
 
-    //public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
+
 }

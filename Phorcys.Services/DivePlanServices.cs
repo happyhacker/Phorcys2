@@ -47,7 +47,32 @@ public class DivePlanServices
 		}
 	}
 
-	public void SaveNewDivePlan(DivePlan divePlan)
+	public void SaveNewDivePlan(DivePlan divePlan, List<int> gearIds)
+	{
+		try
+		{
+			// Load actual Gear entities from the database
+			var gears = _context.Gear
+				.Where(g => gearIds.Contains(g.GearId))
+				.ToList();
+
+			// Assign the gears to the DivePlan's navigation property
+			foreach (var gear in gears)
+			{
+				divePlan.Gears.Add(gear);
+			}
+
+			_context.DivePlans.Add(divePlan);
+			_context.SaveChanges();
+		}
+		catch (SqlException ex)
+		{
+			Console.WriteLine(ex.Message);
+			_logger.LogError(ex, "Error saving Dive Plan and Gear associations: " + ex.Message);
+		}
+	}
+
+	/*public void SaveNewDivePlan(DivePlan divePlan)
 	{
 		try
 		{
@@ -59,7 +84,7 @@ public class DivePlanServices
 			Console.WriteLine(ex.Message);
 			_logger.LogError(ex, "Error saving Dive Plan : " + ex.Message);
 		}
-	}
+	}*/
 
 	public void EditDivePlan(DivePlanDto divePlanDto)
 	{

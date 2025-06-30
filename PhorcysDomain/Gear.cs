@@ -30,7 +30,9 @@ public partial class Gear
     public DateTime? LastModified { get; set; }
 
     public virtual Tank? Tank { get; set; }
-        
+ 
+    public virtual ICollection<DivePlan> DivePlans { get; set; } = new List<DivePlan>();
+    
     //public virtual User User { get; set; } = null!;
 
 	//public int? ManufacturerId { get; set; }
@@ -47,7 +49,7 @@ public partial class Gear
 
 
 
-	//public virtual ICollection<DivePlan> DivePlans { get; set; } = new List<DivePlan>();
+
 
 	//public virtual ICollection<Diver> Divers { get; set; } = new List<Diver>();
 

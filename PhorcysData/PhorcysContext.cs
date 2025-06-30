@@ -54,7 +54,27 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 			.HasForeignKey<DiveAgency>(da => da.ContactId)
 			.OnDelete(DeleteBehavior.Cascade);
 
-	}
+		builder.Entity<DivePlan>()
+	.HasMany(dp => dp.Gears)
+	.WithMany(g => g.DivePlans)
+	.UsingEntity<Dictionary<string, object>>(
+		"DivePlanGear",
+		j => j
+			.HasOne<Gear>()
+			.WithMany()
+			.HasForeignKey("GearId")
+			.OnDelete(DeleteBehavior.Cascade),
+		j => j
+			.HasOne<DivePlan>()
+			.WithMany()
+			.HasForeignKey("DivePlanId")
+			.OnDelete(DeleteBehavior.Cascade),
+		j =>
+		{
+			j.HasKey("DivePlanId", "GearId");
+			j.ToTable("DivePlanGear");
+		});
+}
 
 	public DbSet<DiveShop> DiveShops { get; set; }
 	public DbSet<Dive> Dives { get; set; }
