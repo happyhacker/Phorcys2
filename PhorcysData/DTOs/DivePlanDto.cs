@@ -18,5 +18,6 @@ namespace Phorcys.Data.DTOs
 		public int? MaxDepth { get; set; }
 		public string? Notes { get; set; }
 		public int UserId { get; set; }
+		public List<int> SelectedGearIds { get; set; } = new();
 	}
 }

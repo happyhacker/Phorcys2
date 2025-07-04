@@ -46,9 +46,6 @@ namespace Phorcys2Web.Controllers
 			base.OnActionExecuting(context);
 		}
 
-		//private DivePlanServices divePlanServices = new DivePlanServices();
-		//private DiveSiteServices diveSiteServices = new DiveSiteServices();
-
 		// GET: DiveController
 		[Authorize]
 		public ActionResult Index()
@@ -66,7 +63,6 @@ namespace Phorcys2Web.Controllers
 			}
 		}
 
-
 		// GET: DiveController/Details/5
 		public ActionResult Details(int id)
 		{
@@ -83,25 +79,6 @@ namespace Phorcys2Web.Controllers
 			model.AvailableGear = BuildGearList(_userServices.GetUserId());
 
 			return View(model);
-		}
-
-		private List<SelectListItem> BuildGearList(int userId)
-		{
-			var gearDtos = _gearServices.GetGearTitles(userId) ?? new List<GearDto>();
-			var selectListItems = new List<SelectListItem>();
-
-			foreach (var gear in gearDtos)
-			{
-				if (gear.NoLongerUse == null) // Include only if not marked as no longer used
-				{
-					selectListItems.Add(new SelectListItem
-					{
-						Text = gear.Title,
-						Value = gear.GearId.ToString()
-					});
-				}
-			}
-			return selectListItems;
 		}
 
 		[Authorize]
@@ -137,7 +114,7 @@ namespace Phorcys2Web.Controllers
 		[HttpGet]
 		public ActionResult Edit(int Id)
 		{
-			DivePlan divePlan = _divePlanServices.GetDivePlan(Id);
+			var divePlan = _divePlanServices.GetDivePlan(Id);
 			DivePlanViewModel model = new DivePlanViewModel();
 			model.DivePlanId = Id;
 			model.Title = divePlan.Title;
@@ -148,6 +125,8 @@ namespace Phorcys2Web.Controllers
 			model.ScheduledTime = divePlan.ScheduledTime;
 			model.DiveSiteId = divePlan.DiveSiteId;
 			model.DiveSiteList = BuildDiveSiteList(divePlan.DiveSiteId);
+			model.SelectedGearIds = divePlan.Gears.Select(g => g.GearId).ToList();
+			model.AvailableGear = BuildGearList(divePlan.UserId);
 
 			return View(model);
 		}
@@ -167,6 +146,8 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.MaxDepth = model.MaxDepth;
 				divePlanDto.ScheduledTime = model.ScheduledTime;
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
+				divePlanDto.SelectedGearIds = model.SelectedGearIds ?? new List<int>();
+
 				_divePlanServices.EditDivePlan(divePlanDto);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
 				return RedirectToAction("Index");
@@ -174,11 +155,12 @@ namespace Phorcys2Web.Controllers
 			else
 			{
 				model.DiveSiteList = BuildDiveSiteList(model.DiveSiteSelectedId);
+				model.AvailableGear = BuildGearList(model.UserId);
+
 				return View(model);
 			}
 
 		}
-
 
 		// POST: DiveController/Delete/5
 		[Authorize]
@@ -197,6 +179,7 @@ namespace Phorcys2Web.Controllers
 				return View("Error");
 			}
 		}
+
 		private List<DivePlanIndexViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.DivePlan> divePlans)
 		{
 			List<DivePlanIndexViewModel> models = new List<DivePlanIndexViewModel>();
@@ -216,9 +199,7 @@ namespace Phorcys2Web.Controllers
 				model.ScheduledTime = divePlan.ScheduledTime;
 				model.Notes = divePlan.Notes;
 				models.Add(model);
-
 			}
-
 			return models;
 		}
 
@@ -246,13 +227,24 @@ namespace Phorcys2Web.Controllers
 			return diveSiteList;
 		}
 
-		/* private string GetAspNetUserId() //returns long string of hashed id
-		 {
-			 _userServices.GetLoggedInUserId();
-			 var loginId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-			 return loginId;
-		 }*/
+		private List<SelectListItem> BuildGearList(int userId)
+		{
+			var gearDtos = _gearServices.GetGearTitles(userId) ?? new List<GearDto>();
+			var selectListItems = new List<SelectListItem>();
 
+			foreach (var gear in gearDtos)
+			{
+				if (gear.NoLongerUse == null) // Include only if not marked as no longer used
+				{
+					selectListItems.Add(new SelectListItem
+					{
+						Text = gear.Title,
+						Value = gear.GearId.ToString()
+					});
+				}
+			}
+			return selectListItems;
+		}
 	}
 }
 

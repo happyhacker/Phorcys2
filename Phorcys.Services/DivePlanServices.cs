@@ -72,47 +72,62 @@ public class DivePlanServices
 		}
 	}
 
-	/*public void SaveNewDivePlan(DivePlan divePlan)
-	{
-		try
-		{
-			_context.DivePlans.Add(divePlan);
-			_context.SaveChanges();
-		}
-		catch (SqlException ex)
-		{
-			Console.WriteLine(ex.Message);
-			_logger.LogError(ex, "Error saving Dive Plan : " + ex.Message);
-		}
-	}*/
-
 	public void EditDivePlan(DivePlanDto divePlanDto)
 	{
-		var divePlan = GetDivePlan(divePlanDto.DivePlanId);
-		divePlan.Title = divePlanDto.Title;
-		divePlan.ScheduledTime = divePlanDto.ScheduledTime;
-		divePlan.MaxDepth = divePlanDto.MaxDepth;
-		divePlan.Minutes = divePlanDto.Minutes;
-		divePlan.Notes = divePlanDto.Notes;
-		divePlan.DiveSiteId = divePlanDto.DiveSiteId;
-		divePlan.LastModified = DateTime.Now;
-
-		_context.Entry(divePlan).State = EntityState.Modified;
-		_context.SaveChanges();
-	}
-	public DivePlan GetDivePlan(int divePlanId)
-	{
-		DivePlan divePlan = new DivePlan();
 		try
 		{
-			divePlan = _context.DivePlans.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
+			var divePlan = GetDivePlan(divePlanDto.DivePlanId);
+			if (divePlan == null)
+			{
+				_logger.LogWarning("DivePlan not found for editing. ID = {DivePlanId}", divePlanDto.DivePlanId);
+				return;
+			}
+
+			// Update scalar fields
+			divePlan.Title = divePlanDto.Title;
+			divePlan.ScheduledTime = divePlanDto.ScheduledTime;
+			divePlan.MaxDepth = divePlanDto.MaxDepth;
+			divePlan.Minutes = divePlanDto.Minutes;
+			divePlan.Notes = divePlanDto.Notes ?? "";
+			divePlan.DiveSiteId = divePlanDto.DiveSiteId;
+			divePlan.LastModified = DateTime.Now;
+
+			// Update the gear collection
+			divePlan.Gears.Clear(); // remove existing gear
+
+			if (divePlanDto.SelectedGearIds != null && divePlanDto.SelectedGearIds.Any())
+			{
+				var selectedGears = _context.Gear
+					.Where(g => divePlanDto.SelectedGearIds.Contains(g.GearId))
+					.ToList();
+
+				foreach (var gear in selectedGears)
+				{
+					divePlan.Gears.Add(gear);
+				}
+			}
+			_context.SaveChanges();
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error editing DivePlan with ID {DivePlanId}", divePlanDto.DivePlanId);
+			throw;
+		}
+	}
+
+	public DivePlan GetDivePlan(int divePlanId)
+	{
+		try
+		{
+			var divePlan = _context.DivePlans.Include(dp => dp.Gears)
+				.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
+			return divePlan;	
 		}
 		catch (SqlException ex)
 		{
-			_logger.LogError(ex, "Error retreiving Dive Plan: " + ex.Message);
+			_logger.LogError(ex, "Error retreiving Dive Plan with DivePlanId of {divePlanId}.",divePlanId);
 			throw;
 		}
-		return divePlan;
 	}
 	public void Delete(int id)
 	{
