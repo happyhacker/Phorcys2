@@ -8,6 +8,17 @@
 }
 
 <style>
+	/* Style the chips (tags) for the DiveType MultiSelect */
+	#SelectedDiveTypeIds_taglist .k-chip {
+		background-color: #28a745; /* Match Save button color */
+		color: white;
+		border-radius: 16px;
+		padding: 2px 8px;
+		font-size: 0.85rem;
+	}
+</style>
+
+<style>
 	/* Style the chips (tags) for the Gear MultiSelect */
 	#SelectedGearIds_taglist .k-chip {
 		background-color: #28a745; /* Match Save button color */
@@ -108,6 +119,28 @@
 							</div>
 						</p>
 					</div>
+
+					<!-- Add DiveType MultiSelect -->
+					<div>
+						<p>
+							<label for="SelectedDiveTypeIds">Dive Types:</label>
+							<br />
+							@(Html.Kendo().MultiSelect()
+														.Name("SelectedDiveTypeIds")
+														.DataTextField("Text")   // what users see (Gear.Title)
+														.DataValueField("Value") // what is submitted (GearId)
+														.BindTo(Model.AvailableDiveTypes)
+														.Placeholder("Choose Dive Types...")
+														.AutoClose(false)
+														.Value(Model.SelectedDiveTypeIds.Select(id => id.ToString()).ToList())
+														.HtmlAttributes(new { style = "width: 100%;" })
+														)
+							<div class="pageMessage">
+								@Html.ValidationMessageFor(m => m.SelectedDiveTypeIds)
+							</div>
+						</p>
+					</div>
+
 
 					<!-- Add Gear MultiSelect -->
 					<div>

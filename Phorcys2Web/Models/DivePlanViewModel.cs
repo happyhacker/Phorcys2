@@ -36,11 +36,15 @@ namespace Phorcys.Web.Models
 		// List of gear available to populate the MultiSelect dropdown
 		public List<SelectListItem> AvailableGear { get; set; } = new List<SelectListItem>();
 
-		// List of DiveTypes to populate the MultiSelect dropdown
-		public List<SelectListItem> AvailableDiveTypes { get; set; } = new List<SelectListItem>();
-
 		// IDs of gear selected in the MultiSelect
 		public List<int> SelectedGearIds { get; set; } = new List<int>();
+
+		// List of DiveTypes to populate the MultiSelect dropdown
+		public List<SelectListItem> AvailableDiveTypes { get; set; } = new List<SelectListItem>();
+		
+		// IDs of gear selected in the MultiSelect
+		public List<int> SelectedDiveTypeIds { get; set; } = new List<int>();
+
 
 		//public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
 
