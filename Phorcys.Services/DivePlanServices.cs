@@ -47,7 +47,7 @@ public class DivePlanServices
 		}
 	}
 
-	public void SaveNewDivePlan(DivePlan divePlan, List<int> gearIds)
+	public void SaveNewDivePlan(DivePlan divePlan, List<int> gearIds, List<int> diveTypeIds)
 	{
 		try
 		{
@@ -56,10 +56,17 @@ public class DivePlanServices
 				.Where(g => gearIds.Contains(g.GearId))
 				.ToList();
 
-			// Assign the gears to the DivePlan's navigation property
+			var diveTypes = _context.DiveTypes.Where(d => diveTypeIds.Contains(d.DiveTypeId))
+				.ToList();
+
 			foreach (var gear in gears)
 			{
 				divePlan.Gears.Add(gear);
+			}
+
+			foreach(var diveType in diveTypes)
+			{
+				divePlan.DiveTypes.Add(diveType);
 			}
 
 			_context.DivePlans.Add(divePlan);
@@ -68,7 +75,7 @@ public class DivePlanServices
 		catch (SqlException ex)
 		{
 			Console.WriteLine(ex.Message);
-			_logger.LogError(ex, "Error saving Dive Plan and Gear associations: " + ex.Message);
+			_logger.LogError(ex, "Error saving Dive Plan: " + ex.Message);
 		}
 	}
 
