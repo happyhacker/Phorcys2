@@ -21,6 +21,7 @@ namespace Phorcys2Web.Controllers
 {
 	public class DivePlanController : Controller
 	{
+		private readonly DiveTypeServices _diveTypeServices;
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveSiteServices _diveSiteServices;
 		private readonly UserServices _userServices;
@@ -29,7 +30,9 @@ namespace Phorcys2Web.Controllers
 
 		// Inject DivePlanServices into the controller
 		public DivePlanController(DivePlanServices divePlanServices,
-			DiveSiteServices diveSiteServices, UserServices userServices, GearServices gearServices, ILogger<DivePlanController> logger)
+			DiveSiteServices diveSiteServices, UserServices userServices, 
+			GearServices gearServices, DiveTypeServices diveTypeServices, 
+			ILogger<DivePlanController> logger)
 		{
 			_divePlanServices = divePlanServices;
 			_diveSiteServices = diveSiteServices;
@@ -75,8 +78,9 @@ namespace Phorcys2Web.Controllers
 		public ActionResult Create()
 		{
 			var model = new DivePlanViewModel();
-			model.DiveSiteList = BuildDiveSiteList(null);
+			model.DiveSiteList = BuildDiveSiteList(null); //ToDo shouldn't this be userid?
 			model.AvailableGear = BuildGearList(_userServices.GetUserId());
+			model.AvailableDiveTypes = BuildDiveTypeList(_userServices.GetUserId());
 
 			return View(model);
 		}
@@ -225,6 +229,22 @@ namespace Phorcys2Web.Controllers
 				diveSiteList.Add(item);
 			}
 			return diveSiteList;
+		}
+
+		private List<SelectListItem> BuildDiveTypeList(int userId)
+		{
+			var diveTypeDtos = _diveTypeServices.GetDiveTypeDtos(userId) ?? new List<DiveTypeDto>();
+			var selectListItems = new List<SelectListItem>();
+
+			foreach (var diveType in diveTypeDtos)
+			{
+					selectListItems.Add(new SelectListItem
+					{
+						Text = diveType.Title,
+						Value = diveType.DiveTypeId.ToString()
+					});
+			}
+			return selectListItems;
 		}
 
 		private List<SelectListItem> BuildGearList(int userId)

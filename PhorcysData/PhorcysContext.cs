@@ -54,10 +54,32 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 			.HasForeignKey<DiveAgency>(da => da.ContactId)
 			.OnDelete(DeleteBehavior.Cascade);
 
+		// DivePlan <-> DiveTypes
 		builder.Entity<DivePlan>()
-	.HasMany(dp => dp.Gears)
-	.WithMany(g => g.DivePlans)
-	.UsingEntity<Dictionary<string, object>>(
+			.HasMany(dp => dp.DiveTypes)
+			.WithMany(dt => dt.DivePlans)
+			.UsingEntity<Dictionary<string, object>>(
+				"DivePlanDiveType",
+				j => j
+					.HasOne<DiveType>()
+					.WithMany()
+					.HasForeignKey("DiveTypeId")
+					.OnDelete(DeleteBehavior.Cascade),
+				j => j
+					.HasOne<DivePlan>()
+					.WithMany()
+					.HasForeignKey("DivePlanId")
+					.OnDelete(DeleteBehavior.Cascade),
+				j =>
+				{
+					j.HasKey("DivePlanId", "DiveTypeId");
+					j.ToTable("DivePlansDiveTypes");
+				});
+
+		builder.Entity<DivePlan>()
+			.HasMany(dp => dp.Gears)
+			.WithMany(g => g.DivePlans)
+			.UsingEntity<Dictionary<string, object>>(
 		"DivePlanGear",
 		j => j
 			.HasOne<Gear>()
@@ -76,6 +98,7 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 		});
 }
 
+	public DbSet<DiveType> DiveTypes { get; set; }
 	public DbSet<DiveShop> DiveShops { get; set; }
 	public DbSet<Dive> Dives { get; set; }
 	public DbSet<DivePlan> DivePlans { get; set; }
