@@ -40,7 +40,7 @@ namespace Phorcys.Services
 					Title = d.Title
 				});
 			}
-		
+		       
 			return diveTypeDtos;
 		}
 	}
