@@ -14,8 +14,9 @@ namespace Phorcys.Services
 	{
 		private readonly PhorcysContext _context;
 		private readonly ILogger _logger;
+		private const int systemUser = 6;
 
-		public DiveTypeServices(PhorcysContext context, ILogger logger)
+		public DiveTypeServices(PhorcysContext context, ILogger<DiveTypeServices> logger)
 		{
 			_context = context;
 			_logger = logger;
@@ -23,7 +24,7 @@ namespace Phorcys.Services
 
 		public IEnumerable<DiveType> GetDiveTypes(int userId) 
 		{ 
-			var diveTypes = _context.DiveTypes.Where(d => d.UserId == userId);
+			var diveTypes = _context.DiveTypes.Where(d => d.UserId == userId || d.UserId == systemUser);
 			return diveTypes;
 		}
 

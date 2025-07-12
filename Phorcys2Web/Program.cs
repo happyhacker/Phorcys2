@@ -43,6 +43,7 @@ builder.Services.AddDbContext<PhorcysContext>(options =>
 );
 
 // Add custom services
+builder.Services.AddScoped<DiveTypeServices>();
 builder.Services.AddScoped<DivePlanServices>();
 builder.Services.AddScoped<DiveSiteServices>();
 builder.Services.AddScoped<DiveServices>();

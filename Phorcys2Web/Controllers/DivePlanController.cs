@@ -34,6 +34,7 @@ namespace Phorcys2Web.Controllers
 			GearServices gearServices, DiveTypeServices diveTypeServices, 
 			ILogger<DivePlanController> logger)
 		{
+			_diveTypeServices = diveTypeServices;
 			_divePlanServices = divePlanServices;
 			_diveSiteServices = diveSiteServices;
 			_userServices = userServices;
