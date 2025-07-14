@@ -142,6 +142,7 @@ public class DivePlanServices
 		{
 			var divePlan = _context.DivePlans
 			.Include(dp => dp.Gears)
+			.Include(dt => dt.DiveTypes)
 			.FirstOrDefault(dp => dp.DivePlanId == id);
 			if (divePlan != null)
 			{
