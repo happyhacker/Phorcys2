@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace Phorcys.Data.DTOs
 		public int? MaxDepth { get; set; }
 		public string? Notes { get; set; }
 		public int UserId { get; set; }
+		public List<int> SelectedDiveTypeIds { get; set; } = new();
 		public List<int> SelectedGearIds { get; set; } = new();
 	}
 }

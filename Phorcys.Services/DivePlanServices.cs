@@ -99,7 +99,21 @@ public class DivePlanServices
 			divePlan.DiveSiteId = divePlanDto.DiveSiteId;
 			divePlan.LastModified = DateTime.Now;
 
-			// Update the gear collection
+			//Update the DiveType collection
+			divePlan.DiveTypes.Clear();
+
+			if(divePlanDto.SelectedDiveTypeIds != null && divePlanDto.SelectedDiveTypeIds.Any())
+			{
+				var selectedDiveTypes = _context.DiveTypes
+					.Where(d => divePlanDto.SelectedDiveTypeIds.Contains(d.DiveTypeId))
+					.ToList();
+				foreach( var diveType in selectedDiveTypes)
+				{
+					divePlan.DiveTypes .Add(diveType);
+				}
+			}
+			
+			// Update the Gear collection
 			divePlan.Gears.Clear(); // remove existing gear
 
 			if (divePlanDto.SelectedGearIds != null && divePlanDto.SelectedGearIds.Any())
@@ -127,6 +141,7 @@ public class DivePlanServices
 		try
 		{
 			var divePlan = _context.DivePlans.Include(dp => dp.Gears)
+				.Include(dp => dp.DiveTypes)
 				.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
 			return divePlan;	
 		}

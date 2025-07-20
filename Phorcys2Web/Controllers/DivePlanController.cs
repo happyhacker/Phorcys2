@@ -130,6 +130,8 @@ namespace Phorcys2Web.Controllers
 			model.ScheduledTime = divePlan.ScheduledTime;
 			model.DiveSiteId = divePlan.DiveSiteId;
 			model.DiveSiteList = BuildDiveSiteList(divePlan.DiveSiteId);
+			model.SelectedDiveTypeIds = divePlan.DiveTypes.Select(t  => t.DiveTypeId).ToList();
+			model.AvailableDiveTypes = BuildDiveTypeList(Id);
 			model.SelectedGearIds = divePlan.Gears.Select(g => g.GearId).ToList();
 			model.AvailableGear = BuildGearList(divePlan.UserId);
 
@@ -152,6 +154,7 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.ScheduledTime = model.ScheduledTime;
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
 				divePlanDto.SelectedGearIds = model.SelectedGearIds ?? new List<int>();
+				divePlanDto.SelectedDiveTypeIds = model.SelectedDiveTypeIds ?? new List<int>();
 
 				_divePlanServices.EditDivePlan(divePlanDto);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
