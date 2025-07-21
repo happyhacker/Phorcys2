@@ -18,12 +18,13 @@ public partial class DivePlan
     public DateTime LastModified { get; set; }
     public virtual DiveSite? DiveSite { get; set; }
     public virtual ICollection<Gear> Gears { get; set; } = new List<Gear>();
-
+    public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();  
+     
     //public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
 
     //public ICollection<Dive> Dives { get; set; } = new List<Dive>();
 
-    //public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
+
 
     public User User { get; set; }
 

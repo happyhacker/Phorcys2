@@ -96,7 +96,23 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 			j.HasKey("DivePlanId", "GearId");
 			j.ToTable("DivePlanGear");
 		});
-}
+
+		builder.Entity<TanksOnDive>()
+			.HasKey(t => new { t.DivePlanId, t.GearId });
+
+		builder.Entity<TanksOnDive>()
+			.HasOne(t => t.DivePlan)
+			.WithMany(dp => dp.TanksOnDives)
+			.HasForeignKey(t => t.DivePlanId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<TanksOnDive>()
+			.HasOne(t => t.Tank)
+			.WithMany()
+			.HasForeignKey(t => t.GearId)  // This connects to the GearId in Tank
+			.OnDelete(DeleteBehavior.Cascade);
+
+	}
 
 	public DbSet<DiveType> DiveTypes { get; set; }
 	public DbSet<DiveShop> DiveShops { get; set; }
@@ -109,6 +125,7 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<DiveLocation> DiveLocations { get; set; }
 	public DbSet<Gear> Gear { get; set; }
     public DbSet<Tank> Tanks { get; set; }
+	public DbSet<TanksOnDive> TanksOnDives { get; set; }
 	public DbSet<vwMyCertification> vwMyCertifications { get; set; }
 	public DbSet<DiverCertification> DiverCertifications { get; set;}
 	public DbSet<DiveAgency> DiveAgencies { get; set; }

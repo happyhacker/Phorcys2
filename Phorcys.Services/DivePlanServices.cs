@@ -10,6 +10,7 @@ using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop.Infrastructure;
 
 namespace Phorcys.Services;
 
@@ -53,6 +54,7 @@ public class DivePlanServices
 		{
 			// Load actual Gear entities from the database
 			var gears = _context.Gear
+				.Include(t => t.Tank)
 				.Where(g => gearIds.Contains(g.GearId))
 				.ToList();
 
@@ -62,6 +64,14 @@ public class DivePlanServices
 			foreach (var gear in gears)
 			{
 				divePlan.Gears.Add(gear);
+				if(gear.Tank != null)
+				{
+					divePlan.TanksOnDives.Add(new TanksOnDive
+					{
+						DivePlan = divePlan,
+						Tank = gear.Tank,
+					});
+				}
 			}
 
 			foreach(var diveType in diveTypes)
@@ -158,6 +168,7 @@ public class DivePlanServices
 			var divePlan = _context.DivePlans
 			.Include(dp => dp.Gears)
 			.Include(dt => dt.DiveTypes)
+			.Include(tod => tod.TanksOnDives)
 			.FirstOrDefault(dp => dp.DivePlanId == id);
 			if (divePlan != null)
 			{
