@@ -219,17 +219,17 @@
                             <label><strong>${tank.GasContentTitle || "Tank"} (Gear ID: ${tank.GearId})</strong></label>
 
                             <div style="display: flex; gap: 50px;">
-                                <div>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
                                     <p>Starting Pressure</p>
                                     <div id="${startGaugeId}" style="width:300px;height:300px;"></div>
+                                    <div id="${startSliderId}" style="width: 250px; margin-top: 10px;"></div>
                                     <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
-                                    <div id="${startSliderId}" style="margin-top: 10px;"></div>
                                 </div>
-                                <div>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
                                     <p>Ending Pressure</p>
                                     <div id="${endGaugeId}" style="width:300px;height:300px;"></div>
+                                    <div id="${endSliderId}" style="width: 250px; margin-top: 10px;"></div>
                                     <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
-                                    <div id="${endSliderId}" style="margin-top: 10px;"></div>
                                 </div>
                             </div>
 
@@ -237,7 +237,7 @@
                         </div>
                     `);
 
-                    // Create Starting Pressure Gauge
+                    // Create Gauges
                     const startGauge = $(`#${startGaugeId}`).kendoRadialGauge({
                         pointer: { value: tank.StartingPressure || 0 },
                         scale: {
@@ -250,7 +250,6 @@
                         }
                     }).data("kendoRadialGauge");
 
-                    // Create Ending Pressure Gauge
                     const endGauge = $(`#${endGaugeId}`).kendoRadialGauge({
                         pointer: { value: tank.EndingPressure || 0 },
                         scale: {
@@ -263,7 +262,7 @@
                         }
                     }).data("kendoRadialGauge");
 
-                    // Create Starting Pressure Slider
+                    // Create Sliders
                     $(`#${startSliderId}`).kendoSlider({
                         min: 0,
                         max: 5000,
@@ -271,8 +270,8 @@
                         largeStep: 1000,
                         value: tank.StartingPressure || 0,
                         showButtons: false,
-                        tooltip: { enabled: true },
                         //tickPlacement: "none",
+                        tooltip: { enabled: true },
                         slide: function (e) {
                             startGauge.value(e.value);
                             $(`#${startInputId}`).val(e.value);
@@ -283,16 +282,15 @@
                         }
                     });
 
-                    // Create Ending Pressure Slider
                     $(`#${endSliderId}`).kendoSlider({
                         min: 0,
                         max: 5000,
-                        smallStep: 100, 
+                        smallStep: 100,
                         largeStep: 1000,
                         value: tank.EndingPressure || 0,
                         showButtons: false,
-                        tooltip: { enabled: true },
                         //tickPlacement: "none",
+                        tooltip: { enabled: true },
                         slide: function (e) {
                             endGauge.value(e.value);
                             $(`#${endInputId}`).val(e.value);
@@ -303,7 +301,7 @@
                         }
                     });
 
-                    // Set initial hidden inputs
+                    // Initialize hidden inputs
                     $(`#${startInputId}`).val(tank.StartingPressure || 0);
                     $(`#${endInputId}`).val(tank.EndingPressure || 0);
                 });
