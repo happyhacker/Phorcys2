@@ -4,187 +4,280 @@
 @model Phorcys.Web.Models.DiveViewModel
 
 @{
-	ViewData["Title"] = "New Dive";
+    ViewData["Title"] = "New Dive";
 }
 
 <div class="placeholders mb-2">
-	<div class="row d-flex justify-content-start">
-	</div>
+    <div class="row d-flex justify-content-start">
+    </div>
 </div>
 
 <section class="jumbotron text-center">
-	<div class="container">
-		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
-		<p class="lead-text text-muted">@ViewBag.Message</p>
-	</div>
+    <div class="container">
+        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        <p class="lead-text text-muted">@ViewBag.Message</p>
+    </div>
 </section>
 
 <div class="pageMessage">
-	@Html.ValidationSummary()
+    @Html.ValidationSummary()
 </div>
 
 @using (Html.BeginForm("Create", "Dive", FormMethod.Post))
 {
-	@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-	<div class="pageMessage">
-		@Html.ValidationSummary(true, "Please correct the errors and try again.")
-	</div>
+    <div class="pageMessage">
+        @Html.ValidationSummary(true, "Please correct the errors and try again.")
+    </div>
 
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
 
-				<fieldset>
+                <fieldset>
 
-					<div>
-						<p>
-							<label for="Dive Plan">Dive Plan:</label>
-							<br />
-							@(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
-														.DataTextField("Text")
-														.DataValueField("Value")
-														.BindTo(Model.DivePlanList)
-														.OptionLabel("Select a Dive Plan")
-														.HtmlAttributes(new { @class = "form-control" })
-														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.DivePlanSelectedId)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="Dive Plan">Dive Plan:</label>
+                            <br />
 
-					<div>
-						<p>
-							<label for="Title">Title:</label>
-							<br />
-							@Html.Kendo().TextBoxFor(m => m.Title)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Title)
-							</div>
-						</p>
-					</div>
+                            @(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(Model.DivePlanList)
+                                .OptionLabel("Select a Dive Plan")
+                                .HtmlAttributes(new { @class = "form-control", id = "divePlanDropdown" })
+                                .Events(e => e.Change("onDivePlanChange"))
+                                )
 
-					<div>
-						<p>
-							<label for="DiveNumber">Dive #:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.DiveNumber).Min(1).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.DiveNumber)
-							</div>
-						</p>
-					</div>
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.DivePlanSelectedId)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="DescentTime">Descent Time:</label>
-							<br />
+                    <div>
+                        <p>
+                            <label for="Title">Title:</label>
+                            <br />
+                            @Html.Kendo().TextBoxFor(m => m.Title)
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Title)
+                            </div>
+                        </p>
+                    </div>
 
-							@(Html.Kendo().DateTimePicker()
-														.Name("DescentTime") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
-														.Value(DateTime.Today) // Sets the value of the DatePicker.
-														.HtmlAttributes(new { @style = "width: 300px;" })
-														)
-							@Html.ValidationMessageFor(m => m.DescentTime)
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="DiveNumber">Dive #:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.DiveNumber).Min(1).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.DiveNumber)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="Minutes">Minutes:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(1440).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Minutes)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="DescentTime">Descent Time:</label>
+                            <br />
 
-					<div>
-						<p>
-							<label for="AvgDepth">Average Depth:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(1000).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.AvgDepth)
-							</div>
-						</p>
-					</div>
+                            @(Html.Kendo().DateTimePicker()
+                                .Name("DescentTime") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+                                .Value(DateTime.Today) // Sets the value of the DatePicker.
+                                .HtmlAttributes(new { @style = "width: 300px;" })
+                                )
+                            @Html.ValidationMessageFor(m => m.DescentTime)
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="MaxDepth">Max Depth:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.MaxDepth)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="Minutes">Minutes:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(1440).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Minutes)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="Temperature">Temperature:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Temperature)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="AvgDepth">Average Depth:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(1000).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.AvgDepth)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="AdditionalWeight">Additional Weight:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.AdditionalWeight).Min(0).Max(600).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.AdditionalWeight)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="MaxDepth">Max Depth:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.MaxDepth)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="Notes">Notes:</label>
-							<br />
-							@(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
-							<br />
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Notes)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="Temperature">Temperature:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Temperature)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						@*<button type="submit" class="btn btn-primary">Save</button>
-						@Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })*@
+                    <div id="tankGaugesContainer" style="margin-bottom: 30px;" class="mb-5"></div>
+                   
+                    <div>
+                        <p>
+                            <label for="AdditionalWeight">Additional Weight:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.AdditionalWeight).Min(0).Max(600).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.AdditionalWeight)
+                            </div>
+                        </p>
+                    </div>
 
-						@(Html.Kendo().Button()
-													.Name("saveButton")
-													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
-													//.Icon("save")
-													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
-													.Content("Save")
-													)
+                    <div>
+                        <p>
+                            <label for="Notes">Notes:</label>
+                            <br />
+                            @(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
+                            <br />
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Notes)
+                            </div>
+                        </p>
+                    </div>
 
-						@(Html.Kendo().Button()
-													.Name("cancelButton")
-													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
-													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
-													.Content("Cancel")
-													)
-					</div>
+                    <div>
+                        @*<button type="submit" class="btn btn-primary">Save</button>
+                    @Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })*@
 
-				</fieldset>
+                        @(Html.Kendo().Button()
+                            .Name("saveButton")
+                            .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                            //.Icon("save")
+                            .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+                            .Content("Save")
+                            )
 
-			</div>
-		</div>
-	</div>
+                        @(Html.Kendo().Button()
+                            .Name("cancelButton")
+                            .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+                            .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+                            .Content("Cancel")
+                            )
+                    </div>
+
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
 }
 <script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "Dive")';
-	}
+    function redirectToIndex() {
+        window.location.href = '@Url.Action("Index", "Dive")';
+    }
+
+    // Make Ajax call to get the Tanks tied to the DivePlan selected
+
+    function onDivePlanChange(e) {
+        var divePlanId = $("#divePlanDropdown").val();
+        alert("id=" + divePlanId)
+        if (!divePlanId) return;
+
+        $.ajax({
+            url: '@Url.Action("GetTanksForPlan", "Dive")',
+            type: 'GET',
+            data: { divePlanId: divePlanId },
+            success: function (tanks) {
+                $("#tankGaugesContainer").empty();
+
+                tanks.forEach(function (tank, index) {
+                    const startGaugeId = `tankGaugeStart_${index}`;
+                    const endGaugeId = `tankGaugeEnd_${index}`;
+                    const startInputId = `tankStartPressure_${index}`;
+                    const endInputId = `tankEndPressure_${index}`;
+
+                    $("#tankGaugesContainer").append(`
+                <div style="margin-bottom: 50px;">
+                    <label><strong>${tank.GasContentTitle || "Tank"} (Gear ID: ${tank.GearId})</strong></label>
+
+                    <div style="display: flex; gap: 50px;">
+                        <div>
+                            <p>Starting Pressure</p>
+                            <div id="${startGaugeId}" class="k-radial-gauge" style="width:300px;height:300px;"></div>
+                            <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
+                        </div>
+                        <div>
+                            <p>Ending Pressure</p>
+                            <div id="${endGaugeId}" class="k-radial-gauge" style="width:300px;height:300px;"></div>
+                            <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
+                </div>
+                `);
+
+                    // Init Starting Pressure gauge
+                    $(`#${startGaugeId}`).kendoRadialGauge({
+                        pointer: { value: tank.StartingPressure || 0 },
+                        scale: {
+                            min: 0,
+                            max: 5000,
+                            minorUnit: 100,
+                            startAngle: -30,
+                            endAngle: 210
+                        }
+                    });
+
+                    // Init Ending Pressure gauge
+                    $(`#${endGaugeId}`).kendoRadialGauge({
+                        pointer: { value: tank.EndingPressure || 0 },
+                        scale: {
+                            min: 0,
+                            max: 5000,
+                            minorUnit: 100,
+                            startAngle: -30,
+                            endAngle: 210
+                        }
+                    });
+
+                    // Set initial hidden input values
+                    $(`#${startInputId}`).val(tank.StartingPressure || 0);
+                    $(`#${endInputId}`).val(tank.EndingPressure || 0);
+                });
+            },
+            error: function (err) {
+                console.error("Failed to load tanks", err);
+            }
+        });
+    }
+
+    // On form submit, capture gauge values
+    $("form").submit(function () {
+        $(".k-radial-gauge").each(function (i, el) {
+            const gauge = $(el).data("kendoRadialGauge");
+            if (gauge) {
+                const inputId = $(el).attr("id").includes("Start") ? `tankStartPressure_${i / 2}` : `tankEndPressure_${Math.floor(i / 2)}`;
+                $(`#${inputId}`).val(gauge.value());
+            }
+        });
+    });
 </script>
+

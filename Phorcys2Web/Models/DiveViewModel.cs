@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Phorcys.Data.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,8 @@ namespace Phorcys.Web.Models
 
 		[DisplayName("temperature")]
 		public int? Temperature { get; set; }
+
+		public List<TanksOnDiveDto> Tanks { get; set; }
 
 		[DisplayName("Additional Weight")]
 		public int? AdditionalWeight { get; set; }

@@ -161,6 +161,21 @@ public class DivePlanServices
 			throw;
 		}
 	}
+
+	public List<TanksOnDiveDto> GetTanksForDivePlan(int divePlanId)
+	{
+		return _context.TanksOnDives
+			.Where(t => t.DivePlanId == divePlanId)
+			.Select(t => new TanksOnDiveDto
+			{
+				GearId = t.GearId,
+				StartingPressure = t.StartingPressure,
+				EndingPressure = t.EndingPressure,
+				GasContentTitle = t.GasContentTitle
+			})
+			.ToList();
+	}
+
 	public void Delete(int id)
 	{
 		try
