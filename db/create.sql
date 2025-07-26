@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.4.0                     */
+/* Script generated with: DeZign for Databases 14.6.0                     */
 /* Target DBMS:           MS SQL Server 2022                              */
 /* Project file:          Phorcys2.dez                                    */
 /* Project name:          Phorcys2                                        */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2024-07-09 22:41                                */
+/* Created on:            2025-07-25 23:06                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -13,9 +13,15 @@
 /* Add tables                                                             */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Countries"                                              */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Countries] (
     [CountryCode] VARCHAR(2) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -29,6 +35,9 @@ GO
 /* Add table "dbo.Gases"                                                  */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[Gases] (
     [GasId] INTEGER IDENTITY(1,1) NOT NULL,
     [Name] VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -40,6 +49,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Services"                                               */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Services] (
     [ServiceId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -55,6 +67,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "AspNetRoles"                                                */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [AspNetRoles] (
     [Id] NVARCHAR(450) NOT NULL,
@@ -73,6 +88,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "AspNetUsers"                                                */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [AspNetUsers] (
     [Id] NVARCHAR(450) NOT NULL,
@@ -107,6 +125,9 @@ GO
 /* Add table "AspNetUserTokens"                                           */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [AspNetUserTokens] (
     [UserId] NVARCHAR(450) NOT NULL,
     [LoginProvider] NVARCHAR(128) NOT NULL,
@@ -120,6 +141,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "AspNetRoleClaims"                                           */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [AspNetRoleClaims] (
     [Id] INTEGER IDENTITY(1,1) NOT NULL,
@@ -139,6 +163,9 @@ GO
 /* Add table "AspNetUserClaims"                                           */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [AspNetUserClaims] (
     [Id] INTEGER IDENTITY(1,1) NOT NULL,
     [UserId] NVARCHAR(450) NOT NULL,
@@ -156,6 +183,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "AspNetUserLogins"                                           */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [AspNetUserLogins] (
     [LoginProvider] NVARCHAR(128) NOT NULL,
@@ -175,6 +205,9 @@ GO
 /* Add table "AspNetUserRoles"                                            */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [AspNetUserRoles] (
     [UserId] NVARCHAR(450) NOT NULL,
     [RoleId] NVARCHAR(450) NOT NULL,
@@ -190,6 +223,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "Users"                                                      */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [Users] (
     [UserId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -210,6 +246,9 @@ GO
 /* Add table "dbo.DiveLocations"                                          */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiveLocations] (
     [DiveLocationId] INTEGER IDENTITY(1,1) NOT NULL,
     [ContactId] INTEGER,
@@ -227,6 +266,9 @@ GO
 /* Add table "dbo.Friends"                                                */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[Friends] (
     [RequestorUserId] INTEGER NOT NULL,
     [RecipientUserId] INTEGER NOT NULL,
@@ -242,17 +284,22 @@ GO
 /* Add table "dbo.DiveSites"                                              */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiveSites] (
     [DiveSiteId] INTEGER IDENTITY(0,1) NOT NULL,
     [DiveLocationId] INTEGER,
     [Title] VARCHAR(40) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [IsFreshWater] BIT CONSTRAINT [DEF_DiveSites_IsFreshWater] DEFAULT 0 NOT NULL,
+    [MaxDepth] INTEGER,
     [GeoCode] VARCHAR(30) COLLATE SQL_Latin1_General_CP1_CI_AS,
+    [Latitude] DECIMAL(9,6),
+    [Longitude] DECIMAL(9,6),
     [Notes] VARCHAR(max) COLLATE SQL_Latin1_General_CP1_CI_AS,
     [UserId] INTEGER NOT NULL,
     [Created] DATETIME CONSTRAINT [DEF_DiveSites_Created] DEFAULT getdate() NOT NULL,
     [LastModified] DATETIME CONSTRAINT [DEF_DiveSites_LastModified] DEFAULT getdate() NOT NULL,
-    [MaxDepth] INTEGER,
     CONSTRAINT [PK_DiveSites] PRIMARY KEY CLUSTERED ([DiveSiteId])
 )
 GO
@@ -261,6 +308,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "DiveUrls"                                                   */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [DiveUrls] (
     [DiveUrlId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -277,10 +327,13 @@ GO
 /* Add table "dbo.Certifications"                                         */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[Certifications] (
     [CertificationId] INTEGER IDENTITY(1,1) NOT NULL,
     [DiveAgencyId] INTEGER,
-    [Title] VARCHAR(40) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    [Title] VARCHAR(60) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
     [Notes] VARCHAR(max) COLLATE SQL_Latin1_General_CP1_CI_AS,
     [UserId] INTEGER NOT NULL,
     [Created] DATETIME CONSTRAINT [DEF_Certifications_Created] DEFAULT getdate() NOT NULL,
@@ -293,6 +346,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "DiverCertifications"                                        */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [DiverCertifications] (
     [DiverCertificationId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -353,6 +409,9 @@ GO
 /* Add table "dbo.DiveSiteUrls"                                           */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiveSiteUrls] (
     [DiveSiteUrlId] INTEGER IDENTITY(1,1) NOT NULL,
     [DiveSiteId] INTEGER NOT NULL,
@@ -367,6 +426,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.GasMixes"                                               */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[GasMixes] (
     [DivePlanId] INTEGER NOT NULL,
@@ -412,6 +474,9 @@ GO
 /* Add table "Instructors"                                                */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [Instructors] (
     [InstructorId] INTEGER IDENTITY(1,1) NOT NULL,
     [ContactId] INTEGER NOT NULL,
@@ -441,6 +506,9 @@ GO
 /* Add table "Tanks"                                                      */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [Tanks] (
     [GearId] INTEGER NOT NULL,
     [Volume] INTEGER CONSTRAINT [DF__Tanks_TMP__Volum__282DF8C2] DEFAULT 0,
@@ -456,10 +524,13 @@ GO
 /* Add table "DivePlans"                                                  */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [DivePlans] (
     [DivePlanId] INTEGER IDENTITY(1,1) NOT NULL,
     [DiveSiteId] INTEGER,
-    [Title] VARCHAR(40) NOT NULL,
+    [Title] VARCHAR(60) NOT NULL,
     [Minutes] INTEGER,
     [ScheduledTime] DATETIME NOT NULL,
     [MaxDepth] INTEGER CONSTRAINT [DEF_DivePlans_MaxDepth] DEFAULT 0,
@@ -480,6 +551,9 @@ GO
 /* Add table "dbo.InsurancePolicies"                                      */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[InsurancePolicies] (
     [InsurancePolicyId] INTEGER IDENTITY(1,1) NOT NULL,
     [ContactId] INTEGER NOT NULL,
@@ -497,6 +571,9 @@ GO
 /* Add table "dbo.InsuredGear"                                            */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[InsuredGear] (
     [GearId] INTEGER NOT NULL,
     [InsurancePolicyId] INTEGER NOT NULL,
@@ -509,10 +586,13 @@ GO
 /* Add table "Dives"                                                      */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [Dives] (
     [DiveId] INTEGER IDENTITY(1,1) NOT NULL,
     [DivePlanId] INTEGER,
-    [Title] VARCHAR(40),
+    [Title] VARCHAR(60),
     [Minutes] INTEGER CONSTRAINT [DF__DiveDetai__Minut__31B762FC] DEFAULT 0,
     [DescentTime] DATETIME,
     [AvgDepth] INTEGER CONSTRAINT [DF__DiveDetai__AvgDe__32AB8735] DEFAULT 0,
@@ -520,7 +600,7 @@ CREATE TABLE [Dives] (
     [Temperature] INTEGER CONSTRAINT [DF__DiveDetai__Tempe__3493CFA7] DEFAULT 0,
     [AdditionalWeight] INTEGER CONSTRAINT [DF__DiveDetai__Addit__3587F3E0] DEFAULT 0,
     [Notes] VARCHAR(max) NOT NULL,
-    [DiveNumber] INTEGER NOT NULL,
+    [DiveNumber] INTEGER,
     [UserId] INTEGER,
     [Created] DATETIME CONSTRAINT [DEF_Dives_Created] DEFAULT getdate() NOT NULL,
     [LastModified] DATETIME CONSTRAINT [DEF_Dives_LastModified] DEFAULT getdate() NOT NULL,
@@ -532,6 +612,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Divers"                                                 */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Divers] (
     [DiverId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -547,6 +630,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Qualifications"                                         */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Qualifications] (
     [QualificationId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -564,6 +650,9 @@ GO
 /* Add table "dbo.DiverQualifications"                                    */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiverQualifications] (
     [DiverId] INTEGER NOT NULL,
     [QualificationId] INTEGER NOT NULL,
@@ -577,10 +666,13 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Add table "dbo.TanksOnDive"                                            */
+/* Add table "dbo.TanksOnDives"                                           */
 /* ---------------------------------------------------------------------- */
 
-CREATE TABLE [dbo].[TanksOnDive] (
+GO
+
+
+CREATE TABLE [dbo].[TanksOnDives] (
     [DivePlanId] INTEGER NOT NULL,
     [GearId] INTEGER NOT NULL,
     [GasContentTitle] VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS,
@@ -593,41 +685,44 @@ CREATE TABLE [dbo].[TanksOnDive] (
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', NULL, NULL
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', NULL, NULL
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'DivePlanId'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'DivePlanId'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'GearId'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'GearId'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'GasContentTitle'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'GasContentTitle'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'StartingPressure'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'StartingPressure'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'EndingPressure'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'EndingPressure'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'FillCost'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'FillCost'
 GO
 
 
-EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDive', 'COLUMN', N'FillDate'
+EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'FillDate'
 GO
 
 
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.DiveShops"                                              */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[DiveShops] (
     [DiveShopId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -642,6 +737,9 @@ GO
 /* Add table "DiveTeams"                                                  */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [DiveTeams] (
     [DivePlanId] INTEGER NOT NULL,
     [DiverId] INTEGER NOT NULL,
@@ -655,6 +753,9 @@ GO
 /* Add table "dbo.DiveShopServices"                                       */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiveShopServices] (
     [DiveShopId] INTEGER NOT NULL,
     [ServiceId] INTEGER NOT NULL,
@@ -667,6 +768,9 @@ GO
 /* Add table "dbo.DiverGear"                                              */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiverGear] (
     [DiverId] INTEGER NOT NULL,
     [GearId] INTEGER NOT NULL,
@@ -678,6 +782,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.DiveTypes"                                              */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[DiveTypes] (
     [DiveTypeId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -695,27 +802,30 @@ GO
 /* Add table "Contacts"                                                   */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [Contacts] (
     [ContactId] INTEGER IDENTITY(1,1) NOT NULL,
-    [Company] VARCHAR(40) NOT NULL,
-    [FirstName] VARCHAR(20) NOT NULL,
-    [LastName] VARCHAR(30) NOT NULL,
-    [Address1] VARCHAR(40) NOT NULL,
-    [Address2] VARCHAR(40) NOT NULL,
-    [City] VARCHAR(30) NOT NULL,
-    [State] VARCHAR(20) NOT NULL,
-    [PostalCode] VARCHAR(20) NOT NULL,
+    [Company] VARCHAR(40),
+    [FirstName] VARCHAR(20),
+    [LastName] VARCHAR(30),
+    [Address1] VARCHAR(40),
+    [Address2] VARCHAR(40),
+    [City] VARCHAR(30),
+    [State] VARCHAR(20),
+    [PostalCode] VARCHAR(20),
     [CountryCode] VARCHAR(2),
-    [Email] VARCHAR(50) NOT NULL,
-    [CellPhone] VARCHAR(20) NOT NULL,
-    [HomePhone] VARCHAR(20) NOT NULL,
-    [WorkPhone] VARCHAR(20) NOT NULL,
+    [Email] VARCHAR(50),
+    [CellPhone] VARCHAR(20),
+    [HomePhone] VARCHAR(20),
+    [WorkPhone] VARCHAR(20),
     [Birthday] DATE,
-    [Gender] CHAR(1) NOT NULL,
+    [Gender] CHAR(1),
     [Notes] VARCHAR(max),
-    [UserId] INTEGER NOT NULL,
-    [Created] DATETIME CONSTRAINT [DEF_Contacts_Created] DEFAULT getdate() NOT NULL,
-    [LastModified] DATETIME CONSTRAINT [DEF_Contacts_LastModified] DEFAULT getdate() NOT NULL,
+    [UserId] INTEGER,
+    [Created] DATETIME CONSTRAINT [DEF_Contacts_Created] DEFAULT getdate(),
+    [LastModified] DATETIME CONSTRAINT [DEF_Contacts_LastModified] DEFAULT getdate(),
     CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED ([ContactId])
 )
 GO
@@ -724,6 +834,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.DiveShopStaff"                                          */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[DiveShopStaff] (
     [ContactId] INTEGER NOT NULL,
@@ -734,10 +847,13 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Add table "dbo.GearOnDive"                                             */
+/* Add table "dbo.DivePlanGear"                                           */
 /* ---------------------------------------------------------------------- */
 
-CREATE TABLE [dbo].[GearOnDive] (
+GO
+
+
+CREATE TABLE [dbo].[DivePlanGear] (
     [GearId] INTEGER NOT NULL,
     [DivePlanId] INTEGER NOT NULL,
     CONSTRAINT [PK_GearOnDive] PRIMARY KEY CLUSTERED ([GearId], [DivePlanId])
@@ -748,6 +864,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "Gear"                                                       */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [Gear] (
     [GearId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -773,6 +892,9 @@ GO
 /* Add table "dbo.DivePlansDiveTypes"                                     */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DivePlansDiveTypes] (
     [DiveTypeId] INTEGER NOT NULL,
     [DivePlanId] INTEGER NOT NULL,
@@ -785,6 +907,9 @@ GO
 /* Add table "CertificationInstructors"                                   */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [CertificationInstructors] (
     [InstructorId] INTEGER NOT NULL,
     [CertificationId] INTEGER NOT NULL,
@@ -796,6 +921,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.ServiceSchedules"                                       */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[ServiceSchedules] (
     [ServiceScheduleId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -812,6 +940,9 @@ GO
 /* Add table "dbo.DiveAgencies"                                           */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[DiveAgencies] (
     [DiveAgencyId] INTEGER IDENTITY(1,1) NOT NULL,
     [ContactId] INTEGER NOT NULL,
@@ -825,6 +956,9 @@ GO
 /* Add table "dbo.Manufacturers"                                          */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[Manufacturers] (
     [ManufacturerId] INTEGER IDENTITY(1,1) NOT NULL,
     [ContactId] INTEGER NOT NULL,
@@ -836,6 +970,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Roles"                                                  */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Roles] (
     [RoleId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -850,6 +987,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.GearServiceEvents"                                      */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[GearServiceEvents] (
     [GearServiceEventsId] INTEGER NOT NULL,
@@ -867,6 +1007,9 @@ GO
 /* Add table "dbo.SoldGear"                                               */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[SoldGear] (
     [GearId] INTEGER NOT NULL,
     [SoldToContactId] INTEGER,
@@ -881,6 +1024,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add table "dbo.Attributes"                                             */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE TABLE [dbo].[Attributes] (
     [AttributeId] INTEGER IDENTITY(1,1) NOT NULL,
@@ -899,6 +1045,9 @@ GO
 /* Add table "dbo.AttributeAssociations"                                  */
 /* ---------------------------------------------------------------------- */
 
+GO
+
+
 CREATE TABLE [dbo].[AttributeAssociations] (
     [AttributeId] INTEGER NOT NULL,
     [TableRowId] INTEGER NOT NULL,
@@ -912,6 +1061,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add foreign key constraints                                            */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 ALTER TABLE [Users] ADD CONSTRAINT [Contacts_Users] 
     FOREIGN KEY ([ContactId]) REFERENCES [Contacts] ([ContactId])
@@ -989,7 +1141,7 @@ GO
 
 
 ALTER TABLE [dbo].[GasMixes] ADD CONSTRAINT [TanksOnDive_GasMixes] 
-    FOREIGN KEY ([DivePlanId], [GearId]) REFERENCES [dbo].[TanksOnDive] ([DivePlanId],[GearId])
+    FOREIGN KEY ([DivePlanId], [GearId]) REFERENCES [dbo].[TanksOnDives] ([DivePlanId],[GearId])
 GO
 
 
@@ -1063,12 +1215,12 @@ ALTER TABLE [dbo].[DiverQualifications] ADD CONSTRAINT [Divers_DiverQualificatio
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDive] ADD CONSTRAINT [DivePlans_TanksOnDive] 
+ALTER TABLE [dbo].[TanksOnDives] ADD CONSTRAINT [DivePlans_TanksOnDive] 
     FOREIGN KEY ([DivePlanId]) REFERENCES [DivePlans] ([DivePlanId])
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDive] ADD CONSTRAINT [Tanks_TanksOnDive] 
+ALTER TABLE [dbo].[TanksOnDives] ADD CONSTRAINT [Tanks_TanksOnDive] 
     FOREIGN KEY ([GearId]) REFERENCES [Tanks] ([GearId])
 GO
 
@@ -1138,12 +1290,12 @@ ALTER TABLE [dbo].[DiveShopStaff] ADD CONSTRAINT [DiveShops_DiveShopStaff]
 GO
 
 
-ALTER TABLE [dbo].[GearOnDive] ADD CONSTRAINT [DivePlans_GearOnDive] 
+ALTER TABLE [dbo].[DivePlanGear] ADD CONSTRAINT [DivePlans_DivePlanGear] 
     FOREIGN KEY ([DivePlanId]) REFERENCES [DivePlans] ([DivePlanId])
 GO
 
 
-ALTER TABLE [dbo].[GearOnDive] ADD CONSTRAINT [Gear_GearOnDive] 
+ALTER TABLE [dbo].[DivePlanGear] ADD CONSTRAINT [Gear_GearOnDive] 
     FOREIGN KEY ([GearId]) REFERENCES [Gear] ([GearId])
 GO
 
@@ -1262,19 +1414,6 @@ GO
 /* Add views                                                              */
 /* ---------------------------------------------------------------------- */
 
-CREATE VIEW [vwCertifications]
-AS
-SELECT certs.CertificationId, certs.Title, divers.DiverId, agency.Company AS Agency, dc.Certified, dc.CertificationNum, diverContact.FirstName AS DiverFirstName, diverContact.LastName AS DiverLastName, instructor.FirstName AS InstructorFirstName,
-         instructor.LastName AS InstructorLastName
-FROM  dbo.Certifications AS certs INNER JOIN
-         dbo.DiverCertifications AS dc ON dc.CertificationId = certs.CertificationId INNER JOIN
-         dbo.Users AS u ON u.UserId = dc.DiverId INNER JOIN
-         dbo.Divers AS divers ON divers.DiverId = dc.DiverId INNER JOIN
-         dbo.Contacts AS diverContact ON diverContact.ContactId = divers.ContactId LEFT OUTER JOIN
-         dbo.Instructors ON dbo.Instructors.InstructorId = dc.InstructorId LEFT OUTER JOIN
-         dbo.Contacts AS instructor ON instructor.ContactId = dbo.Instructors.ContactId INNER JOIN
-         dbo.DiveAgencies AS da ON da.DiveAgencyId = certs.DiveAgencyId INNER JOIN
-         dbo.Contacts AS agency ON agency.ContactId = da.ContactId
 GO
 
 
@@ -1294,13 +1433,10 @@ GO
 
 
 CREATE VIEW [vwInstructors] AS (
-SELECT i.InstructorId, c.FirstName, c.LastName, c.CountryCode, c.Email, dac.Company AS 'Agency', ai.InstructorAgencyId
-FROM Instructors AS i LEFT JOIN
-	 Contacts AS c ON i.ContactId = c.ContactId LEFT JOIN
-	 AgencyInstructors ai ON ai.InstructorId = i.InstructorId LEFT JOIN
-     DiveAgencies AS da ON da.DiveAgencyId = ai.DiveAgencyId LEFT JOIN
-     Contacts AS dac ON da.ContactId = dac.ContactId
-	 )
+SELECT i.InstructorId, c.FirstName, c.LastName, c.CountryCode, c.Email
+FROM  dbo.Instructors AS i LEFT OUTER JOIN
+         dbo.Contacts AS c ON i.ContactId = c.ContactId
+)
 GO
 
 
@@ -1324,6 +1460,54 @@ LEFT JOIN Tanks t on t.GearId = g.GearId
 GO
 
 
+/* ---------------------------------------------------------------------- */
+/* Repair/add views                                                       */
+/* ---------------------------------------------------------------------- */
+
+CREATE VIEW [vwMyCertifications] AS (
+SELECT dc.DiverCertificationId, certs.CertificationId, certs.Title, divers.DiverId, u.UserId, agency.Company AS Agency, dc.Certified, dc.CertificationNum,
+         Contacts.FirstName AS DiverFirstName, Contacts.LastName AS DiverLastName, instructor.FirstName AS InstructorFirstName,
+         instructor.LastName AS InstructorLastName, dc.Notes, dc.Created, dc.LastModified
+FROM  dbo.Certifications AS certs INNER JOIN
+         dbo.DiverCertifications AS dc ON dc.CertificationId = certs.CertificationId INNER JOIN
+         dbo.Divers AS divers ON divers.DiverId = dc.DiverId INNER JOIN
+         dbo.Contacts AS Contacts ON Contacts.ContactId = divers.ContactId LEFT OUTER JOIN
+         dbo.Users AS u ON u.UserId = Contacts.UserId LEFT OUTER JOIN
+		 dbo.Instructors ON dbo.Instructors.InstructorId = dc.InstructorId LEFT OUTER JOIN
+         dbo.Contacts AS instructor ON instructor.ContactId = dbo.Instructors.ContactId INNER JOIN
+         dbo.DiveAgencies AS da ON da.DiveAgencyId = certs.DiveAgencyId INNER JOIN
+         dbo.Contacts AS agency ON agency.ContactId = da.ContactId
+)
+GO
+
+
+CREATE VIEW [vwDives] AS (
+SELECT dp.DivePlanId, dp.Title, dp.Notes, dt.Title AS 'DiveType' FROM DivePlans dp
+JOIN DivePlansDiveTypes oe ON oe.DivePlanId = dp.DivePlanId
+JOIN DiveTypes dt ON dt.DiveTypeId = oe.DiveTypeId
+)
+GO
+
+
+CREATE VIEW [vwDiveTeams] AS (
+SELECT dp.ScheduledTime, dp.Title, c.FirstName, c.LastName
+FROM DivePlans dp
+JOIN DiveTeams dt ON dt.DivePlanId = dp.DivePlanId
+JOIN Divers d ON d.DiverId = dt.DiverId
+JOIN Contacts c ON c.ContactId = d.ContactId
+)
+GO
+
+
+CREATE VIEW [vwCertifications] AS (
+SELECT Company AS 'Agency',Title, c.Notes
+FROM Certifications c
+JOIN DiveAgencies DA ON c.DiveAgencyId = DA.DiveAgencyId
+JOIN Contacts Co ON DA.ContactId = Co.ContactId
+)
+GO
+
+
 CREATE VIEW [dbo].[vwDiveShops] AS (
   SELECT c.*, ds.Notes AS ShopNotes
   FROM DiveShops ds JOIN Contacts c ON c.ContactId = ds.ContactId
@@ -1341,6 +1525,9 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add procedures                                                         */
 /* ---------------------------------------------------------------------- */
+
+GO
+
 
 CREATE PROCEDURE [CreateUserLink]
     @UserName NVARCHAR(256),
@@ -1372,6 +1559,26 @@ GO
 /* ---------------------------------------------------------------------- */
 /* Add triggers                                                           */
 /* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Repair/add triggers                                                    */
+/* ---------------------------------------------------------------------- */
+
+CREATE TRIGGER [trgAfterInsertUsers]
+ON Users
+AFTER INSERT
+AS
+BEGIN
+    -- Insert into Contacts table
+    INSERT INTO Contacts (UserId, Email)
+    SELECT inserted.UserId, inserted.LoginId
+    FROM inserted;
+END
+GO
+
 
 CREATE TRIGGER [trg_AfterInsert_AspNetUsers]
 ON AspNetUsers

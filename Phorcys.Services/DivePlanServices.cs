@@ -165,14 +165,17 @@ public class DivePlanServices
 	public List<TanksOnDiveDto> GetTanksForDivePlan(int divePlanId)
 	{
 		return _context.TanksOnDives
+			.Include(t => t.Tank)
+			.ThenInclude(t => t.Gear)
 			.Where(t => t.DivePlanId == divePlanId)
 			.Select(t => new TanksOnDiveDto
 			{
 				GearId = t.GearId,
 				StartingPressure = t.StartingPressure,
 				EndingPressure = t.EndingPressure,
-				GasContentTitle = t.GasContentTitle
-			})
+				GasContentTitle = t.GasContentTitle,
+                GearTitle = t.Tank.Gear.Title
+            })
 			.ToList();
 	}
 
