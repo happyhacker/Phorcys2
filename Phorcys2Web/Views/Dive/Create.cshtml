@@ -218,17 +218,17 @@
                         <div class="mb-5">
                         <div class="text-center">
                             <label><strong>${tank.GearTitle || "Tank"}</strong></label>
-                            <div class="row">
-                                <div class="col-md-6 col-12 d-flex flex-column align-items-center">
+                            <div class="row flex-wrap justify-content-center gx-4">
+                                <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
                                     <p>Starting Pressure</p>
                                     <div id="${startGaugeId}" style="width:200px;height:200px;"></div>
-                                    <div id="${startSliderId}" style="width:250px;margin-top:10px;"></div>
+                                    <div id="${startSliderId}" style="width:200px;margin-top:10px;"></div>
                                     <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
                                 </div>
-                                <div class="col-md-6 col-12 d-flex flex-column align-items-center">
+                                <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
                                     <p>Ending Pressure</p>
                                     <div id="${endGaugeId}" style="width:200px;height:200px;"></div>
-                                    <div id="${endSliderId}" style="width:250px;margin-top:10px;"></div>
+                                    <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
                                     <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
                                 </div>
                             </div>
