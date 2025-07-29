@@ -193,8 +193,38 @@
         window.location.href = '@Url.Action("Index", "Dive")';
     }
 
-    // Make Ajax call to get the Tanks tied to the DivePlan selected
+    // Function to detect if dark mode is active
+    function isDarkMode() {
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
 
+    // Function to get scale configuration based on theme
+    function getScaleConfig() {
+        const isBlackBackground = isDarkMode();
+
+        return {
+            min: 0,
+            max: 5000,
+            minorUnit: 100,
+            majorUnit: 1000,
+            startAngle: -30,
+            endAngle: 210,
+            // Configure tick marks and labels for dark mode
+            minorTicks: {
+                visible: true,
+                color: isBlackBackground ? "#cccccc" : "#333333"  // Light gray for dark mode
+            },
+            majorTicks: {
+                visible: true,
+                color: isBlackBackground ? "#ffffff" : "#000000"  // White for dark mode
+            },
+            labels: {
+                color: isBlackBackground ? "#ffffff" : "#000000"  // White text for dark mode
+            }
+        };
+    }
+
+    // Make Ajax call to get the Tanks tied to the DivePlan selected
     function onDivePlanChange(e) {
         var divePlanId = $("#divePlanDropdown").val();
         if (!divePlanId) return;
@@ -215,51 +245,37 @@
                     const endInputId = `tankEndPressure_${index}`;
 
                     $("#tankGaugesContainer").append(`
-                        <div class="mb-5">
-                        <div class="text-center">
-                            <label><strong>${tank.GearTitle || "Tank"}</strong></label>
-                            <div class="row flex-wrap justify-content-center gx-4">
-                                <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
-                                    <p>Starting Pressure</p>
-                                    <div id="${startGaugeId}" style="width:200px;height:200px;"></div>
-                                    <div id="${startSliderId}" style="width:200px;margin-top:10px;"></div>
-                                    <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
+                            <div class="mb-5">
+                            <div class="text-center">
+                                <label><strong>${tank.GearTitle || "Tank"}</strong></label>
+                                <div class="row flex-wrap justify-content-center gx-4">
+                                    <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
+                                        <p>Starting Pressure</p>
+                                        <div id="${startGaugeId}" style="width:200px;height:200px;"></div>
+                                        <div id="${startSliderId}" style="width:200px;margin-top:10px;"></div>
+                                        <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
+                                    </div>
+                                    <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
+                                        <p>Ending Pressure</p>
+                                        <div id="${endGaugeId}" style="width:200px;height:200px;"></div>
+                                        <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
+                                        <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
+                                    </div>
                                 </div>
-                                <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
-                                    <p>Ending Pressure</p>
-                                    <div id="${endGaugeId}" style="width:200px;height:200px;"></div>
-                                    <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
-                                    <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
-                                </div>
+                                <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
+                                <input type="hidden" name="Tanks[${index}].GasContentTitle" value="${tank.GasContentTitle || ''}" />
                             </div>
-                            <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
-                            <input type="hidden" name="Tanks[${index}].GasContentTitle" value="${tank.GasContentTitle || ''}" />
-                        </div>
-                    </div>                        `);
+                        </div>                        `);
 
-                    // Create Gauges
+                    // Create Gauges with dark mode support
                     const startGauge = $(`#${startGaugeId}`).kendoRadialGauge({
                         pointer: { value: tank.StartingPressure || 0 },
-                        scale: {
-                            min: 0,
-                            max: 5000,
-                            minorUnit: 100,
-                            majorUnit: 1000,
-                            startAngle: -30,
-                            endAngle: 210
-                        }
+                        scale: getScaleConfig()
                     }).data("kendoRadialGauge");
 
                     const endGauge = $(`#${endGaugeId}`).kendoRadialGauge({
                         pointer: { value: tank.EndingPressure || 0 },
-                        scale: {
-                            min: 0,
-                            max: 5000,
-                            minorUnit: 100,
-                            majorUnit: 1000,
-                            startAngle: -30,
-                            endAngle: 210
-                        }
+                        scale: getScaleConfig()
                     }).data("kendoRadialGauge");
 
                     // Create Sliders
@@ -311,5 +327,13 @@
             }
         });
     }
-</script>
 
+    // Optional: Listen for system theme changes and update existing gauges
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+            // If you want to update gauges when user changes system theme
+            // while the page is open, you could call onDivePlanChange() here
+            // to recreate the gauges with the new theme
+        });
+    }
+</script>

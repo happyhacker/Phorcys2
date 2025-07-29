@@ -45,14 +45,21 @@ namespace Phorcys.Services
 			return dive;
 		}
 
-		public void SaveNewDive(Dive dive)
+		public void SaveNewDive(Dive dive, List<TanksOnDiveDto> tanks = null)
 		{
 			try
 			{
 				_context.Dives.Add(dive);
 				_context.SaveChanges();
-			}
-			catch (SqlException ex)
+
+                if (tanks != null && tanks.Any() && dive.DivePlanId.HasValue)
+                {
+                    SaveTankPressures(dive.DivePlanId.Value, tanks);
+                }
+                _logger.LogInformation("Successfully logged new dive");
+
+            }
+            catch (SqlException ex)
 			{
 				_logger.LogError(ex, "Error occurred while saving a new dive");
 			}
@@ -86,7 +93,39 @@ namespace Phorcys.Services
 			}
 		}
 
-		public void Delete(int id)
+        private void SaveTankPressures(int divePlanId, List<TanksOnDiveDto> tanks)
+        {
+            try
+            {
+                // Get existing TanksOnDive records for this dive plan
+                var existingTanks = _context.TanksOnDives
+                    .Where(t => t.DivePlanId == divePlanId)
+                    .ToList();
+
+                // Update pressure data for each tank
+                foreach (var tankDto in tanks)
+                {
+                    var existingTank = existingTanks.FirstOrDefault(t => t.GearId == tankDto.GearId);
+                    if (existingTank != null)
+                    {
+                        existingTank.StartingPressure = tankDto.StartingPressure;
+                        existingTank.EndingPressure = tankDto.EndingPressure;
+                        existingTank.GasContentTitle = tankDto.GasContentTitle;
+                    }
+                }
+
+                _context.SaveChanges();
+                _logger.LogInformation("Successfully saved tank pressures for dive plan {DivePlanId}", divePlanId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving tank pressures for dive plan {DivePlanId}", divePlanId);
+                throw;
+            }
+        }
+
+
+        public void Delete(int id)
 		{
 			try
 			{

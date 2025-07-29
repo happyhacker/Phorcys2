@@ -107,7 +107,7 @@ namespace Phorcys2Web.Controllers
 				dive.LastModified = DateTime.Now;
 				dive.UserId = _userServices.GetUserId();
 				dive.DivePlanId = model.DivePlanSelectedId;
-				_diveServices.SaveNewDive(dive);
+				_diveServices.SaveNewDive(dive, model.Tanks);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
 				return RedirectToAction("Index");
 			}
