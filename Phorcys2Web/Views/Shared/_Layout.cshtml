@@ -5,44 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Phorcys 2.0</title>
 
-    @*@<div class="rightColumn">*@
-    <div id="logindisplay" align="right">
-        @{
-            Html.RenderPartial("LogOnUserControl");
-        }
-    </div>
-    @*</div>*@
-
-    @*Favorite Icon for browser tab*@
+    <!-- Favicons -->
     <link rel="icon" sizes="16x16" href="/icons/DiveFlag16.png">
     <link rel="icon" sizes="32x32" href="/icons/DiveFlag32.png">
     <link rel="icon" sizes="48x48" href="/icons/DiveFlag48.png">
 
-    @*<environment names="Development">*@
+    <!-- Bootstrap and Site Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Phorcys.css" />
 
-    @*</environment>*@
-    @*<environment names="Staging,Production">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-    asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
-    asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    @*</environment>*@
-    @*Core Content Start*@
+    <!-- Telerik Kendo UI Theme -->
+    <link href="~/lib/kendo-ui/styles/classic-main.css" id="telerikThemeLink" rel="stylesheet" type="text/css" />
 
-    <link href="@Url.Content("~/lib/kendo-ui/styles/classic-main.css")" id="telerikThemeLink" rel="stylesheet" type="text/css" />
-    @*<link href="~/lib/kendo-ui/styles/classic-main.css" id="telerikThemeLink" rel="stylesheet">*@
-    <script src="@Url.Content("~/lib/jquery/jquery.min.js")"></script>
-    <script src="@Url.Content("~/lib/kendo-ui/js/jszip.min.js")"></script>
-    <script src="@Url.Content("~/lib/kendo-ui/js/kendo.all.min.js")"></script>
-    <script src="@Url.Content("~/lib/kendo-ui/js/kendo.aspnetmvc.min.js")"></script>
-    @*Core Content End*@
+    <!-- Scripts (non-deferred) -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/kendo-ui/js/jszip.min.js"></script>
+    <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+    <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
 </head>
 <body class="k-content">
+
+    <!-- Navbar -->
     <nav>
-        @*class="navbar navbar-dark bg-dark">*@
         <div class="container-fluid d-flex justify-content-between p-0">
             <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">Phorcys 2.0</a>
 
@@ -51,6 +36,15 @@
             </button>
         </div>
     </nav>
+
+    <!-- Logged-in User Display -->
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end align-items-center mt-2 me-3" id="logindisplay">
+            @Html.Partial("LogOnUserControl")
+        </div>
+    </div>
+
+    <!-- Responsive Menu -->
     <div id="responsive-panel" class="navbar navbar-dark bg-light mb-4">
         <kendo-responsivepanel name="responsive-panel" auto-close="false" breakpoint="768" orientation="top">
             @(
@@ -59,56 +53,50 @@
                 .Items(items =>
                 {
                     items.Add().Text("Home").Action("Index", "Home", new { area = "" });
-                    items.Add().Text("Gear")
-                    .Items(item =>
-                    {
-                        item.Add().Text("Add Gear").Action("Create", "Gear");
-                        item.Add().Text("Display Gear").Action("Index", "Gear");
-                    }
-                    );
 
-                    items.Add().Text("Locations")
-                    .Items(item =>
+                    items.Add().Text("Gear").Items(child =>
                     {
-                        item.Add().Text("Add a Location").Action("Create", "Location");
-                        item.Add().Text("Display Locations").Action("Index", "Location");
-                        item.Add().Text("Add a Site").Action("Create", "Site");
-                        item.Add().Text("Display Sites").Action("Index", "Site");
-                        item.Add().Text("Show Map").Action("Map", "Site");
+                        child.Add().Text("Add Gear").Action("Create", "Gear");
+                        child.Add().Text("Display Gear").Action("Index", "Gear");
                     });
 
-                    items.Add().Text("Dives")
-                    .Items(item =>
+                    items.Add().Text("Locations").Items(child =>
                     {
-                        /*item.Add().Text("Dive Types").Action("Index", "DiveType");*/
-                        item.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
-                        item.Add().Text("Display Dive Plans").Action("Index", "DivePlan");
-                        item.Add().Text("Log Dive").Action("Create", "Dive");
-                        item.Add().Text("Display Dives").Action("Index", "Dive");
+                        child.Add().Text("Add a Location").Action("Create", "Location");
+                        child.Add().Text("Display Locations").Action("Index", "Location");
+                        child.Add().Text("Add a Site").Action("Create", "Site");
+                        child.Add().Text("Display Sites").Action("Index", "Site");
+                        child.Add().Text("Show Map").Action("Map", "Site");
                     });
 
-                    items.Add().Text("Certifications")
-                    .Items(item =>
+                    items.Add().Text("Dives").Items(child =>
                     {
-                        item.Add().Text("Agency Certifications").Action("ComingSoon", "Home");
-                        item.Add().Text("My Certifications").Action("Index", "MyCertification");
+                        child.Add().Text("Create Dive Plan").Action("Create", "DivePlan");
+                        child.Add().Text("Display Dive Plans").Action("Index", "DivePlan");
+                        child.Add().Text("Log Dive").Action("Create", "Dive");
+                        child.Add().Text("Display Dives").Action("Index", "Dive");
                     });
 
-                    items.Add().Text("Contacts")
-                    .Items(items =>
+                    items.Add().Text("Certifications").Items(child =>
                     {
-                        items.Add().Text("Add Contact").Action("Create", "Contact");
-                        items.Add().Text("Display Contacts").Action("Index", "Contact");
+                        child.Add().Text("Agency Certifications").Action("ComingSoon", "Home");
+                        child.Add().Text("My Certifications").Action("Index", "MyCertification");
                     });
 
-                    items.Add().Text("Calculators")
-                    .Items(item =>
+                    items.Add().Text("Contacts").Items(child =>
                     {
-                        item.Add().Text("MOD & END").Action("Index", "ModEnd");
-                        item.Add().Text("END").Action("Index", "End");
+                        child.Add().Text("Add Contact").Action("Create", "Contact");
+                        child.Add().Text("Display Contacts").Action("Index", "Contact");
                     });
 
-                    items.Add().Text("About").Action("About", "Home", new { area = "" });
+                    items.Add().Text("Calculators").Items(child =>
+                    {
+                        child.Add().Text("MOD & END").Action("Index", "ModEnd");
+                        child.Add().Text("END").Action("Index", "End");
+                    });
+
+                    items.Add().Text("About").Action("About", "Home");
+
                     if (User.Identity.IsAuthenticated)
                     {
                         items.Add().Text("Logout").Url("/Identity/Account/Logout");
@@ -117,38 +105,28 @@
                     {
                         items.Add().Text("Login").Url("/Identity/Account/Login");
                     }
-                }
-                )
+                })
                 )
         </kendo-responsivepanel>
     </div>
 
+    <!-- Main Content -->
     <main>
         <div class="container-fluid">
             @RenderBody()
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="footer text-center d-flex align-items-center">
         <div class="container-fluid">
             <p class="text-muted">
-                <!--Copyright © @DateTime.Now.Year Hacksoft. All rights reserved. -->
+                <!-- Optional footer text -->
             </p>
         </div>
-
     </footer>
 
-    @*<div class="d-flex align-items-center bg-dark">
-    <table width="100%">
-    <tr>
-    <td align="left"> <img src="@(Href("~/images/larry_peacock2009.jpg"))" alt="Larry Hack, Peacock Springs" /></td>
-    <td align="left"> <img src="@(Href("~/images/JugHoleLarry.jpg"))" alt="Larry Hack, Jug Hole" /></td>
-    <td align="right"><img src="@(Href("~/images/LarryJB2009.jpg"))" alt="Larry Hack, Jackson Blue" /></td>
-    </tr>
-    </table>
-    </div>*@
-
-
+    <!-- Bootstrap Scripts -->
     <environment names="Development">
         <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
@@ -161,34 +139,22 @@
     @RenderSection("scripts", required: false)
 
     <script>
-
         $(document).ready(function () {
-            kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" })
+            kendo.ui.icon($(".menu"), { icon: "menu", type: "svg" });
         });
 
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-            // Logic to load dark theme
-            document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main-dark.css';
-        } else {
-            // Logic to load light theme
-            document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main.css';
-        }
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const themeLink = document.getElementById('telerikThemeLink');
 
-        // Add listener for changes in OS theme preference
+        themeLink.href = prefersDark
+            ? '/lib/kendo-ui/styles/classic-main-dark.css'
+            : '/lib/kendo-ui/styles/classic-main.css';
 
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                // User switched to dark theme
-                document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main-dark.css';
-            } else {
-                // User switched to light theme
-                document.getElementById('telerikThemeLink').href = '/lib/kendo-ui/styles/classic-main.css';
-            }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            themeLink.href = e.matches
+                ? '/lib/kendo-ui/styles/classic-main-dark.css'
+                : '/lib/kendo-ui/styles/classic-main.css';
         });
-
-
     </script>
-
 </body>
 </html>
