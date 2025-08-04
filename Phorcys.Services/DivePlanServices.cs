@@ -174,6 +174,8 @@ public class DivePlanServices
 				StartingPressure = t.StartingPressure,
 				EndingPressure = t.EndingPressure,
 				GasContentTitle = t.GasContentTitle,
+                OxygenPercent = t.OxygenPercent,
+                HeliumPercent = t.HeliumPercent,
                 GearTitle = t.Tank.Gear.Title
             })
 			.ToList();

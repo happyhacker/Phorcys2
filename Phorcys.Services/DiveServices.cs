@@ -110,6 +110,8 @@ namespace Phorcys.Services
                     {
                         existingTank.StartingPressure = tankDto.StartingPressure;
                         existingTank.EndingPressure = tankDto.EndingPressure;
+                        existingTank.OxygenPercent = tankDto.OxygenPercent;
+                        existingTank.HeliumPercent = tankDto.HeliumPercent;
                         existingTank.GasContentTitle = tankDto.GasContentTitle;
                     }
                 }

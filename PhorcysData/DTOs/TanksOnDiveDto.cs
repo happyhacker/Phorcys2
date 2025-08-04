@@ -13,5 +13,7 @@ public class TanksOnDiveDto
     public int? StartingPressure { get; set; }
 	public int? EndingPressure { get; set; }
 	public string? GasContentTitle { get; set; }
+    public int? OxygenPercent { get; set; }
+    public int? HeliumPercent { get; set; }
 }
 

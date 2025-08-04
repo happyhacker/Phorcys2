@@ -163,8 +163,6 @@
                     </div>
 
                     <div>
-                        @*<button type="submit" class="btn btn-primary">Save</button>
-                    @Html.ActionLink("Cancel", "Index", "Dive", null, new { @class = "btn btn-danger" })*@
 
                         @(Html.Kendo().Button()
                             .Name("saveButton")
@@ -245,27 +243,58 @@
                     const endInputId = `tankEndPressure_${index}`;
 
                     $("#tankGaugesContainer").append(`
-                            <div class="mb-5">
-                            <div class="text-center">
-                                <label><strong>${tank.GearTitle || "Tank"}</strong></label>
-                                <div class="row flex-wrap justify-content-center gx-4">
-                                    <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
-                                        <p>Starting Pressure</p>
-                                        <div id="${startGaugeId}" style="width:200px;height:200px;"></div>
-                                        <div id="${startSliderId}" style="width:200px;margin-top:10px;"></div>
-                                        <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
+                                <div class="mb-5">
+                                <div class="text-center">
+                                    <label><strong>${tank.GearTitle || "Tank"}</strong></label>
+                                    <div class="row flex-wrap justify-content-center gx-4">
+                                        <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
+                                            <p>Starting Pressure</p>
+                                            <div id="${startGaugeId}" style="width:200px;height:200px;"></div>
+                                            <div id="${startSliderId}" style="width:200px;margin-top:10px;"></div>
+                                            <input type="hidden" id="${startInputId}" name="Tanks[${index}].StartingPressure" />
+
+                                            <!-- Gas Content Inputs Below Starting Pressure Gauge -->
+                                            <div class="mt-3" style="width: 200px;">
+                                                <div class="mb-2">
+                                                    <label for="gasContent_${index}" class="form-label small">Gas Content:</label>
+                                                    <input type="text" class="form-control form-control-sm" id="gasContent_${index}"
+                                                           name="Tanks[${index}].GasContentTitle"
+                                                           value="${tank.GasContentTitle || 'Air'}"
+                                                           placeholder="Air, Nitrox, Trimix" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label for="oxygen_${index}" class="form-label small">O2 %:</label>
+                                                        <input type="number" class="form-control form-control-sm" id="oxygen_${index}"
+                                                               name="Tanks[${index}].OxygenPercent"
+                                                               value="${tank.OxygenPercent || 21}"
+                                                               min="2" max="100" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="helium_${index}" class="form-label small">He %:</label>
+                                                        <input type="number" class="form-control form-control-sm" id="helium_${index}"
+                                                               name="Tanks[${index}].HeliumPercent"
+                                                               value="${tank.HeliumPercent || 0}"
+                                                               min="0" max="98" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
+                                            <p>Ending Pressure</p>
+                                            <div id="${endGaugeId}" style="width:200px;height:200px;"></div>
+                                            <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
+                                            <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
+
+                                            <!-- Spacer to align with gas inputs on left side -->
+                                            <div class="mt-3" style="width: 200px; height: 108px;">
+                                                <!-- Empty space to maintain visual balance -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-12 d-flex flex-column align-items-center mb-4 px-3">
-                                        <p>Ending Pressure</p>
-                                        <div id="${endGaugeId}" style="width:200px;height:200px;"></div>
-                                        <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
-                                        <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
-                                    </div>
+                                    <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
                                 </div>
-                                <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
-                                <input type="hidden" name="Tanks[${index}].GasContentTitle" value="${tank.GasContentTitle || ''}" />
-                            </div>
-                        </div>                        `);
+                            </div>                        `);
 
                     // Create Gauges with dark mode support
                     const startGauge = $(`#${startGaugeId}`).kendoRadialGauge({

@@ -16,6 +16,10 @@ public partial class TanksOnDive
 
     public int? EndingPressure { get; set; }
 
+    public int? OxygenPercent { get; set; }
+
+    public int? HeliumPercent { get; set; }
+
     public decimal? FillCost { get; set; }
 
     public DateTime? FillDate { get; set; }
