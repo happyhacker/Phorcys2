@@ -11,18 +11,50 @@
     <link rel="icon" sizes="48x48" href="/icons/DiveFlag48.png">
 
     <!-- Bootstrap and Site Styles -->
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/css/bootstrap.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous" />
+    </environment>
+
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Phorcys.css" />
 
-    <!-- Telerik Kendo UI Theme -->
-    <link href="~/lib/kendo-ui/styles/classic-main.css" id="telerikThemeLink" rel="stylesheet" type="text/css" />
+    <!-- Telerik Kendo UI Theme - CDN with fallback -->
+    <environment names="Development">
+        <link href="~/lib/kendo-ui/styles/classic-main.css" id="telerikThemeLink" rel="stylesheet" type="text/css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="https://kendo.cdn.telerik.com/2023.3.1114/styles/kendo.classic.min.css"
+              id="telerikThemeLink"
+              rel="stylesheet"
+              asp-fallback-href="~/lib/kendo-ui/styles/classic-main.css"
+              asp-fallback-test-class="k-widget"
+              asp-fallback-test-property="font-size"
+              asp-fallback-test-value="14px" />
+    </environment>
 
-    <!-- Scripts (non-deferred) -->
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/kendo-ui/js/jszip.min.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+    <!-- Scripts with CDN performance -->
+    <environment names="Development">
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/lib/kendo-ui/js/jszip.min.js"></script>
+        <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                asp-fallback-src="~/lib/jquery/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"></script>
+        <!-- Kendo UI files remain local since they're licensed and not available on public CDNs -->
+        <script src="~/lib/kendo-ui/js/jszip.min.js"></script>
+        <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+        <script src="~/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+    </environment>
 </head>
 <body class="k-content">
 
@@ -146,15 +178,35 @@
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const themeLink = document.getElementById('telerikThemeLink');
 
-        themeLink.href = prefersDark
-            ? '/lib/kendo-ui/styles/classic-main-dark.css'
-            : '/lib/kendo-ui/styles/classic-main.css';
+        // Update theme switching to use CDN in production, local in development
+        const baseCdnUrl = 'https://kendo.cdn.telerik.com/2023.3.1114/styles/';
+        const baseLocalUrl = '/lib/kendo-ui/styles/';
 
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            themeLink.href = e.matches
-                ? '/lib/kendo-ui/styles/classic-main-dark.css'
-                : '/lib/kendo-ui/styles/classic-main.css';
-        });
+        // Check if we're using CDN (production) or local (development)
+        const isUsingCdn = themeLink.href.includes('kendo.cdn.telerik.com');
+
+        if (isUsingCdn) {
+            themeLink.href = prefersDark
+                ? baseCdnUrl + 'kendo.classic-dark.min.css'
+                : baseCdnUrl + 'kendo.classic.min.css';
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                themeLink.href = e.matches
+                    ? baseCdnUrl + 'kendo.classic-dark.min.css'
+                    : baseCdnUrl + 'kendo.classic.min.css';
+            });
+        } else {
+            // Development - use local files
+            themeLink.href = prefersDark
+                ? baseLocalUrl + 'classic-main-dark.css'
+                : baseLocalUrl + 'classic-main.css';
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                themeLink.href = e.matches
+                    ? baseLocalUrl + 'classic-main-dark.css'
+                    : baseLocalUrl + 'classic-main.css';
+            });
+        }
     </script>
 </body>
 </html>
