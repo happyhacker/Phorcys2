@@ -198,12 +198,12 @@ public class DivePlanServices
 		}
 		catch (DbUpdateException ex)
 		{
-			_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+			_logger.LogError(ex, "Error deleting Dive Plan {id}: {ErrorMessage}", id, ex.Message);
 			throw;
 		}
 		catch (Exception ex)
 		{
-			_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+			_logger.LogError(ex, "Error deleting Dive Plan {id}: {ErrorMessage}", id, ex.Message);
 			throw;
 		}
 	}

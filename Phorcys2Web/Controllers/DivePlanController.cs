@@ -185,8 +185,9 @@ namespace Phorcys2Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				return View("Error");
-			}
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan can not be deleted becuase a dive is tied to it.";
+                return RedirectToAction("Index");
+            }
 		}
 
 		private List<DivePlanIndexViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.DivePlan> divePlans)

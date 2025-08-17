@@ -194,7 +194,8 @@ namespace Phorcys2Web.Controllers
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, "Error deleting Dive {diveId}", diveId);
-				return View("Error");
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Unable to delete Dive. ";
+                return View("Error");
 			}
 		}
 		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
