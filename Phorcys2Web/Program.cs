@@ -17,25 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 var keyVaultUri = new Uri("https://PhorcysKeyVault.vault.azure.net/");
 builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
 
-/*var keyVaultUri = new Uri("https://PhorcysKeyVault.vault.azure.net/");
-
-TokenCredential credential;
-
-if (builder.Environment.IsDevelopment())
-{
-	// Use Azure CLI credential in development (must be logged in via `az login`)
-	credential = new AzureCliCredential();
-}
-else
-{
-	// Use DefaultAzureCredential in production (works with Managed Identity)
-	credential = new DefaultAzureCredential();
-}
-
-// Add Azure Key Vault to configuration
-builder.Configuration.AddAzureKeyVault(keyVaultUri, credential);
-*/
-
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
