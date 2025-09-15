@@ -181,6 +181,60 @@ public class DivePlanServices
 			.ToList();
 	}
 
+	public void UpsertTanksOnDive(int divePlanId, IList<TanksOnDiveDto> posted)
+	{
+		posted ??= new List<TanksOnDiveDto>();
+
+		// Load current rows for the plan
+		var existing = _context.TanksOnDives
+			.Where(t => t.DivePlanId == divePlanId)
+			.ToList();
+
+		// Index by GearId (or by TanksOnDiveId if you add that to the DTO)
+		var existingByGear = existing.ToDictionary(x => x.GearId, x => x);
+
+		// INSERT or UPDATE
+		foreach (var dto in posted)
+		{
+			if (dto.GearId == 0) continue; // need a key to match
+
+			if (existingByGear.TryGetValue(dto.GearId, out var row))
+			{
+				// UPDATE
+				row.StartingPressure = dto.StartingPressure;
+				row.EndingPressure = dto.EndingPressure;
+				row.GasContentTitle = dto.GasContentTitle;
+				row.OxygenPercent = dto.OxygenPercent;
+				row.HeliumPercent = dto.HeliumPercent;
+
+				_context.TanksOnDives.Update(row);
+			}
+			else
+			{
+				// INSERT
+				var newRow = new TanksOnDive
+				{
+					DivePlanId = divePlanId,
+					GearId = dto.GearId,
+					StartingPressure = dto.StartingPressure,
+					EndingPressure = dto.EndingPressure,
+					GasContentTitle = dto.GasContentTitle,
+					OxygenPercent = dto.OxygenPercent,
+					HeliumPercent = dto.HeliumPercent,
+				};
+				_context.TanksOnDives.Add(newRow);
+			}
+		}
+
+		// DELETE rows not posted (optional)
+		var postedGearIds = new HashSet<int>(posted.Where(p => p.GearId != 0).Select(p => p.GearId));
+		var toDelete = existing.Where(e => !postedGearIds.Contains(e.GearId)).ToList();
+		if (toDelete.Count > 0)
+			_context.TanksOnDives.RemoveRange(toDelete);
+
+		_context.SaveChanges();
+	}
+
 	public void Delete(int id)
 	{
 		try

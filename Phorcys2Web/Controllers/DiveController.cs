@@ -26,7 +26,7 @@ namespace Phorcys2Web.Controllers
 		private readonly UserServices _userServices;
 		private readonly ILogger _logger;
 
-		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices, 
+		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices,
 			UserServices userServices, ILogger<DiveController> logger)
 		{
 			_divePlanServices = divePlanServices;
@@ -81,14 +81,15 @@ namespace Phorcys2Web.Controllers
 			return View(model);
 		}
 
-        [HttpGet]
-        public IActionResult GetTanksForPlan(int divePlanId)
-        {
-            var tanks = _divePlanServices.GetTanksForDivePlan(divePlanId);
-            return Json(tanks);
-        }
+		[Authorize]
+		[HttpGet]
+		public IActionResult GetTanksForPlan(int divePlanId)
+		{
+			var tanks = _divePlanServices.GetTanksForDivePlan(divePlanId) ?? new List<TanksOnDiveDto>();
+			return Json(tanks);
+		}
 
-        [Authorize, HttpPost, ValidateAntiForgeryToken]
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
 		public ActionResult Create(DiveViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -97,8 +98,8 @@ namespace Phorcys2Web.Controllers
 				dive.DiveNumber = model.DiveNumber;
 				dive.Title = model.Title;
 				dive.Minutes = model.Minutes;
-                dive.Notes = model.Notes ?? "";
-                dive.MaxDepth = model.MaxDepth;
+				dive.Notes = model.Notes ?? "";
+				dive.MaxDepth = model.MaxDepth;
 				dive.AvgDepth = model.AvgDepth;
 				dive.Temperature = model.Temperature;
 				dive.AdditionalWeight = model.AdditionalWeight;
@@ -146,38 +147,50 @@ namespace Phorcys2Web.Controllers
 		[Authorize, HttpPost, ValidateAntiForgeryToken]
 		public ActionResult Edit(DiveViewModel model)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
-				var diveDto = new DiveDto();
-				diveDto.DiveId = model.DiveId;
-				diveDto.DivePlanId = model.DivePlanSelectedId;
-				diveDto.DiveNumber = model.DiveNumber;
-				diveDto.Title = model.Title;
-				diveDto.Minutes = model.Minutes;
-				diveDto.DescentTime = model.DescentTime;
-				diveDto.AvgDepth = model.AvgDepth;
-				diveDto.MaxDepth = model.MaxDepth;
-				diveDto.Temperature = model.Temperature;
-				diveDto.AdditionalWeight = model.AdditionalWeight;
-				diveDto.Notes = model.Notes ?? "";
-				try
-				{
-					_diveServices.Edit(diveDto);
-					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully updated.";
-				}
-				catch (Exception ex)
-				{
-					_logger.LogError(ex, "There was an error editing a Dive");
-					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error editing the Dive.";
-				}
-				return RedirectToAction("Index");
+				model.DivePlanList = BuildDivePlanList();  // rebuild dropdown
+														   // Keep model.Tanks as posted so the view doesn’t lose user edits
+				return View(model);
+			}
 
-			}
-			else
+			var diveDto = new DiveDto();
+			diveDto.DiveId = model.DiveId;
+			diveDto.DivePlanId = model.DivePlanSelectedId;
+			diveDto.DiveNumber = model.DiveNumber;
+			diveDto.Title = model.Title;
+			diveDto.Minutes = model.Minutes;
+			diveDto.DescentTime = model.DescentTime;
+			diveDto.AvgDepth = model.AvgDepth;
+			diveDto.MaxDepth = model.MaxDepth;
+			diveDto.Temperature = model.Temperature;
+			diveDto.AdditionalWeight = model.AdditionalWeight;
+			diveDto.Notes = model.Notes ?? "";
+			try
 			{
-				return View();
+				_diveServices.Edit(diveDto);
+				if (model.DivePlanSelectedId.HasValue && model.Tanks != null && model.Tanks.Count > 0)
+				{
+					// Choose ONE of these patterns depending on how your services are organized:
+
+					// A) If this lives in DivePlanServices:
+					_divePlanServices.UpsertTanksOnDive(model.DivePlanSelectedId.Value, model.Tanks);
+
+					// OR B) If you prefer to keep it in DiveServices:
+					// _diveServices.SaveTanksOnDive(model.DivePlanSelectedId.Value, model.Tanks);
+				}
+
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully updated.";
 			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "There was an error editing a Dive");
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error editing the Dive.";
+			}
+			return RedirectToAction("Index");
+
 		}
+
 
 		// POST: DiveController/Delete/5
 		[Authorize]
@@ -194,8 +207,8 @@ namespace Phorcys2Web.Controllers
 			catch (Exception ex)
 			{
 				_logger.LogError(ex, "Error deleting Dive {diveId}", diveId);
-                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Unable to delete Dive. ";
-                return View("Error");
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Unable to delete Dive. ";
+				return View("Error");
 			}
 		}
 		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
