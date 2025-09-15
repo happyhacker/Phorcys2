@@ -137,7 +137,7 @@ namespace Phorcys2Web.Controllers
 				model.AdditionalWeight = dive.AdditionalWeight;
 				model.Minutes = dive.Minutes;
 				model.Temperature = dive.Temperature;
-				model.Notes = dive.Notes;
+				model.Notes = dive.Notes ?? "";
 			}
 			return View(model);
 		}
@@ -159,7 +159,7 @@ namespace Phorcys2Web.Controllers
 				diveDto.MaxDepth = model.MaxDepth;
 				diveDto.Temperature = model.Temperature;
 				diveDto.AdditionalWeight = model.AdditionalWeight;
-				diveDto.Notes = model.Notes;
+				diveDto.Notes = model.Notes ?? "";
 				try
 				{
 					_diveServices.Edit(diveDto);

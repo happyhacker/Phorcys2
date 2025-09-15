@@ -80,7 +80,7 @@ namespace Phorcys.Services
 				dive.MaxDepth = diveDto.MaxDepth;
 				dive.Temperature = diveDto.Temperature;
 				dive.AdditionalWeight = diveDto.AdditionalWeight;
-				dive.Notes = diveDto.Notes;
+				dive.Notes = diveDto.Notes ?? "";
 				dive.LastModified = DateTime.Now;
 
 				_context.SaveChanges();
