@@ -259,6 +259,25 @@ namespace Phorcys2Web.Controllers
 			return divePlanList;
 		}
 
+		[Authorize]
+		[HttpGet]
+		public IActionResult GetPlanDefaults(int divePlanId)
+		{
+			var plan = _divePlanServices.GetDivePlan(divePlanId);
+			if (plan == null) return NotFound();
+
+			var dto = new
+			{
+				Title = plan.Title,
+				DescentTime = plan.ScheduledTime.ToString("yyyy-MM-ddTHH:mm"),
+				Minutes = plan.Minutes,
+				MaxDepth = plan.MaxDepth
+			};
+
+			return Json(dto);
+		}
+
+
 	}
 
 }

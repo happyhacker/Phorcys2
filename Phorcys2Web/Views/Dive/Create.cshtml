@@ -27,164 +27,164 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="pageMessage">
+                <div class="pageMessage">
         @Html.ValidationSummary(true, "Please correct the errors and try again.")
-    </div>
+                </div>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
 
-                <fieldset>
+                            <fieldset>
 
-                    <div>
-                        <p>
-                            <label for="Dive Plan">Dive Plan:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="Dive Plan">Dive Plan:</label>
+                                        <br />
 
                             @(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
-                                .DataTextField("Text")
-                                .DataValueField("Value")
-                                .BindTo(Model.DivePlanList)
-                                .OptionLabel("Select a Dive Plan")
-                                .HtmlAttributes(new { @class = "form-control", id = "divePlanDropdown" })
-                                .Events(e => e.Change("onDivePlanChange"))
-                                )
+                                            .DataTextField("Text")
+                                            .DataValueField("Value")
+                                            .BindTo(Model.DivePlanList)
+                                            .OptionLabel("Select a Dive Plan")
+                                            .HtmlAttributes(new { @class = "form-control", id = "divePlanDropdown" })
+                                            .Events(e => e.Change("onDivePlanChange"))
+                                            )
 
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.DivePlanSelectedId)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="Title">Title:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="Title">Title:</label>
+                                        <br />
                             @Html.Kendo().TextBoxFor(m => m.Title)
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.Title)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="DiveNumber">Dive #:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="DiveNumber">Dive #:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.DiveNumber).Min(1).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.DiveNumber)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="DescentTime">Descent Time:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="DescentTime">Descent Time:</label>
+                                        <br />
 
                             @(Html.Kendo().DateTimePicker()
-                                .Name("DescentTime") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
-                                .Value(DateTime.Today) // Sets the value of the DatePicker.
-                                .HtmlAttributes(new { @style = "width: 300px;" })
-                                )
+                                            .Name("DescentTime") // The Name of the DatePicker is mandatory. It specifies the "id" attribute of the component.
+                                            .Value(DateTime.Today) // Sets the value of the DatePicker.
+                                            .HtmlAttributes(new { @style = "width: 300px;" })
+                                            )
                             @Html.ValidationMessageFor(m => m.DescentTime)
-                        </p>
-                    </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="Minutes">Minutes:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="Minutes">Minutes:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(1440).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.Minutes)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="AvgDepth">Average Depth:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="AvgDepth">Average Depth:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.AvgDepth).Min(0).Max(1000).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.AvgDepth)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="MaxDepth">Max Depth:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="MaxDepth">Max Depth:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1200).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.MaxDepth)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="Temperature">Temperature:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="Temperature">Temperature:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.Temperature)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div id="tankGaugesContainer" style="margin-bottom: 30px;" class="mb-5"></div>
+                                <div id="tankGaugesContainer" style="margin-bottom: 30px;" class="mb-5"></div>
 
-                    <div>
-                        <p>
-                            <label for="AdditionalWeight">Additional Weight:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="AdditionalWeight">Additional Weight:</label>
+                                        <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.AdditionalWeight).Min(0).Max(600).Step(1).Format("n0"))
-                            <div class="pageMessage">
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.AdditionalWeight)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-                        <p>
-                            <label for="Notes">Notes:</label>
-                            <br />
+                                <div>
+                                    <p>
+                                        <label for="Notes">Notes:</label>
+                                        <br />
                             @(Html.Kendo().TextAreaFor(m => m.Notes).Resizable("true").Rows(6))
-                            <br />
-                            <div class="pageMessage">
+                                        <br />
+                                        <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.Notes)
-                            </div>
-                        </p>
-                    </div>
+                                        </div>
+                                    </p>
+                                </div>
 
-                    <div>
-
-                        @(Html.Kendo().Button()
-                            .Name("saveButton")
-                            .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
-                            //.Icon("save")
-                            .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
-                            .Content("Save")
-                            )
+                                <div>
 
                         @(Html.Kendo().Button()
-                            .Name("cancelButton")
-                            .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
-                            .ImageUrl(Url.Content("~/icons/RedXMark.png"))
-                            .Content("Cancel")
-                            )
+                                        .Name("saveButton")
+                                        .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                                        //.Icon("save")
+                                        .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+                                        .Content("Save")
+                                        )
+
+                        @(Html.Kendo().Button()
+                                        .Name("cancelButton")
+                                        .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+                                        .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+                                        .Content("Cancel")
+                                        )
+                                </div>
+
+                            </fieldset>
+
+                        </div>
                     </div>
-
-                </fieldset>
-
-            </div>
-        </div>
-    </div>
+                </div>
 }
 <script type="text/javascript">
     function redirectToIndex() {
@@ -222,10 +222,87 @@
         };
     }
 
+// Robustly get the Kendo widget instance from an input or its wrapper
+function getKendoWidget($el) {
+  // Try the element itself
+  var w = ($el && $el.length) ? kendo.widgetInstance($el[0]) : null;
+  if (w) return w;
+  // Try the closest Kendo wrapper
+  var wrap = $el.closest(".k-widget, .k-input, .k-textbox, .k-numerictextbox, .k-datetimepicker");
+  if (wrap.length) {
+    w = kendo.widgetInstance(wrap[0]);
+    if (w) return w;
+  }
+  // Fall back to common data() lookups on the input
+  return $el.data("kendoDateTimePicker")
+      || $el.data("kendoNumericTextBox")
+      || $el.data("kendoTextBox")
+      || null;
+}
+
+function setWidgetValue(id, value) {
+  var $el = $("#" + id);
+  if ($el.length === 0) return;
+
+  var widget = getKendoWidget($el);
+
+  if (widget) {
+    // DateTimePicker
+    if (kendo.ui.DateTimePicker && widget instanceof kendo.ui.DateTimePicker) {
+      var parsed = value ? kendo.parseDate(value, "yyyy-MM-ddTHH:mm") : null;
+      widget.value(parsed);
+      widget.trigger("change");
+      return;
+    }
+    // NumericTextBox
+    if (kendo.ui.NumericTextBox && widget instanceof kendo.ui.NumericTextBox) {
+      var num = (value == null || value === "") ? null : Number(value);
+      widget.value(num);
+      widget.trigger("change");
+      return;
+    }
+    // TextBox
+    if (kendo.ui.TextBox && widget instanceof kendo.ui.TextBox) {
+      widget.value(value ?? "");
+      return;
+    }
+  }
+
+  // Fallbacks when the widget didn't init or the ID is on a wrapper:
+  if ($el.is("input,textarea")) {
+    $el.val(value ?? "");
+  } else {
+    $el.find("input,textarea").first().val(value ?? "");
+  }
+}
+
     // Make Ajax call to get the Tanks tied to the DivePlan selected
     function onDivePlanChange(e) {
-        var divePlanId = $("#divePlanDropdown").val();
-        if (!divePlanId) return;
+  // Use the Kendo widget API for the dropdown
+  var ddl = $("#divePlanDropdown").data("kendoDropDownList");
+  var divePlanId = ddl ? ddl.value() : $("#divePlanDropdown").val();
+  if (!divePlanId) return;
+
+  // 2) NEW: pull defaults (Title, DescentTime, Minutes, MaxDepth) from server and push into Kendo widgets
+  $.getJSON('@Url.Action("GetPlanDefaults", "Dive")', { divePlanId: divePlanId })
+    .done(function (d) {
+      // Title (Kendo TextBox or plain input)
+      var tb = $("#Title").data("kendoTextBox");
+      if (tb) tb.value(d.Title);
+      else $("#Title").val(d.Title ?? "");
+
+      // DescentTime (Kendo DateTimePicker) — parse the server string "yyyy-MM-ddTHH:mm"
+      var dtp = $("#DescentTime").data("kendoDateTimePicker");
+      if (dtp) dtp.value(kendo.parseDate(d.DescentTime, "yyyy-MM-ddTHH:mm"));
+
+      // Minutes (Kendo NumericTextBox)
+      var min = $("#Minutes").data("kendoNumericTextBox");
+      if (min) min.value(d.Minutes);
+
+      // MaxDepth (Kendo NumericTextBox)
+      var md = $("#MaxDepth").data("kendoNumericTextBox");
+      if (md) md.value(d.MaxDepth);
+    });
 
         $.ajax({
             url: '@Url.Action("GetTanksForPlan", "Dive")',
