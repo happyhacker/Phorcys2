@@ -12,13 +12,13 @@ public partial class TanksOnDive
 
     public string? GasContentTitle { get; set; }
 
-    public int? StartingPressure { get; set; }
+    public int StartingPressure { get; set; } = 0;
 
-    public int? EndingPressure { get; set; }
+    public int EndingPressure { get; set; } = 0;
 
-    public int? OxygenPercent { get; set; }
+    public int OxygenPercent { get; set; } = 0;
 
-    public int? HeliumPercent { get; set; }
+    public int HeliumPercent { get; set; } = 0;
 
     public decimal? FillCost { get; set; }
 
