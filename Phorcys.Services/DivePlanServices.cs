@@ -89,69 +89,90 @@ public class DivePlanServices
 		}
 	}
 
-	public void EditDivePlan(DivePlanDto divePlanDto)
+    public void EditDivePlan(DivePlanDto divePlanDto)
+    {
+        try
+        {
+            var divePlan = _context.DivePlans
+                .Include(dp => dp.Gears).ThenInclude(g => g.Tank)
+                .Include(dp => dp.DiveTypes)
+                .Include(dp => dp.TanksOnDives)
+                .FirstOrDefault(dp => dp.DivePlanId == divePlanDto.DivePlanId);
+
+            if (divePlan == null)
+            {
+                _logger.LogWarning("DivePlan not found for editing. ID = {DivePlanId}", divePlanDto.DivePlanId);
+                return;
+            }
+
+            // Update scalar fields
+            divePlan.Title = divePlanDto.Title;
+            divePlan.ScheduledTime = divePlanDto.ScheduledTime;
+            divePlan.MaxDepth = divePlanDto.MaxDepth;
+            divePlan.Minutes = divePlanDto.Minutes;
+            divePlan.Notes = divePlanDto.Notes ?? "";
+            divePlan.DiveSiteId = divePlanDto.DiveSiteId;
+            divePlan.LastModified = DateTime.Now;
+
+            // Update DiveTypes
+            divePlan.DiveTypes.Clear();
+            if (divePlanDto.SelectedDiveTypeIds != null && divePlanDto.SelectedDiveTypeIds.Any())
+            {
+                var selectedDiveTypes = _context.DiveTypes
+                    .Where(d => divePlanDto.SelectedDiveTypeIds.Contains(d.DiveTypeId))
+                    .ToList();
+                foreach (var diveType in selectedDiveTypes)
+                    divePlan.DiveTypes.Add(diveType);
+            }
+
+            // Remove existing TanksOnDives (sync to avoid MARS)
+            var toRemove = _context.TanksOnDives
+                .Where(t => t.DivePlanId == divePlan.DivePlanId)
+                .ToList();
+            if (toRemove.Count > 0)
+                _context.TanksOnDives.RemoveRange(toRemove);
+
+            // Replace Gear links
+            divePlan.Gears.Clear();
+
+            if (divePlanDto.SelectedGearIds != null && divePlanDto.SelectedGearIds.Any())
+            {
+                var selectedGears = _context.Gear
+                    .Include(g => g.Tank) // ensures g.Tank is populated
+                    .Where(g => divePlanDto.SelectedGearIds.Contains(g.GearId))
+                    .ToList();
+
+                foreach (var gear in selectedGears)
+                {
+                    divePlan.Gears.Add(gear);
+
+                    // TankId == GearId; create TanksOnDive when gear has a Tank
+                    if (gear.Tank != null)
+                    {
+                        _context.TanksOnDives.Add(new TanksOnDive
+                        {
+                            DivePlanId = divePlan.DivePlanId,
+                            GearId = gear.GearId
+                        });
+                    }
+                }
+            }
+
+            _context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error editing DivePlan with ID {DivePlanId}", divePlanDto.DivePlanId);
+            throw;
+        }
+    }
+
+    public DivePlan GetDivePlan(int divePlanId)
 	{
 		try
 		{
-			var divePlan = GetDivePlan(divePlanDto.DivePlanId);
-			if (divePlan == null)
-			{
-				_logger.LogWarning("DivePlan not found for editing. ID = {DivePlanId}", divePlanDto.DivePlanId);
-				return;
-			}
-
-			// Update scalar fields
-			divePlan.Title = divePlanDto.Title;
-			divePlan.ScheduledTime = divePlanDto.ScheduledTime;
-			divePlan.MaxDepth = divePlanDto.MaxDepth;
-			divePlan.Minutes = divePlanDto.Minutes;
-			divePlan.Notes = divePlanDto.Notes ?? "";
-			divePlan.DiveSiteId = divePlanDto.DiveSiteId;
-			divePlan.LastModified = DateTime.Now;
-
-			//Update the DiveType collection
-			divePlan.DiveTypes.Clear();
-
-			if(divePlanDto.SelectedDiveTypeIds != null && divePlanDto.SelectedDiveTypeIds.Any())
-			{
-				var selectedDiveTypes = _context.DiveTypes
-					.Where(d => divePlanDto.SelectedDiveTypeIds.Contains(d.DiveTypeId))
-					.ToList();
-				foreach( var diveType in selectedDiveTypes)
-				{
-					divePlan.DiveTypes .Add(diveType);
-				}
-			}
-			
-			// Update the Gear collection
-			divePlan.Gears.Clear(); // remove existing gear
-
-			if (divePlanDto.SelectedGearIds != null && divePlanDto.SelectedGearIds.Any())
-			{
-				var selectedGears = _context.Gear
-					.Where(g => divePlanDto.SelectedGearIds.Contains(g.GearId))
-					.ToList();
-
-				foreach (var gear in selectedGears)
-				{
-					divePlan.Gears.Add(gear);
-				}
-			}
-			_context.SaveChanges();
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error editing DivePlan with ID {DivePlanId}", divePlanDto.DivePlanId);
-			throw;
-		}
-	}
-
-	public DivePlan GetDivePlan(int divePlanId)
-	{
-		try
-		{
-			var divePlan = _context.DivePlans.Include(dp => dp.Gears)
-				.Include(dp => dp.DiveTypes)
+			var divePlan = _context.DivePlans.Include(dp => dp.Gears).ThenInclude(g => g.Tank)
+                .Include(dp => dp.DiveTypes)
 				.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
 			return divePlan;	
 		}
