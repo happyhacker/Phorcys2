@@ -363,10 +363,17 @@ function setWidgetValue(id, value) {
                                                 <div id="${endSliderId}" style="width:200px;margin-top:10px;"></div>
                                                 <input type="hidden" id="${endInputId}" name="Tanks[${index}].EndingPressure" />
 
-                                                <!-- Spacer to align with gas inputs on left side -->
-                                                <div class="mt-3" style="width: 200px; height: 108px;">
-                                                    <!-- Empty space to maintain visual balance -->
+                                                <div class="mt-3" style="width: 200px;">
+                                                  <label for="fillDate_${index}" class="form-label small">Fill Date:</label>
+                                                  <input id="fillDate_${index}" name="Tanks[${index}].FillDate" />
                                                 </div>
+
+                                                <div class="mt-2" style="width: 200px;">
+                                                  <label for="fillCost_${index}" class="form-label small">Fill Cost:</label>
+                                                  <input id="fillCost_${index}" name="Tanks[${index}].FillCost" />
+                                                </div>
+
+
                                             </div>
                                         </div>
                                         <input type="hidden" name="Tanks[${index}].GearId" value="${tank.GearId}" />
@@ -426,6 +433,21 @@ function setWidgetValue(id, value) {
                     // Initialize hidden inputs
                     $(`#${startInputId}`).val(tank.StartingPressure || 0);
                     $(`#${endInputId}`).val(tank.EndingPressure || 0);
+
+                    // Initialize Fill Date
+                    $(`#fillDate_${index}`).kendoDatePicker({
+                      format: "yyyy-MM-dd",
+                      parseFormats: ["yyyy-MM-dd", "MM/dd/yyyy", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm"],
+                      value: tank.FillDate ? kendo.parseDate(tank.FillDate) : null
+                    });
+
+                    // Initialize Fill Cost
+                    $(`#fillCost_${index}`).kendoNumericTextBox({
+                      min: 0,
+                      step: 0.01,
+                      format: "n2",           // use "c2" to show a currency symbol
+                      value: (tank.FillCost != null) ? tank.FillCost : null
+                    });
                 });
             },
             error: function (err) {

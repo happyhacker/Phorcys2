@@ -113,6 +113,8 @@ namespace Phorcys.Services
                         existingTank.OxygenPercent = tankDto.OxygenPercent;
                         existingTank.HeliumPercent = tankDto.HeliumPercent;
                         existingTank.GasContentTitle = tankDto.GasContentTitle;
+						existingTank.FillDate = tankDto.FillDate;
+						existingTank.FillCost = tankDto.FillCost;
                     }
                 }
 

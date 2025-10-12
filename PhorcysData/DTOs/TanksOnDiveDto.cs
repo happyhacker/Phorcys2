@@ -15,5 +15,8 @@ public class TanksOnDiveDto
 	public string? GasContentTitle { get; set; }
     public int OxygenPercent { get; set; } = 0;
     public int HeliumPercent { get; set; } = 0;
+    public decimal? FillCost { get; set; } = 0;
+    public DateTime? FillDate { get; set; }
+
 }
 
