@@ -197,7 +197,9 @@ public class DivePlanServices
 				GasContentTitle = t.GasContentTitle,
                 OxygenPercent = t.OxygenPercent,
                 HeliumPercent = t.HeliumPercent,
-                GearTitle = t.Tank.Gear.Title
+                GearTitle = t.Tank.Gear.Title,
+				FillDate = t.FillDate,
+                FillCost = t.FillCost
             })
 			.ToList();
 	}
@@ -227,8 +229,10 @@ public class DivePlanServices
 				row.GasContentTitle = dto.GasContentTitle;
 				row.OxygenPercent = dto.OxygenPercent;
 				row.HeliumPercent = dto.HeliumPercent;
+				row.FillDate = dto.FillDate;
+				row.FillCost = dto.FillCost;
 
-				_context.TanksOnDives.Update(row);
+                _context.TanksOnDives.Update(row);
 			}
 			else
 			{
@@ -242,7 +246,9 @@ public class DivePlanServices
 					GasContentTitle = dto.GasContentTitle,
 					OxygenPercent = dto.OxygenPercent,
 					HeliumPercent = dto.HeliumPercent,
-				};
+                    FillDate = dto.FillDate,
+					FillCost = dto.FillCost
+                };
 				_context.TanksOnDives.Add(newRow);
 			}
 		}

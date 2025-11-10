@@ -1,87 +1,56 @@
-/* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.6.0                     */
-/* Target DBMS:           MS SQL Server 2022                              */
-/* Project file:          Phorcys2.dez                                    */
-/* Project name:          Phorcys2                                        */
-/* Author:                                                                */
-/* Script type:           Alter database script                           */
-/* Created on:            2025-08-06 11:39                                */
-/* ---------------------------------------------------------------------- */
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop foreign key constraints                                           */
-/* ---------------------------------------------------------------------- */
-
+CREATE TABLE [ChecklistInstances] (
+    [ChecklistInstanceId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistInstances_Created] DEFAULT getdate() NOT NULL,
+    CONSTRAINT [PK_ChecklistInstances] PRIMARY KEY ([ChecklistInstanceId])
+)
 GO
 
-
-ALTER TABLE [GasMixes] DROP CONSTRAINT [TanksOnDive_GasMixes]
+CREATE TABLE [ChecklistItems] (
+    [ChecklistItemId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [SequenceNumber] INTEGER,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistItems_Created] DEFAULT getdate(),
+    CONSTRAINT [PK_ChecklistItems] PRIMARY KEY ([ChecklistItemId])
+)
 GO
 
-
-ALTER TABLE [GasMixes] DROP CONSTRAINT [Gases_GasMixes]
+CREATE TABLE [ChecklistInstanceItems] (
+    [ChecklistInstanceItemId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistInstanceId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [SequenceNumber] INTEGER,
+    [IsChecked] BIT CONSTRAINT [DEF_ChecklistInstanceItems_IsChecked] DEFAULT 0 NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistInstanceItems_Created] DEFAULT getdate() NOT NULL,
+    CONSTRAINT [PK_ChecklistInstanceItems] PRIMARY KEY ([ChecklistInstanceItemId])
+)
 GO
 
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "GasMixes"                                                  */
-/* ---------------------------------------------------------------------- */
-
+CREATE TABLE [Checklists] (
+    [ChecklistId] INTEGER IDENTITY(1,1) NOT NULL,
+    [UserId] INTEGER NOT NULL,
+    [Title] VARCHAR(80) NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_Checklists_Created] DEFAULT getdate() NOT NULL,
+    [LastModified] DATETIME2,
+    CONSTRAINT [PK_Checklists] PRIMARY KEY ([ChecklistId])
+)
 GO
 
-
-/* Drop constraints */
-
-ALTER TABLE [GasMixes] DROP CONSTRAINT [PK__GasMixes__56FD4E221D9B5BB6]
+ALTER TABLE [ChecklistInstances] ADD CONSTRAINT [Checklists_ChecklistInstances] 
+    FOREIGN KEY ([ChecklistId]) REFERENCES [Checklists] ([ChecklistId])
 GO
 
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'DivePlanId'
+ALTER TABLE [ChecklistItems] ADD CONSTRAINT [Checklists_ChecklistItems] 
+    FOREIGN KEY ([ChecklistId]) REFERENCES [Checklists] ([ChecklistId])
 GO
 
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'GearId'
+ALTER TABLE [ChecklistInstanceItems] ADD CONSTRAINT [ChecklistInstances_ChecklistInstanceItems] 
+    FOREIGN KEY ([ChecklistInstanceId]) REFERENCES [ChecklistInstances] ([ChecklistInstanceId]) ON DELETE CASCADE
 GO
 
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'GasId'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'VolumeAdded'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'Percentage'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'CostPerVolumeOfMeasure'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', NULL, NULL
-GO
-
-
-DROP TABLE [GasMixes]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "Gases"                                                     */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [Gases] DROP CONSTRAINT [PK_Gases]
-GO
-
-
-DROP TABLE [Gases]
+ALTER TABLE [Checklists] ADD CONSTRAINT [Users_Checklists] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
 GO
 
