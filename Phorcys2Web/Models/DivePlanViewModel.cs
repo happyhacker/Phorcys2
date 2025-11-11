@@ -45,9 +45,11 @@ namespace Phorcys.Web.Models
 		// IDs of gear selected in the MultiSelect
 		public List<int> SelectedDiveTypeIds { get; set; } = new List<int>();
 
+		//List of Dive Buddies to populate the MultiSelect dropdown
+		public List<SelectListItem> DiveBuddies { get; set; } = new List<SelectListItem>();
 
-		//public virtual ICollection<TanksOnDive> TanksOnDives { get; set; } = new List<TanksOnDive>();
+		// IDs of dive buddies selected in the MultiSelect
+		public List<int> SelectedDiverIds { get; set; } = new List<int>();
 
-		//public required User User { get; set; }
 	}
 }

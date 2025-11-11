@@ -82,6 +82,7 @@ namespace Phorcys2Web.Controllers
 			model.DiveSiteList = BuildDiveSiteList(null); //ToDo shouldn't this be userid?
 			model.AvailableGear = BuildGearList(_userServices.GetUserId());
 			model.AvailableDiveTypes = BuildDiveTypeList(_userServices.GetUserId());
+			model.DiveBuddies = BuildDiveBuddiesList(_userServices.GetUserId());
 
 			return View(model);
 		}
@@ -268,6 +269,22 @@ namespace Phorcys2Web.Controllers
 						Value = gear.GearId.ToString()
 					});
 				}
+			}
+			return selectListItems;
+		}
+
+		private List<SelectListItem> BuildDiveBuddiesList(int userId)
+		{
+			var diveBuddies = _divePlanServices.GetDiveBuddies(userId) ?? new List<Contact>();
+			var selectListItems = new List<SelectListItem>();
+
+			foreach (var buddy in diveBuddies)
+			{
+				selectListItems.Add(new SelectListItem
+				{
+					Text = $"{buddy.FirstName} {buddy.LastName}",
+					Value = buddy.UserId.ToString()
+				});
 			}
 			return selectListItems;
 		}

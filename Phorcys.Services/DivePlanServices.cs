@@ -183,6 +183,24 @@ public class DivePlanServices
 		}
 	}
 
+	public IEnumerable<Contact> GetDiveBuddies(int userId)
+	{
+		try
+		{
+			var contacts = _context.Contacts
+				.Include(c => c.Diver)
+				.Where(c => c.UserId == userId & c.Diver != null)
+				.OrderBy(c => c.FirstName).ToList();
+
+			return contacts;
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error retreiving Contacts for user {userId}" + ex.Message, userId);
+			throw new Exception("Can't connect to database");
+		}
+	}
+
 	public List<TanksOnDiveDto> GetTanksForDivePlan(int divePlanId)
 	{
 		return _context.TanksOnDives
