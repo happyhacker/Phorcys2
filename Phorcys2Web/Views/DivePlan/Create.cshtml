@@ -159,8 +159,8 @@
 							<br />
 							@(Html.Kendo().MultiSelect()
 														.Name("SelectedDiverIds")
-														.DataTextField("Text")   // what users see (Gear.Title)
-														.DataValueField("Value") // what is submitted (GearId)
+														.DataTextField("Text") 
+														.DataValueField("Value")
 														.BindTo(Model.DiveBuddies)
 														.Placeholder("Choose dive buddies...")
 														.AutoClose(false)

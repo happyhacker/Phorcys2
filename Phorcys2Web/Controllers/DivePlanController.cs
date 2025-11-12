@@ -106,7 +106,7 @@ namespace Phorcys2Web.Controllers
 				int userId = _userServices.GetUserId();
 				divePlan.UserId = userId;
 				divePlan.DiveSiteId = model.DiveSiteSelectedId;
-				_divePlanServices.SaveNewDivePlan(divePlan, model.SelectedGearIds, model.SelectedDiveTypeIds);
+				_divePlanServices.SaveNewDivePlan(divePlan, model.SelectedGearIds, model.SelectedDiveTypeIds, model.SelectedDiverIds);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully created.";
 				return RedirectToAction("Index");
 			}
@@ -186,7 +186,7 @@ namespace Phorcys2Web.Controllers
 			}
 			catch (Exception ex)
 			{
-                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan can not be deleted becuase a dive is tied to it.";
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan can not be deleted because a dive is tied to it.";
                 return RedirectToAction("Index");
             }
 		}
@@ -283,7 +283,7 @@ namespace Phorcys2Web.Controllers
 				selectListItems.Add(new SelectListItem
 				{
 					Text = $"{buddy.FirstName} {buddy.LastName}",
-					Value = buddy.UserId.ToString()
+					Value = buddy.Diver.DiverId.ToString()
 				});
 			}
 			return selectListItems;

@@ -48,7 +48,7 @@ public class DivePlanServices
 		}
 	}
 
-	public void SaveNewDivePlan(DivePlan divePlan, List<int> gearIds, List<int> diveTypeIds)
+	public void SaveNewDivePlan(DivePlan divePlan, List<int> gearIds, List<int> diveTypeIds, List<int>diverIds)
 	{
 		try
 		{
@@ -58,7 +58,12 @@ public class DivePlanServices
 				.Where(g => gearIds.Contains(g.GearId))
 				.ToList();
 
-			var diveTypes = _context.DiveTypes.Where(d => diveTypeIds.Contains(d.DiveTypeId))
+			var diveTypes = _context.DiveTypes
+				.Where(d => diveTypeIds.Contains(d.DiveTypeId))
+				.ToList();
+
+			var divers = _context.Divers
+				.Where(c => diverIds.Contains(c.DiverId))
 				.ToList();
 
 			foreach (var gear in gears)
@@ -77,6 +82,15 @@ public class DivePlanServices
 			foreach(var diveType in diveTypes)
 			{
 				divePlan.DiveTypes.Add(diveType);
+			}
+
+			foreach(var diveBuddy in divers)
+			{
+				divePlan.DiveTeams.Add(new DiveTeam
+				{
+					DivePlan = divePlan,
+					Diver = diveBuddy,
+				});
 			}
 
 			_context.DivePlans.Add(divePlan);
@@ -288,6 +302,7 @@ public class DivePlanServices
 			.Include(dp => dp.Gears)
 			.Include(dt => dt.DiveTypes)
 			.Include(tod => tod.TanksOnDives)
+			.Include(t => t.DiveTeams)
 			.FirstOrDefault(dp => dp.DivePlanId == id);
 			if (divePlan != null)
 			{

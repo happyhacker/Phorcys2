@@ -112,6 +112,27 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 			.HasForeignKey(t => t.GearId)  // This connects to the GearId in Tank
 			.OnDelete(DeleteBehavior.Cascade);
 
+		// DivePlan <-> Diver via DiveTeam (associative entity)
+		builder.Entity<DiveTeam>(j =>
+		{
+			j.ToTable("DiveTeams");
+			j.HasKey(t => new { t.DivePlanId, t.DiverId });
+
+			j.HasOne(t => t.DivePlan)
+			 .WithMany(dp => dp.DiveTeams)
+			 .HasForeignKey(t => t.DivePlanId)
+			 .OnDelete(DeleteBehavior.Cascade);
+
+			j.HasOne(t => t.Diver)
+			 .WithMany(d => d.DiveTeams)
+			 .HasForeignKey(t => t.DiverId)
+			 .OnDelete(DeleteBehavior.Cascade);
+
+			// Helpful indexes for lookups (optional)
+			j.HasIndex(t => t.DiverId);
+			j.HasIndex(t => t.DivePlanId);
+		});
+
 	}
 
 	public DbSet<DiveType> DiveTypes { get; set; }
@@ -124,13 +145,14 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<DiveSite> DiveSites { get; set; }
 	public DbSet<DiveLocation> DiveLocations { get; set; }
 	public DbSet<Gear> Gear { get; set; }
-    public DbSet<Tank> Tanks { get; set; }
+	public DbSet<Tank> Tanks { get; set; }
 	public DbSet<TanksOnDive> TanksOnDives { get; set; }
 	public DbSet<vwMyCertification> vwMyCertifications { get; set; }
-	public DbSet<DiverCertification> DiverCertifications { get; set;}
+	public DbSet<DiverCertification> DiverCertifications { get; set; }
 	public DbSet<DiveAgency> DiveAgencies { get; set; }
 	public DbSet<Certification> Certifications { get; set; }
 	public DbSet<Instructor> Instructors { get; set; }
 	public DbSet<Diver> Divers { get; set; }
 	public DbSet<Manufacturer> Manufacturers { get; set; }
+	public DbSet<DiveTeam> DiveTeams { get; set; }
 }

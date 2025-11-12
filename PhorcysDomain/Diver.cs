@@ -19,7 +19,7 @@ public partial class Diver
 
     //public virtual Contact Contact { get; set; } = null!;
 
-    //public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
+    public virtual ICollection<DiveTeam> DiveTeams { get; set; } = new List<DiveTeam>();
 
     //public virtual ICollection<DiverCertification> DiverCertifications { get; set; } = new List<DiverCertification>();
 
