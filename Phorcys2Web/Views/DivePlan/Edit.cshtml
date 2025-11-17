@@ -4,200 +4,197 @@
 @model Phorcys.Web.Models.DivePlanViewModel
 
 @{
-	ViewData["Title"] = "Edit Dive Plan";
+    ViewData["Title"] = "Edit Dive Plan";
 }
 
-<style>
-	/* Style the chips (tags) for the Gear MultiSelect */
-	#SelectedGearIds_taglist .k-chip {
-		background-color: #28a745; /* Match Save button color */
-		color: white;
-		border-radius: 16px;
-		padding: 2px 8px;
-		font-size: 0.85rem;
-	}
-</style>
-
-<style>
-	/* Style the chips (tags) for the Gear MultiSelect */
-	#SelectedDiveTypeIds_taglist .k-chip {
-		background-color: #28a745; /* Match Save button color */
-		color: white;
-		border-radius: 16px;
-		padding: 2px 8px;
-		font-size: 0.85rem;
-	}
-</style>
-
 <div class="placeholders mb-2">
-	<div class="row d-flex justify-content-start">
-	</div>
+    <div class="row d-flex justify-content-start">
+    </div>
 </div>
 
 <section class="jumbotron text-center">
-	<div class="container">
-		<h1 class="jumbotron-heading">@ViewBag.Title</h1>
-		<p class="lead-text text-muted">@ViewBag.Message</p>
-	</div>
+    <div class="container">
+        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        <p class="lead-text text-muted">@ViewBag.Message</p>
+    </div>
 </section>
 
 <div class="pageMessage">
-	@Html.ValidationSummary()
+    @Html.ValidationSummary()
 </div>
 
-@using (Html.BeginForm("Edit", "DivePlan", FormMethod.Post))
-{
-	@Html.AntiForgeryToken()
+@using(Html.BeginForm("Edit", "DivePlan", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
 
-	<div class="pageMessage">
-		@Html.ValidationSummary(true, "Please correct the errors and try again.")
-	</div>
+    <div class="pageMessage">
+        @Html.ValidationSummary(true, "Please correct the errors and try again.")
+    </div>
 
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-6">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
 
-				<fieldset>
+                <fieldset>
 
-					<div>
-						<p>
-							<label for="DiveSiteId">Dive Site:</label>
-							<br />
-							@(Html.Kendo().DropDownListFor(m => m.DiveSiteSelectedId)
+                    <div>
+                        <p>
+                            <label for="DiveSiteId">Dive Site:</label>
+                            <br />
+                            @(Html.Kendo().DropDownListFor(m => m.DiveSiteSelectedId)
 														.DataTextField("Text")
 														.DataValueField("Value")
 														.BindTo(Model.DiveSiteList)
 														.OptionLabel("Select a Dive Site")
 														.HtmlAttributes(new { @class = "form-control" })
 														)
-						</p>
-					</div>
+                        </p>
+                    </div>
 
-					@Html.HiddenFor(m => m.DivePlanId)
-					<div>
-						<p>
-							<label for="Title">Title:</label>
-							<br />
-							@Html.Kendo().TextBoxFor(m => m.Title)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Title)
-							</div>
-						</p>
-					</div>
+                    @Html.HiddenFor(m => m.DivePlanId)
+                    <div>
+                        <p>
+                            <label for="Title">Title:</label>
+                            <br />
+                            @Html.Kendo().TextBoxFor(m => m.Title)
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Title)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="ScheduledTime">Schedule Time:</label>
-							<br />
+                    <div>
+                        <p>
+                            <label for="ScheduledTime">Schedule Time:</label>
+                            <br />
 
-							@(Html.Kendo().DateTimePickerFor(m => m.ScheduledTime)
+                            @(Html.Kendo().DateTimePickerFor(m => m.ScheduledTime)
 														.HtmlAttributes(new { @style = "width: 300px;" })
 														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.ScheduledTime)
-							</div>
-						</p>
-					</div>
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.ScheduledTime)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="Minutes">Minutes:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Minutes)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="Minutes">Minutes:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.Minutes).Min(0).Max(600).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Minutes)
+                            </div>
+                        </p>
+                    </div>
 
-					<div>
-						<p>
-							<label for="MaxDepth">Max Depth:</label>
-							<br />
-							@(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1000).Step(1).Format("n0"))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.MaxDepth)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="MaxDepth">Max Depth:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.MaxDepth).Min(0).Max(1000).Step(1).Format("n0"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.MaxDepth)
+                            </div>
+                        </p>
+                    </div>
 
-					<!-- DiveType MultiSelect -->
-					<div>
-						<p>
-							<label for="SelectedDiveTypeIds">Dive Types:</label>
-							<br />
-							@(Html.Kendo().MultiSelect()
-														.Name("SelectedDiveTypeIds")
+                    <!-- DiveType MultiSelect -->
+                    <div>
+                        <p>
+                            <label for="SelectedDiveTypeIds">Dive Types:</label>
+                            <br />
+                            @(Html.Kendo().MultiSelect()
+                                                        .Name("SelectedDiveTypeIds")
+                                                        .DataTextField("Text")
+                                                        .DataValueField("Value")
+                                                        .BindTo(Model.AvailableDiveTypes)
+                                                        .Placeholder("Choose Dive Types...")
+                                                        .AutoClose(false)
+                                                        .Value(Model.SelectedDiveTypeIds.Select(id => id.ToString()).ToList())
+                                                        .HtmlAttributes(new { @class = "chips-green", style = "width: 100%;" })
+														)
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.SelectedDiveTypeIds)
+                            </div>
+                        </p>
+                    </div>
+
+                    <!-- Modify Gear MultiSelect -->
+                    <div>
+                        <p>
+                            <label for="SelectedGearIds">Gear:</label>
+                            <br />
+                            @(Html.Kendo().MultiSelect()
+                                                        .Name("SelectedGearIds")
+                                                        .DataTextField("Text")   // what users see (Gear.Title)
+                                                        .DataValueField("Value") // what is submitted (GearId)
+                                                        .BindTo(Model.AvailableGear)
+                                                        .Placeholder("Choose gear...")
+                                                        .AutoClose(false)
+                                                        .Value(Model.SelectedGearIds.Select(id => id.ToString()).ToList())
+                                                        .HtmlAttributes(new { @class = "chips-green", style = "width: 100%;" })
+														)
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.SelectedGearIds)
+                            </div>
+                        </p>
+                    </div>
+
+                    <!-- Add buddies MultiSelect -->
+                    <div>
+                        <p>
+                            <label for="SelectedDiverIds">Dive Buddies:</label>
+                            <br />
+                            @(Html.Kendo().MultiSelect()
+														.Name("SelectedDiverIds")
 														.DataTextField("Text")
 														.DataValueField("Value")
-														.BindTo(Model.AvailableDiveTypes)
-														.Placeholder("Choose Dive Types...")
+														.BindTo(Model.DiveBuddies)
+														.Placeholder("Choose dive buddies...")
 														.AutoClose(false)
-														.Value(Model.SelectedDiveTypeIds.Select(id => id.ToString()).ToList())
-														.HtmlAttributes(new { style = "width: 100%;" })
+														.Value(Model.SelectedDiverIds.Select(id => id.ToString()).ToList())
+														.HtmlAttributes(new { @class = "chips-green", style = "width:100%;" })
 														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.SelectedDiveTypeIds)
-							</div>
-						</p>
-					</div>
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.SelectedDiverIds)
+                            </div>
+                        </p>
+                    </div>
 
-					<!-- Modify Gear MultiSelect -->
-					<div>
-						<p>
-							<label for="SelectedGearIds">Gear:</label>
-							<br />
-							@(Html.Kendo().MultiSelect()
-														.Name("SelectedGearIds")
-														.DataTextField("Text")   // what users see (Gear.Title)
-														.DataValueField("Value") // what is submitted (GearId)
-														.BindTo(Model.AvailableGear)
-														.Placeholder("Choose gear...")
-														.AutoClose(false)
-														.Value(Model.SelectedGearIds.Select(id => id.ToString()).ToList())
-														.HtmlAttributes(new { style = "width: 100%;" })
-														)
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.SelectedGearIds)
-							</div>
-						</p>
-					</div>
+                    <div>
+                        <p>
+                            <label for="Notes">Notes:</label>
+                            <br />
+                            @(Html.Kendo().TextAreaFor(m => m.Notes).Rows(6))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.Notes)
+                            </div>
+                        </p>
+                    </div>
+                    <div>
 
-					<div>
-						<p>
-							<label for="Notes">Notes:</label>
-							<br />
-							@(Html.Kendo().TextAreaFor(m => m.Notes).Rows(6))
-							<div class="pageMessage">
-								@Html.ValidationMessageFor(m => m.Notes)
-							</div>
-						</p>
-					</div>
-					<div>
-
-						@*<button type="submit" class="btn btn-primary">Save</button>
-					@Html.ActionLink("Cancel", "Index", "DivePlan", null, new { @class = "btn btn-danger" })
-					*@
-						@(Html.Kendo().Button()
+                        @*<button type="submit" class="btn btn-primary">Save</button>
+                            @Html.ActionLink("Cancel", "Index", "DivePlan", null, new { @class = "btn btn-danger" })
+                        *@
+                        @(Html.Kendo().Button()
 													.Name("saveButton")
 													.HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
 													.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
 													.Content("Save")
 													)
-
-						@(Html.Kendo().Button()
+                        @(Html.Kendo().Button()
 													.Name("cancelButton")
 													.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
 													.ImageUrl(Url.Content("~/icons/RedXMark.png"))
 													.Content("Cancel")
 													)
-					</div>
+                    </div>
 
-				</fieldset>
+                </fieldset>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 }
 <script type="text/javascript">
 	function redirectToIndex() {

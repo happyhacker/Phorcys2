@@ -1,3 +1,13 @@
 ﻿.pageMessage {
     color: red;
 }
+.chips-green .k-chip.k-chip {
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 16px;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+}
+body {
+    outline: 5px solid red;
+}

@@ -136,8 +136,10 @@ namespace Phorcys2Web.Controllers
 			model.AvailableDiveTypes = BuildDiveTypeList(Id);
 			model.SelectedGearIds = divePlan.Gears.Select(g => g.GearId).ToList();
 			model.AvailableGear = BuildGearList(divePlan.UserId);
+            model.SelectedDiverIds= divePlan.DiveTeams.Select(db => db.DiverId).ToList();
+            model.DiveBuddies = BuildDiveBuddiesList(divePlan.UserId);
 
-			return View(model);
+            return View(model);
 		}
 
 		[Authorize]
@@ -157,8 +159,9 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
 				divePlanDto.SelectedGearIds = model.SelectedGearIds ?? new List<int>();
 				divePlanDto.SelectedDiveTypeIds = model.SelectedDiveTypeIds ?? new List<int>();
+                divePlanDto.SelectedDiverIds = model.SelectedDiverIds ?? new List<int>();
 
-				_divePlanServices.EditDivePlan(divePlanDto);
+                _divePlanServices.EditDivePlan(divePlanDto);
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive Plan was successfully updated.";
 				return RedirectToAction("Index");
 			}

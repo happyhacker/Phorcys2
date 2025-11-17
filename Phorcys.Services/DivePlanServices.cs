@@ -111,6 +111,7 @@ public class DivePlanServices
                 .Include(dp => dp.Gears).ThenInclude(g => g.Tank)
                 .Include(dp => dp.DiveTypes)
                 .Include(dp => dp.TanksOnDives)
+                .Include(dp => dp.DiveTeams).ThenInclude(dt => dt.Diver)
                 .FirstOrDefault(dp => dp.DivePlanId == divePlanDto.DivePlanId);
 
             if (divePlan == null)
@@ -172,6 +173,22 @@ public class DivePlanServices
                 }
             }
 
+            // 🔹 Update DiveBuddies (DiveTeams) to match SelectedDiverIds
+            divePlan.DiveTeams.Clear();   // remove existing buddies
+
+            if(divePlanDto.SelectedDiverIds != null && divePlanDto.SelectedDiverIds.Any()) {
+                var selectedDivers = _context.Divers
+                    .Where(d => divePlanDto.SelectedDiverIds.Contains(d.DiverId))
+                    .ToList();
+
+                foreach(var diver in selectedDivers) {
+                    divePlan.DiveTeams.Add(new DiveTeam {
+                        DivePlan = divePlan,
+                        Diver = diver
+                    });
+                }
+            }
+
             _context.SaveChanges();
         }
         catch (Exception ex)
@@ -187,7 +204,8 @@ public class DivePlanServices
 		{
 			var divePlan = _context.DivePlans.Include(dp => dp.Gears).ThenInclude(g => g.Tank)
                 .Include(dp => dp.DiveTypes)
-				.FirstOrDefault(dp => dp.DivePlanId == divePlanId);
+                .Include(dp => dp.DiveTeams).ThenInclude(dt => dt.Diver)
+                .FirstOrDefault(dp => dp.DivePlanId == divePlanId);
 			return divePlan;	
 		}
 		catch (SqlException ex)
