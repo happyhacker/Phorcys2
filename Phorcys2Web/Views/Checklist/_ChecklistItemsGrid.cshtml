@@ -1,0 +1,35 @@
+﻿@(Html.Kendo().Grid<Phorcys.Web.Models.ChecklistItemCreateDto>()
+    .Name("checklistItemsGrid")
+    .ToolBar(t =>
+        t.Custom()
+         .Text("Add Item")
+         .HtmlAttributes(new { onclick = "$('#checklistItemsGrid').data('kendoGrid').addRow();" })
+    )
+    .Reorderable(r => r.Rows(true))
+    .Editable(e => e.Mode(GridEditMode.InLine))
+    .Columns(columns =>
+    {
+        columns.Template("").Draggable(true).Width(40);
+
+        columns.Bound(i => i.SequenceNumber)
+               .Title("#")
+               .Width(60);
+
+        columns.Bound(i => i.Title)
+               .Title("Item");
+
+        columns.Command(cmd =>
+        {
+            cmd.Edit();
+            cmd.Destroy();
+        }).Width(180);
+    })
+    .DataSource(ds => ds.Ajax()
+        .Model(m =>
+        {
+            m.Id(i => i.SequenceNumber); // temporary
+            m.Field(f => f.SequenceNumber).Editable(false);
+            m.Field(f => f.Title);
+        })
+    )
+)

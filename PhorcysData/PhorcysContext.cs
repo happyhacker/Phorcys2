@@ -135,7 +135,11 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 
 	}
 
-	public DbSet<DiveType> DiveTypes { get; set; }
+    public DbSet<Checklist> Checklists { get; set; }
+    public DbSet<ChecklistItem> ChecklistItems { get; set; }
+    public DbSet<ChecklistInstance> ChecklistInstances { get; set; }
+    public DbSet<ChecklistInstanceItem> ChecklistInstanceItems { get; set; }
+    public DbSet<DiveType> DiveTypes { get; set; }
 	public DbSet<DiveShop> DiveShops { get; set; }
 	public DbSet<Dive> Dives { get; set; }
 	public DbSet<DivePlan> DivePlans { get; set; }

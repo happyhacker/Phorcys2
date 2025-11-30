@@ -1,0 +1,90 @@
+﻿
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@model Phorcys.Web.Models.ChecklistCreateViewModel
+
+@{
+    ViewData["Title"] = "New Checklist";
+}
+
+<div class="placeholders mb-2">
+    <div class="row d-flex justify-content-start">
+    </div>
+</div>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        <p class="lead-text text-muted">@ViewBag.Message</p>
+    </div>
+</section>
+
+
+<h2>Create Checklist</h2>
+
+<form id="checklistForm" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mb-3">
+        <label>Checklist Title</label>
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(m => m.ItemsJson, new { id = "ItemsJson" })
+
+    <h3>Items</h3>
+
+    @Html.Partial("_ChecklistItemsGrid")
+
+    <button type="submit" class="btn btn-primary mt-3">
+        Save Checklist
+    </button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            var grid = $("#checklistItemsGrid").data("kendoGrid");
+
+            function resequence() {
+                var data = grid.dataSource.data();
+                for (var i = 0; i < data.length; i++) {
+                    data[i].set("SequenceNumber", i + 1);
+                }
+            }
+
+            grid.dataSource.bind("change", function (e) {
+                resequence();
+            });
+
+            grid.bind("rowReorder", function () {
+                resequence();
+            });
+
+            $("#checklistForm").submit(function () {
+
+                if (grid.editable) {
+                    grid.closeCell();
+                }
+
+                resequence();
+
+                var data = grid.dataSource.data();
+                var items = [];
+
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Title && data[i].Title.trim().length > 0) {
+                        items.push({
+                            Title: data[i].Title,
+                            SequenceNumber: data[i].SequenceNumber
+                        });
+                    }
+                }
+
+                $("#ItemsJson").val(JSON.stringify(items));
+            });
+        });
+    </script>
+}
