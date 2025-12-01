@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Phorcys.Data;
 using Phorcys.Domain;
 
@@ -51,6 +52,14 @@ namespace Phorcys.Services {
 
                 throw;
             }
+        }
+
+        public IEnumerable<Checklist> GetChecklists(int userId) {
+            return _context.Checklists
+                .Include(c => c.Items)
+                .Where(c => c.UserId == userId)
+                .OrderBy(c => c.Title)
+                .ToList();
         }
     }
 }

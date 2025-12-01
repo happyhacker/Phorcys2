@@ -1,0 +1,71 @@
+@using Phorcys2Web.Controllers
+
+@{
+        ViewData["Title"] = "Checklists";
+}
+@model IEnumerable<Phorcys.Web.Models.ChecklistIndexViewModel>
+
+<section class="jumbotron text-center">
+        <div class="container">
+                <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        </div>
+</section>
+
+<div id="message" class="pageMessage">
+        @{
+                if (ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null)
+                {
+                }
+                        <p id="pageMessage">
+                                @(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
+                        </p>
+        }
+</div>
+
+<div class="placeholders mb-2">
+        <div class="row d-flex justify-content-start">
+        </div>
+</div>
+<p>
+        <form action="@Url.Action("Create", "Checklist")" method="get">
+                <button type="submit" class="btn btn-primary">Create Checklist</button>
+        </form>
+</p>
+
+<div class="row">
+        <div class="col-12">
+                @(
+                                Html.Kendo().Grid(Model)
+                                .Name("Grid")
+                                .Columns(columns =>
+                                {
+                                        columns.Bound(p => p.ChecklistId).Hidden(true);
+                                        columns.Bound(p => p.Title);
+                                        columns.Bound(p => p.Created).Format("{0:MM/dd/yyyy}");
+                                        columns.Bound(p => p.LastModified).Format("{0:MM/dd/yyyy}");
+                                        columns.Bound(p => p.ItemCount).Title("Items").Width(120);
+                                })
+                                .Height(700)
+                                .Mobile()
+                                .Resizable(resize => resize.Columns(true)
+                                )
+                                .ToolBar(toolbar =>
+                                {
+                                        toolbar.Excel();
+                                        toolbar.Pdf();
+                                        toolbar.Search();
+                                })
+                                .Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                                .Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                                .ColumnMenu(col => col.Filterable(true))
+                                .Pageable(pageable => pageable
+                                .ButtonCount(5)
+                                .Refresh(true)
+                                .PageSizes(new[] { 5, 10, 20, 40, 800 }))
+                                .Sortable()
+                                .Groupable()
+                                .Filterable()
+                                .Scrollable()
+                                )
+        </div>
+</div>

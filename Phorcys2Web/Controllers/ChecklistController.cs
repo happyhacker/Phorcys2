@@ -5,6 +5,7 @@ using Phorcys.Data.DTOs;
 using Phorcys.Services;
 using Phorcys.Web.Models;
 using Phorcys2Web.Controllers;
+using System.Linq;
 using System.Text.Json;
 
 namespace Phorcys.Web.Controllers {
@@ -20,6 +21,22 @@ namespace Phorcys.Web.Controllers {
             _checklistService = checklistService;
             _logger = logger;
             _userServices = userServices;
+        }
+
+        [Authorize, HttpGet]
+        public IActionResult Index() {
+            var userId = _userServices.GetUserId();
+            var checklists = _checklistService.GetChecklists(userId)
+                .Select(c => new ChecklistIndexViewModel {
+                    ChecklistId = c.ChecklistId,
+                    Title = c.Title,
+                    Created = c.Created,
+                    LastModified = c.LastModified,
+                    ItemCount = c.Items?.Count ?? 0
+                })
+                .ToList();
+
+            return View(checklists);
         }
 
         [Authorize, HttpGet]
@@ -69,8 +86,7 @@ namespace Phorcys.Web.Controllers {
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
                     "The Checklist was successfully added.";
 
-                // Later you might redirect to a Checklist index or detail page
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             catch(Exception ex) {
                 // High-level catch: log and show friendly message
