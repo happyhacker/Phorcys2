@@ -1,0 +1,45 @@
+﻿@using Phorcys.Data.DTOs
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().Grid<ChecklistItemCreateDto>()
+    .Name("checklistItemsGrid")
+    .ToolBar(t =>
+        t.Custom()
+         .Text("Add Item")
+         .HtmlAttributes(new { id = "btnAddItem" })
+    )
+    .Reorderable(r => r.Rows(true))
+    .Editable(e => e.Mode(GridEditMode.InCell))   // type directly in cells
+    .Columns(columns =>
+    {
+        // Drag handle column
+        columns.Template("")
+               .Draggable(true)
+               .Width(40);
+
+        columns.Bound(i => i.SequenceNumber)
+               .Title("#")
+               .Width(60);
+
+        columns.Bound(i => i.Title)
+               .Title("Item");
+
+        // Delete only – editing happens inline in the cell
+        columns.Command(cmd =>
+        {
+            cmd.Destroy();
+        }).Title("Actions").Width(120);
+    })
+    .DataSource(ds => ds.Ajax()
+        .Model(m =>
+        {
+            // Use SequenceNumber as a client-side key.
+            // It will be resequenced in JS.
+            m.Id(i => i.SequenceNumber);
+            m.Field(f => f.SequenceNumber).Editable(false);
+            m.Field(f => f.Title);
+        })
+        // NO transport.Read / Create / Update / Destroy:
+        // grid data stays client-side until the form is submitted.
+    )
+)

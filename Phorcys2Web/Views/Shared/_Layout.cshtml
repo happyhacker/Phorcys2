@@ -122,6 +122,12 @@
                         child.Add().Text("Display Contacts").Action("Index", "Contact");
                     });
 
+                    items.Add().Text("Checklists").Items(child =>
+                    {
+                        child.Add().Text("Create Checklist").Action("Create", "Checklist");
+                        child.Add().Text("Display Checklists").Action("Index", "Checklist");
+                    });
+
                     items.Add().Text("Calculators").Items(child =>
                     {
                         child.Add().Text("MOD & END").Action("Index", "ModEnd");
