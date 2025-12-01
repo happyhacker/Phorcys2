@@ -1,25 +1,9 @@
-﻿
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
-@using Phorcys2Web.Controllers
-
-@model Phorcys.Web.Models.ChecklistCreateViewModel
+﻿@model Phorcys.Web.Models.ChecklistCreateViewModel
+@using Kendo.Mvc.UI
 
 @{
-    ViewData["Title"] = "New Checklist";
+    ViewData["Title"] = "Create Checklist";
 }
-
-<div class="placeholders mb-2">
-    <div class="row d-flex justify-content-start">
-    </div>
-</div>
-
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
-        <p class="lead-text text-muted">@ViewBag.Message</p>
-    </div>
-</section>
-
 
 <h2>Create Checklist</h2>
 
@@ -27,8 +11,10 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group mb-3">
-        <label>Checklist Title</label>
-        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        <label asp-for="Title" class="form-label"></label>
+        @(Html.Kendo().TextBoxFor(m => m.Title))
+
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
     </div>
 
     @Html.HiddenFor(m => m.ItemsJson, new { id = "ItemsJson" })
@@ -37,9 +23,12 @@
 
     @Html.Partial("_ChecklistItemsGrid")
 
-    <button type="submit" class="btn btn-primary mt-3">
-        Save Checklist
-    </button>
+    <div class="mt-3">
+        @(Html.Kendo().Button()
+            .Name("saveChecklistButton")
+            .Content("Save Checklist")
+            .HtmlAttributes(new { type = "submit", @class = "btn btn-primary" }))
+    </div>
 </form>
 
 @section Scripts {
@@ -48,26 +37,115 @@
 
             var grid = $("#checklistItemsGrid").data("kendoGrid");
 
-            function resequence() {
-                var data = grid.dataSource.data();
-                for (var i = 0; i < data.length; i++) {
-                    data[i].set("SequenceNumber", i + 1);
+            // Ensure there is always at least one blank row on load
+            function ensureInitialRow() {
+                if (grid.dataSource.total() === 0) {
+                    var newItem = grid.dataSource.add({
+                        SequenceNumber: 1,
+                        Title: ""
+                    });
+
+                    var row = grid.tbody.find("tr[data-uid='" + newItem.uid + "']");
+                    grid.editCell(row.find("td:eq(2)")); // 0=drag,1=#,2=Title
                 }
             }
 
+            function resequence() {
+                var data = grid.dataSource.data();
+                for (var i = 0; i < data.length; i++) {
+                    data[i].set("SequenceNumber", i + 1); // 1-based
+                }
+            }
+
+            // Initial setup
+            ensureInitialRow();
+            resequence();
+
+            // "Add Item" toolbar button
+            $("#btnAddItem").on("click", function (e) {
+                e.preventDefault();
+
+                grid.closeCell();
+
+                var data = grid.dataSource.data();
+                var nextSeq = data.length + 1;
+
+                var newItem = grid.dataSource.add({
+                    SequenceNumber: nextSeq,
+                    Title: ""
+                });
+
+                resequence();
+
+                var row = grid.tbody.find("tr[data-uid='" + newItem.uid + "']");
+                grid.editCell(row.find("td:eq(2)"));
+            });
+
+            // Resequence anytime data changes (add/remove/edit)
             grid.dataSource.bind("change", function (e) {
                 resequence();
             });
 
-            grid.bind("rowReorder", function () {
+            // Resequence after drag & drop
+            grid.bind("rowReorder", function (e) {
                 resequence();
             });
 
-            $("#checklistForm").submit(function () {
+            // Prevent Enter inside the grid from submitting the form,
+            // and instead: save this row's value, add a new row, focus it.
+            $("#checklistItemsGrid").on("keydown", "input", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.stopPropagation();
 
-                if (grid.editable) {
+                    var $input = $(e.target);
+                    var cell = $input.closest("td");
+                    var row = cell.closest("tr");
+
+                    // Get the dataItem for the row we're currently editing
+                    var dataItem = grid.dataItem(row);
+
+                    // Determine which field this column is bound to (e.g., "Title")
+                    var cellIndex = cell.index();
+                    var field = grid.columns[cellIndex] && grid.columns[cellIndex].field;
+
+                    // Manually push the input value into the data item before closing the cell
+                    if (field) {
+                        dataItem.set(field, $input.val());
+                    }
+
+                    // Close the editor so the value is committed visually too
                     grid.closeCell();
+
+                    // Now add a new blank row
+                    var data = grid.dataSource.data();
+                    var nextSeq = data.length + 1;
+
+                    var newItem = grid.dataSource.add({
+                        SequenceNumber: nextSeq,
+                        Title: ""
+                    });
+
+                    resequence();
+
+                    // Focus the Title cell of the new row
+                    var newRow = grid.tbody.find("tr[data-uid='" + newItem.uid + "']");
+                    grid.editCell(newRow.find("td:eq(2)")); // 0=drag,1=#,2=Title
                 }
+            });
+
+            // Extra safety: if Enter is pressed anywhere inside the grid area,
+            // don't let the form submit.
+            $("#checklistForm").on("keydown", function (e) {
+                if (e.key === "Enter" &&
+                    $(e.target).closest("#checklistItemsGrid").length > 0) {
+                    e.preventDefault();
+                }
+            });
+
+            // Before submitting the form, serialize grid data into ItemsJson
+            $("#checklistForm").on("submit", function (e) {
+                grid.closeCell();
 
                 resequence();
 
@@ -75,10 +153,11 @@
                 var items = [];
 
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].Title && data[i].Title.trim().length > 0) {
+                    var item = data[i];
+                    if (item.Title && item.Title.trim().length > 0) {
                         items.push({
-                            Title: data[i].Title,
-                            SequenceNumber: data[i].SequenceNumber
+                            Title: item.Title,
+                            SequenceNumber: item.SequenceNumber
                         });
                     }
                 }
@@ -88,3 +167,4 @@
         });
     </script>
 }
+

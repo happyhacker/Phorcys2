@@ -1,15 +1,21 @@
-﻿@(Html.Kendo().Grid<Phorcys.Web.Models.ChecklistItemCreateDto>()
+﻿@using Phorcys.Data.DTOs
+@using Kendo.Mvc.UI
+
+@(Html.Kendo().Grid<ChecklistItemCreateDto>()
     .Name("checklistItemsGrid")
     .ToolBar(t =>
         t.Custom()
          .Text("Add Item")
-         .HtmlAttributes(new { onclick = "$('#checklistItemsGrid').data('kendoGrid').addRow();" })
+         .HtmlAttributes(new { id = "btnAddItem" })
     )
     .Reorderable(r => r.Rows(true))
-    .Editable(e => e.Mode(GridEditMode.InLine))
+    .Editable(e => e.Mode(GridEditMode.InCell))   // type directly in cells
     .Columns(columns =>
     {
-        columns.Template("").Draggable(true).Width(40);
+        // Drag handle column
+        columns.Template("")
+               .Draggable(true)
+               .Width(40);
 
         columns.Bound(i => i.SequenceNumber)
                .Title("#")
@@ -18,18 +24,22 @@
         columns.Bound(i => i.Title)
                .Title("Item");
 
+        // Delete only – editing happens inline in the cell
         columns.Command(cmd =>
         {
-            cmd.Edit();
             cmd.Destroy();
-        }).Width(180);
+        }).Title("Actions").Width(120);
     })
     .DataSource(ds => ds.Ajax()
         .Model(m =>
         {
-            m.Id(i => i.SequenceNumber); // temporary
+            // Use SequenceNumber as a client-side key.
+            // It will be resequenced in JS.
+            m.Id(i => i.SequenceNumber);
             m.Field(f => f.SequenceNumber).Editable(false);
             m.Field(f => f.Title);
         })
+        // NO transport.Read / Create / Update / Destroy:
+        // grid data stays client-side until the form is submitted.
     )
 )

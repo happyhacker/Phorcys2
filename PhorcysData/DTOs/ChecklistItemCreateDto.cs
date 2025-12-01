@@ -1,4 +1,4 @@
-﻿namespace Phorcys.Web.Models;
+﻿namespace Phorcys.Data.DTOs;
 
 public class ChecklistItemCreateDto {
     public string Title { get; set; } = string.Empty;

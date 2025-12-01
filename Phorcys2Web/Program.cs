@@ -19,12 +19,15 @@ builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential()
 
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
+    .MinimumLevel.Information() // console still shows INFO
     .WriteTo.Console()
-    .WriteTo.File("Home/LogFiles/log-.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.File(
+        "Home/LogFiles/log-.txt",
+        rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning // FILE logs start at Warning
+    )
     .CreateLogger();
-
-builder.Host.UseSerilog(); // Add this line to use Serilog as the logging provider
+builder.Host.UseSerilog();
 
 // Add services to the container
 builder.Services.AddDbContext<PhorcysContext>(options =>
