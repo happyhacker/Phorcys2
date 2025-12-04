@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Phorcys.Data;
 using Phorcys.Domain;
 
@@ -51,6 +52,31 @@ namespace Phorcys.Services {
 
                 throw;
             }
+        }
+
+        public void Delete(int id) {
+            try {
+                var checklist = _context.Checklists.Find(id);
+                if(checklist != null) {
+                    _context.Checklists.Remove(checklist);
+                    _context.SaveChanges();
+                }
+            }
+            catch(DbUpdateException ex) {
+                _logger.LogError(ex, "Error deleting Checklist {id}: {ErrorMessage}", id, ex.Message);
+                throw;
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public IEnumerable<Checklist> GetChecklists(int userId) {
+            return _context.Checklists
+                .Include(c => c.Items)
+                .Where(c => c.UserId == userId)
+                .OrderBy(c => c.Title)
+                .ToList();
         }
     }
 }
