@@ -104,5 +104,19 @@ namespace Phorcys.Web.Controllers {
                 return View(model);
             }
         }
+
+        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Delete(int checklistId) {
+            try {
+                var userId = _userServices.GetUserId();
+                _checklistService.Delete(checklistId);
+
+                return Ok();
+            }
+            catch(Exception ex) {
+                _logger.LogError(ex, "Error deleting checklist {ChecklistId}.", checklistId);
+                return StatusCode(500);
+            }
+        }
     }
 }

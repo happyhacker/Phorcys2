@@ -54,6 +54,23 @@ namespace Phorcys.Services {
             }
         }
 
+        public void Delete(int id) {
+            try {
+                var checklist = _context.Checklists.Find(id);
+                if(checklist != null) {
+                    _context.Checklists.Remove(checklist);
+                    _context.SaveChanges();
+                }
+            }
+            catch(DbUpdateException ex) {
+                _logger.LogError(ex, "Error deleting Checklist {id}: {ErrorMessage}", id, ex.Message);
+                throw;
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public IEnumerable<Checklist> GetChecklists(int userId) {
             return _context.Checklists
                 .Include(c => c.Items)

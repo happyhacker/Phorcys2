@@ -1,30 +1,30 @@
 @using Phorcys2Web.Controllers
+@model IEnumerable<Phorcys.Web.Models.ChecklistIndexViewModel>
 
 @{
     ViewData["Title"] = "Checklists";
 }
-@model IEnumerable<Phorcys.Web.Models.ChecklistIndexViewModel>
+
+@Html.AntiForgeryToken()
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">@ViewBag.Title</h1>
+        <h1 class="jumbotron-heading">Checklists</h1>
     </div>
 </section>
 
-<div id="message" class="pageMessage">
-    @{
-        if(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] != null) {
-        }
-        <p id="pageMessage">
-            @(ViewContext.TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()])
-        </p>
-    }
-</div>
+@{
+    var pageMessage = ViewContext.TempData[
+        ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()
+    ] as string;
+}
 
-<div class="placeholders mb-2">
-    <div class="row d-flex justify-content-start">
+@if(!string.IsNullOrEmpty(pageMessage)) {
+    <div id="message" class="pageMessage">
+        <p id="pageMessage">@pageMessage</p>
     </div>
-</div>
+}
+
 <p>
     <form action="@Url.Action("Create", "Checklist")" method="get">
         <button type="submit" class="btn btn-primary">Create Checklist</button>
@@ -35,36 +35,93 @@
     <div class="col-12">
         @(
             Html.Kendo().Grid(Model)
-            .Name("Grid")
-            .Columns(columns =>
-            {
-                    columns.Bound(p => p.ChecklistId).Hidden(true);
-                    columns.Bound(p => p.Title);
+                .Name("Grid")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.ChecklistId).Hidden();
+                    columns.Bound(p => p.Title).Title("Checklist");
                     columns.Bound(p => p.Created).Format("{0:MM/dd/yyyy}");
                     columns.Bound(p => p.LastModified).Format("{0:MM/dd/yyyy}");
                     columns.Bound(p => p.ItemCount).Title("Items").Width(120);
-            })
-            .Height(700)
-            .Mobile()
-            .Resizable(resize => resize.Columns(true)
-            )
-            .ToolBar(toolbar =>
-            {
+
+                    columns.Command(command =>
+                    {
+                        //command.Custom("Edit").Click("onEditChecklist");
+                        command.Custom("Delete").Click("onDeleteChecklist");
+                    })
+                    .Title("Actions")
+                    .Width(200);
+                })
+                .Height(700)
+                .Mobile()
+                .Resizable(resize => resize.Columns(true))
+                .ToolBar(toolbar =>
+                {
                     toolbar.Excel();
                     toolbar.Pdf();
                     toolbar.Search();
-            })
-            .Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
-            .Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
-            .ColumnMenu(col => col.Filterable(true))
-            .Pageable(pageable => pageable
-            .ButtonCount(5)
-            .Refresh(true)
-            .PageSizes(new[] { 5, 10, 20, 40, 800 }))
-            .Sortable()
-            .Groupable()
-            .Filterable()
-            .Scrollable()
-            )
+                })
+                .Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                .Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                .ColumnMenu(col => col.Filterable(true))
+                .Pageable(pageable => pageable
+                    .ButtonCount(5)
+                    .Refresh(true)
+                    .PageSizes(new[] { 5, 10, 20, 40, 800 }))
+                .Sortable()
+                .Groupable()
+                .Filterable()
+                .Scrollable()
+        )
     </div>
 </div>
+
+<script>
+    function onEditChecklist(e) {
+        e.preventDefault();
+
+        var grid = $("#Grid").data("kendoGrid");
+        var tr = $(e.target).closest("tr");
+        var data = grid.dataItem(tr);
+
+        var checklistId = data.ChecklistId;
+
+        window.location.href = '@Url.Action("Edit", "Checklist")/' + checklistId;
+    }
+
+    function onDeleteChecklist(e) {
+        e.preventDefault();
+
+        var grid = $("#Grid").data("kendoGrid");
+        var tr = $(e.target).closest("tr");
+        var data = grid.dataItem(tr);
+
+        var checklistId = data.ChecklistId;
+        var title = data.Title;
+
+        if (!confirm("Are you sure you want to delete checklist '" + title + "'?"))
+            return;
+
+        var token = document.querySelector("input[name='__RequestVerificationToken']").value;
+
+        fetch('/Checklist/Delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'RequestVerificationToken': token
+            },
+            body: `checklistId=${encodeURIComponent(checklistId)}&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert("Error deleting checklist.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("An error occurred while deleting the checklist.");
+        });
+    }
+</script>

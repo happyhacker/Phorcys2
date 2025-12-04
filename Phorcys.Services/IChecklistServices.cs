@@ -8,5 +8,6 @@ public interface IChecklistServices {
         string title,
         IEnumerable<(string Title, int SequenceNumber)> items);
 
+    void Delete(int id);
     IEnumerable<Checklist> GetChecklists(int userId);
 }
