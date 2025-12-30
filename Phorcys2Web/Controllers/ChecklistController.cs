@@ -97,10 +97,12 @@ namespace Phorcys.Web.Controllers {
 
             var userId = _userServices.GetUserId();
 
+            var incomingItems = items ?? Enumerable.Empty<ChecklistInstanceItemViewModel>();
+
             var updateResult = _checklistService.UpdateChecklistInstanceItems(
                 userId,
                 checklistId,
-                (items ?? Enumerable.Empty<ChecklistInstanceItemViewModel>()).Select(i => new ChecklistInstanceItem {
+                incomingItems.Select(i => new ChecklistInstanceItem {
                     ChecklistInstanceId = 0,
                     ChecklistInstanceItemId = i.ChecklistInstanceItemId,
                     SequenceNumber = i.SequenceNumber,
@@ -109,13 +111,18 @@ namespace Phorcys.Web.Controllers {
                     Created = DateTime.Now
                 }));
 
-            var responseItems = (updateResult?.Items ?? Enumerable.Empty<ChecklistInstanceItem>())
-                .Select(i => new ChecklistInstanceItemViewModel {
-                    ChecklistInstanceItemId = i.ChecklistInstanceItemId,
-                    SequenceNumber = i.SequenceNumber,
-                    IsChecked = i.IsChecked,
-                    Title = i.Title
-                });
+            var updatedLookup = (updateResult?.Items ?? Enumerable.Empty<ChecklistInstanceItem>())
+                .ToDictionary(i => i.ChecklistInstanceItemId, i => i);
+
+            var responseItems = incomingItems
+                .Select(i => updatedLookup.TryGetValue(i.ChecklistInstanceItemId, out var updated)
+                    ? new ChecklistInstanceItemViewModel {
+                        ChecklistInstanceItemId = updated.ChecklistInstanceItemId,
+                        SequenceNumber = updated.SequenceNumber,
+                        IsChecked = updated.IsChecked,
+                        Title = updated.Title
+                    }
+                    : i);
 
             return Json(responseItems.ToDataSourceResult(request, ModelState));
         }
