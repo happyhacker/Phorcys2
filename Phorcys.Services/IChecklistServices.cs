@@ -10,4 +10,9 @@ public interface IChecklistServices {
 
     void Delete(int id);
     IEnumerable<Checklist> GetChecklists(int userId);
+    ChecklistInstanceItemsResult? GetChecklistInstanceItems(int userId, int checklistId);
+    ChecklistInstanceItemsResult? UpdateChecklistInstanceItems(
+        int userId,
+        int checklistId,
+        IEnumerable<ChecklistInstanceItem> updatedItems);
 }
