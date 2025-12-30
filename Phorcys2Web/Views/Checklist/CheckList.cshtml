@@ -27,7 +27,8 @@
                     columns.Bound(i => i.IsChecked)
                         .Title("Checked")
                         .Width(120)
-                        .ClientTemplate("<input type='checkbox' id='chk_#=ChecklistInstanceItemId#' class='checklist-instance-checkbox k-checkbox k-checkbox-md k-rounded-md' onchange='onChecklistInstanceCheckboxChange(this)' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # /><label class='k-checkbox-label' for='chk_#=ChecklistInstanceItemId#'></label>");
+                        .ClientTemplate("<input type='checkbox' class='k-checkbox k-checkbox-md k-rounded-md' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # disabled='disabled' /><label class='k-checkbox-label'></label>")
+                        .EditorTemplateName("ChecklistInstanceIsChecked");
                     columns.Bound(i => i.Title).Title("Item");
                 })
                 .Mobile()
@@ -38,7 +39,7 @@
                     toolbar.Pdf();
                     toolbar.Search();
                 })
-                .Editable(edit => edit.Mode(GridEditMode.InCell).Enabled(false))
+                .Editable(edit => edit.Mode(GridEditMode.InCell))
                 .ColumnMenu(col => col.Filterable(true))
                 .DataSource(ds => ds.Ajax()
                     .Batch(true)
@@ -78,17 +79,3 @@
     <a class="btn btn-secondary" href="@Url.Action("Index", "Checklist")">Back to Checklists</a>
 </p>
 
-@section Scripts {
-    <script>
-        function onChecklistInstanceCheckboxChange(checkbox) {
-            var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
-            var dataItem = grid.dataItem($(checkbox).closest("tr"));
-
-            if (!dataItem) {
-                return;
-            }
-
-            dataItem.set("IsChecked", checkbox.checked);
-        }
-    </script>
-}
