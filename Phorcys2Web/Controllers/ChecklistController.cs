@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Phorcys.Data.DTOs;
+using Phorcys.Domain;
 using Phorcys.Services;
 using Phorcys.Web.Models;
 using Phorcys2Web.Controllers;
@@ -44,13 +47,85 @@ namespace Phorcys.Web.Controllers {
             return View(new ChecklistCreateViewModel());
         }
 
+        [Authorize, HttpGet]
+        public IActionResult CheckList(int id) {
+            var userId = _userServices.GetUserId();
+            var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, id);
+
+            if(instanceItemsResult == null) {
+                return NotFound();
+            }
+
+            var model = new ChecklistInstanceViewModel {
+                ChecklistId = instanceItemsResult.ChecklistId,
+                Title = instanceItemsResult.Title,
+                Items = instanceItemsResult.Items.Select(i => new ChecklistInstanceItemViewModel {
+                    ChecklistInstanceItemId = i.ChecklistInstanceItemId,
+                    SequenceNumber = i.SequenceNumber,
+                    IsChecked = i.IsChecked,
+                    Title = i.Title
+                }).ToList()
+            };
+
+            return View(model);
+        }
+
+        [Authorize]
+        public IActionResult ChecklistInstanceItems_Read([DataSourceRequest] DataSourceRequest request, int id) {
+            var userId = _userServices.GetUserId();
+            var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, id);
+
+            if(instanceItemsResult == null) {
+                return NotFound();
+            }
+
+            var items = instanceItemsResult.Items.Select(i => new ChecklistInstanceItemViewModel {
+                ChecklistInstanceItemId = i.ChecklistInstanceItemId,
+                SequenceNumber = i.SequenceNumber,
+                IsChecked = i.IsChecked,
+                Title = i.Title
+            });
+
+            return Json(items.ToDataSourceResult(request));
+        }
+
+        [Authorize, HttpPost]
+        public IActionResult ChecklistInstanceItems_Update(
+            [DataSourceRequest] DataSourceRequest request,
+            int checklistId,
+            [Bind(Prefix = "models")] IEnumerable<ChecklistInstanceItemViewModel> items) {
+
+            var userId = _userServices.GetUserId();
+
+            var updateResult = _checklistService.UpdateChecklistInstanceItems(
+                userId,
+                checklistId,
+                (items ?? Enumerable.Empty<ChecklistInstanceItemViewModel>()).Select(i => new ChecklistInstanceItem {
+                    ChecklistInstanceId = 0,
+                    ChecklistInstanceItemId = i.ChecklistInstanceItemId,
+                    SequenceNumber = i.SequenceNumber,
+                    Title = i.Title,
+                    IsChecked = i.IsChecked,
+                    Created = DateTime.Now
+                }));
+
+            var responseItems = (updateResult?.Items ?? Enumerable.Empty<ChecklistInstanceItem>())
+                .Select(i => new ChecklistInstanceItemViewModel {
+                    ChecklistInstanceItemId = i.ChecklistInstanceItemId,
+                    SequenceNumber = i.SequenceNumber,
+                    IsChecked = i.IsChecked,
+                    Title = i.Title
+                });
+
+            return Json(responseItems.ToDataSourceResult(request, ModelState));
+        }
+
         [Authorize, HttpPost, ValidateAntiForgeryToken]
         public IActionResult Create(ChecklistCreateViewModel model) {
             if(!ModelState.IsValid) {
                 return View(model);
             }
 
-            // 1. Deserialize the items JSON coming from the grid
             List<ChecklistItemCreateDto>? dtoItems = null;
 
             if(!string.IsNullOrWhiteSpace(model.ItemsJson)) {
@@ -68,16 +143,13 @@ namespace Phorcys.Web.Controllers {
                 }
             }
 
-            // 2. Map Web DTOs -> simple tuples for the service
             var items = (dtoItems ?? new List<ChecklistItemCreateDto>())
                 .Where(x => !string.IsNullOrWhiteSpace(x.Title))
                 .Select(x => (x.Title, x.SequenceNumber));
 
             try {
-                // 3. Get the current user id (from your Users table)
                 int userId = _userServices.GetUserId();
 
-                // 4. Call the service – it handles transaction + logging
                 var checklistId = _checklistService.CreateChecklistWithItems(
                     userId,
                     model.Title,
@@ -89,7 +161,6 @@ namespace Phorcys.Web.Controllers {
                 return RedirectToAction("Index");
             }
             catch(Exception ex) {
-                // High-level catch: log and show friendly message
                 _logger.LogError(ex,
                     "Error creating checklist '{Title}' for current user. Model: {@Model}",
                     model.Title,
@@ -100,7 +171,6 @@ namespace Phorcys.Web.Controllers {
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
                     "There was a problem saving the checklist. Please try again. If the problem persists, contact support.";
 
-                // Re-render the view with the user's input and validation errors
                 return View(model);
             }
         }
