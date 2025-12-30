@@ -21,12 +21,23 @@
                 .Name("ChecklistInstanceGrid")
                 .Columns(columns =>
                 {
-                    columns.Bound(i => i.SequenceNumber).Title("#").Width(80).Editable(false);
+                    columns.Bound(i => i.SequenceNumber)
+                        .Title("#")
+                        .Width(80);
+
                     columns.Bound(i => i.IsChecked)
-                        .Title("Checked")
-                        .Width(120)
-                        .ClientTemplate("<input type='checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />");
-                    columns.Bound(i => i.Title).Title("Item").Editable(false);
+                      .Title("Checked")
+                      .Width(120)
+                      .HtmlAttributes(new { style = "text-align:center;" })
+                      .HeaderHtmlAttributes(new { style = "text-align:center;" })
+                      .ClientTemplate(
+                          "<input type='checkbox' " +
+                          "#= IsChecked ? 'checked=\"checked\"' : '' # " +
+                          "onchange='onChecklistCheckedChange(this)' />"
+                      );
+
+                    columns.Bound(i => i.Title)
+                        .Title("Item");
                 })
                 .Editable(edit => edit.Mode(GridEditMode.InCell))
                 .DataSource(ds => ds.Ajax()
@@ -34,19 +45,34 @@
                     .AutoSync(true)
                     .Model(m =>
                     {
+                        // WARNING: SequenceNumber must be unique. Your screenshot shows duplicates.
+                        // Replace with a real unique key if possible (e.g., ChecklistInstanceItemId).
                         m.Id(i => i.SequenceNumber);
+
                         m.Field(f => f.SequenceNumber).Editable(false);
                         m.Field(f => f.Title).Editable(false);
-                        m.Field(f => f.IsChecked);
+                        m.Field(f => f.IsChecked).Editable(true);
                     })
                     .Read(read => read.Action("ChecklistInstanceItems_Read", "Checklist", new { id = Model.ChecklistId }))
                     .Update(update => update.Action("ChecklistInstanceItems_Update", "Checklist", new { checklistId = Model.ChecklistId }))
                 )
-                .Pageable(page => page
+                .Mobile()
+                .Resizable(resize => resize.Columns(true))
+                .ToolBar(toolbar => {
+                    toolbar.Excel();
+                    toolbar.Pdf();
+                    toolbar.Search();
+                })
+                .Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                .Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+                .ColumnMenu(col => col.Filterable(true))
+                .Pageable(pageable => pageable
                     .ButtonCount(5)
                     .Refresh(true)
-                    .PageSizes(new[] { 5, 10, 20, 50 }))
+                    .PageSizes(new[] { 5, 10, 20, 40, 800 }))
                 .Sortable()
+                .Groupable()
+                .Filterable()
                 .Scrollable()
         )
     </div>
@@ -58,15 +84,12 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $(document).on("change", "#ChecklistInstanceGrid .k-grid-content input[type='checkbox']", function () {
-                var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
-                var dataItem = grid.dataItem($(this).closest("tr"));
+        function onChecklistCheckedChange(cb) {
+            var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
+            var dataItem = grid.dataItem($(cb).closest("tr"));
+            if (!dataItem) return;
 
-                if (dataItem) {
-                    dataItem.set("IsChecked", this.checked);
-                }
-            });
-        });
+            dataItem.set("IsChecked", cb.checked);
+        }
     </script>
 }
