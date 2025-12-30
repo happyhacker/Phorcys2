@@ -27,11 +27,17 @@
                     columns.Bound(i => i.IsChecked)
                         .Title("Checked")
                         .Width(120)
-                        .ClientTemplate("<input type='checkbox' class='checklist-instance-checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />")
-                        .EditorTemplateName("ChecklistInstanceIsChecked");
+                        .ClientTemplate("<input type='checkbox' class='checklist-instance-checkbox k-checkbox' onclick='onChecklistInstanceCheckboxClick(this)' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />");
                     columns.Bound(i => i.Title).Title("Item");
                 })
-                .Editable(edit => edit.Mode(GridEditMode.InCell))
+                .ToolBar(toolbar =>
+                {
+                    toolbar.Excel();
+                    toolbar.Pdf();
+                    toolbar.ColumnChooser();
+                })
+                .Editable(edit => edit.Mode(GridEditMode.InCell).Enabled(false))
+                .ColumnMenu()
                 .DataSource(ds => ds.Ajax()
                     .Batch(true)
                     .AutoSync(true)
@@ -46,6 +52,12 @@
                     .Read(read => read.Action("ChecklistInstanceItems_Read", "Checklist", new { id = Model.ChecklistId }))
                     .Update(update => update.Action("ChecklistInstanceItems_Update", "Checklist", new { checklistId = Model.ChecklistId }))
                 )
+                .Excel(excel => excel
+                    .AllPages(true)
+                    .FileName("ChecklistItems.xlsx"))
+                .Pdf(pdf => pdf
+                    .AllPages(true)
+                    .FileName("ChecklistItems.pdf"))
                 .Pageable(page => page
                     .ButtonCount(5)
                     .Refresh(true)
@@ -62,15 +74,15 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $(document).on("change", "#ChecklistInstanceGrid .k-grid-content input[type='checkbox']", function () {
-                var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
-                var dataItem = grid.dataItem($(this).closest("tr"));
+        function onChecklistInstanceCheckboxClick(checkbox) {
+            var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
+            var dataItem = grid.dataItem($(checkbox).closest("tr"));
 
-                if (dataItem) {
-                    dataItem.set("IsChecked", this.checked);
-                }
-            });
-        });
+            if (!dataItem) {
+                return;
+            }
+
+            dataItem.set("IsChecked", checkbox.checked);
+        }
     </script>
 }
