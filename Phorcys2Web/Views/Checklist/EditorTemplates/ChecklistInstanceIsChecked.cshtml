@@ -1,5 +1,7 @@
 @model bool
 
-@Html.Kendo().CheckBoxFor(m => m)
-    .Name("IsChecked")
-    .HtmlAttributes(new { @class = "checklist-instance-checkbox" })
+@(
+    Html.Kendo().CheckBoxFor(m => m)
+        .Name("IsChecked")
+        .HtmlAttributes(new { @class = "checklist-instance-checkbox" })
+)
