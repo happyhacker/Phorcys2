@@ -46,6 +46,7 @@
 
                     columns.Command(command =>
                     {
+                        command.Custom("Check List").Click("onCheckList");
                         //command.Custom("Edit").Click("onEditChecklist");
                         command.Custom("Delete").Click("onDeleteChecklist");
                     })
@@ -87,6 +88,18 @@
         var checklistId = data.ChecklistId;
 
         window.location.href = '@Url.Action("Edit", "Checklist")/' + checklistId;
+    }
+
+    function onCheckList(e) {
+        e.preventDefault();
+
+        var grid = $("#Grid").data("kendoGrid");
+        var tr = $(e.target).closest("tr");
+        var data = grid.dataItem(tr);
+
+        var checklistId = data.ChecklistId;
+
+        window.location.href = '@Url.Action("CheckList", "Checklist")/' + checklistId;
     }
 
     function onDeleteChecklist(e) {

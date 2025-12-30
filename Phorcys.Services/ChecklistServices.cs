@@ -78,5 +78,34 @@ namespace Phorcys.Services {
                 .OrderBy(c => c.Title)
                 .ToList();
         }
+
+        public ChecklistInstanceItemsResult? GetChecklistInstanceItems(int userId, int checklistId) {
+            var checklist = _context.Checklists
+                .Include(c => c.Items)
+                .FirstOrDefault(c => c.UserId == userId && c.ChecklistId == checklistId);
+
+            if(checklist == null) {
+                _logger.LogWarning("Checklist {ChecklistId} not found for user {UserId} when requesting instance items.", checklistId, userId);
+                return null;
+            }
+
+            var instanceItems = checklist.Items
+                .OrderBy(i => i.SequenceNumber)
+                .ThenBy(i => i.ChecklistItemId)
+                .Select(item => new ChecklistInstanceItem {
+                    ChecklistInstanceId = 0,
+                    SequenceNumber = item.SequenceNumber,
+                    Title = item.Title,
+                    IsChecked = false,
+                    Created = DateTime.Now
+                })
+                .ToList();
+
+            return new ChecklistInstanceItemsResult {
+                ChecklistId = checklist.ChecklistId,
+                Title = checklist.Title,
+                Items = instanceItems
+            };
+        }
     }
 }

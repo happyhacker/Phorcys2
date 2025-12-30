@@ -44,6 +44,28 @@ namespace Phorcys.Web.Controllers {
             return View(new ChecklistCreateViewModel());
         }
 
+        [Authorize, HttpGet]
+        public IActionResult CheckList(int checklistId) {
+            var userId = _userServices.GetUserId();
+            var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, checklistId);
+
+            if(instanceItemsResult == null) {
+                return NotFound();
+            }
+
+            var model = new ChecklistInstanceViewModel {
+                ChecklistId = instanceItemsResult.ChecklistId,
+                Title = instanceItemsResult.Title,
+                Items = instanceItemsResult.Items.Select(i => new ChecklistInstanceItemViewModel {
+                    SequenceNumber = i.SequenceNumber,
+                    IsChecked = i.IsChecked,
+                    Title = i.Title
+                }).ToList()
+            };
+
+            return View(model);
+        }
+
         [Authorize, HttpPost, ValidateAntiForgeryToken]
         public IActionResult Create(ChecklistCreateViewModel model) {
             if(!ModelState.IsValid) {
