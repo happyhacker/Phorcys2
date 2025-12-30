@@ -1,16 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Phorcys.Data;
 using Phorcys.Domain;
+using System.Collections.Concurrent;
 
 namespace Phorcys.Services {
     public class ChecklistServices : IChecklistServices {
         private readonly PhorcysContext _context;
         private readonly ILogger<ChecklistServices> _logger;
+        private readonly ConcurrentDictionary<string, ChecklistInstanceCacheEntry> _instanceCache = new();
 
         public ChecklistServices(PhorcysContext context, ILogger<ChecklistServices> logger) {
             _context = context;
             _logger = logger;
+        }
+
+        private sealed class ChecklistInstanceCacheEntry {
+            public string Title { get; set; } = string.Empty;
+            public List<ChecklistInstanceItem> Items { get; set; } = new();
         }
 
         public int CreateChecklistWithItems(
@@ -37,10 +44,7 @@ namespace Phorcys.Services {
                     });
                 }
 
-                // Add only the parent; EF will insert children based on the Items collection
                 _context.Checklists.Add(checklist);
-
-                // Single SaveChanges: EF wraps this in a transaction and does parent+children in one go
                 _context.SaveChanges();
 
                 return checklist.ChecklistId;
@@ -80,6 +84,47 @@ namespace Phorcys.Services {
         }
 
         public ChecklistInstanceItemsResult? GetChecklistInstanceItems(int userId, int checklistId) {
+            var cacheKey = GetCacheKey(userId, checklistId);
+
+            if(_instanceCache.TryGetValue(cacheKey, out var cachedEntry)) {
+                return CloneResult(checklistId, cachedEntry);
+            }
+
+            var createdEntry = CreateInstanceCacheEntry(userId, checklistId);
+            if(createdEntry == null) {
+                return null;
+            }
+
+            _instanceCache[cacheKey] = createdEntry;
+
+            return CloneResult(checklistId, createdEntry);
+        }
+
+        public ChecklistInstanceItemsResult? UpdateChecklistInstanceItems(int userId, int checklistId, IEnumerable<ChecklistInstanceItem> updatedItems) {
+            var cacheKey = GetCacheKey(userId, checklistId);
+
+            var cacheEntry = _instanceCache.GetOrAdd(cacheKey, _ => CreateInstanceCacheEntry(userId, checklistId) ?? new ChecklistInstanceCacheEntry());
+
+            if(string.IsNullOrWhiteSpace(cacheEntry.Title) && !cacheEntry.Items.Any()) {
+                return null;
+            }
+
+            var updatedLookup = (updatedItems ?? Enumerable.Empty<ChecklistInstanceItem>())
+                .Where(i => i.SequenceNumber.HasValue)
+                .ToDictionary(i => i.SequenceNumber!.Value, i => i.IsChecked);
+
+            foreach(var item in cacheEntry.Items) {
+                if(item.SequenceNumber.HasValue && updatedLookup.TryGetValue(item.SequenceNumber.Value, out var isChecked)) {
+                    item.IsChecked = isChecked;
+                }
+            }
+
+            return CloneResult(checklistId, cacheEntry);
+        }
+
+        private string GetCacheKey(int userId, int checklistId) => $"{userId}:{checklistId}";
+
+        private ChecklistInstanceCacheEntry? CreateInstanceCacheEntry(int userId, int checklistId) {
             var checklist = _context.Checklists
                 .Include(c => c.Items)
                 .FirstOrDefault(c => c.UserId == userId && c.ChecklistId == checklistId);
@@ -101,10 +146,27 @@ namespace Phorcys.Services {
                 })
                 .ToList();
 
-            return new ChecklistInstanceItemsResult {
-                ChecklistId = checklist.ChecklistId,
+            return new ChecklistInstanceCacheEntry {
                 Title = checklist.Title,
                 Items = instanceItems
+            };
+        }
+
+        private static ChecklistInstanceItemsResult CloneResult(int checklistId, ChecklistInstanceCacheEntry entry) {
+            var clonedItems = entry.Items
+                .Select(item => new ChecklistInstanceItem {
+                    ChecklistInstanceId = item.ChecklistInstanceId,
+                    SequenceNumber = item.SequenceNumber,
+                    Title = item.Title,
+                    IsChecked = item.IsChecked,
+                    Created = item.Created
+                })
+                .ToList();
+
+            return new ChecklistInstanceItemsResult {
+                ChecklistId = checklistId,
+                Title = entry.Title,
+                Items = clonedItems
             };
         }
     }
