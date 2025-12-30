@@ -140,10 +140,18 @@ namespace Phorcys.Web.Controllers {
                     dtoItems = JsonSerializer.Deserialize<List<ChecklistItemCreateDto>>(model.ItemsJson);
                 }
                 catch(Exception ex) {
+                    var safeTitle = (model.Title ?? string.Empty)
+                        .Replace("\r", " ")
+                        .Replace("\n", " ");
+
+                    var safeItemsJson = (model.ItemsJson ?? string.Empty)
+                        .Replace("\r", " ")
+                        .Replace("\n", " ");
+
                     _logger.LogError(ex,
                         "Unable to parse checklist items JSON for checklist '{Title}'. Raw JSON: {ItemsJson}",
-                        model.Title,
-                        model.ItemsJson);
+                        safeTitle,
+                        safeItemsJson);
 
                     ModelState.AddModelError(string.Empty, "Unable to parse checklist items.");
                     return View(model);
