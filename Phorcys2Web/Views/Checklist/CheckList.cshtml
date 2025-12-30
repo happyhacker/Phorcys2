@@ -21,12 +21,15 @@
                 .Name("ChecklistInstanceGrid")
                 .Columns(columns =>
                 {
-                    columns.Bound(i => i.ChecklistInstanceItemId).Hidden();
+                    columns.Bound(i => i.ChecklistInstanceItemId)
+                        .Hidden()
+                        .Editable(false);
                     columns.Bound(i => i.SequenceNumber).Title("#").Width(80).Editable(false);
                     columns.Bound(i => i.IsChecked)
                         .Title("Checked")
                         .Width(120)
-                        .ClientTemplate("<input type='checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />");
+                        .ClientTemplate("<input type='checkbox' class='checklist-instance-checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />")
+                        .EditorTemplateName("ChecklistInstanceIsChecked");
                     columns.Bound(i => i.Title).Title("Item").Editable(false);
                 })
                 .Editable(edit => edit.Mode(GridEditMode.InCell))
