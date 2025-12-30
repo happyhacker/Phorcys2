@@ -36,6 +36,7 @@
                     .Model(m =>
                     {
                         m.Id(i => i.ChecklistInstanceItemId);
+                        m.Field(f => f.ChecklistInstanceItemId).Editable(false);
                         m.Field(f => f.SequenceNumber).Editable(false);
                         m.Field(f => f.Title).Editable(false);
                         m.Field(f => f.IsChecked);
