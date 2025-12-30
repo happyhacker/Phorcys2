@@ -27,7 +27,14 @@
                     columns.Bound(i => i.IsChecked)
                         .Title("Checked")
                         .Width(120)
-                        .ClientTemplate("<input type='checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # onclick=\\\"return false;\\\" />")
+                        .ClientTemplate(
+                            @Html.Kendo().CheckBox()
+                                .Name("isChecked_#=ChecklistInstanceItemId#")
+                                .Checked("#= IsChecked #")
+                                .Enable(false)
+                                .HtmlAttributes(new { @class = "checklist-instance-checkbox" })
+                                .ToClientTemplate()
+                        )
                         .EditorTemplateName("ChecklistInstanceIsChecked");
                     columns.Bound(i => i.Title).Title("Item");
                 })
