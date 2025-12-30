@@ -30,14 +30,16 @@
                         .ClientTemplate("<input type='checkbox' class='checklist-instance-checkbox k-checkbox' onclick='onChecklistInstanceCheckboxClick(this)' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # />");
                     columns.Bound(i => i.Title).Title("Item");
                 })
+                .Mobile()
+                .Resizable(resize => resize.Columns(true))
                 .ToolBar(toolbar =>
                 {
                     toolbar.Excel();
                     toolbar.Pdf();
-                    toolbar.ColumnChooser();
+                    toolbar.Search();
                 })
                 .Editable(edit => edit.Mode(GridEditMode.InCell).Enabled(false))
-                .ColumnMenu()
+                .ColumnMenu(col => col.Filterable(true))
                 .DataSource(ds => ds.Ajax()
                     .Batch(true)
                     .AutoSync(true)
@@ -54,15 +56,19 @@
                 )
                 .Excel(excel => excel
                     .AllPages(true)
-                    .FileName("ChecklistItems.xlsx"))
+                    .FileName("ChecklistItems.xlsx")
+                    .ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
                 .Pdf(pdf => pdf
                     .AllPages(true)
-                    .FileName("ChecklistItems.pdf"))
+                    .FileName("ChecklistItems.pdf")
+                    .ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
                 .Pageable(page => page
                     .ButtonCount(5)
                     .Refresh(true)
-                    .PageSizes(new[] { 5, 10, 20, 50 }))
+                    .PageSizes(new[] { 5, 10, 20, 40, 800 }))
                 .Sortable()
+                .Groupable()
+                .Filterable()
                 .Scrollable()
         )
     </div>
