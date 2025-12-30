@@ -27,8 +27,7 @@
                     columns.Bound(i => i.IsChecked)
                         .Title("Checked")
                         .Width(120)
-                        .ClientTemplate("<input type='checkbox' class='k-checkbox k-checkbox-md k-rounded-md' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # disabled='disabled' /><label class='k-checkbox-label'></label>")
-                        .EditorTemplateName("ChecklistInstanceIsChecked");
+                        .ClientTemplate("<input type='checkbox' #= IsChecked ? 'checked=\\\"checked\\\"' : '' # onchange='onChecklistCheckedChange(this)' />");
                     columns.Bound(i => i.Title).Title("Item");
                 })
                 .Mobile()
@@ -74,6 +73,17 @@
         )
     </div>
 </div>
+
+<script>
+    function onChecklistCheckedChange(cb) {
+        var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
+        var item = grid.dataItem($(cb).closest("tr"));
+        if (!item) {
+            return;
+        }
+        item.set("IsChecked", cb.checked);
+    }
+</script>
 
 <p class="mt-3">
     <a class="btn btn-secondary" href="@Url.Action("Index", "Checklist")">Back to Checklists</a>
