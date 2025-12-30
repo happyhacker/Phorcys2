@@ -45,9 +45,9 @@ namespace Phorcys.Web.Controllers {
         }
 
         [Authorize, HttpGet]
-        public IActionResult CheckList(int checklistId) {
+        public IActionResult CheckList(int id) {
             var userId = _userServices.GetUserId();
-            var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, checklistId);
+            var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, id);
 
             if(instanceItemsResult == null) {
                 return NotFound();
