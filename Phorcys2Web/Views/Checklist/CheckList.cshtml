@@ -7,8 +7,7 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Check List</h1>
-        <p class="lead text-muted">@Model.Title</p>
+        <h1 class="jumbotron-heading">@Model.Title</h1>
     </div>
 </section>
 
@@ -49,6 +48,7 @@
                 .DataSource(ds => ds.Ajax()
                     .Batch(true)
                     .AutoSync(true)
+                    .PageSize(40)
                     .Model(m =>
                     {
                         m.Id(i => i.ChecklistInstanceItemId);
@@ -71,7 +71,7 @@
                 .Pageable(page => page
                     .ButtonCount(5)
                     .Refresh(true)
-                    .PageSizes(new[] { 5, 10, 20, 40, 800 }))
+                    .PageSizes(new[] { 10, 20, 40, 80 }))
                 .Sortable()
                 .Groupable()
                 .Filterable()
@@ -80,7 +80,20 @@
     </div>
 </div>
 
+<p class="mt-3">
+    @(Html.Kendo().Button()
+        .Name("cancelButton")
+        .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+        .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+        .Content("Cancel")
+    )
+</p>
+
 <script>
+    function redirectToIndex() {
+        window.location.href = '@Url.Action("Index", "Checklist")';
+    }
+
     function onChecklistCheckedChange(cb) {
         var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
         var item = grid.dataItem($(cb).closest("tr"));
@@ -91,8 +104,4 @@
         item.set("IsChecked", cb.checked);
     }
 </script>
-
-<p class="mt-3">
-    <a class="btn btn-secondary" href="@Url.Action("Index", "Checklist")">Back to Checklists</a>
-</p>
 
