@@ -48,6 +48,33 @@ namespace Phorcys.Web.Controllers {
         }
 
         [Authorize, HttpGet]
+        public IActionResult Edit(int id) {
+            var userId = _userServices.GetUserId();
+            var checklist = _checklistService.GetChecklistById(userId, id);
+
+            if(checklist == null) {
+                return NotFound();
+            }
+
+            var model = new ChecklistEditViewModel {
+                ChecklistId = checklist.ChecklistId,
+                Title = checklist.Title,
+                ItemsJson = string.Empty  // Will be populated by JavaScript from the grid
+            };
+
+            // Pass items to ViewBag so they can be loaded into the grid
+            ViewBag.ExistingItems = checklist.Items
+                .OrderBy(i => i.SequenceNumber)
+                .Select(i => new {
+                    i.SequenceNumber,
+                    i.Title
+                })
+                .ToList();
+
+            return View(model);
+        }
+
+        [Authorize, HttpGet]
         public IActionResult CheckList(int id) {
             var userId = _userServices.GetUserId();
             var instanceItemsResult = _checklistService.GetChecklistInstanceItems(userId, id);
@@ -185,6 +212,71 @@ namespace Phorcys.Web.Controllers {
                     "There was a problem saving the checklist. Please try again. If the problem persists, contact support.");
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
                     "There was a problem saving the checklist. Please try again. If the problem persists, contact support.";
+
+                return View(model);
+            }
+        }
+
+        [Authorize, HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Edit(ChecklistEditViewModel model) {
+            if(!ModelState.IsValid) {
+                return View(model);
+            }
+
+            List<ChecklistItemCreateDto>? dtoItems = null;
+
+            if(!string.IsNullOrWhiteSpace(model.ItemsJson)) {
+                try {
+                    dtoItems = JsonSerializer.Deserialize<List<ChecklistItemCreateDto>>(model.ItemsJson);
+                }
+                catch(Exception ex) {
+                    var safeTitle = (model.Title ?? string.Empty)
+                        .Replace("\r", " ")
+                        .Replace("\n", " ");
+
+                    var safeItemsJson = (model.ItemsJson ?? string.Empty)
+                        .Replace("\r", " ")
+                        .Replace("\n", " ");
+
+                    _logger.LogError(ex,
+                        "Unable to parse checklist items JSON for checklist '{Title}'. Raw JSON: {ItemsJson}",
+                        safeTitle,
+                        safeItemsJson);
+
+                    ModelState.AddModelError(string.Empty, "Unable to parse checklist items.");
+                    return View(model);
+                }
+            }
+
+            var items = (dtoItems ?? new List<ChecklistItemCreateDto>())
+                .Where(x => !string.IsNullOrWhiteSpace(x.Title))
+                .Select(x => (x.Title, x.SequenceNumber));
+
+            try {
+                int userId = _userServices.GetUserId();
+
+                _checklistService.UpdateChecklistWithItems(
+                    userId,
+                    model.ChecklistId,
+                    model.Title,
+                    items);
+
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
+                    "The Checklist was successfully updated.";
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex) {
+                _logger.LogError(ex,
+                    "Error updating checklist {ChecklistId} with title '{Title}' for current user. Model: {@Model}",
+                    model.ChecklistId,
+                    model.Title,
+                    model);
+
+                ModelState.AddModelError(string.Empty,
+                    "There was a problem updating the checklist. Please try again. If the problem persists, contact support.");
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
+                    "There was a problem updating the checklist. Please try again. If the problem persists, contact support.";
 
                 return View(model);
             }
