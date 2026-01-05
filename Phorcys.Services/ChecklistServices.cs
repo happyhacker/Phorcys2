@@ -83,6 +83,57 @@ namespace Phorcys.Services {
                 .ToList();
         }
 
+        public Checklist? GetChecklistById(int userId, int checklistId) {
+            return _context.Checklists
+                .Include(c => c.Items)
+                .FirstOrDefault(c => c.UserId == userId && c.ChecklistId == checklistId);
+        }
+
+        public void UpdateChecklistWithItems(
+            int userId,
+            int checklistId,
+            string title,
+            IEnumerable<(string Title, int SequenceNumber)> items) {
+            try {
+                var checklist = _context.Checklists
+                    .Include(c => c.Items)
+                    .FirstOrDefault(c => c.ChecklistId == checklistId && c.UserId == userId);
+
+                if(checklist == null) {
+                    throw new InvalidOperationException($"Checklist {checklistId} not found for user {userId}");
+                }
+
+                checklist.Title = title;
+                checklist.LastModified = DateTime.Now;
+
+                // Remove existing items
+                _context.ChecklistItems.RemoveRange(checklist.Items);
+
+                // Add updated items
+                var orderedItems = (items ?? Enumerable.Empty<(string Title, int SequenceNumber)>())
+                    .Where(i => !string.IsNullOrWhiteSpace(i.Title))
+                    .OrderBy(i => i.SequenceNumber)
+                    .ToList();
+
+                foreach(var item in orderedItems) {
+                    checklist.Items.Add(new ChecklistItem {
+                        Title = item.Title,
+                        SequenceNumber = item.SequenceNumber,
+                        Created = DateTime.Now
+                    });
+                }
+
+                _context.SaveChanges();
+            }
+            catch(Exception ex) {
+                _logger.LogError(ex,
+                    "Error updating checklist {ChecklistId} with title '{Title}' for user {UserId}. Items: {@Items}",
+                    checklistId, title, userId, items);
+
+                throw;
+            }
+        }
+
         public ChecklistInstanceItemsResult? GetChecklistInstanceItems(int userId, int checklistId) {
             var cacheKey = GetCacheKey(userId, checklistId);
 
