@@ -44,7 +44,7 @@
 					columns.Bound(p => p.Title);
 					columns.Bound(p => p.RetailPrice).Format("{0:c}");
 					columns.Bound(p => p.Paid).Format("{0:c}");
-					columns.Bound(p => p.Sn);
+					columns.Bound(p => p.Sn).Title("Serial#");
 					columns.Bound(p => p.Acquired).Format("{0:MM/dd/yyyy}");
 					columns.Bound(p => p.Weight);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
@@ -52,7 +52,7 @@
 					{
 						command.Custom("Edit").Click("onEdit");
 						command.Custom("Delete").Click("onDelete");
-					});
+					}).Title("Actions");
 				})
 				.Height(700)
 				.Mobile()
