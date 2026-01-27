@@ -25,23 +25,37 @@
 
     @Html.Partial("_ChecklistItemsGrid")
 
-    <div class="mt-3">
+    <div class="mt-4">
         @(Html.Kendo().Button()
-            .Name("saveChecklistButton")
-            .Content("Save Checklist")
-            .HtmlAttributes(new { type = "submit", @class = "btn btn-primary" }))
+                .Name("saveButton")
+                .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                //.Icon("save")
+                .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+                .Content("Save")
+                )
+
+        @(Html.Kendo().Button()
+                .Name("cancelButton")
+                .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+                .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+                .Content("Cancel")
+                )
     </div>
 </form>
 
 @section Scripts {
     <script>
+        function redirectToIndex() {
+            window.location.href = '@Url.Action("Index", "Checklist")';
+        }
+
         $(document).ready(function () {
 
             var grid = $("#checklistItemsGrid").data("kendoGrid");
 
             // Load existing items from ViewBag
             var existingItems = @Html.Raw(Json.Serialize(ViewBag.ExistingItems ?? new List<object>()));
-            
+
             if (existingItems && existingItems.length > 0) {
                 for (var i = 0; i < existingItems.length; i++) {
                     grid.dataSource.add({
