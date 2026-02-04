@@ -1,0 +1,13 @@
+# Explicitly declare C#
+*.cs linguist-language=C#
+*.cshtml linguist-language=C#
+
+# Treat web assets as generated output (if they are)
+Phorcys2Web/wwwroot/**/*.css linguist-generated=true
+Phorcys2Web/wwwroot/**/*.js linguist-generated=true
+Phorcys2Web/wwwroot/**/*.map linguist-generated=true
+
+# Ignore build artifacts
+**/bin/** linguist-generated=true
+**/obj/** linguist-generated=true
+**/dist/** linguist-generated=true
