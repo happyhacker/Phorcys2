@@ -98,43 +98,8 @@
 	@Html.AntiForgeryToken()
 	<input type="hidden" name="DiveSiteId" id="hiddenDiveSiteId" value="" />
 }
-<script>
-	function onDelete(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
-		var diveSiteId = data.DiveSiteId;
-		if (data.UserName == "System") {
-			alert("You may not delete a System Dive Site");
-		} else {
-			if (confirm("Are you sure you want to delete site #" + diveSiteId + "?")) {
-				// Set the DiveSiteId in the hidden form and submit the form
-				$('#hiddenDiveSiteId').val(diveSiteId);
-				$('#hiddenDeleteForm').submit();
-			}
-		}
-	}
+<div id="siteIndexConfig" data-edit-url="@Url.Action("Edit", "Site")"></div>
 
-	function onEdit(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
-		var diveSiteId = data.DiveSiteId;
-		//alert("DiveSiteId = " + diveSiteId);
-		/*
-		if (data.UserName == "System") {
-			alert("You may not edit a System Dive Site");
-		} else {
-		*/
-			window.location.href = '@Url.Action("Edit", "Site")/' + diveSiteId;
-		//}
-	}
-
-	function isVisible(data) {
-		if (data.LoggedIn == 'system') {
-			return true;
-		} else {
-			return data.UserName != 'System';
-		}
-	}
-</script>
+@section Scripts {
+	<script src="~/js/pages/site-index.js"></script>
+}

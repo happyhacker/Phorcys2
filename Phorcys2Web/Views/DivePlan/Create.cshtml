@@ -210,8 +210,8 @@
         </div>
     </div>
 }
-<script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "DivePlan")';
-	}
-</script>
+<div id="divePlanFormConfig" data-index-url="@Url.Action("Index", "DivePlan")"></div>
+
+@section Scripts {
+	<script src="~/js/pages/diveplan-form.js"></script>
+}

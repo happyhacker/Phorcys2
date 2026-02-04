@@ -156,9 +156,9 @@
 		</div>
 	</div>
 }
-<script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "Site")';
-	}
-</script>
+<div id="siteFormConfig" data-index-url="@Url.Action("Index", "Site")"></div>
+
+@section Scripts {
+	<script src="~/js/pages/site-form.js"></script>
+}
 

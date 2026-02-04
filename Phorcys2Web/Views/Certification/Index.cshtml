@@ -86,28 +86,9 @@
 	@Html.AntiForgeryToken()
 	<input type="hidden" name="DiveId" id="hiddenDiveId" value="" />
 }
-<script>
-	function onDelete(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
+<div id="certificationIndexConfig" data-edit-url="@Url.Action("Edit", "Dive")"></div>
 
-		var diveId = data.DiveId;
-		var diveNumber = data.DiveNumber;
-		if (confirm("Are you sure you want to delete dive #" + diveNumber + "?")) {
-			// Set the DiveId in the hidden form and submit the form
-			$('#hiddenDiveId').val(diveId);
-			$('#hiddenDeleteForm').submit();
-		}
-	}
-
-	function onEdit(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
-
-		var diveId = data.DiveId;
-		window.location.href = '@Url.Action("Edit", "Dive")/' + diveId;
-	}
-</script>
+@section Scripts {
+	<script src="~/js/pages/certification-index.js"></script>
+}
 

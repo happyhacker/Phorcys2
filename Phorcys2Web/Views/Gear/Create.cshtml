@@ -179,9 +179,8 @@
         </div>
     </div>
 }
+<div id="gearFormConfig" data-index-url="@Url.Action("Index", "Gear")"></div>
 
-<script type="text/javascript">
-    function redirectToIndex() {
-        window.location.href = '@Url.Action("Index", "Gear")';
-    }
-</script>
+@section Scripts {
+    <script src="~/js/pages/gear-form.js"></script>
+}

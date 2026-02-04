@@ -84,9 +84,9 @@
 		</div>
 	</div>
 }
-<script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "Location")';
-	}
-</script>
+<div id="locationFormConfig" data-index-url="@Url.Action("Index", "Location")"></div>
+
+@section Scripts {
+	<script src="~/js/pages/location-form.js"></script>
+}
 

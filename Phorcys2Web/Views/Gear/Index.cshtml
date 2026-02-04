@@ -85,28 +85,9 @@
 	@Html.AntiForgeryToken()
 	<input type="hidden" name="GearId" id="hiddenGearId" value="" />
 }
-<script>
-	function onDelete(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
+<div id="gearIndexConfig" data-edit-url="@Url.Action("Edit", "Gear")"></div>
 
-		var gearId = data.GearId;
-		if (confirm("Are you sure you want to delete this gear? " + gearId)) {
-			// Set the GearId in the hidden form and submit the form
-			$('#hiddenGearId').val(gearId);
-			$('#hiddenDeleteForm').submit();
-		}
-	}
-
-	function onEdit(e) {
-		e.preventDefault();
-		var tr = $(e.target).closest("tr");
-		var data = this.dataItem(tr);
-
-		var gearId = data.GearId;
-		//alert("GearId = " + gearId);
-		window.location.href = '@Url.Action("Edit", "Gear")/' + gearId;
-	}
-</script>
+@section Scripts {
+	<script src="~/js/pages/gear-index.js"></script>
+}
 
