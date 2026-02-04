@@ -89,19 +89,8 @@
     )
 </p>
 
-<script>
-    function redirectToIndex() {
-        window.location.href = '@Url.Action("Index", "Checklist")';
-    }
+<div id="checklistInstanceConfig" data-index-url="@Url.Action("Index", "Checklist")"></div>
 
-    function onChecklistCheckedChange(cb) {
-        var grid = $("#ChecklistInstanceGrid").data("kendoGrid");
-        var item = grid.dataItem($(cb).closest("tr"));
-        if (!item) {
-            return;
-        }
-
-        item.set("IsChecked", cb.checked);
-    }
-</script>
-
+@section Scripts {
+    <script src="~/js/pages/checklist-instance.js"></script>
+}
