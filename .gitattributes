@@ -1,13 +1,19 @@
-# Explicitly declare C#
+# Primary backend language
 *.cs linguist-language=C#
+
+# Razor stays visible (counts as HTML/C# mix)
 *.cshtml linguist-language=C#
 
-# Treat web assets as generated output (if they are)
-Phorcys2Web/wwwroot/**/*.css linguist-generated=true
-Phorcys2Web/wwwroot/**/*.js linguist-generated=true
-Phorcys2Web/wwwroot/**/*.map linguist-generated=true
+# Frontend languages (keep counted)
+*.css linguist-language=CSS
+*.js linguist-language=JavaScript
 
-# Ignore build artifacts
+# Hide ONLY generated/minified output
+**/*.min.css linguist-generated=true
+**/*.min.js linguist-generated=true
+**/*.map linguist-generated=true
+
+# Hide build artifacts
 **/bin/** linguist-generated=true
 **/obj/** linguist-generated=true
 **/dist/** linguist-generated=true
