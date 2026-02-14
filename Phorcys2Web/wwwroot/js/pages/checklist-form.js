@@ -17,21 +17,6 @@ $(document).ready(function () {
         return;
     }
 
-    var checklistItemClientIdCounter = 0;
-
-    function nextClientId() {
-        checklistItemClientIdCounter += 1;
-        return "checklist-item-" + checklistItemClientIdCounter;
-    }
-
-    function createGridItem(sequenceNumber, title) {
-        return {
-            ClientId: nextClientId(),
-            SequenceNumber: sequenceNumber,
-            Title: title || ""
-        };
-    }
-
     var existingItems = [];
     if (checklistExistingItemsId) {
         var existingItemsScript = document.getElementById(checklistExistingItemsId);
@@ -42,13 +27,19 @@ $(document).ready(function () {
 
     if (existingItems && existingItems.length > 0) {
         for (var i = 0; i < existingItems.length; i++) {
-            grid.dataSource.add(createGridItem(existingItems[i].SequenceNumber || (i + 1), existingItems[i].Title || ""));
+            grid.dataSource.add({
+                SequenceNumber: existingItems[i].SequenceNumber || (i + 1),
+                Title: existingItems[i].Title || ""
+            });
         }
     }
 
     function ensureInitialRow() {
         if (grid.dataSource.total() === 0) {
-            var newItem = grid.dataSource.add(createGridItem(1, ""));
+            var newItem = grid.dataSource.add({
+                SequenceNumber: 1,
+                Title: ""
+            });
 
             var row = grid.tbody.find("tr[data-uid='" + newItem.uid + "']");
             grid.editCell(row.find("td:eq(2)"));
@@ -68,34 +59,11 @@ $(document).ready(function () {
         return orderedItems;
     }
 
-    function resequence(items) {
-        var data = items || getItemsInDisplayedOrder();
+    function resequence() {
+        var data = getItemsInDisplayedOrder();
 
         for (var i = 0; i < data.length; i++) {
             data[i].set("SequenceNumber", i + 1);
-        }
-    }
-
-    function syncDataSourceToDisplayedOrder() {
-        var displayedItems = getItemsInDisplayedOrder();
-        if (displayedItems.length === 0) {
-            return;
-        }
-
-        var normalizedItems = [];
-
-        for (var i = 0; i < displayedItems.length; i++) {
-            normalizedItems.push({
-                ClientId: displayedItems[i].ClientId,
-                SequenceNumber: i + 1,
-                Title: displayedItems[i].Title || ""
-            });
-        }
-
-        grid.dataSource.data([]);
-
-        for (var j = 0; j < normalizedItems.length; j++) {
-            grid.dataSource.add(normalizedItems[j]);
         }
     }
 
@@ -110,7 +78,10 @@ $(document).ready(function () {
         var data = grid.dataSource.data();
         var nextSeq = data.length + 1;
 
-        var newItem = grid.dataSource.add(createGridItem(nextSeq, ""));
+        var newItem = grid.dataSource.add({
+            SequenceNumber: nextSeq,
+            Title: ""
+        });
 
         resequence();
 
@@ -126,7 +97,7 @@ $(document).ready(function () {
 
     grid.bind("rowReorder", function () {
         setTimeout(function () {
-            syncDataSourceToDisplayedOrder();
+            resequence();
         }, 0);
     });
 
@@ -153,7 +124,10 @@ $(document).ready(function () {
             var data = grid.dataSource.data();
             var nextSeq = data.length + 1;
 
-            var newItem = grid.dataSource.add(createGridItem(nextSeq, ""));
+            var newItem = grid.dataSource.add({
+                SequenceNumber: nextSeq,
+                Title: ""
+            });
 
             resequence();
 
@@ -172,9 +146,7 @@ $(document).ready(function () {
     $("#checklistForm").on("submit", function () {
         grid.closeCell();
 
-        syncDataSourceToDisplayedOrder();
-
-        var data = grid.dataSource.data();
+        var data = getItemsInDisplayedOrder();
         var items = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -182,7 +154,7 @@ $(document).ready(function () {
             if (item.Title && item.Title.trim().length > 0) {
                 items.push({
                     Title: item.Title,
-                    SequenceNumber: item.SequenceNumber
+                    SequenceNumber: i + 1
                 });
             }
         }
