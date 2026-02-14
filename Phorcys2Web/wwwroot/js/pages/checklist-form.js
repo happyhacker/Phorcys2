@@ -17,8 +17,6 @@ $(document).ready(function () {
         return;
     }
 
-    var isReorderingRows = false;
-
     var existingItems = [];
     if (checklistExistingItemsId) {
         var existingItemsScript = document.getElementById(checklistExistingItemsId);
@@ -92,28 +90,15 @@ $(document).ready(function () {
     });
 
     grid.dataSource.bind("change", function (e) {
-        if (e && e.action === "remove" && !isReorderingRows) {
+        if (e && e.action === "remove") {
             resequence();
         }
     });
 
-    grid.bind("rowReorder", function (e) {
-        var movedItem = grid.dataItem(e.row);
-        if (!movedItem) {
-            return;
-        }
-
-        isReorderingRows = true;
-
-        try {
-            grid.dataSource.remove(movedItem);
-            grid.dataSource.insert(e.newIndex, movedItem);
-        }
-        finally {
-            isReorderingRows = false;
-        }
-
-        resequence();
+    grid.bind("rowReorder", function () {
+        setTimeout(function () {
+            resequence();
+        }, 0);
     });
 
     $("#checklistItemsGrid").on("keydown", "input", function (e) {
