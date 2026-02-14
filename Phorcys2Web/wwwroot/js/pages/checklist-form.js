@@ -79,8 +79,34 @@ $(document).ready(function () {
         resequence();
     });
 
-    grid.bind("rowReorder", function () {
-        resequence();
+    grid.bind("rowReorder", function (e) {
+        // After visual reorder, rebuild data source order based on DOM row order
+        setTimeout(function () {
+            var dataSource = grid.dataSource;
+            var data = dataSource.data();
+
+            // Build a map of uid -> data item
+            var itemsByUid = {};
+            for (var i = 0; i < data.length; i++) {
+                itemsByUid[data[i].uid] = data[i];
+            }
+
+            // Get rows in current DOM order and build new ordered array
+            var rows = grid.tbody.find("tr");
+            var newOrder = [];
+            rows.each(function () {
+                var uid = $(this).data("uid");
+                if (uid && itemsByUid[uid]) {
+                    newOrder.push({
+                        Title: itemsByUid[uid].Title,
+                        SequenceNumber: newOrder.length + 1
+                    });
+                }
+            });
+
+            // Clear and repopulate data source with new order
+            dataSource.data(newOrder);
+        }, 0);
     });
 
     $("#checklistItemsGrid").on("keydown", "input", function (e) {
