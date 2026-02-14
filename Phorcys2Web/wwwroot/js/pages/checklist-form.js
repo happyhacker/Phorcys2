@@ -46,8 +46,22 @@ $(document).ready(function () {
         }
     }
 
+    function getItemsInDisplayedOrder() {
+        var orderedItems = [];
+
+        grid.tbody.find("tr").each(function () {
+            var dataItem = grid.dataItem(this);
+            if (dataItem) {
+                orderedItems.push(dataItem);
+            }
+        });
+
+        return orderedItems;
+    }
+
     function resequence() {
-        var data = grid.dataSource.data();
+        var data = getItemsInDisplayedOrder();
+
         for (var i = 0; i < data.length; i++) {
             data[i].set("SequenceNumber", i + 1);
         }
@@ -130,7 +144,7 @@ $(document).ready(function () {
 
         resequence();
 
-        var data = grid.dataSource.data();
+        var data = getItemsInDisplayedOrder();
         var items = [];
 
         for (var i = 0; i < data.length; i++) {
