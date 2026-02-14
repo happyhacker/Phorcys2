@@ -17,6 +17,8 @@ $(document).ready(function () {
         return;
     }
 
+    var isReorderingRows = false;
+
     var existingItems = [];
     if (checklistExistingItemsId) {
         var existingItemsScript = document.getElementById(checklistExistingItemsId);
@@ -46,8 +48,22 @@ $(document).ready(function () {
         }
     }
 
+    function getItemsInDisplayedOrder() {
+        var orderedItems = [];
+
+        grid.tbody.find("tr").each(function () {
+            var dataItem = grid.dataItem(this);
+            if (dataItem) {
+                orderedItems.push(dataItem);
+            }
+        });
+
+        return orderedItems;
+    }
+
     function resequence() {
-        var data = grid.dataSource.data();
+        var data = getItemsInDisplayedOrder();
+
         for (var i = 0; i < data.length; i++) {
             data[i].set("SequenceNumber", i + 1);
         }
@@ -75,11 +91,28 @@ $(document).ready(function () {
         grid.editCell(row.find("td:eq(2)"));
     });
 
-    grid.dataSource.bind("change", function () {
-        resequence();
+    grid.dataSource.bind("change", function (e) {
+        if (e && e.action === "remove" && !isReorderingRows) {
+            resequence();
+        }
     });
 
-    grid.bind("rowReorder", function () {
+    grid.bind("rowReorder", function (e) {
+        var movedItem = grid.dataItem(e.row);
+        if (!movedItem) {
+            return;
+        }
+
+        isReorderingRows = true;
+
+        try {
+            grid.dataSource.remove(movedItem);
+            grid.dataSource.insert(e.newIndex, movedItem);
+        }
+        finally {
+            isReorderingRows = false;
+        }
+
         resequence();
     });
 
@@ -128,9 +161,7 @@ $(document).ready(function () {
     $("#checklistForm").on("submit", function () {
         grid.closeCell();
 
-        resequence();
-
-        var data = grid.dataSource.data();
+        var data = getItemsInDisplayedOrder();
         var items = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -138,7 +169,7 @@ $(document).ready(function () {
             if (item.Title && item.Title.trim().length > 0) {
                 items.push({
                     Title: item.Title,
-                    SequenceNumber: item.SequenceNumber
+                    SequenceNumber: i + 1
                 });
             }
         }
