@@ -155,74 +155,8 @@
         </div>
     </div>
 }
+<div id="myCertificationFormConfig" data-index-url="@Url.Action("Index", "MyCertification")"></div>
 
-<script type="text/javascript">
-    console.log("Script Loaded");  // Debugging: Check if the script is loaded
-
-    function redirectToIndex() {
-        window.location.href = '@Url.Action("Index", "MyCertification")';
-    }
-
-    function AdjustCertList() {
-        console.log("AdjustCertList called");  // Debugging: Check if the function is called
-        //alert("AdjustCertList called");
-
-        // Reference the forms
-        var mainForm = document.getElementById("TheForm");
-        var agencyForm = document.getElementById("AgencyForm");
-        //alert("agencyForm = " + agencyForm);
-        // Debugging: Log the forms to the console
-        console.log("mainForm:", mainForm);
-        console.log("agencyForm:", agencyForm);
-
-        // Check if the forms are found
-        if (!mainForm) {
-            alert("Main form not found");
-            return;
-        }
-        if (!agencyForm) {
-            alert("Agency form not found");
-            return;
-        }
-
-        // Get the DiveAgencyId value from the main form
-        var diveAgencyId = mainForm.elements["DiveAgencyId"].value;
-        //alert("DiveAgencyId = " + diveAgencyId);
-
-        // Debugging: Log the diveAgencyId
-        console.log("diveAgencyId:", diveAgencyId);
-
-        // Set the DiveAgencyId value in the hidden form
-        agencyForm.elements["HiddenDiveAgencyId"].value = diveAgencyId;
-
-        // Debugging: Log the hidden form's DiveAgencyId value
-        console.log("agencyForm HiddenDiveAgencyId:", agencyForm.elements["HiddenDiveAgencyId"].value);
-
-        // Submit the hidden form
-        agencyForm.submit();
-    }
-
-    // Ensure the script runs after the DOM is fully loaded
-    document.addEventListener("DOMContentLoaded", function () {
-        console.log("DOMContentLoaded event fired");  // Debugging: Check if DOMContentLoaded is fired
-        //alert("DOMContentLoaded event fired");
-
-        var agencyFormCheck = document.getElementById("AgencyForm");
-        if (agencyFormCheck) {
-            console.log("AgencyForm found during DOMContentLoaded:", agencyFormCheck);
-            //alert("AgencyForm found during DOMContentLoaded");
-        } else {
-            console.log("AgencyForm NOT found during DOMContentLoaded");
-            alert("AgencyForm NOT found during DOMContentLoaded");
-        }
-
-        var dropdown = $("#DiveAgencyId").data("kendoDropDownList");
-        if (dropdown) {
-            console.log("Dropdown found, binding change event");  // Debugging: Check if the dropdown is found
-            dropdown.bind("change", AdjustCertList);
-        } else {
-            console.log("Dropdown element not found");
-            //alert("Dropdown element not found");
-        }
-    });
-</script>
+@section Scripts {
+    <script src="~/js/pages/mycertification-form.js"></script>
+}

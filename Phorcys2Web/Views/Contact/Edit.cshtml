@@ -230,8 +230,8 @@
 		</div>
 	</div>
 }
-<script type="text/javascript">
-	function redirectToIndex() {
-		window.location.href = '@Url.Action("Index", "Contact")';
-	}
-</script>
+<div id="contactFormConfig" data-index-url="@Url.Action("Index", "Contact")"></div>
+
+@section Scripts {
+	<script src="~/js/pages/contact-form.js"></script>
+}
