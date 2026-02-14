@@ -3,4 +3,5 @@
 public class ChecklistItemCreateDto {
     public string Title { get; set; } = string.Empty;
     public int SequenceNumber { get; set; }
+    public string ClientId { get; set; } = string.Empty;
 }

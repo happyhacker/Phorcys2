@@ -33,9 +33,9 @@
     .DataSource(ds => ds.Ajax()
         .Model(m =>
         {
-            // Use SequenceNumber as a client-side key.
-            // It will be resequenced in JS.
-            m.Id(i => i.SequenceNumber);
+            // Use ClientId as a stable client-side key so SequenceNumber can be safely resequenced.
+            m.Id(i => i.ClientId);
+            m.Field(f => f.ClientId).Editable(false);
             m.Field(f => f.SequenceNumber).Editable(false);
             m.Field(f => f.Title);
         })
