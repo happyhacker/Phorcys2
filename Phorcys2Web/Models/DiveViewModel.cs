@@ -52,7 +52,9 @@ namespace Phorcys.Web.Models
 		[DisplayName("Additional Weight")]
 		public int? AdditionalWeight { get; set; }
 
-		[DisplayName("Notes")]
+        public string DiveBuddies { get; set; } = string.Empty;
+
+        [DisplayName("Notes")]
 		public string Notes { get; set; }
 
 		[DisplayName("Dive #")]

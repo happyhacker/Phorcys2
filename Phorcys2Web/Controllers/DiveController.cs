@@ -211,38 +211,52 @@ namespace Phorcys2Web.Controllers
 				return View("Error");
 			}
 		}
-		private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives)
-		{
-			List<DiveViewModel> models = new List<DiveViewModel>();
-			DiveViewModel model;
+        private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives) {
+            var models = new List<DiveViewModel>();
 
-			foreach (var dive in dives)
-			{
-				model = new DiveViewModel();
-				model.DiveId = dive.DiveId;
-				model.DiveNumber = dive.DiveNumber;
-				if (dive.DivePlan != null)
-				{
-					model.DivePlanTitle = dive.DivePlan.Title;
-					model.DiveSite = dive.DivePlan.DiveSite.Title;
-				}
-				model.Title = dive.Title;
-				model.Minutes = dive.Minutes;
-				model.MaxDepth = dive.MaxDepth;
-				model.AvgDepth = dive.AvgDepth;
-				model.AdditionalWeight = dive.AdditionalWeight;
-				model.Created = dive.Created;
-				model.LastModified = dive.LastModified;
-				model.DescentTime = dive.DescentTime;
-				model.Notes = dive.Notes;
-				models.Add(model);
+            foreach(var dive in dives) {
+                var model = new DiveViewModel {
+                    DiveId = dive.DiveId,
+                    DiveNumber = dive.DiveNumber,
+                    Title = dive.Title,
+                    Minutes = dive.Minutes,
+                    MaxDepth = dive.MaxDepth,
+                    AvgDepth = dive.AvgDepth,
+                    AdditionalWeight = dive.AdditionalWeight,
+                    Created = dive.Created,
+                    LastModified = dive.LastModified,
+                    DescentTime = dive.DescentTime,
+                    Notes = dive.Notes
+                };
 
-			}
+                if(dive.DivePlan != null) {
+                    model.DivePlanTitle = dive.DivePlan.Title;
 
-			return models;
-		}
+                    if(dive.DivePlan.DiveSite != null)
+                        model.DiveSite = dive.DivePlan.DiveSite.Title;
 
-		private IList<SelectListItem> BuildDivePlanList()
+                    var buddyNames = dive.DivePlan.DiveTeams?
+                        .Select(dt => {
+                            var c = dt.Diver?.Contact;
+                            var first = (c?.FirstName ?? "").Trim();
+                            var last = (c?.LastName ?? "").Trim();
+                            return $"{first} {last}".Trim();
+                        })
+                        .Where(n => !string.IsNullOrWhiteSpace(n))
+                        .Distinct()
+                        .OrderBy(n => n)
+                        .ToList();
+
+                    if(buddyNames != null && buddyNames.Count > 0)
+                        model.DiveBuddies = string.Join(":", buddyNames);
+                }
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        private IList<SelectListItem> BuildDivePlanList()
 		{
 			IList<SelectListItem> divePlanList = new List<SelectListItem>();
 			string loggedInId = _userServices.GetLoggedInUserId();
