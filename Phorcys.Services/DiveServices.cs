@@ -19,27 +19,29 @@ namespace Phorcys.Services
 			_logger.LogInformation("DiveServices initialized.");
 		}
 
-		public async Task<IEnumerable<Dive>> GetDivesAsync(int userId)
-		{
-			try
-			{
-				var dives = await _context.Dives
-										 .Where(r => r.UserId == userId)
-										 .Include(d => d.DivePlan.DiveSite)
-										 .ThenInclude(u => u.User)
-										 .AsNoTracking()
-										 .OrderByDescending(dive => dive.DiveNumber)
-										 .ToListAsync();
-				return dives;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Error occurred while getting dives for user {UserId}", userId); // Replace Console.WriteLine
-				throw new Exception("Can't connect to database");
-			}
-		}
+        public async Task<IEnumerable<Dive>> GetDivesAsync(int userId) {
+            try {
+                var dives = await _context.Dives
+                    .Where(d => d.UserId == userId)
+                    .Include(d => d.DivePlan)
+                        .ThenInclude(dp => dp.DiveSite)
+                    .Include(d => d.DivePlan)
+                        .ThenInclude(dp => dp.DiveTeams)
+                            .ThenInclude(dt => dt.Diver)
+                                .ThenInclude(diver => diver.Contact)
+                    .AsNoTracking()
+                    .OrderByDescending(d => d.DiveNumber)
+                    .ToListAsync();
 
-		public Dive GetDive(int diveId)
+                return dives;
+            }
+            catch(Exception ex) {
+                _logger.LogError(ex, "Error occurred while getting dives for user {UserId}", userId);
+                throw new Exception("Can't connect to database");
+            }
+        }
+
+        public Dive GetDive(int diveId)
 		{
 			var dive = _context.Dives.FirstOrDefault(d => d.DiveId == diveId);
 			return dive;

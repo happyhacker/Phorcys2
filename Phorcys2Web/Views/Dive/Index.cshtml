@@ -48,6 +48,8 @@
 					columns.Bound(p => p.DescentTime).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.Minutes);
 					columns.Bound(p => p.MaxDepth);
+                    columns.Bound(p => p.AvgDepth).Hidden(true);
+                    columns.Bound(p => p.DiveBuddies);
 					columns.Bound(p => p.Notes).Width(100).Hidden(true);
 					columns.Command(command =>
 					{
@@ -69,9 +71,9 @@
 				.Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
 				.ColumnMenu(col => col.Filterable(true))
 				.Pageable(pageable => pageable
-				.ButtonCount(5)
+				.ButtonCount(6)
 				.Refresh(true)
-				.PageSizes(new[] { 5, 10, 20, 40, 800 }))
+				.PageSizes(new[] { 5, 10, 15, 20, 40, 800 }))
 				.Sortable()
 				.Groupable()
 				.Filterable()
