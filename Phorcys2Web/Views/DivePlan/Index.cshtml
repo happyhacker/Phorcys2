@@ -27,12 +27,14 @@
 	<div class="row d-flex justify-content-start">
 	</div>
 </div>
-<p>
-	@*Html.ActionLink("Enter New Dive Plan", "Create", "DivePlan")*@
+
+<div>
+    <p>
 	<form action="@Url.Action("Create", "DivePlan")" method="get">
 		<button type="submit" class="btn btn-primary">Enter New Dive Plan</button>
 	</form>
-</p>
+    </p>
+</div>
 
 <div class="row">
 	<div class="col-12">
@@ -45,16 +47,16 @@
 					columns.Bound(p => p.Title);
 					columns.Bound(p => p.DiveSite);
 					columns.Bound(p => p.ScheduledTime).Format("{0:MM/dd/yyyy hh:mm tt}");
-					columns.Bound(p => p.Minutes).Width(100);
-					columns.Bound(p => p.MaxDepth).Width(120);
-					columns.Bound(p => p.Notes).Width(100).Hidden(true);
+					columns.Bound(p => p.Minutes);
+					columns.Bound(p => p.MaxDepth);
+					columns.Bound(p => p.Notes).Hidden(true);
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");
 						command.Custom("Delete").Click("onDelete");
 					}).Title("Actions");
 				})
-				.Height(700)
+				.Height(720)
 				.Mobile()
 				.Resizable(resize => resize.Columns(true)
 				)
@@ -75,7 +77,6 @@
 				.Groupable()
 				.Filterable()
 				.Scrollable()
-				@*.HtmlAttributes(new { style = "height:700px;" })*@
 				)
 	</div>
 </div>
