@@ -98,9 +98,18 @@
                             </div>
                         </p>
                     </div>
-                   <br/>
+                    <br/>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            @(Html.Kendo().CheckBoxFor(m => m.IsSelectable).HtmlAttributes(new { @class = "form-check-input" }))
+                            <label asp-for="IsSelectable" class="form-check-label">
+                                Is selectable on Dive Plans?
+                            </label>
+                        </div>
+                    </div>
                     
-                   <div>
+                    <div>
                         @(
                         Html.Kendo().ExpansionPanel()
                                     .Name("expansionPanel")

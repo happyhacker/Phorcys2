@@ -57,7 +57,7 @@
 						command.Custom("Delete").Click("onDelete");
 					}).Title("Actions");
 				})
-				.Height(700)
+				.Height(720)
 				.Mobile()
 				.Resizable(resize => resize.Columns(true)
 				)
@@ -92,5 +92,12 @@
 
 @section Scripts {
 	<script src="~/js/pages/dive-index.js"></script>
+        
+    <script>
+        $(document).ready(function() {
+            var grid = $("#Grid").data("kendoGrid");
+            grid.dataSource.pageSize(15);
+        });
+    </script>
 }
 

@@ -16,7 +16,8 @@ namespace Phorcys.Data.DTOs
 		public DateTime? Acquired { get; set; }
 		public DateTime? NoLongerUse { get; set; }
 		public double? Weight { get; set; }
-		public string? Notes { get; set; }
+        public bool IsSelectable { get; set; }
+        public string? Notes { get; set; }
 		//Tank info
 		public int? Volume { get; set; }
 		public int? WorkingPressure { get; set; }

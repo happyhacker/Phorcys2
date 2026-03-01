@@ -264,7 +264,7 @@ namespace Phorcys2Web.Controllers
 
 			foreach (var gear in gearDtos)
 			{
-				if (gear.NoLongerUse == null) // Include only if not marked as no longer used
+				if (gear.IsSelectable == true)
 				{
 					selectListItems.Add(new SelectListItem
 					{
