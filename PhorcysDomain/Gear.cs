@@ -19,6 +19,8 @@ public partial class Gear
 
     public DateTime? NoLongerUse { get; set; }
 
+    public bool IsSelectable { get; set; }
+
     public double? Weight { get; set; }
 
     public string? Notes { get; set; }

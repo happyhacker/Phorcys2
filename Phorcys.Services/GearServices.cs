@@ -50,11 +50,12 @@ namespace Phorcys.Services
 				var gearDtos = new List<GearDto>();
 				foreach (Gear gear in gearList)
 				{
-				if (gear.NoLongerUse == null) 	
+				if (gear.IsSelectable == true) 	
 					gearDtos.Add(new GearDto
 						{
 							GearId = gear.GearId,
-							Title = gear.Title
+							Title = gear.Title,
+                            IsSelectable = gear.IsSelectable
 					});
 				}
 				return gearDtos;
@@ -82,6 +83,7 @@ namespace Phorcys.Services
 					gearDto.Sn = gear.Sn;
 					gearDto.NoLongerUse = gear.NoLongerUse;
 					gearDto.Weight = gear.Weight;
+                    gearDto.IsSelectable = gear.IsSelectable;
 					gearDto.Notes = gear.Notes;
 					if (gear.Tank != null)
 					{
@@ -151,6 +153,7 @@ namespace Phorcys.Services
 					gear.Sn = gearDto.Sn;
 					gear.NoLongerUse = gearDto.NoLongerUse;
 					gear.Weight = gearDto.Weight;
+                    gear.IsSelectable = gearDto.IsSelectable;
 					gear.Notes = gearDto.Notes;
 					gear.LastModified = DateTime.Now;
 					if (

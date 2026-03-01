@@ -19,6 +19,7 @@ namespace Phorcys.Web.Models
 		public string? Sn { get; set; }
 		public DateTime? Acquired { get; set; }
 		public DateTime? NoLongerUse { get; set; }
+        public bool IsSelectable { get; set; }
 
 		[DisplayName("Weight")]
 		[Range(0, int.MaxValue, ErrorMessage = "Please enter a valid weight.")]

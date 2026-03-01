@@ -71,6 +71,7 @@ namespace Phorcys.Web.Controllers
 		public ActionResult Create()
 		{
 			var model = new GearViewModel();
+            model.IsSelectable = true;
 			return View(model);
 		}
 
@@ -88,6 +89,7 @@ namespace Phorcys.Web.Controllers
 				gear.RetailPrice = model.RetailPrice;
 				gear.Paid = model.Paid;
 				gear.Weight = model.Weight;
+                gear.IsSelectable = model.IsSelectable;
 				gear.Notes = model.Notes;
 				gear.Created = DateTime.Now;
 				gear.LastModified = DateTime.Now;
@@ -131,7 +133,8 @@ namespace Phorcys.Web.Controllers
 				model.Sn = gearDto.Sn;
 				model.NoLongerUse = gearDto.NoLongerUse;
 				model.Weight = gearDto.Weight;
-				model.Notes = gearDto.Notes;
+                model.IsSelectable = gearDto.IsSelectable;
+                model.Notes = gearDto.Notes;
 				model.TankVolume = gearDto.Volume;
 				model.WorkingPressure = gearDto.WorkingPressure;
 				model.ManufacturedMonth = gearDto.ManufacturedMonth;
@@ -157,7 +160,8 @@ namespace Phorcys.Web.Controllers
 				gearDto.Sn = model.Sn;
 				gearDto.NoLongerUse = model.NoLongerUse;
 				gearDto.Weight = model.Weight;
-				gearDto.Notes = model.Notes;
+                gearDto.IsSelectable = model.IsSelectable;
+                gearDto.Notes = model.Notes;
 				gearDto.Volume = model.TankVolume;
 				gearDto.WorkingPressure = model.WorkingPressure;
 				gearDto.ManufacturedMonth = model.ManufacturedMonth;
@@ -184,6 +188,7 @@ namespace Phorcys.Web.Controllers
 				model.Sn = gear.Sn;
 				model.Acquired = gear.Acquired;
 				model.NoLongerUse = gear.NoLongerUse;
+                model.IsSelectable = gear.IsSelectable;
 				model.Weight = gear.Weight;
 				model.Notes = gear.Notes;
 				models.Add(model);
