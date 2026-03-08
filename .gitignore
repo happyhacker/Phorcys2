@@ -12,6 +12,9 @@
 # Ignore all log files in any LogFiles directory at any depth
 **/LogFiles/*.txt
 
+#Ignore all Claude files
+**.claude/*.*
+
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
 *.BASE.*
