@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys.Data.DTOs;
 using Microsoft.Extensions.Logging;
+using Kendo.Mvc.UI;
 //using Phorcys.Web.ModelsNew;
 
 namespace Phorcys2Web.Controllers
@@ -95,9 +96,9 @@ namespace Phorcys2Web.Controllers
 				new DiveCompareViewModel {
 					Field = "Dive Site",
 					Planned = plan?.DiveSite?.Title ?? "",
-					Actual = "",
-					HasPlanValue = hasPlan,
-					IsMatch = false
+					Actual = plan?.DiveSite?.Title ?? "", // Assuming DiveSite is same as the plan
+                    HasPlanValue = hasPlan,
+					IsMatch = true // We assume the dive site matches the plan's dive site
 				},
 				new DiveCompareViewModel {
 					Field = "Date / Time",
