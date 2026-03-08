@@ -47,6 +47,15 @@ namespace Phorcys.Services
 			return dive;
 		}
 
+		public Dive GetDiveWithPlan(int diveId)
+		{
+			var dive = _context.Dives
+				.Include(d => d.DivePlan)
+					.ThenInclude(dp => dp.DiveSite)
+				.FirstOrDefault(d => d.DiveId == diveId);
+			return dive;
+		}
+
 		public void SaveNewDive(Dive dive, List<TanksOnDiveDto> tanks = null)
 		{
 			try

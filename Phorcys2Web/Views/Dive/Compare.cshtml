@@ -1,0 +1,63 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using Phorcys2Web.Controllers
+
+@{
+	ViewData["Title"] = "Compare Dive Plan vs. Dive";
+}
+@model IEnumerable<Phorcys.Web.Models.DiveCompareViewModel>
+
+<div class="placeholders mb-2">
+	<div class="row d-flex justify-content-start">
+	</div>
+</div>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">Compare Dive #@ViewBag.DiveNumber</h1>
+		@if ((bool)ViewBag.HasPlan)
+		{
+			<p class="lead-text text-muted">Plan vs. Actual</p>
+		}
+		else
+		{
+			<p class="lead-text text-muted">No dive plan linked to this dive</p>
+		}
+	</div>
+</section>
+
+<div class="row">
+	<div class="col-12">
+		@(
+			Html.Kendo().Grid(Model)
+			.Name("CompareGrid")
+			.Columns(columns =>
+			{
+				columns.Bound(p => p.Field).Title("Field");
+				columns.Bound(p => p.Planned).Title("Planned");
+				columns.Bound(p => p.Actual).Title("Actual");
+				columns.Bound(p => p.IsMatch).Hidden(true);
+				columns.Bound(p => p.HasPlanValue).Hidden(true);
+			})
+			.Resizable(resize => resize.Columns(true))
+			.Events(e => e.DataBound("onCompareDataBound"))
+			.Scrollable()
+		)
+	</div>
+</div>
+
+<div> 
+<p>
+	@(Html.Kendo().Button()
+		.Name("okButton")
+		.HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
+		.ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
+		.Content("OK")
+	)
+</p>
+</div>
+
+<div id="diveCompareConfig" data-index-url="@Url.Action("Index", "Dive")"></div>
+
+@section Scripts {
+	<script src="~/js/pages/dive-compare.js"></script>
+}
