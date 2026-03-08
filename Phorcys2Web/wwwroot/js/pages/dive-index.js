@@ -1,5 +1,6 @@
 var diveIndexConfig = document.getElementById("diveIndexConfig");
 var diveEditUrlBase = diveIndexConfig ? diveIndexConfig.dataset.editUrl : "";
+var diveCompareUrlBase = diveIndexConfig ? diveIndexConfig.dataset.compareUrl : "";
 
 window.onDelete = function (e) {
     e.preventDefault();
@@ -21,4 +22,13 @@ window.onEdit = function (e) {
 
     var diveId = data.DiveId;
     window.location.href = diveEditUrlBase + "/" + diveId;
+};
+
+window.onCompare = function (e) {
+    e.preventDefault();
+    var tr = $(e.target).closest("tr");
+    var data = this.dataItem(tr);
+
+    var diveId = data.DiveId;
+    window.location.href = diveCompareUrlBase + "/" + diveId;
 };
