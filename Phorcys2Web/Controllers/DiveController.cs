@@ -70,6 +70,68 @@ namespace Phorcys2Web.Controllers
 			return View();
 		}
 
+		[Authorize, HttpGet]
+		public ActionResult Compare(int id)
+		{
+			var dive = _diveServices.GetDiveWithPlan(id);
+			if (dive == null)
+				return View("Error");
+
+			var plan = dive.DivePlan;
+			bool hasPlan = plan != null;
+
+			ViewBag.DiveNumber = dive.DiveNumber;
+			ViewBag.HasPlan = hasPlan;
+
+			var rows = new List<DiveCompareViewModel>
+			{
+				new DiveCompareViewModel {
+					Field = "Title",
+					Planned = plan?.Title ?? "",
+					Actual = dive.Title ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && string.Equals(plan.Title, dive.Title, StringComparison.OrdinalIgnoreCase)
+				},
+				new DiveCompareViewModel {
+					Field = "Dive Site",
+					Planned = plan?.DiveSite?.Title ?? "",
+					Actual = "",
+					HasPlanValue = hasPlan,
+					IsMatch = false
+				},
+				new DiveCompareViewModel {
+					Field = "Date / Time",
+					Planned = plan?.ScheduledTime.ToString("MM/dd/yyyy hh:mm tt") ?? "",
+					Actual = dive.DescentTime?.ToString("MM/dd/yyyy hh:mm tt") ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && plan.ScheduledTime.Date == dive.DescentTime?.Date
+				},
+				new DiveCompareViewModel {
+					Field = "Duration (min)",
+					Planned = plan?.Minutes?.ToString() ?? "",
+					Actual = dive.Minutes?.ToString() ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && plan.Minutes == dive.Minutes
+				},
+				new DiveCompareViewModel {
+					Field = "Max Depth",
+					Planned = plan?.MaxDepth?.ToString() ?? "",
+					Actual = dive.MaxDepth?.ToString() ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && plan.MaxDepth == dive.MaxDepth
+				},
+				new DiveCompareViewModel {
+					Field = "Notes",
+					Planned = plan?.Notes ?? "",
+					Actual = dive.Notes ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && string.Equals(plan.Notes, dive.Notes, StringComparison.OrdinalIgnoreCase)
+				}
+			};
+
+			return View(rows);
+		}
+
 		// GET: DiveController/Create
 		[Authorize]
 		[HttpGet]

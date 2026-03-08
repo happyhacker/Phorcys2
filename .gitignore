@@ -9,6 +9,9 @@
 # $ git config --global mergetool.keepBackup false
 *.orig
 
+#Ignore all Claude files
+**/.claude/*.*
+
 # Ignore all log files in any LogFiles directory at any depth
 **/LogFiles/*.txt
 

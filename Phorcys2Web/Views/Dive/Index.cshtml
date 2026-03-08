@@ -54,6 +54,7 @@
 					columns.Command(command =>
 					{
 						command.Custom("Edit").Click("onEdit");
+						command.Custom("Compare").Click("onCompare");
 						command.Custom("Delete").Click("onDelete");
 					}).Title("Actions");
 				})
@@ -88,7 +89,7 @@
 	@Html.AntiForgeryToken()
 	<input type="hidden" name="DiveId" id="hiddenDiveId" value="" />
 }
-<div id="diveIndexConfig" data-edit-url="@Url.Action("Edit", "Dive")"></div>
+<div id="diveIndexConfig" data-edit-url="@Url.Action("Edit", "Dive")" data-compare-url="@Url.Action("Compare", "Dive")"></div>
 
 @section Scripts {
 	<script src="~/js/pages/dive-index.js"></script>
