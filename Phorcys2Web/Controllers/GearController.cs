@@ -60,8 +60,14 @@ namespace Phorcys.Web.Controllers
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Gear successfully deleted.";
 				return RedirectToAction("Index");
 			}
+			catch (InvalidOperationException ex)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = ex.Message;
+				return RedirectToAction("Index");
+			}
 			catch (Exception ex)
 			{
+				_logger.LogError(ex, "Unexpected error deleting gear {GearId}: {Message}", GearId, ex.Message);
 				return View("Error");
 			}
 		}

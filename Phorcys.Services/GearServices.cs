@@ -105,16 +105,41 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var gear = _context.Gear.Find(id);
-				if (gear != null)
+				var gear = _context.Gear.Include(g => g.DivePlans).FirstOrDefault(g => g.GearId == id);
+				if (gear == null) return;
+
+				if (gear.DivePlans.Any())
 				{
-					_context.Gear.Remove(gear);
+					var divePlanIds = gear.DivePlans.Select(dp => dp.DivePlanId).ToList();
+					var dives = _context.Dives
+						.Where(d => d.DivePlanId.HasValue && divePlanIds.Contains(d.DivePlanId.Value))
+						.ToList();
+
+					if (dives.Any())
+					{
+						var diveNumbers = string.Join(", ", dives.Select(d => d.DiveNumber).OrderBy(n => n));
+						throw new InvalidOperationException(
+							$"Unable to delete this gear because the following dives reference it: {diveNumbers}");
+					}
+
+					// No dives reference these plans — safe to remove the gear references
+					foreach (var divePlan in gear.DivePlans.ToList())
+					{
+						divePlan.Gears.Remove(gear);
+					}
 					_context.SaveChanges();
 				}
+
+				_context.Gear.Remove(gear);
+				_context.SaveChanges();
+			}
+			catch (InvalidOperationException)
+			{
+				throw;
 			}
 			catch (DbUpdateException ex)
 			{
-				_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
+				_logger.LogError(ex, "Error deleting Gear {id}: {ErrorMessage}", id, ex.Message);
 				throw;
 			}
 			catch (Exception ex)
