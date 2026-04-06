@@ -122,23 +122,20 @@ namespace Phorcys.Services
         // Field helpers — defensive getters that return null on any parse failure
         // -----------------------------------------------------------------------
 
-        private static string? GetString(string[] fields, Dictionary<string, int> idx, params string[] candidates)
+        private static string? GetString(string[] fields, Dictionary<string, int> idx, string key)
         {
-            foreach (var key in candidates)
+            if (idx.TryGetValue(key, out int col) && col < fields.Length)
             {
-                if (idx.TryGetValue(key, out int col) && col < fields.Length)
-                {
-                    var val = fields[col].Trim().Trim('"');
-                    if (!string.IsNullOrEmpty(val))
-                        return val;
-                }
+                var val = fields[col].Trim().Trim('"');
+                if (!string.IsNullOrEmpty(val))
+                    return val;
             }
             return null;
         }
 
-        private static int? GetInt(string[] fields, Dictionary<string, int> idx, params string[] candidates)
+        private static int? GetInt(string[] fields, Dictionary<string, int> idx, string key)
         {
-            var raw = GetString(fields, idx, candidates);
+            var raw = GetString(fields, idx, key);
             if (raw == null) return null;
 
             // Strip trailing "%" or unit suffixes (e.g. "100%", "82 ft")
@@ -152,8 +149,9 @@ namespace Phorcys.Services
             return null;
         }
 
-        private static float? GetFloat(string[] fields, Dictionary<string, int> idx, params string[] candidates) {
-            var raw = GetString(fields, idx, candidates);
+        private static float? GetFloat(string[] fields, Dictionary<string, int> idx, string key)
+        {
+            var raw = GetString(fields, idx, key);
             if(raw == null)
                 return null;
 
@@ -166,9 +164,9 @@ namespace Phorcys.Services
             return null;
         }
 
-        private static DateTime? GetDateTime(string[] fields, Dictionary<string, int> idx, params string[] candidates)
+        private static DateTime? GetDateTime(string[] fields, Dictionary<string, int> idx, string key)
         {
-            var raw = GetString(fields, idx, candidates);
+            var raw = GetString(fields, idx, key);
             if (raw == null) return null;
 
             // Shearwater Cloud exports local/device time — do NOT convert to UTC.
