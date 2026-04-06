@@ -7,12 +7,9 @@ namespace Phorcys.Services
     /// <summary>
     /// Parses the summary section of a Shearwater Cloud CSV export.
     ///
-    /// Shearwater Cloud exports a CSV with one header row followed by one row per dive.
-    /// Column names vary slightly across device models and export versions, so this
-    /// parser uses flexible (normalized) column name matching.
-    ///
-    /// Phase 1 only: parses the first data row as the summary for a single dive.
-    /// Profile sample rows are not parsed.
+    /// Row 1: summary column headers (Dive Number, Start Date, Max Depth, …)
+    /// Row 2: summary values for the dive
+    /// Row 3+: profile sample headers and data (not parsed in Phase 1)
     /// </summary>
     public class ShearwaterCsvImportService : IShearwaterCsvImportService
     {
@@ -103,20 +100,18 @@ namespace Phorcys.Services
         {
             var dto = new ShearwaterDiveSummaryDto();
 
-            dto.DiveNumber      = GetInt(fields, idx, "DIVENUMBER", "DIVE");
-            dto.StartTime       = GetDateTime(fields, idx, "STARTDATE", "STARTTIME", "DIVETIME", "DATE");
-            dto.MaxDepth        = GetInt(fields, idx, "MAXDEPTHFT", "MAXDEPTHM", "MAXDEPTH", "DEEPEST");
-            dto.SerialNumber    = GetString(fields, idx, "COMPUTERSERIALNUMBER", "SERIALNO", "SN", "SERIAL");
-            dto.FirmwareVersion = GetString(fields, idx, "COMPUTERFIRMWAREVERSION", "FIRMWARE", "FWVERSION", "FW");
-            dto.CnsBeforePercent = GetInt(fields, idx, "STARTCNS", "STARTO2CNSPERCENT", "STARTCNS", "CNSBEFORE", "CNSBEFORE");
-            dto.CnsAfterPercent  = GetInt(fields, idx, "ENDCNS", "ENDO2CNSPERCENT", "ENDCNS", "CNSAFTER");
-            dto.BatteryVoltage   = GetFloat(fields, idx, "ENDBATTERYVOLTAGE", "BATTERYPERCENT", "BATTERYVOLTS", "BATTERYVOLTAGE");
+            dto.DiveNumber       = GetInt(fields, idx, "DIVENUMBER");
+            dto.StartTime        = GetDateTime(fields, idx, "STARTDATE");
+            dto.MaxDepth         = GetInt(fields, idx, "MAXDEPTH");
+            dto.SerialNumber     = GetString(fields, idx, "COMPUTERSERIALNUMBER");
+            dto.FirmwareVersion  = GetString(fields, idx, "COMPUTERFIRMWAREVERSION");
+            dto.CnsBeforePercent = GetInt(fields, idx, "STARTCNS");
+            dto.CnsAfterPercent  = GetInt(fields, idx, "ENDCNS");
+            dto.BatteryVoltage   = GetFloat(fields, idx, "ENDBATTERYVOLTAGE");
+            dto.Product          = GetString(fields, idx, "PRODUCT");
 
-            // "Computer Name" or "Device" is the product/model name
-            dto.Product = GetString(fields, idx, "PRODUCT", "COMPUTER", "DEVICE", "DEVICENAME", "DIVERCOMPUTER");
-
-            // Duration is reported in seconds by Shearwater; convert to rounded minutes
-            int? durationSeconds = GetInt(fields, idx, "MAXTIME", "DURATION", "DURATIONSSECONDS", "TIMES", "DIVETIME");
+            // Max Time is in seconds; convert to rounded minutes
+            int? durationSeconds = GetInt(fields, idx, "MAXTIME");
             if (durationSeconds.HasValue)
                 dto.DurationMinutes = (int)Math.Round(durationSeconds.Value / 60.0);
 
@@ -176,19 +171,13 @@ namespace Phorcys.Services
             var raw = GetString(fields, idx, candidates);
             if (raw == null) return null;
 
-            // Common Shearwater export date formats (local/device time — do NOT convert to UTC)
+            // Shearwater Cloud exports local/device time — do NOT convert to UTC.
+            // Primary format: "2/18/2026 7:37:41 PM"
             string[] formats =
             {
+                "M/d/yyyy h:mm:ss tt",
+                "M/d/yyyy h:mm tt",
                 "yyyy-MM-dd HH:mm:ss",
-                "yyyy-MM-dd HH:mm",
-                "yyyy-MM-ddTHH:mm:ss",
-                "yyyy-MM-ddTHH:mm",
-                "MM/dd/yyyy HH:mm:ss",
-                "MM/dd/yyyy HH:mm",
-                "MM/dd/yyyy h:mm:ss tt",
-                "MM/dd/yyyy h:mm tt",
-                "M/d/yyyy H:mm:ss",
-                "M/d/yyyy H:mm",
             };
 
             if (DateTime.TryParseExact(raw, formats,
