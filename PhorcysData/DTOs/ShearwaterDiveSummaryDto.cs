@@ -10,10 +10,22 @@ namespace Phorcys.Data.DTOs
         public int? DiveNumber { get; set; }
 
         /// <summary>
-        /// Dive start time in local/device time (as exported by Shearwater Cloud).
+        /// Timestamp when the diver descended (dive start), in local/device time.
         /// Do NOT convert to UTC — store and display as-is.
         /// </summary>
-        public DateTime? StartTime { get; set; }
+        public DateTime? Descended { get; set; }
+
+        /// <summary>
+        /// Timestamp when the diver surfaced (dive end), in local/device time.
+        /// Do NOT convert to UTC — store and display as-is.
+        /// </summary>
+        public DateTime? Surfaced { get; set; }
+
+        /// <summary>Dive mode (e.g. OC, CC, Gauge) as reported by the dive computer.</summary>
+        public string? DiveMode { get; set; }
+
+        /// <summary>True when the dive computer was configured to use imperial units.</summary>
+        public bool? IsEmperial { get; set; }
 
         /// <summary>
         /// Dive duration in whole minutes, rounded from seconds.

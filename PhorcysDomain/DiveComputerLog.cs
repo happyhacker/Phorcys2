@@ -58,6 +58,20 @@ namespace Phorcys.Domain
         [Column("BatteryVoltageEnd")]
         public float? BatteryVoltage { get; set; }
 
+        public string? DiveMode { get; set; }
+
+        public bool? IsEmperial { get; set; }
+
+        /// <summary>Timestamp when the diver descended (dive start). Maps to "Start Date" in the CSV.</summary>
+        public DateTime? Descended { get; set; }
+
+        /// <summary>Timestamp when the diver surfaced (dive end). Maps to "End Date" in the CSV.</summary>
+        public DateTime? Surfaced { get; set; }
+
+        public int? MaxDepth { get; set; }
+
+        public int? Minutes { get; set; }
+
         public virtual Dive? Dive { get; set; }
     }
 }

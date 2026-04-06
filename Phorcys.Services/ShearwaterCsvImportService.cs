@@ -101,7 +101,7 @@ namespace Phorcys.Services
             var dto = new ShearwaterDiveSummaryDto();
 
             dto.DiveNumber       = GetInt(fields, idx, "DIVENUMBER");
-            dto.StartTime        = GetDateTime(fields, idx, "STARTDATE");
+            dto.Descended        = GetDateTime(fields, idx, "STARTDATE");
             dto.MaxDepth         = GetInt(fields, idx, "MAXDEPTH");
             dto.SerialNumber     = GetString(fields, idx, "COMPUTERSERIALNUMBER");
             dto.FirmwareVersion  = GetString(fields, idx, "COMPUTERFIRMWAREVERSION");

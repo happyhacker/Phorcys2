@@ -200,6 +200,12 @@ namespace Phorcys2Web.Controllers
 							CnsBeforePercent = model.ImportedCnsBeforePercent,
 							CnsAfterPercent = model.ImportedCnsAfterPercent,
 							BatteryVoltage = model.ImportedBatteryVoltage,
+							DiveMode = model.ImportedDiveMode,
+							IsEmperial = model.ImportedIsEmperial,
+							Descended = model.ImportedDescended,
+							Surfaced = model.ImportedSurfaced,
+							MaxDepth = model.MaxDepth,
+							Minutes = model.Minutes,
 							ImportedDateTime = DateTime.Now,
 							// GearId is [NotMapped] — stored in-memory for reference but not persisted.
 							// To persist the match, add a GearId column to DiveComputerLogs.
@@ -261,8 +267,8 @@ namespace Phorcys2Web.Controllers
 			if (summary.DiveNumber.HasValue)
 				model.DiveNumber = summary.DiveNumber.Value;
 
-			if (summary.StartTime.HasValue)
-				model.DescentTime = summary.StartTime.Value;
+			if (summary.Descended.HasValue)
+				model.DescentTime = summary.Descended.Value;
 
 			if (summary.DurationMinutes.HasValue)
 				model.Minutes = summary.DurationMinutes.Value;
@@ -278,9 +284,13 @@ namespace Phorcys2Web.Controllers
 			model.ImportedCnsBeforePercent = summary.CnsBeforePercent;
 			model.ImportedCnsAfterPercent = summary.CnsAfterPercent;
 			model.ImportedBatteryVoltage = summary.BatteryVoltage;
+			model.ImportedDiveMode = summary.DiveMode;
+			model.ImportedIsEmperial = summary.IsEmperial;
+			model.ImportedDescended = summary.Descended;
+			model.ImportedSurfaced = summary.Surfaced;
 
 			_logger.LogInformation("Shearwater CSV imported: DiveNumber={DiveNumber}, Start={Start}, Duration={Mins}min, MaxDepth={Depth}",
-				summary.DiveNumber, summary.StartTime, summary.DurationMinutes, summary.MaxDepth);
+				summary.DiveNumber, summary.Descended, summary.DurationMinutes, summary.MaxDepth);
 
 			return View("Create", model);
 		}

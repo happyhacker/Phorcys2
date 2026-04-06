@@ -93,5 +93,17 @@ namespace Phorcys.Web.Models
 
         /// <summary>Battery level/voltage from the imported CSV.</summary>
         public float? ImportedBatteryVoltage { get; set; }
+
+        /// <summary>Dive mode (e.g. OC, CC, Gauge) from the imported CSV.</summary>
+        public string? ImportedDiveMode { get; set; }
+
+        /// <summary>True when the dive computer used imperial units, from the imported CSV.</summary>
+        public bool? ImportedIsEmperial { get; set; }
+
+        /// <summary>Dive start timestamp from the imported CSV (local/device time).</summary>
+        public DateTime? ImportedDescended { get; set; }
+
+        /// <summary>Dive end timestamp from the imported CSV (local/device time).</summary>
+        public DateTime? ImportedSurfaced { get; set; }
     }
 }
