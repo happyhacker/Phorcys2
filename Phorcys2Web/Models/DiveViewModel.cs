@@ -68,5 +68,30 @@ namespace Phorcys.Web.Models
 
         public DateTime LastModified { get; set; }
 
+        // -----------------------------------------------------------------------
+        // Shearwater CSV import — populated after upload, stored as hidden fields,
+        // used to create a DiveComputerLog record when the dive is saved.
+        // -----------------------------------------------------------------------
+
+        /// <summary>True when a Shearwater CSV has been uploaded and parsed for this form session.</summary>
+        public bool HasImportedData { get; set; }
+
+        /// <summary>Serial number from the imported CSV; used for Gear matching and DiveComputerLog.</summary>
+        public string ImportedSerialNumber { get; set; }
+
+        /// <summary>Computer product/model name from the imported CSV (e.g. "Perdix 2").</summary>
+        public string ImportedProduct { get; set; }
+
+        /// <summary>Firmware version string from the imported CSV.</summary>
+        public string ImportedFirmwareVersion { get; set; }
+
+        /// <summary>O2 CNS % at dive start from the imported CSV.</summary>
+        public int? ImportedCnsBeforePercent { get; set; }
+
+        /// <summary>O2 CNS % at dive end from the imported CSV.</summary>
+        public int? ImportedCnsAfterPercent { get; set; }
+
+        /// <summary>Battery level/voltage from the imported CSV.</summary>
+        public float? ImportedBatteryVoltage { get; set; }
     }
 }
