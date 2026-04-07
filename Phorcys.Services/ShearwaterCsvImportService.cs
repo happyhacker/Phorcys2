@@ -2,8 +2,7 @@ using Microsoft.Extensions.Logging;
 using Phorcys.Data.DTOs;
 using System.Text;
 
-namespace Phorcys.Services
-{
+namespace Phorcys.Services {
     /// <summary>
     /// Parses the summary section of a Shearwater Cloud CSV export.
     ///
@@ -11,32 +10,26 @@ namespace Phorcys.Services
     /// Row 2: summary values for the dive
     /// Row 3+: profile sample headers and data (not parsed in Phase 1)
     /// </summary>
-    public class ShearwaterCsvImportService : IShearwaterCsvImportService
-    {
+    public class ShearwaterCsvImportService : IShearwaterCsvImportService {
         private readonly ILogger<ShearwaterCsvImportService> _logger;
 
-        public ShearwaterCsvImportService(ILogger<ShearwaterCsvImportService> logger)
-        {
+        public ShearwaterCsvImportService(ILogger<ShearwaterCsvImportService> logger) {
             _logger = logger;
         }
 
-        public async Task<ShearwaterDiveSummaryDto?> ParseAsync(Stream csvStream)
-        {
-            try
-            {
+        public async Task<ShearwaterDiveSummaryDto?> ParseAsync(Stream csvStream) {
+            try {
                 using var reader = new StreamReader(csvStream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, leaveOpen: true);
 
                 // Read all non-empty lines
                 var lines = new List<string>();
                 string? line;
-                while ((line = await reader.ReadLineAsync()) != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(line))
+                while((line = await reader.ReadLineAsync()) != null) {
+                    if(!string.IsNullOrWhiteSpace(line))
                         lines.Add(line);
                 }
 
-                if (lines.Count < 2)
-                {
+                if(lines.Count < 2) {
                     _logger.LogWarning("Shearwater CSV has fewer than 2 non-empty lines; cannot parse.");
                     return null;
                 }
@@ -50,28 +43,21 @@ namespace Phorcys.Services
 
                 return MapRow(fields, columnIndex);
             }
-            catch (Exception ex)
-            {
+            catch(Exception ex) {
                 _logger.LogError(ex, "Error parsing Shearwater CSV file.");
                 return null;
             }
         }
 
-        // -----------------------------------------------------------------------
-        // Column index building — tolerant matching
-        // -----------------------------------------------------------------------
-
         /// <summary>
         /// Maps a normalized column key to its 0-based index in the header row.
         /// Unknown columns are silently ignored.
         /// </summary>
-        private static Dictionary<string, int> BuildColumnIndex(string[] headers)
-        {
+        private static Dictionary<string, int> BuildColumnIndex(string[] headers) {
             var index = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < headers.Length; i++)
-            {
+            for(int i = 0; i < headers.Length; i++) {
                 var normalized = NormalizeColName(headers[i]);
-                if (!string.IsNullOrEmpty(normalized))
+                if(!string.IsNullOrEmpty(normalized))
                     index.TryAdd(normalized, i);  // first occurrence wins on duplicate headers
             }
             return index;
@@ -81,76 +67,68 @@ namespace Phorcys.Services
         /// Strips spaces, punctuation, and parenthesized units so "Max Depth (ft)"
         /// and "MaxDepth" both normalize to "MAXDEPTH".
         /// </summary>
-        private static string NormalizeColName(string name)
-        {
+        private static string NormalizeColName(string name) {
             var sb = new StringBuilder();
-            foreach (char c in name.ToUpperInvariant())
-            {
-                if (char.IsLetterOrDigit(c))
+            foreach(char c in name.ToUpperInvariant()) {
+                if(char.IsLetterOrDigit(c))
                     sb.Append(c);
             }
             return sb.ToString();
         }
 
-        // -----------------------------------------------------------------------
         // Row mapping
-        // -----------------------------------------------------------------------
-
-        private ShearwaterDiveSummaryDto MapRow(string[] fields, Dictionary<string, int> idx)
-        {
+        private ShearwaterDiveSummaryDto MapRow(string[] fields, Dictionary<string, int> idx) {
             var dto = new ShearwaterDiveSummaryDto();
 
-            dto.DiveNumber       = GetInt(fields, idx, "DIVENUMBER");
-            dto.Descended        = GetDateTime(fields, idx, "STARTDATE");
-            dto.MaxDepth         = GetInt(fields, idx, "MAXDEPTH");
-            dto.SerialNumber     = GetString(fields, idx, "COMPUTERSERIALNUMBER");
-            dto.FirmwareVersion  = GetString(fields, idx, "COMPUTERFIRMWAREVERSION");
+            dto.DiveNumber = GetInt(fields, idx, "DIVENUMBER");
+            dto.Descended = GetDateTime(fields, idx, "STARTDATE");
+            dto.Surfaced = GetDateTime(fields, idx, "ENDDATE");
+            dto.MaxDepth = GetInt(fields, idx, "MAXDEPTH");
+            dto.SerialNumber = GetString(fields, idx, "COMPUTERSERIALNUMBER");
+            dto.FirmwareVersion = GetString(fields, idx, "COMPUTERFIRMWAREVERSION");
             dto.CnsBeforePercent = GetInt(fields, idx, "STARTCNS");
-            dto.CnsAfterPercent  = GetInt(fields, idx, "ENDCNS");
-            dto.BatteryVoltage   = GetFloat(fields, idx, "ENDBATTERYVOLTAGE");
-            dto.Product          = GetString(fields, idx, "PRODUCT");
+            dto.CnsAfterPercent = GetInt(fields, idx, "ENDCNS");
+            dto.BatteryVoltage = GetFloat(fields, idx, "ENDBATTERYVOLTAGE");
+            dto.Product = GetString(fields, idx, "PRODUCT");
+            var IsTrue = GetString(fields, idx, "IMPERIALUNITS");
+            dto.IsImperial = IsTrue.Equals("TRUE", StringComparison.OrdinalIgnoreCase);
+            dto.DiveMode = GetString(fields, idx, "MODE");
 
             // Max Time is in seconds; convert to rounded minutes
             int? durationSeconds = GetInt(fields, idx, "MAXTIME");
-            if (durationSeconds.HasValue)
+            if(durationSeconds.HasValue)
                 dto.DurationMinutes = (int)Math.Round(durationSeconds.Value / 60.0);
 
             return dto;
         }
 
-        // -----------------------------------------------------------------------
         // Field helpers — defensive getters that return null on any parse failure
-        // -----------------------------------------------------------------------
-
-        private static string? GetString(string[] fields, Dictionary<string, int> idx, string key)
-        {
-            if (idx.TryGetValue(key, out int col) && col < fields.Length)
-            {
+        private static string? GetString(string[] fields, Dictionary<string, int> idx, string key) {
+            if(idx.TryGetValue(key, out int col) && col < fields.Length) {
                 var val = fields[col].Trim().Trim('"');
-                if (!string.IsNullOrEmpty(val))
+                if(!string.IsNullOrEmpty(val))
                     return val;
             }
             return null;
         }
 
-        private static int? GetInt(string[] fields, Dictionary<string, int> idx, string key)
-        {
+        private static int? GetInt(string[] fields, Dictionary<string, int> idx, string key) {
             var raw = GetString(fields, idx, key);
-            if (raw == null) return null;
+            if(raw == null)
+                return null;
 
             // Strip trailing "%" or unit suffixes (e.g. "100%", "82 ft")
             var cleaned = raw.Split(' ')[0].TrimEnd('%');
-            if (int.TryParse(cleaned, out int result))
+            if(int.TryParse(cleaned, out int result))
                 return result;
             // Try parsing as double and rounding (e.g. "82.3")
-            if (double.TryParse(cleaned, System.Globalization.NumberStyles.Any,
+            if(double.TryParse(cleaned, System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture, out double dbl))
                 return (int)Math.Round(dbl);
             return null;
         }
 
-        private static float? GetFloat(string[] fields, Dictionary<string, int> idx, string key)
-        {
+        private static float? GetFloat(string[] fields, Dictionary<string, int> idx, string key) {
             var raw = GetString(fields, idx, key);
             if(raw == null)
                 return null;
@@ -164,10 +142,10 @@ namespace Phorcys.Services
             return null;
         }
 
-        private static DateTime? GetDateTime(string[] fields, Dictionary<string, int> idx, string key)
-        {
+        private static DateTime? GetDateTime(string[] fields, Dictionary<string, int> idx, string key) {
             var raw = GetString(fields, idx, key);
-            if (raw == null) return null;
+            if(raw == null)
+                return null;
 
             // Shearwater Cloud exports local/device time — do NOT convert to UTC.
             // Primary format: "2/18/2026 7:37:41 PM"
@@ -178,55 +156,41 @@ namespace Phorcys.Services
                 "yyyy-MM-dd HH:mm:ss",
             };
 
-            if (DateTime.TryParseExact(raw, formats,
+            if(DateTime.TryParseExact(raw, formats,
                 System.Globalization.CultureInfo.InvariantCulture,
                 System.Globalization.DateTimeStyles.None,
-                out DateTime result))
-            {
+                out DateTime result)) {
                 return result;
             }
 
             // Fallback: try general parse
-            if (DateTime.TryParse(raw, out DateTime fallback))
+            if(DateTime.TryParse(raw, out DateTime fallback))
                 return fallback;
 
             return null;
         }
 
-        // -----------------------------------------------------------------------
         // CSV line splitter — handles double-quoted fields with embedded commas
-        // -----------------------------------------------------------------------
-
-        private static string[] SplitCsvLine(string line)
-        {
+           private static string[] SplitCsvLine(string line) {
             var fields = new List<string>();
             var current = new StringBuilder();
             bool inQuotes = false;
 
-            for (int i = 0; i < line.Length; i++)
-            {
+            for(int i = 0; i < line.Length; i++) {
                 char c = line[i];
 
-                if (c == '"')
-                {
+                if(c == '"') {
                     // Handle escaped quotes ("")
-                    if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
-                    {
+                    if(inQuotes && i + 1 < line.Length && line[i + 1] == '"') {
                         current.Append('"');
                         i++;
-                    }
-                    else
-                    {
+                    } else {
                         inQuotes = !inQuotes;
                     }
-                }
-                else if (c == ',' && !inQuotes)
-                {
+                } else if(c == ',' && !inQuotes) {
                     fields.Add(current.ToString());
                     current.Clear();
-                }
-                else
-                {
+                } else {
                     current.Append(c);
                 }
             }

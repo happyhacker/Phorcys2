@@ -60,7 +60,7 @@ namespace Phorcys.Domain
 
         public string? DiveMode { get; set; }
 
-        public bool? IsEmperial { get; set; }
+        public bool? IsImperial { get; set; }
 
         /// <summary>Timestamp when the diver descended (dive start). Maps to "Start Date" in the CSV.</summary>
         public DateTime? Descended { get; set; }

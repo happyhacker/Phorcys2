@@ -25,7 +25,7 @@ namespace Phorcys.Data.DTOs
         public string? DiveMode { get; set; }
 
         /// <summary>True when the dive computer was configured to use imperial units.</summary>
-        public bool? IsEmperial { get; set; }
+        public bool? IsImperial { get; set; }
 
         /// <summary>
         /// Dive duration in whole minutes, rounded from seconds.

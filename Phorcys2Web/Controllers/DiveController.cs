@@ -201,7 +201,7 @@ namespace Phorcys2Web.Controllers
 							CnsAfterPercent = model.ImportedCnsAfterPercent,
 							BatteryVoltage = model.ImportedBatteryVoltage,
 							DiveMode = model.ImportedDiveMode,
-							IsEmperial = model.ImportedIsEmperial,
+							IsImperial = model.ImportedIsImperial,
 							Descended = model.ImportedDescended,
 							Surfaced = model.ImportedSurfaced,
 							MaxDepth = model.MaxDepth,
@@ -285,7 +285,7 @@ namespace Phorcys2Web.Controllers
 			model.ImportedCnsAfterPercent = summary.CnsAfterPercent;
 			model.ImportedBatteryVoltage = summary.BatteryVoltage;
 			model.ImportedDiveMode = summary.DiveMode;
-			model.ImportedIsEmperial = summary.IsEmperial;
+			model.ImportedIsImperial = summary.IsImperial;
 			model.ImportedDescended = summary.Descended;
 			model.ImportedSurfaced = summary.Surfaced;
 

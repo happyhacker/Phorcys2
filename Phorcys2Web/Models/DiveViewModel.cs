@@ -98,7 +98,7 @@ namespace Phorcys.Web.Models
         public string? ImportedDiveMode { get; set; }
 
         /// <summary>True when the dive computer used imperial units, from the imported CSV.</summary>
-        public bool? ImportedIsEmperial { get; set; }
+        public bool? ImportedIsImperial { get; set; }
 
         /// <summary>Dive start timestamp from the imported CSV (local/device time).</summary>
         public DateTime? ImportedDescended { get; set; }
