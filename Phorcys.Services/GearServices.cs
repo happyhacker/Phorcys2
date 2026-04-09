@@ -149,6 +149,32 @@ namespace Phorcys.Services
 			}
 		}
 
+        /// <summary>
+        /// Finds the GearId for a gear item belonging to the given user whose serial number
+        /// matches the provided value (case-insensitive, whitespace-trimmed).
+        /// Returns null if no match is found or the serial number is empty.
+        /// </summary>
+        public int? FindGearIdBySerialNumber(int userId, string? serialNumber)
+        {
+            if (string.IsNullOrWhiteSpace(serialNumber))
+                return null;
+
+            var normalized = serialNumber.Trim().ToUpperInvariant();
+            try
+            {
+                var gear = _context.Gear
+                    .Where(g => g.UserId == userId && g.Sn != null)
+                    .AsEnumerable()
+                    .FirstOrDefault(g => g.Sn!.Trim().ToUpperInvariant() == normalized);
+                return gear?.GearId;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error looking up gear by serial number for user {UserId}", userId);
+                return null;
+            }
+        }
+
 		public void SaveNewGear(Gear gear)
 		{
 			try

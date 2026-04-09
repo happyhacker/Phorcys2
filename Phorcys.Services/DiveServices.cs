@@ -140,6 +140,27 @@ namespace Phorcys.Services
         }
 
 
+        /// <summary>
+        /// Persists a DiveComputerLog record for the given dive.
+        /// Call this after SaveNewDive so DiveId is available.
+        /// Note: DiveComputerLog.GearId is [NotMapped] and will not be persisted;
+        /// the matched gear is identified via SerialNumber in the stored row.
+        /// </summary>
+        public void SaveDiveComputerLog(DiveComputerLog log)
+        {
+            try
+            {
+                _context.DiveComputerLogs.Add(log);
+                _context.SaveChanges();
+                _logger.LogInformation("Saved DiveComputerLog for DiveId {DiveId}", log.DiveId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving DiveComputerLog for DiveId {DiveId}", log.DiveId);
+                throw;
+            }
+        }
+
         public void Delete(int id)
 		{
 			try

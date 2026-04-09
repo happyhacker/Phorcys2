@@ -25,14 +25,20 @@ namespace Phorcys2Web.Controllers
 		private readonly DivePlanServices _divePlanServices;
 		private readonly DiveServices _diveServices;
 		private readonly UserServices _userServices;
+		private readonly GearServices _gearServices;
+		private readonly IShearwaterCsvImportService _shearwaterCsvImportService;
 		private readonly ILogger _logger;
 
 		public DiveController(DivePlanServices divePlanServices, DiveServices diveServices,
-			UserServices userServices, ILogger<DiveController> logger)
+			UserServices userServices, GearServices gearServices,
+			IShearwaterCsvImportService shearwaterCsvImportService,
+			ILogger<DiveController> logger)
 		{
 			_divePlanServices = divePlanServices;
 			_diveServices = diveServices;
 			_userServices = userServices;
+			_gearServices = gearServices;
+			_shearwaterCsvImportService = shearwaterCsvImportService;
 			_logger = logger;
 		}
 
@@ -172,6 +178,48 @@ namespace Phorcys2Web.Controllers
 				dive.UserId = _userServices.GetUserId();
 				dive.DivePlanId = model.DivePlanSelectedId;
 				_diveServices.SaveNewDive(dive, model.Tanks);
+
+				// If a Shearwater CSV was imported, create the DiveComputerLog record
+				if (model.HasImportedData)
+				{
+					try
+					{
+						int userId = _userServices.GetUserId();
+						int? matchedGearId = _gearServices.FindGearIdBySerialNumber(userId, model.ImportedSerialNumber);
+
+						var log = new Phorcys.Domain.DiveComputerLog
+						{
+							DiveId = dive.DiveId,
+							Vendor = "Shearwater",
+							Product = model.ImportedProduct,
+							// Model is the same as Product for Shearwater imports
+							Model = model.ImportedProduct,
+							SerialNumber = model.ImportedSerialNumber,
+							FirmwareVersion = model.ImportedFirmwareVersion,
+							DiveNumber = model.DiveNumber,
+							CnsBeforePercent = model.ImportedCnsBeforePercent,
+							CnsAfterPercent = model.ImportedCnsAfterPercent,
+							BatteryVoltage = model.ImportedBatteryVoltage,
+							DiveMode = model.ImportedDiveMode,
+							IsImperial = model.ImportedIsImperial,
+							Descended = model.ImportedDescended,
+							Surfaced = model.ImportedSurfaced,
+							MaxDepth = model.MaxDepth,
+							Minutes = model.Minutes,
+							ImportedDateTime = DateTime.Now,
+							// GearId is [NotMapped] — stored in-memory for reference but not persisted.
+							// To persist the match, add a GearId column to DiveComputerLogs.
+							GearId = matchedGearId
+						};
+						_diveServices.SaveDiveComputerLog(log);
+					}
+					catch (Exception ex)
+					{
+						// Log but don't fail the dive save — the dive was already created
+						_logger.LogError(ex, "Failed to save DiveComputerLog for dive {DiveId}", dive.DiveId);
+					}
+				}
+
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The Dive was successfully created.";
 				return RedirectToAction("Index");
 			}
@@ -180,6 +228,82 @@ namespace Phorcys2Web.Controllers
 				model.DivePlanList = BuildDivePlanList();
 				return View(model);
 			}
+		}
+
+		/// <summary>
+		/// Accepts a Shearwater Cloud CSV file, parses the summary row, and re-displays
+		/// the Create Dive Log form with the imported values pre-filled.
+		/// The user can review and edit all values before saving.
+		/// </summary>
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public async Task<ActionResult> UploadShearwaterCsv(IFormFile csvFile, int? divePlanSelectedId)
+		{
+			var model = new DiveViewModel();
+			model.DivePlanList = BuildDivePlanList();
+            model.DivePlanSelectedId = divePlanSelectedId > 0 ? divePlanSelectedId : null;
+
+            // If a dive plan was selected, pre-populate Title from the plan
+            if(model.DivePlanSelectedId.HasValue) {
+                try {
+                    var plan = _divePlanServices.GetDivePlan(model.DivePlanSelectedId.Value);
+                    if(plan != null)
+                        model.Title = plan.Title;
+                }
+                catch(Exception ex) {
+                    _logger.LogError(ex, "Error retrieving dive plan {PlanId} during CSV import", model.DivePlanSelectedId);
+                }
+            }
+            if (csvFile == null || csvFile.Length == 0)
+			{
+				ModelState.AddModelError("", "Please select a Shearwater CSV file to upload.");
+				return View("Create", model);
+			}
+
+			if (!csvFile.FileName.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+			{
+				ModelState.AddModelError("", "The uploaded file must be a .csv file exported from Shearwater Cloud.");
+				return View("Create", model);
+			}
+
+			using var stream = csvFile.OpenReadStream();
+			var summary = await _shearwaterCsvImportService.ParseAsync(stream);
+
+			if (summary == null)
+			{
+				ModelState.AddModelError("", "The file could not be parsed. Please verify it is a valid Shearwater Cloud CSV export.");
+				return View("Create", model);
+			}
+
+			// Prefill form fields from imported summary
+			if (summary.DiveNumber.HasValue)
+				model.DiveNumber = summary.DiveNumber.Value;
+
+			if (summary.Descended.HasValue)
+				model.DescentTime = summary.Descended.Value;
+
+			if (summary.DurationMinutes.HasValue)
+				model.Minutes = summary.DurationMinutes.Value;
+
+			if (summary.MaxDepth.HasValue)
+				model.MaxDepth = summary.MaxDepth.Value;
+
+			// Store import metadata for DiveComputerLog creation on save
+			model.HasImportedData = true;
+			model.ImportedSerialNumber = summary.SerialNumber;
+			model.ImportedProduct = summary.Product;
+			model.ImportedFirmwareVersion = summary.FirmwareVersion;
+			model.ImportedCnsBeforePercent = summary.CnsBeforePercent;
+			model.ImportedCnsAfterPercent = summary.CnsAfterPercent;
+			model.ImportedBatteryVoltage = summary.BatteryVoltage;
+			model.ImportedDiveMode = summary.DiveMode;
+			model.ImportedIsImperial = summary.IsImperial;
+			model.ImportedDescended = summary.Descended;
+			model.ImportedSurfaced = summary.Surfaced;
+
+			_logger.LogInformation("Shearwater CSV imported: DiveNumber={DiveNumber}, Start={Start}, Duration={Mins}min, MaxDepth={Depth}",
+				summary.DiveNumber, summary.Descended, summary.DurationMinutes, summary.MaxDepth);
+
+			return View("Create", model);
 		}
 
 
