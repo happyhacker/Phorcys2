@@ -240,9 +240,20 @@ namespace Phorcys2Web.Controllers
 		{
 			var model = new DiveViewModel();
 			model.DivePlanList = BuildDivePlanList();
-			model.DivePlanSelectedId = divePlanSelectedId > 0 ? divePlanSelectedId : null;
+            model.DivePlanSelectedId = divePlanSelectedId > 0 ? divePlanSelectedId : null;
 
-			if (csvFile == null || csvFile.Length == 0)
+            // If a dive plan was selected, pre-populate Title from the plan
+            if(model.DivePlanSelectedId.HasValue) {
+                try {
+                    var plan = _divePlanServices.GetDivePlan(model.DivePlanSelectedId.Value);
+                    if(plan != null)
+                        model.Title = plan.Title;
+                }
+                catch(Exception ex) {
+                    _logger.LogError(ex, "Error retrieving dive plan {PlanId} during CSV import", model.DivePlanSelectedId);
+                }
+            }
+            if (csvFile == null || csvFile.Length == 0)
 			{
 				ModelState.AddModelError("", "Please select a Shearwater CSV file to upload.");
 				return View("Create", model);

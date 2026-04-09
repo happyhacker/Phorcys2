@@ -27,18 +27,20 @@
 <div class="container mb-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card border-secondary">
-                <div class="card-header">
-                    <strong>Upload Shearwater CSV</strong>
+
+            <div class="k-card">
+                <div class="k-card-header">
+                    <span class="k-card-title">Optional - Upload a Shearwater dive computer CSV file</span>
                 </div>
-                <div class="card-body">
-                    <p class="card-text text-muted small">
+                <div class="k-card-body">
+                    <p class="k-card-subtitle">
                         Export from Shearwater Cloud as CSV, then upload here to prefill the form.
                         You can review and edit all values before saving.
                     </p>
                     @if (Model.HasImportedData)
                     {
-                        <div class="alert alert-success py-2 small" role="alert">
+                        <div class="k-card" style="margin-bottom: 0.75rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; border-color: var(--kendo-color-success, #37b400);">
+                            <span style="color: var(--kendo-color-success, #37b400);">✓</span>
                             Shearwater CSV imported. Fields below have been prefilled — review and save when ready.
                         </div>
                     }
@@ -48,13 +50,24 @@
                           action="@Url.Action("UploadShearwaterCsv", "Dive")">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="divePlanSelectedId" id="uploadFormPlanId" value="0" />
-                        <div class="input-group">
-                            <input type="file" name="csvFile" accept=".csv" class="form-control form-control-sm" />
-                            <button type="submit" class="btn btn-outline-secondary btn-sm">Import</button>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            @(Html.Kendo().Upload()
+                                .Name("csvFile")
+                                .Multiple(false)
+                                .ShowFileList(false)
+                                .Async(a => a.AutoUpload(false))
+                                .HtmlAttributes(new { accept = ".csv" })
+                            )
+                            @(Html.Kendo().Button()
+                                .Name("csvImportButton")
+                                .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                                .Content("Import")
+                            )
                         </div>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -90,7 +103,6 @@
                         <p>
                             <label for="Dive Plan">Dive Plan:</label>
                             <br />
-
                             @(Html.Kendo().DropDownListFor(m => m.DivePlanSelectedId)
                                 .DataTextField("Text")
                                 .DataValueField("Value")
@@ -98,8 +110,7 @@
                                 .OptionLabel("Select a Dive Plan")
                                 .HtmlAttributes(new { @class = "form-control", id = "divePlanDropdown" })
                                 .Events(e => e.Change("onDivePlanChange"))
-                                )
-
+                            )
                             <div class="pageMessage">
                                 @Html.ValidationMessageFor(m => m.DivePlanSelectedId)
                             </div>
@@ -132,12 +143,11 @@
                         <p>
                             <label for="DescentTime">Descent Time:</label>
                             <br />
-
                             @(Html.Kendo().DateTimePicker()
                                 .Name("DescentTime")
                                 .Value(Model.DescentTime ?? DateTime.Today)
                                 .HtmlAttributes(new { @style = "width: 300px;" })
-                                )
+                            )
                             @Html.ValidationMessageFor(m => m.DescentTime)
                         </p>
                     </div>
@@ -212,21 +222,18 @@
                     </div>
 
                     <div>
-
                         @(Html.Kendo().Button()
                             .Name("saveButton")
                             .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
-                            //.Icon("save")
                             .ImageUrl(Url.Content("~/icons/GreenCheckmark.png"))
                             .Content("Save")
-                            )
-
+                        )
                         @(Html.Kendo().Button()
                             .Name("cancelButton")
                             .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToIndex();" })
                             .ImageUrl(Url.Content("~/icons/RedXMark.png"))
                             .Content("Cancel")
-                            )
+                        )
                     </div>
 
                 </fieldset>
@@ -235,6 +242,7 @@
         </div>
     </div>
 }
+
 <div id="diveCreateConfig"
      data-index-url="@Url.Action("Index", "Dive")"
      data-get-tanks-url="@Url.Action("GetTanksForPlan", "Dive")"
