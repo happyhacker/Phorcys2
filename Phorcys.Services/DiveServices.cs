@@ -161,6 +161,49 @@ namespace Phorcys.Services
             }
         }
 
+        public void SaveLogSamples(int diveComputerLogId, List<LogSampleDto> sampleDtos)
+        {
+            try
+            {
+                var samples = sampleDtos.Select(dto => new LogSample
+                {
+                    DiveComputerLogId    = diveComputerLogId,
+                    ElapsedSeconds       = dto.ElapsedSeconds,
+                    Depth                = dto.Depth,
+                    FirstDecoStopDepth   = dto.FirstDecoStopDepth,
+                    TimeToSurfaceMinutes = dto.TimeToSurfaceMinutes,
+                    AvgPPO2              = dto.AvgPPO2,
+                    FractionO2           = dto.FractionO2,
+                    FractionHe           = dto.FractionHe,
+                    FirstDecoStopMinutes = dto.FirstDecoStopMinutes,
+                    NoDecoLimitMinutes   = dto.NoDecoLimitMinutes,
+                    CircuitMode          = dto.CircuitMode,
+                    CCRMode              = dto.CCRMode,
+                    Temperature          = dto.Temperature,
+                    GasSwitchNeeded      = dto.GasSwitchNeeded,
+                    ExternalPPO2Active   = dto.ExternalPPO2Active,
+                    SetPointType         = dto.SetPointType,
+                    CircuitSwitchType    = dto.CircuitSwitchType,
+                    O2Sensor1Millivolts  = dto.O2Sensor1Millivolts,
+                    O2Sensor2Millivolts  = dto.O2Sensor2Millivolts,
+                    O2Sensor3Millivolts  = dto.O2Sensor3Millivolts,
+                    BatteryVoltage       = dto.BatteryVoltage,
+                    AscentRate           = dto.AscentRate,
+                    SafeAscentDepth      = dto.SafeAscentDepth,
+                    CO2Millibar          = dto.CO2Millibar,
+                }).ToList();
+
+                _context.LogSamples.AddRange(samples);
+                _context.SaveChanges();
+                _logger.LogInformation("Saved {Count} log samples for DiveComputerLogId {Id}", samples.Count, diveComputerLogId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving log samples for DiveComputerLogId {Id}", diveComputerLogId);
+                throw;
+            }
+        }
+
         public void Delete(int id)
 		{
 			try

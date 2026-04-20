@@ -1,14 +1,16 @@
 using Microsoft.Extensions.Logging;
 using Phorcys.Data.DTOs;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Phorcys.Services {
     /// <summary>
-    /// Parses the summary section of a Shearwater Cloud CSV export.
+    /// Parses a Shearwater Cloud CSV export.
     ///
     /// Row 1: summary column headers (Dive Number, Start Date, Max Depth, …)
     /// Row 2: summary values for the dive
-    /// Row 3+: profile sample headers and data (not parsed in Phase 1)
+    /// Row 3: profile sample headers
+    /// Row 4+: profile sample data (one row per sample interval)
     /// </summary>
     public class ShearwaterCsvImportService : IShearwaterCsvImportService {
         private readonly ILogger<ShearwaterCsvImportService> _logger;
@@ -34,14 +36,23 @@ namespace Phorcys.Services {
                     return null;
                 }
 
-                // Parse header row
+                // Parse summary header row and data row
                 var headers = SplitCsvLine(lines[0]);
                 var columnIndex = BuildColumnIndex(headers);
-
-                // Parse first data row
                 var fields = SplitCsvLine(lines[1]);
+                var dto = MapRow(fields, columnIndex);
 
-                return MapRow(fields, columnIndex);
+                // Parse profile sample rows (row 3 = sample headers, rows 4+ = sample data)
+                if(lines.Count >= 4) {
+                    var sampleHeaders = SplitCsvLine(lines[2]);
+                    var sampleIndex = BuildColumnIndex(sampleHeaders);
+                    for(int i = 3; i < lines.Count; i++) {
+                        var sampleFields = SplitCsvLine(lines[i]);
+                        dto.Samples.Add(MapSampleRow(sampleFields, sampleIndex));
+                    }
+                }
+
+                return dto;
             }
             catch(Exception ex) {
                 _logger.LogError(ex, "Error parsing Shearwater CSV file.");
@@ -168,6 +179,49 @@ namespace Phorcys.Services {
                 return fallback;
 
             return null;
+        }
+
+        private static LogSampleDto MapSampleRow(string[] fields, Dictionary<string, int> idx) {
+            return new LogSampleDto {
+                ElapsedSeconds        = GetInt(fields, idx, "TIMESEC") ?? 0,
+                Depth                 = GetDecimal(fields, idx, "DEPTH") ?? 0m,
+                FirstDecoStopDepth    = GetDecimal(fields, idx, "FIRSTSTOPDEPTH") ?? 0m,
+                TimeToSurfaceMinutes  = GetInt(fields, idx, "TIMETOSURFACEMIN") ?? 0,
+                AvgPPO2               = GetDecimal(fields, idx, "AVERAGEPPO2") ?? 0m,
+                FractionO2            = GetDecimal(fields, idx, "FRACTIONO2") ?? 0m,
+                FractionHe            = GetDecimal(fields, idx, "FRACTIONHE") ?? 0m,
+                FirstDecoStopMinutes  = GetInt(fields, idx, "FIRSTSTOPTIME") ?? 0,
+                NoDecoLimitMinutes    = GetInt(fields, idx, "CURRENTNDL") ?? 0,
+                CircuitMode           = (short)(GetInt(fields, idx, "CURRENTCIRCUITMODE") ?? 0),
+                CCRMode               = (short)(GetInt(fields, idx, "CURRENTCCRMODE") ?? 0),
+                Temperature           = GetInt(fields, idx, "WATERTEMP") ?? 0,
+                GasSwitchNeeded       = GetBool(fields, idx, "GASSWITCHNEEDED"),
+                ExternalPPO2Active    = GetBool(fields, idx, "EXTERNALPPO2"),
+                SetPointType          = (short)(GetInt(fields, idx, "SETPOINTTYPE") ?? 0),
+                CircuitSwitchType     = (short)(GetInt(fields, idx, "CIRCUITSWITCHTYPE") ?? 0),
+                O2Sensor1Millivolts   = GetInt(fields, idx, "EXTERNALO2SENSOR1MV") ?? 0,
+                O2Sensor2Millivolts   = GetInt(fields, idx, "EXTERNALO2SENSOR2MV") ?? 0,
+                O2Sensor3Millivolts   = GetInt(fields, idx, "EXTERNALO2SENSOR3MV") ?? 0,
+                BatteryVoltage        = GetDecimal(fields, idx, "BATTERYVOLTAGE") ?? 0m,
+                AscentRate            = GetDecimal(fields, idx, "ASCENTRATE") ?? 0m,
+                SafeAscentDepth       = GetDecimal(fields, idx, "SAFEASCENTDEPTH") ?? 0m,
+                CO2Millibar           = GetInt(fields, idx, "CO2MBAR") ?? 0,
+            };
+        }
+
+        private static decimal? GetDecimal(string[] fields, Dictionary<string, int> idx, string key) {
+            var raw = GetString(fields, idx, key);
+            if(raw == null) return null;
+            var cleaned = raw.Split(' ')[0].TrimEnd('%');
+            if(decimal.TryParse(cleaned, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out decimal result))
+                return result;
+            return null;
+        }
+
+        private static bool GetBool(string[] fields, Dictionary<string, int> idx, string key) {
+            var raw = GetString(fields, idx, key);
+            return string.Equals(raw, "true", StringComparison.OrdinalIgnoreCase);
         }
 
         // CSV line splitter — handles double-quoted fields with embedded commas

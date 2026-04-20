@@ -43,6 +43,15 @@ builder.Services.AddDbContext<PhorcysContext>(options =>
         })
 );
 
+// Session (used to pass large CSV sample data between upload and save)
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Add custom services
 builder.Services.AddScoped<IChecklistServices, ChecklistServices>();
 builder.Services.AddScoped<ChecklistServices>();
@@ -105,6 +114,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapRazorPages();
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
