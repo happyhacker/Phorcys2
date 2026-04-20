@@ -73,5 +73,7 @@ namespace Phorcys.Domain
         public int? Minutes { get; set; }
 
         public virtual Dive? Dive { get; set; }
+
+        public virtual ICollection<LogSample> LogSamples { get; set; } = new List<LogSample>();
     }
 }

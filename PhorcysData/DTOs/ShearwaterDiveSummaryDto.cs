@@ -53,5 +53,8 @@ namespace Phorcys.Data.DTOs
 
         /// <summary>Battery level/voltage at end of dive (as integer percent or voltage).</summary>
         public float? BatteryVoltage { get; set; }
+
+        /// <summary>Time-series profile samples parsed from the CSV (rows 4+). May be empty if the file has no sample data.</summary>
+        public List<LogSampleDto> Samples { get; set; } = new List<LogSampleDto>();
     }
 }

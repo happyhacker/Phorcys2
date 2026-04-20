@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.AspNetCore.Authorization;
 using Phorcys.Data.DTOs;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using Kendo.Mvc.UI;
 //using Phorcys.Web.ModelsNew;
 
@@ -212,6 +213,15 @@ namespace Phorcys2Web.Controllers
 							GearId = matchedGearId
 						};
 						_diveServices.SaveDiveComputerLog(log);
+
+						string? samplesJson = HttpContext.Session.GetString("PendingLogSamples");
+						if(!string.IsNullOrEmpty(samplesJson))
+						{
+							var sampleDtos = JsonSerializer.Deserialize<List<LogSampleDto>>(samplesJson);
+							if(sampleDtos?.Count > 0)
+								_diveServices.SaveLogSamples(log.DiveComputerLogId, sampleDtos);
+							HttpContext.Session.Remove("PendingLogSamples");
+						}
 					}
 					catch (Exception ex)
 					{
@@ -300,8 +310,13 @@ namespace Phorcys2Web.Controllers
 			model.ImportedDescended = summary.Descended;
 			model.ImportedSurfaced = summary.Surfaced;
 
-			_logger.LogInformation("Shearwater CSV imported: DiveNumber={DiveNumber}, Start={Start}, Duration={Mins}min, MaxDepth={Depth}",
-				summary.DiveNumber, summary.Descended, summary.DurationMinutes, summary.MaxDepth);
+			if(summary.Samples.Count > 0)
+				HttpContext.Session.SetString("PendingLogSamples", JsonSerializer.Serialize(summary.Samples));
+			else
+				HttpContext.Session.Remove("PendingLogSamples");
+
+			_logger.LogInformation("Shearwater CSV imported: DiveNumber={DiveNumber}, Start={Start}, Duration={Mins}min, MaxDepth={Depth}, Samples={Samples}",
+				summary.DiveNumber, summary.Descended, summary.DurationMinutes, summary.MaxDepth, summary.Samples.Count);
 
 			return View("Create", model);
 		}
