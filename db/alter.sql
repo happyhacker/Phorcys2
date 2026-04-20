@@ -5,7 +5,7 @@
 /* Project name:          Phorcys2                                        */
 /* Author:                                                                */
 /* Script type:           Alter database script                           */
-/* Created on:            2026-04-05 23:57                                */
+/* Created on:            2026-04-19 23:31                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -16,23 +16,7 @@
 GO
 
 
-ALTER TABLE [DiveComputerLogs] DROP CONSTRAINT [Dives_DiveComputerLogs]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Alter table "DiveComputerLogs"                                         */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-ALTER TABLE [DiveComputerLogs] DROP CONSTRAINT [PK_DiveComputerLogs]
-GO
-
-
-ALTER TABLE [DiveComputerLogs] ADD CONSTRAINT [PK_DiveComputerLogs] 
-    PRIMARY KEY ([DiveComputerLogId])
+ALTER TABLE [LogSamples] DROP CONSTRAINT [FK_LogSamples_DiveComputerLogs]
 GO
 
 
@@ -43,7 +27,7 @@ GO
 GO
 
 
-ALTER TABLE [DiveComputerLogs] ADD CONSTRAINT [Dives_DiveComputerLogs] 
-    FOREIGN KEY ([DiveId]) REFERENCES [Dives] ([DiveId]) ON DELETE CASCADE
+ALTER TABLE [LogSamples] ADD CONSTRAINT [FK_LogSamples_DiveComputerLogs] 
+    FOREIGN KEY ([DiveComputerLogId]) REFERENCES [DiveComputerLogs] ([DiveComputerLogId]) ON DELETE CASCADE
 GO
 
