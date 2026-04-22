@@ -32,3 +32,4 @@ window.onCompare = function (e) {
     var diveId = data.DiveId;
     window.location.href = diveCompareUrlBase + "/" + diveId;
 };
+

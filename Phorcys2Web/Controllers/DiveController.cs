@@ -59,8 +59,10 @@ namespace Phorcys2Web.Controllers
 		{
 			try
 			{
-				var dives = await _diveServices.GetDivesAsync(_userServices.GetUserId()); // Await the completion of the async method
-				var model = CreateIndexModel(dives); // Now dives is IEnumerable<Dive>
+				var userId = _userServices.GetUserId();
+				var dives = await _diveServices.GetDivesAsync(userId);
+				var diveIdsWithLogs = _diveServices.GetDiveIdsWithComputerLogs(userId);
+				var model = CreateIndexModel(dives, diveIdsWithLogs);
 
 				return View(model);
 			}
@@ -413,7 +415,7 @@ namespace Phorcys2Web.Controllers
 				return View("Error");
 			}
 		}
-        private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives) {
+        private List<DiveViewModel> CreateIndexModel(IEnumerable<Phorcys.Domain.Dive> dives, HashSet<int> diveIdsWithLogs) {
             var models = new List<DiveViewModel>();
 
             foreach(var dive in dives) {
@@ -452,10 +454,36 @@ namespace Phorcys2Web.Controllers
                     if(buddyNames != null && buddyNames.Count > 0)
                         model.DiveBuddies = string.Join(":", buddyNames);
                 }
+                model.HasSamples = diveIdsWithLogs.Contains(dive.DiveId);
                 models.Add(model);
             }
 
             return models;
+        }
+
+        [Authorize, HttpGet]
+        public IActionResult Samples(int diveId)
+        {
+            try
+            {
+                var dive = _diveServices.GetDive(diveId);
+                if (dive == null)
+                {
+                    _logger.LogWarning("Samples requested for unknown diveId {DiveId}", diveId);
+                    return View("Error");
+                }
+
+                ViewBag.DiveNumber = dive.DiveNumber;
+                ViewBag.DiveTitle = dive.Title;
+
+                var samples = _diveServices.GetLogSamplesForDive(diveId);
+                return View(samples);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading samples for diveId {DiveId}", diveId);
+                return View("Error");
+            }
         }
 
         private IList<SelectListItem> BuildDivePlanList()

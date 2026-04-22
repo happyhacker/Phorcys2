@@ -105,5 +105,7 @@ namespace Phorcys.Web.Models
 
         /// <summary>Dive end timestamp from the imported CSV (local/device time).</summary>
         public DateTime? ImportedSurfaced { get; set; }
+
+        public bool HasSamples { get; set; }
     }
 }

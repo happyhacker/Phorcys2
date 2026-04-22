@@ -34,6 +34,20 @@
 	</form>
 </p>
 
+<script>
+    function hasSamples(dataItem) {
+        return dataItem.HasSamples;
+    }
+    function onSamples(e) {
+        e.preventDefault();
+        var tr = $(e.target).closest("tr");
+        var data = this.dataItem(tr);
+        var config = document.getElementById("diveIndexConfig");
+        var samplesUrl = config ? config.dataset.samplesUrl : "";
+        window.location.href = samplesUrl + "?diveId=" + data.DiveId;
+    }
+</script>
+
 <div class="row">
 	<div class="col-12">
 		@(
@@ -55,6 +69,7 @@
 					{
 						command.Custom("Edit").Click("onEdit");
 						command.Custom("Compare").Click("onCompare");
+						command.Custom("Samples").Click("onSamples").Visible("hasSamples");
 						command.Custom("Delete").Click("onDelete");
 					}).Title("Actions");
 				})
@@ -89,7 +104,7 @@
 	@Html.AntiForgeryToken()
 	<input type="hidden" name="DiveId" id="hiddenDiveId" value="" />
 }
-<div id="diveIndexConfig" data-edit-url="@Url.Action("Edit", "Dive")" data-compare-url="@Url.Action("Compare", "Dive")"></div>
+<div id="diveIndexConfig" data-edit-url="@Url.Action("Edit", "Dive")" data-compare-url="@Url.Action("Compare", "Dive")" data-samples-url="@Url.Action("Samples", "Dive")"></div>
 
 @section Scripts {
 	<script src="~/js/pages/dive-index.js"></script>
