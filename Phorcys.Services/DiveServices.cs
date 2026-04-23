@@ -204,6 +204,32 @@ namespace Phorcys.Services
             }
         }
 
+        public HashSet<int> GetDiveIdsWithComputerLogs(int userId)
+        {
+            return _context.DiveComputerLogs
+                .Where(log => log.DiveId.HasValue && log.Dive != null && log.Dive.UserId == userId)
+                .Select(log => log.DiveId.Value)
+                .ToHashSet();
+        }
+
+        public IEnumerable<LogSample> GetLogSamplesForDive(int diveId)
+        {
+            try
+            {
+                return _context.DiveComputerLogs
+                    .Where(log => log.DiveId == diveId)
+                    .Include(log => log.LogSamples)
+                    .SelectMany(log => log.LogSamples)
+                    .OrderBy(s => s.ElapsedSeconds)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading log samples for diveId {DiveId}", diveId);
+                throw;
+            }
+        }
+
         public void Delete(int id)
 		{
 			try

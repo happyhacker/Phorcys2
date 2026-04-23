@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Dive Samples";
+}
+@model IEnumerable<Phorcys.Domain.LogSample>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Dive #@ViewBag.DiveNumber — @ViewBag.DiveTitle — Computer Samples</h1>
+    </div>
+</section>
+
+<style>
+    #SamplesGrid .k-header {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        @(
+            Html.Kendo().Grid(Model)
+            .Name("SamplesGrid")
+            .Columns(columns =>
+            {
+                columns.Bound(s => s.LogSampleId).Hidden(true);
+                columns.Bound(s => s.DiveComputerLogId).Hidden(true);
+                columns.Bound(s => s.ElapsedSeconds).Title("Elapsed (s)").Width(125);
+                columns.Bound(s => s.Depth).Width(125);
+                columns.Bound(s => s.FirstDecoStopDepth).Title("1st Deco Depth").Width(125);
+                columns.Bound(s => s.TimeToSurfaceMinutes).Title("TTS (min)").Width(125);
+                columns.Bound(s => s.AvgPPO2).Title("Avg PPO2").Width(125);
+                columns.Bound(s => s.FractionO2).Title("FO2").Width(125);
+                columns.Bound(s => s.FractionHe).Title("FHe").Width(125);
+                columns.Bound(s => s.FirstDecoStopMinutes).Title("1st Deco (min)").Width(125);
+                columns.Bound(s => s.NoDecoLimitMinutes).Title("NDL (min)").Width(125);
+                columns.Bound(s => s.CircuitMode).Title("Circuit Mode").Width(125);
+                columns.Bound(s => s.CCRMode).Title("CCR Mode").Width(125);
+                columns.Bound(s => s.Temperature).Width(125);
+                columns.Bound(s => s.GasSwitchNeeded).Title("Gas Switch").Width(125);
+                columns.Bound(s => s.ExternalPPO2Active).Title("Ext PPO2").Width(125);
+                columns.Bound(s => s.SetPointType).Title("Set Point").Width(125);
+                columns.Bound(s => s.CircuitSwitchType).Title("Circuit Switch").Width(125);
+                columns.Bound(s => s.O2Sensor1Millivolts).Title("O2 S1 (mv)").Width(125);
+                columns.Bound(s => s.O2Sensor2Millivolts).Title("O2 S2 (mv)").Width(125);
+                columns.Bound(s => s.O2Sensor3Millivolts).Title("O2 S3 (mv)").Width(125);
+                columns.Bound(s => s.BatteryVoltage).Title("Battery (V)").Width(125);
+                columns.Bound(s => s.AscentRate).Title("Ascent Rate").Width(125);
+                columns.Bound(s => s.SafeAscentDepth).Title("Safe Ascent Depth").Width(125);
+                columns.Bound(s => s.CO2Millibar).Title("CO2 (mbar)").Width(125);
+            })
+            .Height(720)
+            .Mobile()
+            .Resizable(resize => resize.Columns(true))
+            .ToolBar(toolbar =>
+            {
+                toolbar.Excel();
+                toolbar.Pdf();
+                toolbar.Search();
+            })
+            .Pdf(pdf => pdf.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+            .Excel(excel => excel.ProxyURL(Url.Action("Excel_Export_Save", "Grid")))
+            .ColumnMenu(col => col.Filterable(true))
+            .Pageable(pageable => pageable
+                .ButtonCount(6)
+                .Refresh(true)
+                .PageSizes(new[] { 500, 1000, 2000 }))
+            .Sortable()
+            .Groupable()
+            .Filterable()
+            .Scrollable()
+        )
+    </div>
+</div>
+
+<div class="mt-4">
+    @(Html.Kendo().Button()
+        .Name("cancelButton")
+        .HtmlAttributes(new { @class = "btn btn-normal", onclick = "redirectToSamplesIndex();" })
+        .ImageUrl(Url.Content("~/icons/RedXMark.png"))
+        .Content("Cancel")
+    )
+</div>
+
+<div id="samplesConfig" data-index-url="@Url.Action("Index", "Dive")"></div>
+
+@section Scripts {
+    <script>
+        var samplesConfig = document.getElementById("samplesConfig");
+        var samplesIndexUrl = samplesConfig ? samplesConfig.dataset.indexUrl : "/Dive";
+
+        function redirectToSamplesIndex() {
+            window.location.href = samplesIndexUrl;
+        }
+
+        $(document).ready(function () {
+            var grid = $("#SamplesGrid").data("kendoGrid");
+            grid.dataSource.pageSize(500);
+        });
+    </script>
+}
