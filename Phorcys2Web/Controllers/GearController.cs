@@ -46,7 +46,6 @@ namespace Phorcys.Web.Controllers
 			{
 				return View("Error"); // Or another appropriate response
 			}
-			return View();
 		}
 
 		[Authorize]

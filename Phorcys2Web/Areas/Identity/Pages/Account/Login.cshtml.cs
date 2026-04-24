@@ -139,7 +139,7 @@ namespace Phorcys.Web.Areas.Identity.Pages.Account
                 }catch(SqlException ex)
                 {
 				    TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
-                    _logger.LogError("Error 666: Can't connect to database");
+                    _logger.LogError("Error 666: Can't connect to database: {Message}", ex.Message);
 					return RedirectToAction("Index");
 				}
 			}

@@ -14,7 +14,7 @@ namespace Phorcys.Data.DTOs
         public bool IsManufacturer { get; set; }
         public bool IsAgency { get; set; }
         public bool IsDiveShop { get; set; }
-        public string Company { get; set; } = null!;
+        public string? Company { get; set; } = null!;
 		public string FirstName { get; set; } = null!;
 		public string LastName { get; set; } = null!;
 		public string Address1 { get; set; } = null!;

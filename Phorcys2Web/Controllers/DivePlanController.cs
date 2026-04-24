@@ -61,11 +61,12 @@ namespace Phorcys2Web.Controllers
 
 				return View(model);
 			}
-			catch (Exception ex)
-			{
-				return View("Error"); // Or another appropriate response
-			}
-		}
+            catch(Exception ex) {
+                _logger.LogError(ex, "Error retrieving Dive Plan: {message}", ex.Message);
+                ViewBag.ErrorMessage = "Error retrieving Dive Plan";
+                return View("Error");
+            }
+        }
 
 		// GET: DiveController/Details/5
 		public ActionResult Details(int id)

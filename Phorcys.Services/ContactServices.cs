@@ -57,6 +57,10 @@ namespace Phorcys.Services
                     .Include(c => c.DiveAgency)
                     .Include(c => c.Manufacturer)
                     .FirstOrDefault(c => c.ContactId == contactId);
+
+                if(contact == null)
+                    throw new KeyNotFoundException($"Contact {contactId} not found.");
+
                 dto.ContactId = contactId;
 				dto.UserId = contact.UserId;
 				dto.IsInstructor = contact.Instructor != null;
@@ -187,7 +191,7 @@ namespace Phorcys.Services
 			}
             catch (DbUpdateException ex)
             {
-                _logger.LogError("Error saving Contact");
+                _logger.LogError("Error saving Contact: " + ex.Message);
                 throw;
             }
         }
