@@ -177,7 +177,10 @@ namespace Phorcys.Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
+                _logger.LogError(ex, "Error retrieving Contact: {message}", ex.Message);
+                ViewBag.ErrorMessage = "Error retrieving Contact";
+
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
 				return RedirectToAction("Index");
 			}
 		}
@@ -219,7 +222,10 @@ namespace Phorcys.Web.Controllers
 			}
 			catch (Exception ex)
 			{
-				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
+                _logger.LogError(ex, "Error saving Contact {id}: {message}", model.ContactId,ex.Message);
+                ViewBag.ErrorMessage = "Error saving Contact";
+
+                TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
 				return RedirectToAction("Index");
 			}
 		}
