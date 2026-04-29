@@ -69,14 +69,14 @@ namespace Phorcys.Services
                 dto.IsManufacturer = contact.Manufacturer != null;
                 dto.IsDiver = contact.Diver != null;
 				dto.Company = contact.Company;
-                dto.FirstName = contact.FirstName;
-                dto.LastName = contact.LastName;
+                dto.FirstName = contact.FirstName ?? string.Empty;
+                dto.LastName = contact.LastName ?? string.Empty;
                 dto.Email = contact.Email;
-                dto.Address1 = contact.Address1;
-                dto.Address2 = contact.Address2;    
-                dto.City = contact.City;
-                dto.State = contact.State;
-                dto.PostalCode = contact.PostalCode;
+                dto.Address1 = contact.Address1 ?? string.Empty;
+                dto.Address2 = contact.Address2 ?? string.Empty;
+                dto.City = contact.City ?? string.Empty;
+                dto.State = contact.State ?? string.Empty;
+                dto.PostalCode = contact.PostalCode ?? string.Empty;
                 dto.CountryCode = contact.CountryCode;  
                 dto.Notes = contact.Notes;
 
@@ -321,7 +321,7 @@ namespace Phorcys.Services
 		private string GetCountryCode(string code)
         {
             string countryCode = "";
-            Country country = _context.Countries.FirstOrDefault(d => d.CountryCode == code);
+            Country? country = _context.Countries.FirstOrDefault(d => d.CountryCode == code);
             if (country == null)
             {
                 countryCode = "US";
@@ -354,7 +354,7 @@ namespace Phorcys.Services
 		private int CreateNewContact(Phorcys.Domain.User user)
         {
             Contact contact = new Contact();
-            contact.ContactId = (int)user.ContactId;
+            contact.ContactId = user.ContactId.GetValueOrDefault();
 			contact.Company = "";
 			contact.FirstName = "";
 			contact.LastName = "";

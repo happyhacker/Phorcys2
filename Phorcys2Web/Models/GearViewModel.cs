@@ -16,7 +16,7 @@ namespace Phorcys.Web.Models
 
 		[DisplayName("Paid")]
 		public decimal? Paid { get; set; }
-		public string? Sn { get; set; }
+		public string Sn { get; set; }
 		public DateTime? Acquired { get; set; }
 		public DateTime? NoLongerUse { get; set; }
         public bool IsSelectable { get; set; }
@@ -41,7 +41,7 @@ namespace Phorcys.Web.Models
 		[Range(0, 99, ErrorMessage = "Please enter a valid year.")]
 		public byte? ManufacturedYear { get; set; }	
 		
-		public string? Notes { get; set; }
+		public string Notes { get; set; }
 		public int UserId { get; set; }
 	}
 }

@@ -31,7 +31,7 @@ namespace Phorcys.Web.Models
 		public int UserId { get; set; }
 		public DateTime Created { get; set; }
 		public DateTime LastModified { get; set; }
-		public virtual DiveSite? DiveSite { get; set; }
+		public virtual DiveSite DiveSite { get; set; }
 
 		// List of gear available to populate the MultiSelect dropdown
 		public List<SelectListItem> AvailableGear { get; set; } = new List<SelectListItem>();

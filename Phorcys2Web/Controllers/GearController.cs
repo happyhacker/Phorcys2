@@ -42,7 +42,7 @@ namespace Phorcys.Web.Controllers
 
 				return View(model);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return View("Error"); // Or another appropriate response
 			}

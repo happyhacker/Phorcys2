@@ -32,7 +32,7 @@ namespace Phorcys.Web.Models
 
         [DisplayName("Geo Code")]
 		[MaxLength(30)]
-		public string? GeoCode { get; set; }
+		public string GeoCode { get; set; }
 
         [Column(TypeName = "decimal(9,6)")]
         [DisplayName("Latitude")]
@@ -55,7 +55,7 @@ namespace Phorcys.Web.Models
 		public DateTime LastModified { get; set; }
 
 		[DisplayName("Notes")]
-        public string? Notes { get; set; }
+        public string Notes { get; set; }
 
 		public virtual string Url4Map(string geoCode)
 		{

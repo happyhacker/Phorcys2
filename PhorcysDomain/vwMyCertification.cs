@@ -11,7 +11,7 @@ namespace Phorcys.Domain
 	public class vwMyCertification
 	{
 		public int DiverCertificationId { get; set; }
-		public string Title { get; set; }
+		public string Title { get; set; } = null!;
 		public int DiverId { get; set; }
 		public int UserId { get; set; }
 		public string? Agency {  get; set; }

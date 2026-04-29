@@ -102,7 +102,7 @@ namespace Phorcys.Services {
             dto.BatteryVoltage = GetFloat(fields, idx, "ENDBATTERYVOLTAGE");
             dto.Product = GetString(fields, idx, "PRODUCT");
             var IsTrue = GetString(fields, idx, "IMPERIALUNITS");
-            dto.IsImperial = IsTrue.Equals("TRUE", StringComparison.OrdinalIgnoreCase);
+            dto.IsImperial = string.Equals(IsTrue, "TRUE", StringComparison.OrdinalIgnoreCase);
             dto.DiveMode = GetString(fields, idx, "MODE");
 
             // Max Time is in seconds; convert to rounded minutes

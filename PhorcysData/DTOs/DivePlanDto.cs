@@ -22,6 +22,6 @@ namespace Phorcys.Data.DTOs
 		public List<int> SelectedDiveTypeIds { get; set; } = new();
 		public List<int> SelectedGearIds { get; set; } = new();
         public List<int> SelectedDiverIds { get; set; } = new();
-        public IList<TanksOnDiveDto> TanksOnDiveDtos { get; set; }
+        public IList<TanksOnDiveDto> TanksOnDiveDtos { get; set; } = new List<TanksOnDiveDto>();
     }
 }

@@ -20,17 +20,17 @@ public class UserServices
 		_logger = logger;
 	}
 
-	public string GetLoggedInUserId()
+	public string? GetLoggedInUserId()
 	{
-		HttpContext httpContext = _httpContextAccessor.HttpContext;
-		ClaimsPrincipal user = httpContext?.User;
-		Claim userIdClaim = user?.FindFirst(ClaimTypes.NameIdentifier);
-		string userId = userIdClaim?.Value;
+		HttpContext? httpContext = _httpContextAccessor.HttpContext;
+		ClaimsPrincipal? user = httpContext?.User;
+		Claim? userIdClaim = user?.FindFirst(ClaimTypes.NameIdentifier);
+		string? userId = userIdClaim?.Value;
 
 		return userId;
 	}
 
-	public User GetUser(int userId)
+	public User? GetUser(int userId)
 	{
 		try
 		{

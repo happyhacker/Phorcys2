@@ -19,9 +19,9 @@ namespace Phorcys.Data.DTOs
 
 		public int DiveLocationId { get; set; }
 
-		public string LocationTitle { get; set; }
+		public string LocationTitle { get; set; } = null!;
 
-		public string Title { get; set; }
+		public string Title { get; set; } = null!;
 
 		public bool IsFreshWater { get; set; }
 

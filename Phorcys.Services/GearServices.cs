@@ -144,7 +144,7 @@ namespace Phorcys.Services
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Error deleting Gear: {ErrorMessage}", id, ex.Message);
+				_logger.LogError(ex, "Error deleting Gear {id}: {ErrorMessage}", id, ex.Message);
 				throw;
 			}
 		}
@@ -207,19 +207,19 @@ namespace Phorcys.Services
                     gear.IsSelectable = gearDto.IsSelectable;
 					gear.Notes = gearDto.Notes;
 					gear.LastModified = DateTime.Now;
-					if (
-						gear.Tank != null
-						| (
-						  gearDto.Volume.HasValue && gearDto.Volume.Value != 0
-						  | gearDto.WorkingPressure.HasValue && gearDto.WorkingPressure.Value != 0
-						  | gearDto.ManufacturedYear.HasValue && gearDto.ManufacturedYear.Value != 0
-						  | gearDto.ManufacturedMonth.HasValue && gearDto.ManufacturedMonth.Value != 0)
-						)
+					if (gear.Tank != null
+						|| (gearDto.Volume.HasValue && gearDto.Volume.Value != 0)
+						|| (gearDto.WorkingPressure.HasValue && gearDto.WorkingPressure.Value != 0)
+						|| (gearDto.ManufacturedYear.HasValue && gearDto.ManufacturedYear.Value != 0)
+						|| (gearDto.ManufacturedMonth.HasValue && gearDto.ManufacturedMonth.Value != 0))
 					{
-						gear.Tank.Volume = gearDto.Volume;
-						gear.Tank.WorkingPressure = gearDto.WorkingPressure;
-						gear.Tank.ManufacturedMonth = gearDto.ManufacturedMonth;
-						gear.Tank.ManufacturedYear = gearDto.ManufacturedYear;
+						if (gear.Tank != null)
+						{
+							gear.Tank.Volume = gearDto.Volume;
+							gear.Tank.WorkingPressure = gearDto.WorkingPressure;
+							gear.Tank.ManufacturedMonth = gearDto.ManufacturedMonth;
+							gear.Tank.ManufacturedYear = gearDto.ManufacturedYear;
+						}
 					}
 					_context.Entry(gear).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 					_context.SaveChanges();

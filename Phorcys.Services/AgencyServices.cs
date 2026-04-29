@@ -39,7 +39,7 @@ namespace Phorcys.Services
 			}
 		}
 
-		public DiveAgency GetAgency(int id)
+		public DiveAgency? GetAgency(int id)
 		{
 			var agency = _context.DiveAgencies.Include(a => a.Certifications).FirstOrDefault(a => a.DiveAgencyId == id);
 			return agency;

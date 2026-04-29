@@ -95,7 +95,7 @@ namespace Phorcys.Web.Models
         public float? ImportedBatteryVoltage { get; set; }
 
         /// <summary>Dive mode (e.g. OC, CC, Gauge) from the imported CSV.</summary>
-        public string? ImportedDiveMode { get; set; }
+        public string ImportedDiveMode { get; set; }
 
         /// <summary>True when the dive computer used imperial units, from the imported CSV.</summary>
         public bool? ImportedIsImperial { get; set; }

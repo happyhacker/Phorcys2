@@ -29,7 +29,7 @@ public class DivePlanServices
 
 	public IEnumerable<DivePlan> GetDivePlans(int userId)
 	{
-		var divePlans = _context.DivePlans.Where(r => r.UserId == userId).Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+		var divePlans = _context.DivePlans.Where(r => r.UserId == userId).Include(d => d.DiveSite!).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 		return divePlans;
 	}
 
@@ -37,7 +37,7 @@ public class DivePlanServices
 	{
 		try
 		{
-			var divePlans = _context.DivePlans.Include(d => d.DiveSite).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
+			var divePlans = _context.DivePlans.Include(d => d.DiveSite!).ThenInclude(u => u.User).AsNoTracking().OrderByDescending(dp => dp.ScheduledTime).ToList();
 			return divePlans;
 		}
 		catch (Exception ex)
@@ -198,7 +198,7 @@ public class DivePlanServices
         }
     }
 
-    public DivePlan GetDivePlan(int divePlanId)
+    public DivePlan? GetDivePlan(int divePlanId)
 	{
 		try
 		{

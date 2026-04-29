@@ -108,7 +108,6 @@ public partial class Sql2022754043PhorcysContext : DbContext
     public virtual DbSet<VwTanksOnDive> VwTanksOnDives { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=sql2k2201.discountasp.net;Initial Catalog=SQL2022_754043_phorcys;User ID=SQL2022_754043_phorcys_user;Password=nnihuee;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

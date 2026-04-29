@@ -44,7 +44,7 @@ namespace Phorcys.Web.Controllers
 
 				return View(model);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return View("Error");
 			}
@@ -90,7 +90,7 @@ namespace Phorcys.Web.Controllers
 					_diveSiteServices.Save(siteDto);
 					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Site successfully created.";
 					return RedirectToAction("Index");
-				}catch (Exception ex)
+				}catch (Exception)
 				{
 					TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "An error WTF-117 occured. Unable to add site.";
 					return View();
@@ -126,7 +126,7 @@ namespace Phorcys.Web.Controllers
 						"An error occurred while updating the database.";
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 					"An unexpected error occurred.";
