@@ -51,7 +51,7 @@ namespace Phorcys.Web.Controllers
 
 				return View(model);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return View("Error"); // Or another appropriate response
 			}
@@ -69,7 +69,7 @@ namespace Phorcys.Web.Controllers
 					"Contact successfully deleted.";
 				//return RedirectToAction("Index");
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 					"there was an error deleting the Contact.";

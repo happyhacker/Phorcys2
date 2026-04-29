@@ -54,7 +54,7 @@ namespace Phorcys.Web.Controllers
 
 				return View(certs);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				return View("Error"); // Or another appropriate response
 			}
@@ -73,7 +73,7 @@ namespace Phorcys.Web.Controllers
 
 				return RedirectToAction("Index");
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
 					"there was an error deleting the Certification.";
@@ -135,7 +135,7 @@ namespace Phorcys.Web.Controllers
 				model.Notes = myCertDto.Notes;
 
 				return View(model);
-			}catch(Exception ex)
+			}catch(Exception)
 			{
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
 				return RedirectToAction("Index");
@@ -164,7 +164,7 @@ namespace Phorcys.Web.Controllers
 				{
 					return View(model);
 				}
-			}catch (Exception ex)
+			}catch (Exception)
 			{
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error connecting to the database.";
 				return RedirectToAction("Index");

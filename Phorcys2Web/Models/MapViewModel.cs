@@ -18,6 +18,6 @@ namespace Phorcys.Web.Models
         public string Water { get; set; } = string.Empty;
         public int? MaxDepth { get; set; }
         [DisplayName("Notes")]
-        public string? Notes { get; set; }
+        public string Notes { get; set; }
     }
 }

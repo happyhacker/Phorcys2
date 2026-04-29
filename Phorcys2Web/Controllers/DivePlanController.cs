@@ -123,6 +123,7 @@ namespace Phorcys2Web.Controllers
 		public ActionResult Edit(int Id)
 		{
 			var divePlan = _divePlanServices.GetDivePlan(Id);
+			if (divePlan == null) return NotFound();
 			DivePlanViewModel model = new DivePlanViewModel();
 			model.DivePlanId = Id;
 			model.Title = divePlan.Title;
@@ -188,7 +189,7 @@ namespace Phorcys2Web.Controllers
 				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan successfully deleted.";
 				return RedirectToAction("Index");
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Dive Plan can not be deleted because a dive is tied to it.";
                 return RedirectToAction("Index");

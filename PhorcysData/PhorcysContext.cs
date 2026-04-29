@@ -145,7 +145,7 @@ public class PhorcysContext : IdentityDbContext<IdentityUser>
 	public DbSet<DiveShop> DiveShops { get; set; }
 	public DbSet<Dive> Dives { get; set; }
 	public DbSet<DivePlan> DivePlans { get; set; }
-	public DbSet<User> Users { get; set; }
+	public new DbSet<User> Users { get; set; }
 	public DbSet<Contact> Contacts { get; set; }
 	public DbSet<Country> Countries { get; set; }
 	public DbSet<DiveSite> DiveSites { get; set; }
