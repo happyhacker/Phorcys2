@@ -216,7 +216,7 @@ namespace Phorcys2Web.Controllers
 						};
 						_diveServices.SaveDiveComputerLog(log);
 
-						string? samplesJson = HttpContext.Session.GetString("PendingLogSamples");
+						string samplesJson = HttpContext.Session.GetString("PendingLogSamples");
 						if(!string.IsNullOrEmpty(samplesJson))
 						{
 							var sampleDtos = JsonSerializer.Deserialize<List<LogSampleDto>>(samplesJson);

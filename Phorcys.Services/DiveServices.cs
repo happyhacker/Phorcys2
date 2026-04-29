@@ -23,9 +23,9 @@ namespace Phorcys.Services
             try {
                 var dives = await _context.Dives
                     .Where(d => d.UserId == userId)
-                    .Include(d => d.DivePlan)
+                    .Include(d => d.DivePlan!)
                         .ThenInclude(dp => dp.DiveSite)
-                    .Include(d => d.DivePlan)
+                    .Include(d => d.DivePlan!)
                         .ThenInclude(dp => dp.DiveTeams)
                             .ThenInclude(dt => dt.Diver)
                                 .ThenInclude(diver => diver.Contact)
@@ -41,22 +41,22 @@ namespace Phorcys.Services
             }
         }
 
-        public Dive GetDive(int diveId)
+        public Dive? GetDive(int diveId)
 		{
 			var dive = _context.Dives.FirstOrDefault(d => d.DiveId == diveId);
 			return dive;
 		}
 
-		public Dive GetDiveWithPlan(int diveId)
+		public Dive? GetDiveWithPlan(int diveId)
 		{
 			var dive = _context.Dives
-				.Include(d => d.DivePlan)
+				.Include(d => d.DivePlan!)
 					.ThenInclude(dp => dp.DiveSite)
 				.FirstOrDefault(d => d.DiveId == diveId);
 			return dive;
 		}
 
-		public void SaveNewDive(Dive dive, List<TanksOnDiveDto> tanks = null)
+		public void SaveNewDive(Dive dive, List<TanksOnDiveDto>? tanks = null)
 		{
 			try
 			{
@@ -80,7 +80,8 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var dive = GetDive(diveDto.DiveId);
+				var dive = GetDive(diveDto.DiveId)
+					?? throw new KeyNotFoundException($"Dive {diveDto.DiveId} not found.");
 
 				dive.DivePlanId = diveDto.DivePlanId;
 				dive.DiveNumber = diveDto.DiveNumber;
@@ -208,7 +209,7 @@ namespace Phorcys.Services
         {
             return _context.DiveComputerLogs
                 .Where(log => log.DiveId.HasValue && log.Dive != null && log.Dive.UserId == userId)
-                .Select(log => log.DiveId.Value)
+                .Select(log => log.DiveId!.Value)
                 .ToHashSet();
         }
 
@@ -244,7 +245,7 @@ namespace Phorcys.Services
 			catch (DbUpdateException ex)
 			{
 				_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{

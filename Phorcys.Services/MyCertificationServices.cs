@@ -47,8 +47,9 @@ namespace Phorcys.Services
 			try
 			{
 				var myCertDto = new MyCertificationDto();
-				var myCert = _context.DiverCertifications.Include("Certification").FirstOrDefault(c => c.DiverCertificationId == diverCertificationId);
-				myCertDto.AgencyId = (int)myCert.Certification.DiveAgencyId;
+				var myCert = _context.DiverCertifications.Include("Certification").FirstOrDefault(c => c.DiverCertificationId == diverCertificationId)
+					?? throw new KeyNotFoundException($"DiverCertification {diverCertificationId} not found.");
+				myCertDto.AgencyId = myCert.Certification.DiveAgencyId.GetValueOrDefault();
 				myCertDto.CertificationId = myCert.CertificationId;
 				myCertDto.InstructorId = myCert.InstructorId;
 				myCertDto.Certified = myCert.Certified;
@@ -77,7 +78,7 @@ namespace Phorcys.Services
 			catch (DbUpdateException ex)
 			{
 				_logger.LogError(ex, "Error deleting Certification {id}: {ErrorMessage}", diverCertificationId, ex.Message);
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{
@@ -106,8 +107,8 @@ namespace Phorcys.Services
 			}
 			catch (DbUpdateException ex)
 			{
-				_logger.LogError("Error saving Diver Certification");
-				throw ex;
+				_logger.LogError(ex, "Error saving Diver Certification");
+				throw;
 			}
 		}
 
@@ -115,10 +116,9 @@ namespace Phorcys.Services
 		{
 			try
 			{
-				var cert = _context.DiverCertifications.Find(certDto.DiverCertificationId);
-				//var diverId = GetDiverId(_userServices.GetUserId());
+				var cert = _context.DiverCertifications.Find(certDto.DiverCertificationId)
+					?? throw new KeyNotFoundException($"DiverCertification {certDto.DiverCertificationId} not found.");
 
-				//cert.DiverId = diverId;
 				cert.CertificationId = certDto.CertificationId;
 				cert.InstructorId = certDto.InstructorId;
 				cert.CertificationNum = certDto.CertificationNum;
@@ -131,12 +131,12 @@ namespace Phorcys.Services
 			}
 			catch (DbUpdateException ex)
 			{
-				_logger.LogError("Database error saving Diver Certification: {msg}", ex.Message);
-				throw ex;
+				_logger.LogError(ex, "Database error saving Diver Certification: {msg}", ex.Message);
+				throw;
 			} catch(Exception ex)
 			{
-				_logger.LogError("Error saving Diver Certification: {msg}", ex.Message);
-				throw ex;
+				_logger.LogError(ex, "Error saving Diver Certification: {msg}", ex.Message);
+				throw;
 			}
 		}
 
@@ -144,8 +144,9 @@ namespace Phorcys.Services
 		private int GetDiverId(int userId)
 		{
 			int diverId = 0;
-			var user = _userServices.GetUser(userId);
-			Diver diver = _context.Divers.FirstOrDefault(d => d.ContactId == user.ContactId);
+			var user = _userServices.GetUser(userId)
+				?? throw new KeyNotFoundException($"User {userId} not found.");
+			Diver? diver = _context.Divers.FirstOrDefault(d => d.ContactId == user.ContactId);
 			if (diver == null)
 			{
 				//create diver record
@@ -161,7 +162,7 @@ namespace Phorcys.Services
 		private int CreateNewDiver(User user)
 		{
 			Diver diver = new Diver();
-			diver.ContactId = (int)user.ContactId;
+			diver.ContactId = user.ContactId.GetValueOrDefault();
 			_context.Divers.Add(diver);
 			_context.SaveChanges();
 

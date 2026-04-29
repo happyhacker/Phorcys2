@@ -144,7 +144,7 @@ namespace Phorcys.Services
 			}catch(DbUpdateException ex)
 			{
 				_logger.LogError(ex, "Error deleting Dive Site {id}: {ErrorMessage}", id, ex.Message);
-				throw ex;
+				throw;
 			}catch(Exception ex)
 			{
 				_logger.LogError("Error deleting Dive Site: " + ex.Message);

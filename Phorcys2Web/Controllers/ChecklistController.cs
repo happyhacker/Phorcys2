@@ -160,7 +160,7 @@ namespace Phorcys.Web.Controllers {
                 return View(model);
             }
 
-            List<ChecklistItemCreateDto>? dtoItems = null;
+            List<ChecklistItemCreateDto> dtoItems = null;
 
             if(!string.IsNullOrWhiteSpace(model.ItemsJson)) {
                 try {
@@ -223,7 +223,7 @@ namespace Phorcys.Web.Controllers {
                 return View(model);
             }
 
-            List<ChecklistItemCreateDto>? dtoItems = null;
+            List<ChecklistItemCreateDto> dtoItems = null;
 
             if(!string.IsNullOrWhiteSpace(model.ItemsJson)) {
                 try {

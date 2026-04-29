@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Domain", "..\Phorcy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Services", "..\Phorcys.Services\Phorcys.Services.csproj", "{176C9576-7089-4AC0-AD52-24E1C3F3E147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Tests", "X:\Data\Dev\Projects\dotNet\SCUBA\Phorcys2\Phorcys.Tests\Phorcys.Tests.csproj", "{E44C0743-9948-4F85-9ADD-2740E04796DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Phorcys.Tests", "..\Phorcys.Tests\Phorcys.Tests.csproj", "{E44C0743-9948-4F85-9ADD-2740E04796DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

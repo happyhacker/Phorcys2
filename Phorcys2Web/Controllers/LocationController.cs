@@ -53,7 +53,7 @@ namespace Phorcys.Web.Controllers
 
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle or log the exception as appropriate
                 return View("Error"); // Or another appropriate response
@@ -135,7 +135,7 @@ namespace Phorcys.Web.Controllers
                 TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Location successfully deleted.";
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View("Error"); // Or redirect to a different view as appropriate
             }

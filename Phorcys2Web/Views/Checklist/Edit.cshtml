@@ -23,7 +23,7 @@
 
     <h3>Items</h3>
 
-    @Html.Partial("_ChecklistItemsGrid")
+    @await Html.PartialAsync("_ChecklistItemsGrid")
 
     <div class="mt-4">
         @(Html.Kendo().Button()

@@ -22,7 +22,7 @@ namespace Phorcys.Web.Models
 		public string City { get; set; } = null!;
 		public string State { get; set; } = null!;
 		public string PostalCode { get; set; } = null!;
-		public string? CountryCode { get; set; }
+		public string CountryCode { get; set; }
 
 		[EmailAddress(ErrorMessage = "Invalid email format")] 
 		public string Email { get; set; } = null!;
@@ -39,7 +39,7 @@ namespace Phorcys.Web.Models
 
 		public DateTime? Birthday { get; set; }
 		public string Gender { get; set; }
-		public string? Notes { get; set; }
+		public string Notes { get; set; }
 		public int UserId { get; set; }
 		public DateTime Created { get; set; }
 		public DateTime LastModified { get; set; }
