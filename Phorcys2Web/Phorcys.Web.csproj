@@ -37,9 +37,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ModelsNew\**" />
     <Compile Remove="Templates\**" />
+    <Content Remove="ModelsNew\**" />
     <Content Remove="Templates\**" />
+    <EmbeddedResource Remove="ModelsNew\**" />
     <EmbeddedResource Remove="Templates\**" />
+    <None Remove="ModelsNew\**" />
     <None Remove="Templates\**" />
   </ItemGroup>
 
