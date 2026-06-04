@@ -7,6 +7,14 @@
     var niceMinutes = new[] { 1, 2, 5, 10, 15, 20, 30, 60 }.FirstOrDefault(n => n >= minutesPerLabel);
     if (niceMinutes == 0) niceMinutes = 60;
     var initialStep = niceMinutes * 6;
+
+    // Pin the temperature (right) axis to a padded range derived from the data.
+    // Water temp barely varies over a dive (e.g. 66–67), so left to auto-scale the
+    // axis range goes degenerate and the line mis-renders. A fixed padded range keeps
+    // it stable and readable.
+    var temps = Model.Select(s => (int)s.Temperature).Where(t => t > 0).ToList();
+    var tempAxisMin = temps.Any() ? temps.Min() - 5 : 0;
+    var tempAxisMax = temps.Any() ? temps.Max() + 5 : 100;
 }
 
 <section class="jumbotron text-center">
@@ -38,6 +46,16 @@
                                 .Name("DiveProfileChart")
                                 .Series(series =>
                                 {
+                                    // Deco ceiling: shade from the surface down to the first deco stop
+                                    // depth, producing the solid red "can't ascend past here" block.
+                                    // Drawn first so the depth line renders on top of it.
+                                    series.Area(s => s.FirstDecoStopDepth)
+                                        .Name("Deco Ceiling")
+                                        .Color("red")
+                                        .Opacity(0.5)
+                                        .Line(line => line.Color("red"))
+                                        .Axis("depthAxis")
+                                        .Markers(m => m.Visible(false));
                                     series.Line(s => s.Depth)
                                         .Name("Depth")
                                         .Color("blue")
@@ -45,11 +63,7 @@
                                         .Markers(m => m.Visible(false));
                                     series.Line(s => s.Temperature)
                                         .Name("Temp")
-                                        .Axis("rightAxis")
-                                        .Markers(m => m.Visible(false));
-                                    series.Line(s => s.NoDecoLimitMinutes)
-                                        .Name("NDL (min)")
-                                        .Color("red")
+                                        .Color("green")
                                         .Axis("rightAxis")
                                         .Markers(m => m.Visible(false));
                                 })
@@ -69,7 +83,9 @@
                                 )
                                 .ValueAxis(axis => axis.Numeric()
                                     .Name("rightAxis")
-                                    .Title(t => t.Text("Temp / NDL (min)"))
+                                    .Min(tempAxisMin)
+                                    .Max(tempAxisMax)
+                                    .Title(t => t.Text("Temp"))
                                 )
                                 .Legend(legend => legend
                                     .Position(ChartLegendPosition.Bottom)
@@ -78,6 +94,12 @@
                                 .Tooltip(tooltip => tooltip
                                     .Visible(true)
                                     .Shared(true)
+                                    .SharedTemplate(
+                                        "<div style='text-align:center;font-weight:bold'>#= formatElapsedTooltip(category) #</div>" +
+                                        "# for (var i = 0; i < points.length; i++) { #" +
+                                        "<div><span style='color:#= points[i].series.color #'>●</span> #= points[i].series.name #: #= points[i].value #</div>" +
+                                        "# } #"
+                                    )
                                 )
                                 .HtmlAttributes(new { style = "height: 500px;" })
                             )
@@ -163,6 +185,14 @@
         var samplesConfig = document.getElementById("samplesConfig");
         var samplesIndexUrl = samplesConfig ? samplesConfig.dataset.indexUrl : "/Dive";
         var sampleCount = parseInt(samplesConfig ? samplesConfig.dataset.sampleCount : "0") || 0;
+
+        // Formats elapsed seconds as m:ss for the chart tooltip header (e.g. 300 -> "5:00").
+        function formatElapsedTooltip(totalSeconds) {
+            var secs = Math.round(totalSeconds);
+            var m = Math.floor(secs / 60);
+            var s = secs % 60;
+            return m + ":" + (s < 10 ? "0" + s : s);
+        }
 
         // Shearwater logs at 10-second intervals — 6 samples per minute.
         var SAMPLES_PER_MINUTE = 6;
