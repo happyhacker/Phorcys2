@@ -56,7 +56,7 @@ namespace Phorcys.Domain
         /// Battery voltage/level at the end of the dive. Maps to the "BatteryVoltageEnd" column.
         /// </summary>
         [Column("BatteryVoltageEnd")]
-        public float? BatteryVoltage { get; set; }
+        public decimal? BatteryVoltage { get; set; }
 
         public string? DiveMode { get; set; }
 

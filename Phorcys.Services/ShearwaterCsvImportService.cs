@@ -99,7 +99,7 @@ namespace Phorcys.Services {
             dto.FirmwareVersion = GetString(fields, idx, "COMPUTERFIRMWAREVERSION");
             dto.CnsBeforePercent = GetInt(fields, idx, "STARTCNS");
             dto.CnsAfterPercent = GetInt(fields, idx, "ENDCNS");
-            dto.BatteryVoltage = GetFloat(fields, idx, "ENDBATTERYVOLTAGE");
+            dto.BatteryVoltage = GetDecimal(fields, idx, "ENDBATTERYVOLTAGE");
             dto.Product = GetString(fields, idx, "PRODUCT");
             var IsTrue = GetString(fields, idx, "IMPERIALUNITS");
             dto.IsImperial = string.Equals(IsTrue, "TRUE", StringComparison.OrdinalIgnoreCase);
@@ -136,20 +136,6 @@ namespace Phorcys.Services {
             if(double.TryParse(cleaned, System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture, out double dbl))
                 return (int)Math.Round(dbl);
-            return null;
-        }
-
-        private static float? GetFloat(string[] fields, Dictionary<string, int> idx, string key) {
-            var raw = GetString(fields, idx, key);
-            if(raw == null)
-                return null;
-
-            // Strip trailing "%" or unit suffixes (e.g. "1.6v", "82 ft")
-            var cleaned = raw.Split(' ')[0].TrimEnd('%');
-            if(float.TryParse(cleaned, System.Globalization.NumberStyles.Any,
-                System.Globalization.CultureInfo.InvariantCulture, out float result))
-                return result;
-
             return null;
         }
 
