@@ -23,6 +23,69 @@
     @Html.ValidationSummary()
 </div>
 
+@* Optional: import ONLY the dive computer detail (profile samples) for this already-logged dive.
+   This is a separate form from the Edit form below and never changes the dive summary. *@
+<div class="container mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @if (!Model.HasSamples)
+            {
+                <div class="k-card">
+                    <div class="k-card-header">
+                        <span class="k-card-title">Optional — add dive computer detail data</span>
+                    </div>
+                    <div class="k-card-body">
+                        <p class="k-card-subtitle">
+                            Upload a Shearwater Cloud CSV to add this dive's depth/temperature profile.
+                            Only the detail (sample) data is added — the dive summary below is not changed.
+                        </p>
+                        <form id="shearwaterDetailForm"
+                              method="post"
+                              enctype="multipart/form-data"
+                              action="@Url.Action("UploadShearwaterCsvForEdit", "Dive")">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="diveId" value="@Model.DiveId" />
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                @(Html.Kendo().Upload()
+                                    .Name("csvFile")
+                                    .Multiple(false)
+                                    .ShowFileList(false)
+                                    .Async(a => a.AutoUpload(false))
+                                    .HtmlAttributes(new { accept = ".csv" })
+                                )
+                                @(Html.Kendo().Button()
+                                    .Name("csvDetailImportButton")
+                                    .HtmlAttributes(new { type = "submit", @class = "btn btn-normal" })
+                                    .Content("Import")
+                                )
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="k-card">
+                    <div class="k-card-header">
+                        <span class="k-card-title">Dive computer detail</span>
+                    </div>
+                    <div class="k-card-body">
+                        <p class="k-card-subtitle" style="margin-bottom: 0.75rem;">
+                            <span style="color: var(--kendo-color-success, #37b400);">✓</span>
+                            This dive already has dive computer detail data.
+                        </p>
+                        @(Html.Kendo().Button()
+                            .Name("viewSamplesButton")
+                            .HtmlAttributes(new { @class = "btn btn-normal", onclick = $"window.location.href='{Url.Action("Samples", "Dive", new { diveId = Model.DiveId })}'; return false;" })
+                            .Content("View Samples")
+                        )
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 @using (Html.BeginForm("Edit", "Dive", FormMethod.Post))
 {
     @Html.AntiForgeryToken()

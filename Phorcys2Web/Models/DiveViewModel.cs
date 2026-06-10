@@ -92,7 +92,7 @@ namespace Phorcys.Web.Models
         public int? ImportedCnsAfterPercent { get; set; }
 
         /// <summary>Battery level/voltage from the imported CSV.</summary>
-        public float? ImportedBatteryVoltage { get; set; }
+        public decimal? ImportedBatteryVoltage { get; set; }
 
         /// <summary>Dive mode (e.g. OC, CC, Gauge) from the imported CSV.</summary>
         public string ImportedDiveMode { get; set; }

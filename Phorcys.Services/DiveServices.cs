@@ -231,6 +231,16 @@ namespace Phorcys.Services
             }
         }
 
+        /// <summary>
+        /// Returns true when the dive already has at least one DiveComputerLog (i.e. detail/
+        /// sample data has been imported). Uses an existence check so no entity columns are
+        /// materialized.
+        /// </summary>
+        public bool DiveHasComputerLog(int diveId)
+        {
+            return _context.DiveComputerLogs.Any(log => log.DiveId == diveId);
+        }
+
         public void Delete(int id)
 		{
 			try

@@ -324,6 +324,100 @@ namespace Phorcys2Web.Controllers
 		}
 
 
+		/// <summary>
+		/// Accepts a Shearwater Cloud CSV for an ALREADY-LOGGED dive and imports ONLY the
+		/// detail/profile data (a DiveComputerLog + its LogSamples). The dive's manually
+		/// entered summary fields are never modified. Persists immediately on upload.
+		/// </summary>
+		[Authorize, HttpPost, ValidateAntiForgeryToken]
+		public async Task<ActionResult> UploadShearwaterCsvForEdit(IFormFile csvFile, int diveId)
+		{
+			var dive = _diveServices.GetDive(diveId);
+			if (dive == null)
+			{
+				_logger.LogWarning("UploadShearwaterCsvForEdit called for unknown diveId {DiveId}", diveId);
+				return RedirectToAction("Index");
+			}
+
+			// Block re-import: detail may only be imported once for a dive via this flow.
+			if (_diveServices.DiveHasComputerLog(diveId))
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "This dive already has dive computer detail data.";
+				return RedirectToAction("Edit", new { id = diveId });
+			}
+
+			if (csvFile == null || csvFile.Length == 0)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "Please select a Shearwater CSV file to upload.";
+				return RedirectToAction("Edit", new { id = diveId });
+			}
+
+			if (!csvFile.FileName.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The uploaded file must be a .csv file exported from Shearwater Cloud.";
+				return RedirectToAction("Edit", new { id = diveId });
+			}
+
+			ShearwaterDiveSummaryDto? summary;
+			using (var stream = csvFile.OpenReadStream())
+				summary = await _shearwaterCsvImportService.ParseAsync(stream);
+
+			if (summary == null)
+			{
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "The file could not be parsed. Please verify it is a valid Shearwater Cloud CSV export.";
+				return RedirectToAction("Edit", new { id = diveId });
+			}
+
+			try
+			{
+				int userId = _userServices.GetUserId();
+				int? matchedGearId = _gearServices.FindGearIdBySerialNumber(userId, summary.SerialNumber);
+
+				// This DiveComputerLog is the computer's own record; its metadata fields come
+				// from the CSV. The dive's manually-entered summary (Dive entity) is untouched.
+				var log = new Phorcys.Domain.DiveComputerLog
+				{
+					DiveId = diveId,
+					Vendor = "Shearwater",
+					Product = summary.Product,
+					Model = summary.Product,
+					SerialNumber = summary.SerialNumber,
+					FirmwareVersion = summary.FirmwareVersion,
+					DiveNumber = summary.DiveNumber,
+					CnsBeforePercent = summary.CnsBeforePercent,
+					CnsAfterPercent = summary.CnsAfterPercent,
+					BatteryVoltage = summary.BatteryVoltage,
+					DiveMode = summary.DiveMode,
+					IsImperial = summary.IsImperial,
+					Descended = summary.Descended,
+					Surfaced = summary.Surfaced,
+					MaxDepth = summary.MaxDepth,
+					Minutes = summary.DurationMinutes,
+					ImportedDateTime = DateTime.Now,
+					// GearId is [NotMapped]; serial number is persisted so the match can be re-derived.
+					GearId = matchedGearId
+				};
+				_diveServices.SaveDiveComputerLog(log);
+
+				if (summary.Samples.Count > 0)
+					_diveServices.SaveLogSamples(log.DiveComputerLogId, summary.Samples);
+
+				_logger.LogInformation("Imported Shearwater detail for DiveId {DiveId}: Samples={Samples}", diveId, summary.Samples.Count);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] =
+					summary.Samples.Count > 0
+						? $"Dive computer detail imported ({summary.Samples.Count} samples)."
+						: "Dive computer detail imported.";
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Failed to import Shearwater detail for dive {DiveId}", diveId);
+				TempData[ControllerEnums.GlobalViewDataProperty.PageMessage.ToString()] = "There was an error importing the dive computer detail.";
+			}
+
+			return RedirectToAction("Edit", new { id = diveId });
+		}
+
+
 		[Authorize, HttpGet]
 		public ActionResult Edit(int id)
 		{
@@ -343,6 +437,9 @@ namespace Phorcys2Web.Controllers
 				model.Minutes = dive.Minutes;
 				model.Temperature = dive.Temperature;
 				model.Notes = dive.Notes ?? "";
+				// Drives the Edit view: show the import card only when no computer
+				// detail has been imported yet; otherwise show the "already imported" card.
+				model.HasSamples = _diveServices.DiveHasComputerLog(id);
 			}
 			return View(model);
 		}
