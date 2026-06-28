@@ -101,6 +101,7 @@ namespace Phorcys2Web.Controllers
 				divePlan.Minutes = model.Minutes;
 				divePlan.Notes = model.Notes ?? "";
 				divePlan.MaxDepth = model.MaxDepth;
+				divePlan.AveragePO2 = model.AveragePO2;
 				divePlan.ScheduledTime = model.ScheduledTime;
 				divePlan.Created = DateTime.Now;
 				divePlan.LastModified = DateTime.Now;
@@ -130,6 +131,7 @@ namespace Phorcys2Web.Controllers
 			model.Minutes = divePlan.Minutes;
 			model.Notes = divePlan.Notes;
 			model.MaxDepth = divePlan.MaxDepth;
+			model.AveragePO2 = divePlan.AveragePO2;
 			model.UserId = divePlan.UserId;
 			model.ScheduledTime = divePlan.ScheduledTime;
 			model.DiveSiteId = divePlan.DiveSiteId;
@@ -157,6 +159,7 @@ namespace Phorcys2Web.Controllers
 				divePlanDto.Minutes = model.Minutes;
 				divePlanDto.Notes = model.Notes ?? "";
 				divePlanDto.MaxDepth = model.MaxDepth;
+				divePlanDto.AveragePO2 = model.AveragePO2;
 				divePlanDto.ScheduledTime = model.ScheduledTime;
 				divePlanDto.DiveSiteId = model.DiveSiteSelectedId;
 				divePlanDto.SelectedGearIds = model.SelectedGearIds ?? new List<int>();
