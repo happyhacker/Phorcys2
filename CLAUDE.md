@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Phorcys 2.0 is a web-based SCUBA dive logging and planning application. Current version: **2.3.4**. Production: https://phorcys2.azurewebsites.net/
+Phorcys 2.0 is a web-based SCUBA dive logging and planning application. Current version: **2.4.6**. Production: https://www.PhorcysDive.com/
 
 ---
 

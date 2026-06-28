@@ -20,7 +20,7 @@ When generating DDL or reviewing schema objects, you MUST enforce the following 
 ### ALL DATABASE OBJECTS
 - Limit name length — shorter is better
 - Do not use underscore characters in names
-- Avoid abbreviations; avoid acronyms unless a company-accepted standard (e.g., CPAP)
+- Avoid abbreviations; avoid acronyms unless a company-accepted standard (e.g., PSMT)
 - Use Pascal Case for all object names
 - Do not use spaces in names
 
