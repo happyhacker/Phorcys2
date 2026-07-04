@@ -17,6 +17,7 @@ namespace Phorcys.Data.DTOs
 		public DateTime? DescentTime { get; set; }
 		public int? AvgDepth { get; set; }
 		public int? MaxDepth { get; set; }
+		public decimal? AveragePO2 { get; set; }
 		public int? Temperature { get; set; }
 		public int? AdditionalWeight { get; set; }
 		public string Notes { get; set; } = null!;

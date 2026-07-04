@@ -187,6 +187,17 @@
 
                     <div>
                         <p>
+                            <label for="AveragePO2">Average PO2:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.AveragePO2).Min(0.5m).Max(2.5m).Step(0.1m).Format("n2"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.AveragePO2)
+                            </div>
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>
                             <label for="Temperature">Temperature:</label>
                             <br />
                             @(Html.Kendo().NumericTextBoxFor(m => m.Temperature).Min(0).Max(600).Step(1).Format("n0"))
