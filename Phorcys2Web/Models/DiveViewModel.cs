@@ -42,7 +42,11 @@ namespace Phorcys.Web.Models
 
         [DisplayName("Max Depth")]
         [Range(0,1100, ErrorMessage = "You didn't really go this deep.")]
-        public int? MaxDepth { get; set; }  
+        public int? MaxDepth { get; set; }
+
+		[DisplayName("Average PO2")]
+		[Range(0.5, 2.5, ErrorMessage = "Average PO2 must be between 0.5 and 2.5.")]
+		public decimal? AveragePO2 { get; set; }
 
 		[DisplayName("temperature")]
 		public int? Temperature { get; set; }

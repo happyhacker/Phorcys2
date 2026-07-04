@@ -90,6 +90,7 @@ namespace Phorcys.Services
 				dive.DescentTime = diveDto.DescentTime;
 				dive.AvgDepth = diveDto.AvgDepth;
 				dive.MaxDepth = diveDto.MaxDepth;
+				dive.AveragePO2 = diveDto.AveragePO2;
 				dive.Temperature = diveDto.Temperature;
 				dive.AdditionalWeight = diveDto.AdditionalWeight;
 				dive.Notes = diveDto.Notes ?? "";

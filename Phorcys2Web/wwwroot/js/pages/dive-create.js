@@ -92,6 +92,9 @@ window.onDivePlanChange = function () {
 
                 var md = $("#MaxDepth").data("kendoNumericTextBox");
                 if (md) md.value(d.MaxDepth);
+
+                var po2 = $("#AveragePO2").data("kendoNumericTextBox");
+                if (po2) po2.value(d.AveragePO2);
             });
     }
 

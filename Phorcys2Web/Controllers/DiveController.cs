@@ -131,6 +131,13 @@ namespace Phorcys2Web.Controllers
 					IsMatch = hasPlan && plan.MaxDepth == dive.MaxDepth
 				},
 				new DiveCompareViewModel {
+					Field = "Average PO2",
+					Planned = plan?.AveragePO2?.ToString("n2") ?? "",
+					Actual = dive.AveragePO2?.ToString("n2") ?? "",
+					HasPlanValue = hasPlan,
+					IsMatch = hasPlan && plan.AveragePO2 == dive.AveragePO2
+				},
+				new DiveCompareViewModel {
 					Field = "Notes",
 					Planned = plan?.Notes ?? "",
 					Actual = dive.Notes ?? "",
@@ -172,6 +179,7 @@ namespace Phorcys2Web.Controllers
 				dive.Minutes = model.Minutes;
 				dive.Notes = model.Notes ?? "";
 				dive.MaxDepth = model.MaxDepth;
+				dive.AveragePO2 = model.AveragePO2;
 				dive.AvgDepth = model.AvgDepth;
 				dive.Temperature = model.Temperature;
 				dive.AdditionalWeight = model.AdditionalWeight;
@@ -298,6 +306,10 @@ namespace Phorcys2Web.Controllers
 
 			if (summary.MaxDepth.HasValue)
 				model.MaxDepth = summary.MaxDepth.Value;
+
+			// Default Average PO2 to the mean of the per-sample Avg PPO2 readings from the CSV.
+			if (summary.Samples.Count > 0)
+				model.AveragePO2 = Math.Round(summary.Samples.Average(s => s.AvgPPO2), 2);
 
 			// Store import metadata for DiveComputerLog creation on save
 			model.HasImportedData = true;
@@ -431,6 +443,7 @@ namespace Phorcys2Web.Controllers
 				model.DivePlanList = BuildDivePlanList();
 				model.Title = dive.Title;
 				model.MaxDepth = dive.MaxDepth;
+				model.AveragePO2 = dive.AveragePO2;
 				model.AvgDepth = dive.AvgDepth;
 				model.DescentTime = dive.DescentTime;
 				model.AdditionalWeight = dive.AdditionalWeight;
@@ -464,6 +477,7 @@ namespace Phorcys2Web.Controllers
 			diveDto.DescentTime = model.DescentTime;
 			diveDto.AvgDepth = model.AvgDepth;
 			diveDto.MaxDepth = model.MaxDepth;
+			diveDto.AveragePO2 = model.AveragePO2;
 			diveDto.Temperature = model.Temperature;
 			diveDto.AdditionalWeight = model.AdditionalWeight;
 			diveDto.Notes = model.Notes ?? "";
@@ -612,7 +626,8 @@ namespace Phorcys2Web.Controllers
 				Title = plan.Title,
 				DescentTime = plan.ScheduledTime.ToString("yyyy-MM-ddTHH:mm"),
 				Minutes = plan.Minutes,
-				MaxDepth = plan.MaxDepth
+				MaxDepth = plan.MaxDepth,
+				AveragePO2 = plan.AveragePO2
 			};
 
 			return Json(dto);
