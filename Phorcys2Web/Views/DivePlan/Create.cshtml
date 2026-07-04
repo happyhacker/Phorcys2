@@ -107,6 +107,17 @@
                         </p>
                     </div>
 
+                    <div>
+                        <p>
+                            <label for="AveragePO2">Average PO2:</label>
+                            <br />
+                            @(Html.Kendo().NumericTextBoxFor(m => m.AveragePO2).Min(0.5m).Max(2.5m).Step(0.1m).Format("n2"))
+                            <div class="pageMessage">
+                                @Html.ValidationMessageFor(m => m.AveragePO2)
+                            </div>
+                        </p>
+                    </div>
+
                     <!-- Add DiveType MultiSelect -->
                     <div>
                         <p>

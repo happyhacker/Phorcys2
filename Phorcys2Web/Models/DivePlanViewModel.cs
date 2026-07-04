@@ -25,7 +25,11 @@ namespace Phorcys.Web.Models
 		
 		[DisplayName("Max Depth")]
 		public int? MaxDepth { get; set; }
-		
+
+		[DisplayName("Average PO2")]
+		[Range(0.5, 2.5, ErrorMessage = "Average PO2 must be between 0.5 and 2.5.")]
+		public decimal? AveragePO2 { get; set; }
+
 		[DisplayName("Notes")]
 		public string Notes { get; set; }
 		public int UserId { get; set; }

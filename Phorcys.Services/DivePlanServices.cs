@@ -124,6 +124,7 @@ public class DivePlanServices
             divePlan.Title = divePlanDto.Title;
             divePlan.ScheduledTime = divePlanDto.ScheduledTime;
             divePlan.MaxDepth = divePlanDto.MaxDepth;
+            divePlan.AveragePO2 = divePlanDto.AveragePO2;
             divePlan.Minutes = divePlanDto.Minutes;
             divePlan.Notes = divePlanDto.Notes ?? "";
             divePlan.DiveSiteId = divePlanDto.DiveSiteId;

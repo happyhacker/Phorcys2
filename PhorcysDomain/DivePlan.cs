@@ -12,6 +12,7 @@ public partial class DivePlan
 	public int? Minutes { get; set; }
 	public DateTime ScheduledTime { get; set; }
     public int? MaxDepth { get; set; }
+    public decimal? AveragePO2 { get; set; }
     public string? Notes { get; set; }
     public int UserId { get; set; }
     public DateTime Created { get; set; }
