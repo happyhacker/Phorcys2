@@ -49,6 +49,7 @@
 					columns.Bound(p => p.ScheduledTime).Format("{0:MM/dd/yyyy hh:mm tt}");
 					columns.Bound(p => p.Minutes);
 					columns.Bound(p => p.MaxDepth);
+                    columns.Bound(p => p.AveragePo2).Hidden(true);
 					columns.Bound(p => p.Notes).Hidden(true);
 					columns.Command(command =>
 					{

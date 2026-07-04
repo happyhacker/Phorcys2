@@ -30,6 +30,9 @@ namespace Phorcys.Web.Models
 		[DisplayName("Max Depth")]
 		public int? MaxDepth { get; set; }
 
+        [DisplayName("Average PO2")]
+        public decimal? AveragePo2 { get; set; }
+
 		[DisplayName("Notes")]
 		public string Notes { get; set; }
 

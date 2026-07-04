@@ -216,6 +216,7 @@ namespace Phorcys2Web.Controllers
 				model.Minutes = divePlan.Minutes;
 				model.MaxDepth = divePlan.MaxDepth;
 				model.ScheduledTime = divePlan.ScheduledTime;
+                model.AveragePo2 = divePlan.AveragePO2;
 				model.Notes = divePlan.Notes;
 				models.Add(model);
 			}
