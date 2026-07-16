@@ -103,9 +103,10 @@ For local development, use `dotnet user-secrets` or set up Azure CLI credentials
 
 ## Agents
 
-Four specialized agents live in `.claude/agents/`:
+Five specialized agents live in `.claude/agents/`:
 
 - **Matt** — SQL Server: T-SQL, DDL, schema design, naming conventions
 - **Matthew** — .NET backend: service layer, EF Core, DTOs, controllers, ViewModels
 - **Robert** — CI/CD: GitHub Actions, Azure App Service deployment, EF migration pipelines
 - **Thiago** — UI: Razor views, Telerik/Kendo components, Bootstrap 5, jQuery
+- **Sudhir** — QA: xUnit + Moq test writing/review, service-layer test coverage
