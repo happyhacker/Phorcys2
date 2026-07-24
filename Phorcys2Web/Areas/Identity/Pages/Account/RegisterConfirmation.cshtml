@@ -1,0 +1,19 @@
+﻿@page
+@model Phorcys.Web.Areas.Identity.Pages.Account.RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register Confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            Thank you for registering. Please check your email (<strong>@Model.Email</strong>)
+            for a link to confirm your account before signing in.
+        </p>
+        <p>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Return to login</a>
+        </p>
+    </div>
+</div>

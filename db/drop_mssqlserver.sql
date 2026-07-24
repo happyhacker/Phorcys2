@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.6.0                     */
+/* Script generated with: DeZign for Databases 14.9.2                     */
 /* Target DBMS:           MS SQL Server 2022                              */
 /* Project file:          Phorcys2.dez                                    */
 /* Project name:          Phorcys2                                        */
 /* Author:                                                                */
 /* Script type:           Database drop script                            */
-/* Created on:            2025-07-25 23:06                                */
+/* Created on:            2026-07-23 20:18                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -46,11 +46,11 @@ GO
 GO
 
 
-DROP VIEW [vwTanksOnDive]
+DROP VIEW [vwInstructors]
 GO
 
 
-DROP VIEW [vwInstructors]
+DROP VIEW [vwTanksOnDives]
 GO
 
 
@@ -213,11 +213,15 @@ ALTER TABLE [dbo].[DiverQualifications] DROP CONSTRAINT [Divers_DiverQualificati
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] DROP CONSTRAINT [DivePlans_TanksOnDive]
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DivePlans_TanksOnDive]
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] DROP CONSTRAINT [Tanks_TanksOnDive]
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [Tanks_TanksOnDive]
+GO
+
+
+ALTER TABLE [ChecklistInstances] DROP CONSTRAINT [Checklists_ChecklistInstances]
 GO
 
 
@@ -333,6 +337,10 @@ ALTER TABLE [AspNetUserTokens] DROP CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_
 GO
 
 
+ALTER TABLE [ChecklistItems] DROP CONSTRAINT [Checklists_ChecklistItems]
+GO
+
+
 ALTER TABLE [dbo].[ServiceSchedules] DROP CONSTRAINT [Gear_ServiceSchedules]
 GO
 
@@ -369,6 +377,118 @@ ALTER TABLE [dbo].[AttributeAssociations] DROP CONSTRAINT [Attributes_AttributeA
 GO
 
 
+ALTER TABLE [DiveComputerLogs] DROP CONSTRAINT [Dives_DiveComputerLogs]
+GO
+
+
+ALTER TABLE [LogSamples] DROP CONSTRAINT [FK_LogSamples_DiveComputerLogs]
+GO
+
+
+ALTER TABLE [ChecklistInstanceItems] DROP CONSTRAINT [ChecklistInstances_ChecklistInstanceItems]
+GO
+
+
+ALTER TABLE [Checklists] DROP CONSTRAINT [Users_Checklists]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "Checklists"                                                */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [Checklists] DROP CONSTRAINT [DEF_Checklists_Created]
+GO
+
+
+ALTER TABLE [Checklists] DROP CONSTRAINT [PK_Checklists]
+GO
+
+
+/* Drop indexes */
+
+DROP TABLE [Checklists]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "ChecklistInstanceItems"                                    */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [ChecklistInstanceItems] DROP CONSTRAINT [DEF_ChecklistInstanceItems_IsChecked]
+GO
+
+
+ALTER TABLE [ChecklistInstanceItems] DROP CONSTRAINT [DEF_ChecklistInstanceItems_Created]
+GO
+
+
+ALTER TABLE [ChecklistInstanceItems] DROP CONSTRAINT [PK_ChecklistInstanceItems]
+GO
+
+
+/* Drop indexes */
+
+DROP TABLE [ChecklistInstanceItems]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "LogSamples"                                                */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [LogSamples] DROP CONSTRAINT [PK_LogSamples]
+GO
+
+
+/* Drop indexes */
+
+DROP INDEX [LogSamples].[IX_LogSamples_DiveComputerLogId]
+GO
+
+
+DROP TABLE [LogSamples]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "DiveComputerLogs"                                          */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [DiveComputerLogs] DROP CONSTRAINT [DEF_DiveComputerLogs_ImportedDateTime]
+GO
+
+
+ALTER TABLE [DiveComputerLogs] DROP CONSTRAINT [PK_DiveComputerLogs]
+GO
+
+
+/* Drop indexes */
+
+DROP TABLE [DiveComputerLogs]
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Drop table "dbo.AttributeAssociations"                                 */
 /* ---------------------------------------------------------------------- */
@@ -381,6 +501,8 @@ GO
 ALTER TABLE [dbo].[AttributeAssociations] DROP CONSTRAINT [PK_AttributeAssociations]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[AttributeAssociations]
 GO
@@ -407,6 +529,8 @@ ALTER TABLE [dbo].[Attributes] DROP CONSTRAINT [PK_Attributes]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Attributes]
 GO
 
@@ -427,6 +551,8 @@ GO
 ALTER TABLE [dbo].[SoldGear] DROP CONSTRAINT [PK_SoldGear]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[SoldGear]
 GO
@@ -449,6 +575,8 @@ ALTER TABLE [dbo].[GearServiceEvents] DROP CONSTRAINT [PK_GearServiceEvents]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[GearServiceEvents]
 GO
 
@@ -465,6 +593,8 @@ GO
 ALTER TABLE [dbo].[Roles] DROP CONSTRAINT [PK_Roles]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[Roles]
 GO
@@ -483,6 +613,8 @@ ALTER TABLE [dbo].[Manufacturers] DROP CONSTRAINT [PK_Manufacturers]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Manufacturers]
 GO
 
@@ -499,6 +631,8 @@ GO
 ALTER TABLE [dbo].[DiveAgencies] DROP CONSTRAINT [PK_DiveAgencies]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DiveAgencies]
 GO
@@ -517,7 +651,32 @@ ALTER TABLE [dbo].[ServiceSchedules] DROP CONSTRAINT [PK_ServiceSchedules]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[ServiceSchedules]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "ChecklistItems"                                            */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [ChecklistItems] DROP CONSTRAINT [DEF_ChecklistItems_Created]
+GO
+
+
+ALTER TABLE [ChecklistItems] DROP CONSTRAINT [PK_ChecklistItems]
+GO
+
+
+/* Drop indexes */
+
+DROP TABLE [ChecklistItems]
 GO
 
 
@@ -533,6 +692,8 @@ GO
 ALTER TABLE [CertificationInstructors] DROP CONSTRAINT [PK_CertificationInstructors]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [CertificationInstructors]
 GO
@@ -550,6 +711,8 @@ GO
 ALTER TABLE [dbo].[DivePlansDiveTypes] DROP CONSTRAINT [PK_DivePlansDiveTypes]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DivePlansDiveTypes]
 GO
@@ -572,6 +735,10 @@ ALTER TABLE [Gear] DROP CONSTRAINT [DF__Gear_TMP__Paid__17036CC0]
 GO
 
 
+ALTER TABLE [Gear] DROP CONSTRAINT [DEF_Gear_IsSelectable]
+GO
+
+
 ALTER TABLE [Gear] DROP CONSTRAINT [DF__Gear_TMP__Weight__17F790F9]
 GO
 
@@ -585,6 +752,12 @@ GO
 
 
 ALTER TABLE [Gear] DROP CONSTRAINT [PK_Gear]
+GO
+
+
+/* Drop indexes */
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'Gear', NULL, NULL
 GO
 
 
@@ -605,6 +778,8 @@ ALTER TABLE [dbo].[DivePlanGear] DROP CONSTRAINT [PK_GearOnDive]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DivePlanGear]
 GO
 
@@ -621,6 +796,8 @@ GO
 ALTER TABLE [dbo].[DiveShopStaff] DROP CONSTRAINT [PK_DiveShopStaff]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DiveShopStaff]
 GO
@@ -647,6 +824,8 @@ ALTER TABLE [Contacts] DROP CONSTRAINT [PK_Contacts]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [Contacts]
 GO
 
@@ -672,6 +851,8 @@ ALTER TABLE [dbo].[DiveTypes] DROP CONSTRAINT [PK_DiveTypes]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DiveTypes]
 GO
 
@@ -688,6 +869,8 @@ GO
 ALTER TABLE [dbo].[DiverGear] DROP CONSTRAINT [PK_DiverGear]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DiverGear]
 GO
@@ -706,6 +889,8 @@ ALTER TABLE [dbo].[DiveShopServices] DROP CONSTRAINT [PK_DiveShopServices]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DiveShopServices]
 GO
 
@@ -722,6 +907,8 @@ GO
 ALTER TABLE [DiveTeams] DROP CONSTRAINT [PK_DiveTeam]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [DiveTeams]
 GO
@@ -740,12 +927,14 @@ ALTER TABLE [dbo].[DiveShops] DROP CONSTRAINT [PK_DiveShops]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DiveShops]
 GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "dbo.TanksOnDives"                                          */
+/* Drop table "ChecklistInstances"                                        */
 /* ---------------------------------------------------------------------- */
 
 GO
@@ -753,17 +942,54 @@ GO
 
 /* Drop constraints */
 
-ALTER TABLE [dbo].[TanksOnDives] DROP CONSTRAINT [DF__TanksOnDi__Start__3C34F16F]
+ALTER TABLE [ChecklistInstances] DROP CONSTRAINT [DEF_ChecklistInstances_Created]
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] DROP CONSTRAINT [DF__TanksOnDi__Endin__3D2915A8]
+ALTER TABLE [ChecklistInstances] DROP CONSTRAINT [PK_ChecklistInstances]
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] DROP CONSTRAINT [PK_TanksOnDive]
+/* Drop indexes */
+
+DROP TABLE [ChecklistInstances]
 GO
 
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "TanksOnDives"                                              */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DF__TanksOnDi__Start__3C34F16F]
+GO
+
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DF__TanksOnDi__Endin__3D2915A8]
+GO
+
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DF_TanksOnDives_OxygenPercent]
+GO
+
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DF_TanksOnDives_HeliumPercent]
+GO
+
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [DF_TanksOnDives_NitrogenPercent]
+GO
+
+
+ALTER TABLE [TanksOnDives] DROP CONSTRAINT [PK_TanksOnDive]
+GO
+
+
+/* Drop indexes */
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'DivePlanId'
 GO
@@ -797,7 +1023,7 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
-DROP TABLE [dbo].[TanksOnDives]
+DROP TABLE [TanksOnDives]
 GO
 
 
@@ -821,6 +1047,8 @@ GO
 ALTER TABLE [dbo].[DiverQualifications] DROP CONSTRAINT [PK_DiverQualifications]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DiverQualifications]
 GO
@@ -847,6 +1075,8 @@ ALTER TABLE [dbo].[Qualifications] DROP CONSTRAINT [PK_Qualifications]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Qualifications]
 GO
 
@@ -871,6 +1101,8 @@ GO
 ALTER TABLE [dbo].[Divers] DROP CONSTRAINT [PK_Divers]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[Divers]
 GO
@@ -917,6 +1149,8 @@ ALTER TABLE [Dives] DROP CONSTRAINT [PK_Dives]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [Dives]
 GO
 
@@ -933,6 +1167,8 @@ GO
 ALTER TABLE [dbo].[InsuredGear] DROP CONSTRAINT [PK_InsuredGear]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[InsuredGear]
 GO
@@ -958,6 +1194,8 @@ GO
 ALTER TABLE [dbo].[InsurancePolicies] DROP CONSTRAINT [PK_InsurancePolicies]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[InsurancePolicies]
 GO
@@ -988,6 +1226,12 @@ ALTER TABLE [DivePlans] DROP CONSTRAINT [PK_DivePlans]
 GO
 
 
+/* Drop indexes */
+
+DROP INDEX [DivePlans].[IDX_DivePlans_DiveId]
+GO
+
+
 DROP TABLE [DivePlans]
 GO
 
@@ -1013,6 +1257,8 @@ ALTER TABLE [Tanks] DROP CONSTRAINT [PK_Tanks]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [Tanks]
 GO
 
@@ -1029,6 +1275,8 @@ GO
 ALTER TABLE [Instructors] DROP CONSTRAINT [PK_Instructors]
 GO
 
+
+/* Drop indexes */
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'Instructors', 'COLUMN', N'InstructorId'
 GO
@@ -1062,6 +1310,8 @@ GO
 ALTER TABLE [dbo].[GasMixes] DROP CONSTRAINT [PK__GasMixes__56FD4E221D9B5BB6]
 GO
 
+
+/* Drop indexes */
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'GasMixes', 'COLUMN', N'DivePlanId'
 GO
@@ -1108,6 +1358,8 @@ ALTER TABLE [dbo].[DiveSiteUrls] DROP CONSTRAINT [PK_DiveSiteUrls]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DiveSiteUrls]
 GO
 
@@ -1132,6 +1384,8 @@ GO
 ALTER TABLE [DiverCertifications] DROP CONSTRAINT [PK_DiverCertifications]
 GO
 
+
+/* Drop indexes */
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'DiverCertifications', 'COLUMN', N'DiverCertificationId'
 GO
@@ -1198,6 +1452,8 @@ ALTER TABLE [dbo].[Certifications] DROP CONSTRAINT [PK_Certifications]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Certifications]
 GO
 
@@ -1214,6 +1470,8 @@ GO
 ALTER TABLE [DiveUrls] DROP CONSTRAINT [PK_ContentLinks]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [DiveUrls]
 GO
@@ -1244,6 +1502,8 @@ ALTER TABLE [dbo].[DiveSites] DROP CONSTRAINT [PK_DiveSites]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[DiveSites]
 GO
 
@@ -1260,6 +1520,8 @@ GO
 ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [PK_Friends]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[Friends]
 GO
@@ -1285,6 +1547,8 @@ GO
 ALTER TABLE [dbo].[DiveLocations] DROP CONSTRAINT [PK_DiveLocations]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[DiveLocations]
 GO
@@ -1319,6 +1583,8 @@ ALTER TABLE [Users] DROP CONSTRAINT [TUC_Users_1]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [Users]
 GO
 
@@ -1333,6 +1599,12 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [AspNetUserRoles] DROP CONSTRAINT [PK_AspNetUserRoles]
+GO
+
+
+/* Drop indexes */
+
+DROP INDEX [AspNetUserRoles].[IX_AspNetUserRoles_RoleId]
 GO
 
 
@@ -1353,6 +1625,12 @@ ALTER TABLE [AspNetUserLogins] DROP CONSTRAINT [PK_AspNetUserLogins]
 GO
 
 
+/* Drop indexes */
+
+DROP INDEX [AspNetUserLogins].[IX_AspNetUserLogins_UserId]
+GO
+
+
 DROP TABLE [AspNetUserLogins]
 GO
 
@@ -1367,6 +1645,12 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [AspNetUserClaims] DROP CONSTRAINT [PK_AspNetUserClaims]
+GO
+
+
+/* Drop indexes */
+
+DROP INDEX [AspNetUserClaims].[IX_AspNetUserClaims_UserId]
 GO
 
 
@@ -1387,6 +1671,12 @@ ALTER TABLE [AspNetRoleClaims] DROP CONSTRAINT [PK_AspNetRoleClaims]
 GO
 
 
+/* Drop indexes */
+
+DROP INDEX [AspNetRoleClaims].[IX_AspNetRoleClaims_RoleId]
+GO
+
+
 DROP TABLE [AspNetRoleClaims]
 GO
 
@@ -1403,6 +1693,8 @@ GO
 ALTER TABLE [AspNetUserTokens] DROP CONSTRAINT [PK_AspNetUserTokens]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [AspNetUserTokens]
 GO
@@ -1421,6 +1713,16 @@ ALTER TABLE [AspNetUsers] DROP CONSTRAINT [PK_AspNetUsers]
 GO
 
 
+/* Drop indexes */
+
+DROP INDEX [AspNetUsers].[EmailIndex]
+GO
+
+
+DROP INDEX [AspNetUsers].[UserNameIndex]
+GO
+
+
 DROP TABLE [AspNetUsers]
 GO
 
@@ -1435,6 +1737,12 @@ GO
 /* Drop constraints */
 
 ALTER TABLE [AspNetRoles] DROP CONSTRAINT [PK_AspNetRoles]
+GO
+
+
+/* Drop indexes */
+
+DROP INDEX [AspNetRoles].[RoleNameIndex]
 GO
 
 
@@ -1463,6 +1771,8 @@ ALTER TABLE [dbo].[Services] DROP CONSTRAINT [PK_Services]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Services]
 GO
 
@@ -1480,6 +1790,8 @@ ALTER TABLE [dbo].[Gases] DROP CONSTRAINT [PK_Gases]
 GO
 
 
+/* Drop indexes */
+
 DROP TABLE [dbo].[Gases]
 GO
 
@@ -1496,6 +1808,8 @@ GO
 ALTER TABLE [dbo].[Countries] DROP CONSTRAINT [PK_Countries]
 GO
 
+
+/* Drop indexes */
 
 DROP TABLE [dbo].[Countries]
 GO
