@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.6.0                     */
+/* Script generated with: DeZign for Databases 14.9.2                     */
 /* Target DBMS:           MS SQL Server 2022                              */
 /* Project file:          Phorcys2.dez                                    */
 /* Project name:          Phorcys2                                        */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2025-07-25 23:06                                */
+/* Created on:            2026-07-23 20:18                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -534,6 +534,7 @@ CREATE TABLE [DivePlans] (
     [Minutes] INTEGER,
     [ScheduledTime] DATETIME NOT NULL,
     [MaxDepth] INTEGER CONSTRAINT [DEF_DivePlans_MaxDepth] DEFAULT 0,
+    [AveragePO2] DECIMAL(3,2),
     [Notes] VARCHAR(max),
     [UserId] INTEGER NOT NULL,
     [Created] DATETIME CONSTRAINT [DEF_DivePlans_Created] DEFAULT getdate() NOT NULL,
@@ -597,6 +598,7 @@ CREATE TABLE [Dives] (
     [DescentTime] DATETIME,
     [AvgDepth] INTEGER CONSTRAINT [DF__DiveDetai__AvgDe__32AB8735] DEFAULT 0,
     [MaxDepth] INTEGER CONSTRAINT [DF__DiveDetai__MaxDe__339FAB6E] DEFAULT 0,
+    [AveragePO2] DECIMAL(3,2),
     [Temperature] INTEGER CONSTRAINT [DF__DiveDetai__Tempe__3493CFA7] DEFAULT 0,
     [AdditionalWeight] INTEGER CONSTRAINT [DF__DiveDetai__Addit__3587F3E0] DEFAULT 0,
     [Notes] VARCHAR(max) NOT NULL,
@@ -666,20 +668,23 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Add table "dbo.TanksOnDives"                                           */
+/* Add table "TanksOnDives"                                               */
 /* ---------------------------------------------------------------------- */
 
 GO
 
 
-CREATE TABLE [dbo].[TanksOnDives] (
+CREATE TABLE [TanksOnDives] (
     [DivePlanId] INTEGER NOT NULL,
     [GearId] INTEGER NOT NULL,
-    [GasContentTitle] VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS,
+    [GasContentTitle] VARCHAR(20),
     [StartingPressure] INTEGER CONSTRAINT [DF__TanksOnDi__Start__3C34F16F] DEFAULT 0,
     [EndingPressure] INTEGER CONSTRAINT [DF__TanksOnDi__Endin__3D2915A8] DEFAULT 0,
     [FillCost] MONEY,
     [FillDate] DATETIME,
+    [OxygenPercent] INTEGER CONSTRAINT [DF_TanksOnDives_OxygenPercent] DEFAULT 0 NOT NULL,
+    [HeliumPercent] INTEGER CONSTRAINT [DF_TanksOnDives_HeliumPercent] DEFAULT 0 NOT NULL,
+    [NitrogenPercent] INTEGER CONSTRAINT [DF_TanksOnDives_NitrogenPercent] DEFAULT 0 NOT NULL,
     CONSTRAINT [PK_TanksOnDive] PRIMARY KEY CLUSTERED ([DivePlanId], [GearId])
 )
 GO
@@ -714,6 +719,23 @@ GO
 
 
 EXECUTE sp_addextendedproperty N'MS_Description', N'N', 'SCHEMA', N'dbo', 'TABLE', N'TanksOnDives', 'COLUMN', N'FillDate'
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add table "ChecklistInstances"                                         */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [ChecklistInstances] (
+    [ChecklistInstanceId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistInstances_Created] DEFAULT getdate() NOT NULL,
+    CONSTRAINT [PK_ChecklistInstances] PRIMARY KEY CLUSTERED ([ChecklistInstanceId])
+)
 GO
 
 
@@ -878,6 +900,7 @@ CREATE TABLE [Gear] (
     [SN] VARCHAR(30),
     [Acquired] DATE,
     [NoLongerUse] DATE,
+    [IsSelectable] BIT CONSTRAINT [DEF_Gear_IsSelectable] DEFAULT 1 NOT NULL,
     [Weight] FLOAT(53) CONSTRAINT [DF__Gear_TMP__Weight__17F790F9] DEFAULT 0,
     [Notes] VARCHAR(max),
     [UserId] INTEGER NOT NULL,
@@ -885,6 +908,10 @@ CREATE TABLE [Gear] (
     [LastModified] DATETIME CONSTRAINT [GearLastModified] DEFAULT getdate(),
     CONSTRAINT [PK_Gear] PRIMARY KEY CLUSTERED ([GearId])
 )
+GO
+
+
+EXECUTE sp_addextendedproperty N'MS_Description', N'Mark as 0, false, if it should not be displayed on the DivePlan Gear selection.', 'SCHEMA', N'dbo', 'TABLE', N'Gear', NULL, NULL
 GO
 
 
@@ -914,6 +941,24 @@ CREATE TABLE [CertificationInstructors] (
     [InstructorId] INTEGER NOT NULL,
     [CertificationId] INTEGER NOT NULL,
     CONSTRAINT [PK_CertificationInstructors] PRIMARY KEY CLUSTERED ([InstructorId], [CertificationId])
+)
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add table "ChecklistItems"                                             */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [ChecklistItems] (
+    [ChecklistItemId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [SequenceNumber] INTEGER,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistItems_Created] DEFAULT getdate(),
+    CONSTRAINT [PK_ChecklistItems] PRIMARY KEY CLUSTERED ([ChecklistItemId])
 )
 GO
 
@@ -1059,6 +1104,116 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Add table "DiveComputerLogs"                                           */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [DiveComputerLogs] (
+    [DiveComputerLogId] INTEGER IDENTITY(1,1) NOT NULL,
+    [DiveId] INTEGER,
+    [Vendor] VARCHAR(40),
+    [Product] VARCHAR(40),
+    [Model] VARCHAR(40),
+    [SerialNumber] VARCHAR(40),
+    [FirmareVersion] VARCHAR(40),
+    [DiveMode] VARCHAR(40),
+    [BatteryVoltageEnd] DECIMAL(3,2),
+    [StartCNS] INTEGER,
+    [EndCNS] INTEGER,
+    [DiveNumber] INTEGER,
+    [IsImperial] BIT,
+    [Descended] DATETIME2,
+    [Surfaced] DATETIME2,
+    [MaxDepth] INTEGER,
+    [Minutes] INTEGER,
+    [ImportedDateTime] DATETIME2 CONSTRAINT [DEF_DiveComputerLogs_ImportedDateTime] DEFAULT getdate(),
+    CONSTRAINT [PK_DiveComputerLogs] PRIMARY KEY CLUSTERED ([DiveComputerLogId])
+)
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add table "LogSamples"                                                 */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [LogSamples] (
+    [LogSampleId] INTEGER IDENTITY(1,1) NOT NULL,
+    [DiveComputerLogId] INTEGER NOT NULL,
+    [ElapsedSeconds] INTEGER NOT NULL,
+    [Depth] DECIMAL(6,1) NOT NULL,
+    [FirstDecoStopDepth] DECIMAL(6,1) NOT NULL,
+    [TimeToSurfaceMinutes] INTEGER NOT NULL,
+    [AvgPPO2] DECIMAL(4,2) NOT NULL,
+    [FractionO2] DECIMAL(4,2) NOT NULL,
+    [FractionHe] DECIMAL(4,2) NOT NULL,
+    [FirstDecoStopMinutes] INTEGER NOT NULL,
+    [NoDecoLimitMinutes] INTEGER NOT NULL,
+    [CircuitMode] SMALLINT NOT NULL,
+    [CCRMode] SMALLINT NOT NULL,
+    [Temperature] INTEGER NOT NULL,
+    [GasSwitchNeeded] BIT NOT NULL,
+    [ExternalPPO2Active] BIT NOT NULL,
+    [SetPointType] SMALLINT NOT NULL,
+    [CircuitSwitchType] SMALLINT NOT NULL,
+    [O2Sensor1Millivolts] INTEGER NOT NULL,
+    [O2Sensor2Millivolts] INTEGER NOT NULL,
+    [O2Sensor3Millivolts] INTEGER NOT NULL,
+    [BatteryVoltage] DECIMAL(4,2) NOT NULL,
+    [AscentRate] DECIMAL(5,1) NOT NULL,
+    [SafeAscentDepth] DECIMAL(6,1) NOT NULL,
+    [CO2Millibar] INTEGER NOT NULL,
+    CONSTRAINT [PK_LogSamples] PRIMARY KEY CLUSTERED ([LogSampleId])
+)
+GO
+
+
+CREATE NONCLUSTERED INDEX [IX_LogSamples_DiveComputerLogId] ON [LogSamples] ([DiveComputerLogId] ASC)
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add table "ChecklistInstanceItems"                                     */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [ChecklistInstanceItems] (
+    [ChecklistInstanceItemId] INTEGER IDENTITY(1,1) NOT NULL,
+    [ChecklistInstanceId] INTEGER NOT NULL,
+    [Title] VARCHAR(120) NOT NULL,
+    [SequenceNumber] INTEGER,
+    [IsChecked] BIT CONSTRAINT [DEF_ChecklistInstanceItems_IsChecked] DEFAULT 0 NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_ChecklistInstanceItems_Created] DEFAULT getdate() NOT NULL,
+    CONSTRAINT [PK_ChecklistInstanceItems] PRIMARY KEY CLUSTERED ([ChecklistInstanceItemId])
+)
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Add table "Checklists"                                                 */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+CREATE TABLE [Checklists] (
+    [ChecklistId] INTEGER IDENTITY(1,1) NOT NULL,
+    [UserId] INTEGER NOT NULL,
+    [Title] VARCHAR(80) NOT NULL,
+    [Created] DATETIME2 CONSTRAINT [DEF_Checklists_Created] DEFAULT getdate() NOT NULL,
+    [LastModified] DATETIME2,
+    CONSTRAINT [PK_Checklists] PRIMARY KEY CLUSTERED ([ChecklistId])
+)
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Add foreign key constraints                                            */
 /* ---------------------------------------------------------------------- */
 
@@ -1141,7 +1296,7 @@ GO
 
 
 ALTER TABLE [dbo].[GasMixes] ADD CONSTRAINT [TanksOnDive_GasMixes] 
-    FOREIGN KEY ([DivePlanId], [GearId]) REFERENCES [dbo].[TanksOnDives] ([DivePlanId],[GearId])
+    FOREIGN KEY ([DivePlanId], [GearId]) REFERENCES [TanksOnDives] ([DivePlanId],[GearId])
 GO
 
 
@@ -1215,13 +1370,18 @@ ALTER TABLE [dbo].[DiverQualifications] ADD CONSTRAINT [Divers_DiverQualificatio
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] ADD CONSTRAINT [DivePlans_TanksOnDive] 
+ALTER TABLE [TanksOnDives] ADD CONSTRAINT [DivePlans_TanksOnDive] 
     FOREIGN KEY ([DivePlanId]) REFERENCES [DivePlans] ([DivePlanId])
 GO
 
 
-ALTER TABLE [dbo].[TanksOnDives] ADD CONSTRAINT [Tanks_TanksOnDive] 
+ALTER TABLE [TanksOnDives] ADD CONSTRAINT [Tanks_TanksOnDive] 
     FOREIGN KEY ([GearId]) REFERENCES [Tanks] ([GearId])
+GO
+
+
+ALTER TABLE [ChecklistInstances] ADD CONSTRAINT [Checklists_ChecklistInstances] 
+    FOREIGN KEY ([ChecklistId]) REFERENCES [Checklists] ([ChecklistId])
 GO
 
 
@@ -1365,6 +1525,11 @@ ALTER TABLE [AspNetUserTokens] ADD CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_U
 GO
 
 
+ALTER TABLE [ChecklistItems] ADD CONSTRAINT [Checklists_ChecklistItems] 
+    FOREIGN KEY ([ChecklistId]) REFERENCES [Checklists] ([ChecklistId]) ON DELETE CASCADE
+GO
+
+
 ALTER TABLE [dbo].[ServiceSchedules] ADD CONSTRAINT [Gear_ServiceSchedules] 
     FOREIGN KEY ([GearId]) REFERENCES [Gear] ([GearId])
 GO
@@ -1410,25 +1575,30 @@ ALTER TABLE [dbo].[AttributeAssociations] ADD CONSTRAINT [Attributes_AttributeAs
 GO
 
 
+ALTER TABLE [DiveComputerLogs] ADD CONSTRAINT [Dives_DiveComputerLogs] 
+    FOREIGN KEY ([DiveId]) REFERENCES [Dives] ([DiveId]) ON DELETE CASCADE
+GO
+
+
+ALTER TABLE [LogSamples] ADD CONSTRAINT [FK_LogSamples_DiveComputerLogs] 
+    FOREIGN KEY ([DiveComputerLogId]) REFERENCES [DiveComputerLogs] ([DiveComputerLogId]) ON DELETE CASCADE
+GO
+
+
+ALTER TABLE [ChecklistInstanceItems] ADD CONSTRAINT [ChecklistInstances_ChecklistInstanceItems] 
+    FOREIGN KEY ([ChecklistInstanceId]) REFERENCES [ChecklistInstances] ([ChecklistInstanceId]) ON DELETE CASCADE
+GO
+
+
+ALTER TABLE [Checklists] ADD CONSTRAINT [Users_Checklists] 
+    FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+GO
+
+
 /* ---------------------------------------------------------------------- */
 /* Add views                                                              */
 /* ---------------------------------------------------------------------- */
 
-GO
-
-
-CREATE VIEW [vwTanksOnDive] AS (
-SELECT dp.DivePlanId, dp.Title AS DiveTitle, g.Title AS Tank, t.GearId, t.Volume, t.WorkingPressure, tod.StartingPressure, tod.EndingPressure,
-       dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.StartingPressure) AS FillVolume, ROUND(dbo.CalcVolume(t.Volume,
-       t.WorkingPressure, tod.StartingPressure) / 3, 0) AS Thirds,
-	   dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.EndingPressure) AS TurnVolume,
-	   dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.StartingPressure)
-                         - dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.EndingPressure) AS GasUsed
-FROM dbo.Tanks AS t
-INNER JOIN TanksOnDive AS tod ON tod.GearId = t.GearId
-INNER JOIN DivePlans AS dp ON tod.DivePlanId = dp.DivePlanId
-INNER JOIN Gear AS g ON tod.GearId = g.GearId
-)
 GO
 
 
@@ -1437,6 +1607,42 @@ SELECT i.InstructorId, c.FirstName, c.LastName, c.CountryCode, c.Email
 FROM  dbo.Instructors AS i LEFT OUTER JOIN
          dbo.Contacts AS c ON i.ContactId = c.ContactId
 )
+GO
+
+
+CREATE VIEW [vwTanksOnDives]
+AS
+WITH cte_TankVolumes AS (
+    SELECT
+        dp.DivePlanId,
+        dp.Title AS DiveTitle,
+        g.Title  AS Tank,
+        t.GearId,                    -- adjust if you expose GearId instead
+        t.Volume,
+        t.WorkingPressure,
+        tod.StartingPressure,
+        tod.EndingPressure,
+        dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.StartingPressure) AS FillVolume,
+        dbo.CalcVolume(t.Volume, t.WorkingPressure, tod.EndingPressure)   AS EndVolume
+    FROM dbo.Tanks         AS t
+    INNER JOIN dbo.TanksOnDives AS tod ON tod.GearId     = t.GearId      -- if your FK is GearId, switch this join
+    INNER JOIN dbo.DivePlans     AS dp  ON tod.DivePlanId = dp.DivePlanId
+    LEFT  JOIN dbo.Gear          AS g   ON t.GearId       = g.GearId
+)
+SELECT
+    c.DivePlanId,
+    c.DiveTitle,
+    c.Tank,
+    c.GearId,
+    c.Volume,
+    c.WorkingPressure,
+    c.StartingPressure,
+    c.EndingPressure,
+    c.FillVolume,
+    CAST(c.FillVolume AS decimal(18,2)) / 3.0       AS Thirds,
+    CAST(c.FillVolume AS decimal(18,2)) * 2.0 / 3.0 AS TurnVolume,
+    c.FillVolume - c.EndVolume                      AS GasUsed
+FROM cte_TankVolumes AS c
 GO
 
 
@@ -1482,9 +1688,12 @@ GO
 
 
 CREATE VIEW [vwDives] AS (
-SELECT dp.DivePlanId, dp.Title, dp.Notes, dt.Title AS 'DiveType' FROM DivePlans dp
-JOIN DivePlansDiveTypes oe ON oe.DivePlanId = dp.DivePlanId
-JOIN DiveTypes dt ON dt.DiveTypeId = oe.DiveTypeId
+SELECT dp.UserId, dp.DivePlanId, d.DiveNumber, CAST(d.DescentTime AS date) AS Date, dp.Title, MAX(d.Minutes) AS Minutes, d.Notes, STRING_AGG(dt.Title, ': ') AS DiveTypes
+FROM  dbo.DivePlans AS dp INNER JOIN
+         dbo.Dives AS d ON d.DivePlanId = dp.DivePlanId LEFT OUTER JOIN
+         dbo.DivePlansDiveTypes AS dpdt ON dpdt.DivePlanId = dp.DivePlanId LEFT OUTER JOIN
+         dbo.DiveTypes AS dt ON dt.DiveTypeId = dpdt.DiveTypeId
+GROUP BY dp.UserId, dp.DivePlanId, d.DiveNumber, CAST(d.DescentTime AS date), dp.Title, d.Notes
 )
 GO
 

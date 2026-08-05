@@ -27,13 +27,15 @@ namespace Phorcys.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly UserServices _userServices;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            UserServices userServices)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -41,6 +43,7 @@ namespace Phorcys.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userServices = userServices;
         }
 
         [BindProperty]
@@ -90,6 +93,24 @@ namespace Phorcys.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    try
+                    {
+                        // Provision the corresponding Phorcys.Domain.User/Contact records so the
+                        // new AspNetUsers row is linked into the rest of the domain model.
+                        await _userServices.ProvisionNewUserAsync(user.Id, Input.Email);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Domain provisioning failed after the Identity account was already created.
+                        // Roll back the Identity account so we don't leave an orphaned AspNetUsers row
+                        // with no corresponding domain User/Contact, and let the user retry.
+                        _logger.LogError(ex, "Failed to provision domain User/Contact for new AspNetUser {AspNetUserId}. Rolling back account creation.", user.Id);
+                        await _userManager.DeleteAsync(user);
+
+                        ModelState.AddModelError(string.Empty, "An error occurred while creating your account. Please try again.");
+                        return Page();
+                    }
 
                     // Generate the email confirmation token
                     var userId = await _userManager.GetUserIdAsync(user);
