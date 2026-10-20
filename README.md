@@ -99,7 +99,7 @@ The application uses Azure Key Vault for secrets management. Configure the follo
 
 The application is configured for Azure App Service deployment. The production instance is available at:
 
-https://phorcys2.azurewebsites.net/
+https://phorcysDive.com/
 
 ## License
 
