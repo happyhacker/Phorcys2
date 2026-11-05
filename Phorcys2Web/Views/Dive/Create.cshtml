@@ -261,7 +261,7 @@
      data-get-defaults-url="@Url.Action("GetPlanDefaults", "Dive")"></div>
 
 @section Scripts {
-    <script src="~/js/pages/dive-create.js"></script>
+    <script src="~/js/pages/dive-create.js" asp-append-version="true"></script>
     <script>
         // Pass the selected dive plan ID to the CSV upload form before submitting,
         // so the plan selection is preserved after the upload re-renders the page.
