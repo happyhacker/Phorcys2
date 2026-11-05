@@ -49,23 +49,23 @@ function renderTanks(tanks) {
             "        <input type=\"hidden\" id=\"" + startInputId + "\" name=\"Tanks[" + index + "].StartingPressure\" />" +
             "        <div class=\"mt-3\" style=\"width: 200px;\">" +
             "          <div class=\"mb-2\">" +
-            "            <label class=\"form-label small\">Gas Content:</label>" +
-            "            <input type=\"text\" class=\"form-control form-control-sm\"" +
+            "            <label for=\"gasContent_" + index + "\" class=\"form-label small\">Gas Content:</label>" +
+            "            <input type=\"text\" id=\"gasContent_" + index + "\"" +
             "                   name=\"Tanks[" + index + "].GasContentTitle\"" +
             "                   value=\"" + (tank.GasContentTitle != null ? tank.GasContentTitle : "Air") + "\"" +
             "                   placeholder=\"Air, Nitrox, Trimix\" />" +
             "          </div>" +
             "          <div class=\"row\">" +
             "            <div class=\"col-6\">" +
-            "              <label class=\"form-label small\">O2 %:</label>" +
-            "              <input type=\"number\" class=\"form-control form-control-sm\"" +
+            "              <label for=\"oxygen_" + index + "\" class=\"form-label small\">O2 %:</label>" +
+            "              <input type=\"number\" id=\"oxygen_" + index + "\"" +
             "                     name=\"Tanks[" + index + "].OxygenPercent\"" +
             "                     value=\"" + (tank.OxygenPercent != null ? tank.OxygenPercent : 21) + "\"" +
             "                     min=\"2\" max=\"100\" />" +
             "            </div>" +
             "            <div class=\"col-6\">" +
-            "              <label class=\"form-label small\">He %:</label>" +
-            "              <input type=\"number\" class=\"form-control form-control-sm\"" +
+            "              <label for=\"helium_" + index + "\" class=\"form-label small\">He %:</label>" +
+            "              <input type=\"number\" id=\"helium_" + index + "\"" +
             "                     name=\"Tanks[" + index + "].HeliumPercent\"" +
             "                     value=\"" + (tank.HeliumPercent != null ? tank.HeliumPercent : 0) + "\"" +
             "                     min=\"0\" max=\"98\" />" +
@@ -142,6 +142,13 @@ function renderTanks(tanks) {
             format: "n2",
             value: (tank.FillCost != null) ? tank.FillCost : null
         });
+
+        // Themed Kendo widgets for gas fields (same look as the other form fields).
+        $("#gasContent_" + index).kendoTextBox().data("kendoTextBox").wrapper.addClass("w-100");
+        $("#oxygen_" + index).kendoNumericTextBox({ min: 2, max: 100, step: 1, decimals: 0, format: "n0" })
+            .data("kendoNumericTextBox").wrapper.addClass("w-100");
+        $("#helium_" + index).kendoNumericTextBox({ min: 0, max: 98, step: 1, decimals: 0, format: "n0" })
+            .data("kendoNumericTextBox").wrapper.addClass("w-100");
     });
 }
 

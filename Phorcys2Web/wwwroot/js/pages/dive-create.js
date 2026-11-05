@@ -141,7 +141,7 @@ window.onDivePlanChange = function () {
                     "        <div class=\"mt-3\" style=\"width: 200px;\">" +
                     "          <div class=\"mb-2\">" +
                     "            <label for=\"gasContent_" + index + "\" class=\"form-label small\">Gas Content:</label>" +
-                    "            <input type=\"text\" class=\"form-control form-control-sm\" id=\"gasContent_" + index + "\"" +
+                    "            <input type=\"text\" id=\"gasContent_" + index + "\"" +
                     "                   name=\"Tanks[" + index + "].GasContentTitle\"" +
                     "                   value=\"" + (tank.GasContentTitle || "Air") + "\"" +
                     "                   placeholder=\"Air, Nitrox, Trimix\" />" +
@@ -149,14 +149,14 @@ window.onDivePlanChange = function () {
                     "          <div class=\"row\">" +
                     "            <div class=\"col-6\">" +
                     "              <label for=\"oxygen_" + index + "\" class=\"form-label small\">O2 %:</label>" +
-                    "              <input type=\"number\" class=\"form-control form-control-sm\" id=\"oxygen_" + index + "\"" +
+                    "              <input type=\"number\" id=\"oxygen_" + index + "\"" +
                     "                     name=\"Tanks[" + index + "].OxygenPercent\"" +
                     "                     value=\"" + (tank.OxygenPercent || 21) + "\"" +
                     "                     min=\"2\" max=\"100\" />" +
                     "            </div>" +
                     "            <div class=\"col-6\">" +
                     "              <label for=\"helium_" + index + "\" class=\"form-label small\">He %:</label>" +
-                    "              <input type=\"number\" class=\"form-control form-control-sm\" id=\"helium_" + index + "\"" +
+                    "              <input type=\"number\" id=\"helium_" + index + "\"" +
                     "                     name=\"Tanks[" + index + "].HeliumPercent\"" +
                     "                     value=\"" + (tank.HeliumPercent || 0) + "\"" +
                     "                     min=\"0\" max=\"98\" />" +
@@ -245,6 +245,13 @@ window.onDivePlanChange = function () {
                     format: "n2",
                     value: (tank.FillCost != null) ? tank.FillCost : null
                 });
+
+                // Themed Kendo widgets for gas fields (same look as the other form fields).
+                $("#gasContent_" + index).kendoTextBox().data("kendoTextBox").wrapper.addClass("w-100");
+                $("#oxygen_" + index).kendoNumericTextBox({ min: 2, max: 100, step: 1, decimals: 0, format: "n0" })
+                    .data("kendoNumericTextBox").wrapper.addClass("w-100");
+                $("#helium_" + index).kendoNumericTextBox({ min: 0, max: 98, step: 1, decimals: 0, format: "n0" })
+                    .data("kendoNumericTextBox").wrapper.addClass("w-100");
             });
         },
         error: function (err) {
