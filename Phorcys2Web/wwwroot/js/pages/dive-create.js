@@ -78,23 +78,38 @@ window.onDivePlanChange = function () {
     if (!divePlanId) return;
 
     if (diveCreateDefaultsUrl) {
-        $.getJSON(diveCreateDefaultsUrl, { divePlanId: divePlanId })
+        // The server decides which fields the plan may fill (FieldsToApply); fields populated by the
+        // Shearwater import (tracked in the hidden ImportedFields input) are never overwritten.
+        $.getJSON(diveCreateDefaultsUrl, { divePlanId: divePlanId, importedFields: $("#ImportedFields").val() || "" })
             .done(function (d) {
-                var tb = $("#Title").data("kendoTextBox");
-                if (tb) tb.value(d.Title);
-                else $("#Title").val(d.Title ?? "");
+                var apply = d.FieldsToApply || d.fieldsToApply || [];
+                var shouldApply = function (name) { return apply.indexOf(name) !== -1; };
 
-                var dtp = $("#DescentTime").data("kendoDateTimePicker");
-                if (dtp) dtp.value(kendo.parseDate(d.DescentTime, "yyyy-MM-ddTHH:mm"));
+                if (shouldApply("Title")) {
+                    var tb = $("#Title").data("kendoTextBox");
+                    if (tb) tb.value(d.Title);
+                    else $("#Title").val(d.Title ?? "");
+                }
 
-                var min = $("#Minutes").data("kendoNumericTextBox");
-                if (min) min.value(d.Minutes);
+                if (shouldApply("DescentTime")) {
+                    var dtp = $("#DescentTime").data("kendoDateTimePicker");
+                    if (dtp) dtp.value(kendo.parseDate(d.DescentTime, "yyyy-MM-ddTHH:mm"));
+                }
 
-                var md = $("#MaxDepth").data("kendoNumericTextBox");
-                if (md) md.value(d.MaxDepth);
+                if (shouldApply("Minutes")) {
+                    var min = $("#Minutes").data("kendoNumericTextBox");
+                    if (min) min.value(d.Minutes);
+                }
 
-                var po2 = $("#AveragePO2").data("kendoNumericTextBox");
-                if (po2) po2.value(d.AveragePO2);
+                if (shouldApply("MaxDepth")) {
+                    var md = $("#MaxDepth").data("kendoNumericTextBox");
+                    if (md) md.value(d.MaxDepth);
+                }
+
+                if (shouldApply("AveragePO2")) {
+                    var po2 = $("#AveragePO2").data("kendoNumericTextBox");
+                    if (po2) po2.value(d.AveragePO2);
+                }
             });
     }
 

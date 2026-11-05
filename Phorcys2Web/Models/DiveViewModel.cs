@@ -110,6 +110,13 @@ namespace Phorcys.Web.Models
         /// <summary>Dive end timestamp from the imported CSV (local/device time).</summary>
         public DateTime? ImportedSurfaced { get; set; }
 
+        /// <summary>
+        /// Comma-separated names of the shared fields (DescentTime, Minutes, MaxDepth, AveragePO2)
+        /// that the import populated. Round-trips as a hidden field so a Dive Plan selected later
+        /// does not overwrite them. See DivePlanDefaultsMerger.
+        /// </summary>
+        public string ImportedFields { get; set; }
+
         public bool HasSamples { get; set; }
     }
 }

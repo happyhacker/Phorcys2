@@ -313,6 +313,7 @@ namespace Phorcys2Web.Controllers
 
 			// Store import metadata for DiveComputerLog creation on save
 			model.HasImportedData = true;
+			model.ImportedFields = DivePlanDefaultsMerger.Serialize(DivePlanDefaultsMerger.GetImportedFields(summary));
 			model.ImportedSerialNumber = summary.SerialNumber;
 			model.ImportedProduct = summary.Product;
 			model.ImportedFirmwareVersion = summary.FirmwareVersion;
@@ -616,19 +617,13 @@ namespace Phorcys2Web.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult GetPlanDefaults(int divePlanId)
+		public IActionResult GetPlanDefaults(int divePlanId, string importedFields = null)
 		{
 			var plan = _divePlanServices.GetDivePlan(divePlanId);
 			if (plan == null) return NotFound();
 
-			var dto = new
-			{
-				Title = plan.Title,
-				DescentTime = plan.ScheduledTime.ToString("yyyy-MM-ddTHH:mm"),
-				Minutes = plan.Minutes,
-				MaxDepth = plan.MaxDepth,
-				AveragePO2 = plan.AveragePO2
-			};
+			// Import data always wins: the merger excludes any field the import already populated.
+			var dto = DivePlanDefaultsMerger.Merge(plan, DivePlanDefaultsMerger.Parse(importedFields));
 
 			return Json(dto);
 		}

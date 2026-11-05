@@ -78,6 +78,7 @@
 
     @* Hidden fields carrying imported computer metadata through to the Create POST *@
     @Html.HiddenFor(m => m.HasImportedData)
+    @Html.HiddenFor(m => m.ImportedFields)
     @Html.HiddenFor(m => m.ImportedSerialNumber)
     @Html.HiddenFor(m => m.ImportedProduct)
     @Html.HiddenFor(m => m.ImportedFirmwareVersion)
